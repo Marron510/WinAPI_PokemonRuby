@@ -1,10 +1,11 @@
+#include "PreCompile.h"
 #include "EngineWindow.h"
 #include <EngineBase/EngineDebug.h>
 
 
 HINSTANCE UEngineWindow::hInstance = nullptr;
-std::map<std::string, WNDCLASSEXA> UEngineWindow::WindowClasss;
-
+std::map<std::string, WNDCLASSEXA> UEngineWindow::WindowClasses;
+int WindowCount = 0;
 
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -19,7 +20,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     }
     break;
     case WM_DESTROY:
-        PostQuitMessage(0);
+        --WindowCount;
         break;
     default:
         return DefWindowProc(hWnd, message, wParam, lParam);
@@ -31,6 +32,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 void UEngineWindow::EngineWindowInit(HINSTANCE _Instance)
 {
+    hInstance = _Instance;
+
     WNDCLASSEXA wcex;
 
     wcex.cbSize = sizeof(WNDCLASSEX);
@@ -48,31 +51,36 @@ void UEngineWindow::EngineWindowInit(HINSTANCE _Instance)
     wcex.hIconSm = nullptr;
     CreateWindowClass(wcex);
 
-    hInstance = _Instance;
+    
 }
 
-int UEngineWindow::WindowMessageLoop()
+int UEngineWindow::WindowMessageLoop(EngineDelegate _FrameFunction) // 함수포인터로 윈도우 창에서 여러 기능들이 작동하게 만듬
 {
     // 윈도우 창에서 사용하는 단축키는 사용하지 않음
     // HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_WINDOWSPROJECT2));
     MSG msg;
 
-    while (GetMessage(&msg, nullptr, 0, 0))
+    while (WindowCount)
     {
-        if (!TranslateAccelerator(msg.hwnd, nullptr, &msg))
+        if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) // PeekMessage와 PM_REMOVE를 활용하여 일정 메세지 이상으로 삭제되게 구현
         {
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }
+        if (true == _FrameFunction.IsBind()) // 현재 작동하는 함수(움직임)가 없다면 실행
+        {
+            _FrameFunction();
+        }
     }
+
     return (int)msg.wParam;
 }
 
 void UEngineWindow::CreateWindowClass(const WNDCLASSEXA& _Class)
 {
 
-    std::map<std::string, WNDCLASSEXA>::iterator EndIter = WindowClasss.end();
-    std::map<std::string, WNDCLASSEXA>::iterator FindIter = WindowClasss.find(std::string(_Class.lpszClassName));
+    std::map<std::string, WNDCLASSEXA>::iterator EndIter = WindowClasses.end();
+    std::map<std::string, WNDCLASSEXA>::iterator FindIter = WindowClasses.find(std::string(_Class.lpszClassName));
 
     if (EndIter != FindIter)
     {
@@ -82,7 +90,7 @@ void UEngineWindow::CreateWindowClass(const WNDCLASSEXA& _Class)
 
     RegisterClassExA(&_Class);
 
-    WindowClasss.insert(std::pair{ _Class.lpszClassName, _Class });
+    WindowClasses.insert(std::pair{ _Class.lpszClassName, _Class }); // map으로 윈도우 classes를 구현
 }
 
 
@@ -96,15 +104,10 @@ UEngineWindow::~UEngineWindow()
 
 }
 
-void UEngineWindow::Create(std::string_view _ClassName)
-{
-    Create("Window", _ClassName);
-}
-
 
 void UEngineWindow::Create(std::string_view _TitleName, std::string_view _ClassName)
 {
-    if (false == WindowClasss.contains(_ClassName.data()))
+    if (false == WindowClasses.contains(_ClassName.data()))
     {
         MSGASSERT(std::string(_ClassName) + " 등록하지 않은 클래스로 윈도우창을 만들려고 했습니다");
         return;
@@ -125,9 +128,10 @@ void UEngineWindow::Open(std::string_view _TitleName)
 {
     if (nullptr == WindowHandle)
     {
-        Create();
+        Create("Window");
     }
 
     ShowWindow(WindowHandle, SW_SHOW);
     UpdateWindow(WindowHandle);
+    ++WindowCount; // 윈도우 창의 개수 추가
 }
