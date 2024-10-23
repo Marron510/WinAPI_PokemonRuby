@@ -74,15 +74,8 @@ void UEngineWindow::CreateWindowClass(const WNDCLASSEXA& _Class)
     std::map<std::string, WNDCLASSEXA>::iterator EndIter = WindowClasss.end();
     std::map<std::string, WNDCLASSEXA>::iterator FindIter = WindowClasss.find(std::string(_Class.lpszClassName));
 
-    // ckw
     if (EndIter != FindIter)
     {
-        // std::string ErrorText = "같은 이름의 윈도우 클래스를 2번 등록했습니다" + std::string(_Class.lpszClassName);
-
-        // std::string 내부에 들고 있는 맴버변수 => std::string => std::vector<char>
-        // std::vector<char> char* = new char[100];
-        // ErrorText const char* 리턴해주는 함수가 c_str()
-        // const char* Text = ErrorText.c_str();
         MSGASSERT("같은 이름의 윈도우 클래스를 2번 등록했습니다" + std::string(_Class.lpszClassName));
         return;
     }
@@ -108,11 +101,12 @@ void UEngineWindow::Create(std::string_view _ClassName)
     Create("Window", _ClassName);
 }
 
+
 void UEngineWindow::Create(std::string_view _TitleName, std::string_view _ClassName)
 {
     if (false == WindowClasss.contains(_ClassName.data()))
     {
-        MSGASSERT("등록하지 않은 클래스로 윈도우창을 만들려고 했습니다" + std::string(_ClassName));
+        MSGASSERT(std::string(_ClassName) + " 등록하지 않은 클래스로 윈도우창을 만들려고 했습니다");
         return;
     }
 
@@ -121,7 +115,7 @@ void UEngineWindow::Create(std::string_view _TitleName, std::string_view _ClassN
 
     if (!WindowHandle)
     {
-        MSGASSERT("윈도우 생성에 실패했습니다." + std::string(_TitleName));
+        MSGASSERT(std::string(_TitleName) + " 윈도우 생성에 실패했습니다.");
         return;
     }
 
