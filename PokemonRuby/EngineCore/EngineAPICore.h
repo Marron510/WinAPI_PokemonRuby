@@ -1,10 +1,14 @@
 #pragma once
+
+#include <string>
+
 #include <Windows.h>
 #include <EnginePlatform/EngineWindow.h>
 
 #pragma comment (lib, "EngineBase.lib")
 #pragma comment (lib, "EnginePlatform.lib")
 
+#include "Level.h"
 
 class UContentsCore
 {
@@ -30,7 +34,7 @@ public:
 
 	static int EngineStart(HINSTANCE _Inst, UContentsCore* _UserCore);
 
-	class UEngineAPICore* GetCore() 
+	static class UEngineAPICore* GetCore() 
 	{
 		return MainCore;
 	}
@@ -38,6 +42,13 @@ public:
 	UEngineWindow& GetMainWindow() 
 	{
 		return EngineMainWindow;
+	}
+
+	void CreateLevel(std::string_view _LevelName)
+	{
+		ULevel* NewLevel = new ULevel();
+
+		Levels.insert({ _LevelName.data() , NewLevel });
 	}
 
 protected:
@@ -49,6 +60,8 @@ private:
 	static UContentsCore* UserCore;
 
 	UEngineWindow EngineMainWindow; // 엔진 메인 윈도우
+
+	std::map<std::string, class ULevel*> Levels;
 
 	void Tick();
 

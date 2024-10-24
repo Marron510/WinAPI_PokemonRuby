@@ -17,6 +17,6 @@ public:
 protected:
 
 private:
-	// AGameMode* Mai
+	class AGameMode* GameMode = nullptr;
 };
 
