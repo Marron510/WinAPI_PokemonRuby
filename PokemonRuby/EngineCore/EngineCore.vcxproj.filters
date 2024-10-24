@@ -13,7 +13,7 @@
     <ClInclude Include="Actor.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="AGameMode.h">
+    <ClInclude Include="GameMode.h">
       <Filter>Object\Actor</Filter>
     </ClInclude>
   </ItemGroup>
@@ -30,7 +30,7 @@
     <ClCompile Include="Actor.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="AGameMode.cpp">
+    <ClCompile Include="GameMode.cpp">
       <Filter>Object\Actor</Filter>
     </ClCompile>
   </ItemGroup>

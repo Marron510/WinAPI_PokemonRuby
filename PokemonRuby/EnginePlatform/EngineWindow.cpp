@@ -57,12 +57,16 @@ void UEngineWindow::EngineWindowInit(HINSTANCE _Instance)
 int UEngineWindow::WindowMessageLoop(EngineDelegate _StartFunction, EngineDelegate _FrameFunction) // 함수포인터로 윈도우 창에서 여러 기능들이 작동하게 만듬
 {
     // 윈도우 창에서 사용하는 단축키는 사용하지 않음
-    // HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_WINDOWSPROJECT2));
-    MSG msg;
+    MSG msg = MSG();
 
-    while (WindowCount)
+    if (true == _StartFunction.IsBind())
     {
-        if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) // PeekMessage와 PM_REMOVE를 활용하여 일정 메세지 이상으로 삭제되게 구현
+        _StartFunction();
+    }
+
+    while (0 != WindowCount)
+    {
+        if (0 != PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) // PeekMessage와 PM_REMOVE를 활용하여 일정 메세지 이상으로 삭제되게 구현
         {
             TranslateMessage(&msg);
             DispatchMessage(&msg);
@@ -84,7 +88,7 @@ void UEngineWindow::CreateWindowClass(const WNDCLASSEXA& _Class)
 
     if (EndIter != FindIter)
     {
-        MSGASSERT("같은 이름의 윈도우 클래스를 2번 등록했습니다" + std::string(_Class.lpszClassName));
+        MSGASSERT(std::string(_Class.lpszClassName) + " 같은 이름의 윈도우 클래스를 2번 등록했습니다");
         return;
     }
 
@@ -116,19 +120,25 @@ void UEngineWindow::Create(std::string_view _TitleName, std::string_view _ClassN
     WindowHandle = CreateWindowA(_ClassName.data(), _TitleName.data(), WS_OVERLAPPEDWINDOW,
         0, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
-    if (!WindowHandle)
+    if (nullptr == WindowHandle)
     {
         MSGASSERT(std::string(_TitleName) + " 윈도우 생성에 실패했습니다.");
         return;
     }
 
+    BackBuffer = GetDC(WindowHandle);
 }
 
 void UEngineWindow::Open(std::string_view _TitleName)
 {
-    if (nullptr == WindowHandle)
+    if (0 == WindowHandle)
     {
         Create("Window");
+    }
+
+    if (0 == WindowHandle)
+    {
+        return;
     }
 
     ShowWindow(WindowHandle, SW_SHOW);

@@ -23,7 +23,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="AGameMode.h">
+    <ClInclude Include="GameMode.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -45,7 +45,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="AGameMode.cpp">
+    <ClCompile Include="GameMode.cpp">
       <SubType>
       </SubType>
     </ClCompile>

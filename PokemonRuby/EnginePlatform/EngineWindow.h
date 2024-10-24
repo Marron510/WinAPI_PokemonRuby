@@ -18,7 +18,6 @@ public:
 	
 
 	static int WindowMessageLoop(EngineDelegate _StartFunction, EngineDelegate _FrameFunction);
-	// constrcuter destructer
 	UEngineWindow();
 	~UEngineWindow();
 
@@ -33,11 +32,16 @@ public:
 	//std::string과 달리 std::string_view 는 수정을 하지 못한다는 단점이 있다.
 	void Open(std::string_view _TitleName = "Window");
 
+	inline HDC GetBackBuffer()
+	{
+		return BackBuffer;
+	}
+
 protected:
 
 private:
 	static HINSTANCE hInstance;
 	static std::map<std::string, WNDCLASSEXA> WindowClasses;
-
+	HDC BackBuffer = nullptr;
 	HWND WindowHandle = nullptr;
 };

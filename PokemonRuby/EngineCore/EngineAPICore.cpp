@@ -3,6 +3,7 @@
 
 #include <EnginePlatform/EngineWindow.h>
 #include <EngineBase/EngineDelegate.h>
+#include <EngineBase/EngineDebug.h>
 
 UEngineAPICore* UEngineAPICore::MainCore = nullptr;
 UContentsCore* UEngineAPICore::UserCore = nullptr;
@@ -60,6 +61,29 @@ void UEngineAPICore::EngineTick() // 엔진실행
 }
 void UEngineAPICore::Tick()
 {
+	if (nullptr == CurLevel)
+	{
+		MSGASSERT("엔진 코어에 현재 레벨이 지정되지 않았습니다");
+		return;
+	}
 
+	CurLevel->Tick();
+	CurLevel->Render();
 }
 
+
+void UEngineAPICore::OpenLevel(std::string_view _LevelName)
+{
+	std::string ChangeName = _LevelName.data();
+
+	std::map<std::string, class ULevel*>::iterator FindIter = Levels.find(ChangeName);
+	std::map<std::string, class ULevel*>::iterator EndIter = Levels.end();
+
+	if (EndIter == FindIter)
+	{
+		MSGASSERT(ChangeName + "라는 이름의 레벨은 존재하지 않습니다.");
+		return;
+	}
+
+	CurLevel = FindIter->second;
+}
