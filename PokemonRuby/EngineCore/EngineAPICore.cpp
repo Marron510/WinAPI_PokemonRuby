@@ -5,6 +5,7 @@
 #include <EngineBase/EngineDelegate.h>
 
 UEngineAPICore* UEngineAPICore::MainCore = nullptr;
+UContentsCore* UEngineAPICore::UserCore = nullptr;
 
 
 UEngineAPICore::UEngineAPICore()
@@ -17,32 +18,33 @@ UEngineAPICore::~UEngineAPICore()
 }
 
 
-int UEngineAPICore::EngineStart(HINSTANCE _Inst)
+int UEngineAPICore::EngineStart(HINSTANCE _Inst, UContentsCore* _UserCore)
 {
+	UserCore = _UserCore;
 	UEngineWindow::EngineWindowInit(_Inst);
 
-	UEngineAPICore Core;
+	UEngineAPICore Core = UEngineAPICore();
 	Core.EngineMainWindow.Open();
 
 
-	EngineDelegate NewDel;
-	NewDel = EngineLoop; // 델리게이트에 한가지 기능만 넣었음
-	return UEngineWindow::WindowMessageLoop(NewDel);
+	EngineDelegate Start = EngineDelegate(std::bind(EngineBeginPlay));
+	EngineDelegate FrameLoop = EngineDelegate(std::bind(EngineTick));;
+	return UEngineWindow::WindowMessageLoop(Start, FrameLoop);
 
 }
 
-void UEngineAPICore::EngineLoop() // 엔진실행
+void UEngineAPICore::EngineBeginPlay() // 유저코어 실행
 {
-	MainCore->Tick();
-	MainCore->Render();
+	UserCore->BeginPlay();
 }
 
+void UEngineAPICore::EngineTick() // 엔진실행
+{
+	UserCore->Tick();
+	MainCore->Tick();
+}
 void UEngineAPICore::Tick()
 {
 
 }
 
-void UEngineAPICore::Render()
-{
-
-}

@@ -7,6 +7,9 @@
     <ClInclude Include="Player.h">
       <Filter>ContentsObject</Filter>
     </ClInclude>
+    <ClInclude Include="PokemonCore.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Player.cpp">
@@ -15,6 +18,9 @@
     <ClCompile Include="PreCompile.cpp">
       <Filter>PreCompile</Filter>
     </ClCompile>
+    <ClCompile Include="PokemonCore.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ContentsObject">
@@ -22,6 +28,9 @@
     </Filter>
     <Filter Include="PreCompile">
       <UniqueIdentifier>{dcfa414f-879d-48d9-8657-a057e822e3f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{1d1aa88d-69df-4c15-a6c2-469b737825e4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

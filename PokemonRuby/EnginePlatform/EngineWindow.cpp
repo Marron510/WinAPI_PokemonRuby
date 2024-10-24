@@ -54,7 +54,7 @@ void UEngineWindow::EngineWindowInit(HINSTANCE _Instance)
     
 }
 
-int UEngineWindow::WindowMessageLoop(EngineDelegate _FrameFunction) // 함수포인터로 윈도우 창에서 여러 기능들이 작동하게 만듬
+int UEngineWindow::WindowMessageLoop(EngineDelegate _StartFunction, EngineDelegate _FrameFunction) // 함수포인터로 윈도우 창에서 여러 기능들이 작동하게 만듬
 {
     // 윈도우 창에서 사용하는 단축키는 사용하지 않음
     // HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_WINDOWSPROJECT2));
