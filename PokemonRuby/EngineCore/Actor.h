@@ -1,18 +1,18 @@
 #pragma once
+
+// 설명 :
 class AActor
 {
 public:
-	// 생성자 소멸자
+	// constrcuter destructer
 	AActor();
 	~AActor();
 
-	// delete funcion
-
+	// delete Function
 	AActor(const AActor& _Other) = delete;
 	AActor(AActor&& _Other) noexcept = delete;
 	AActor& operator=(const AActor& _Other) = delete;
 	AActor& operator=(AActor&& _Other) noexcept = delete;
-
 
 protected:
 
