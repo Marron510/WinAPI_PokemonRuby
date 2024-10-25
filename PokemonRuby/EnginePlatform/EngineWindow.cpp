@@ -59,14 +59,14 @@ int UEngineWindow::WindowMessageLoop(EngineDelegate _StartFunction, EngineDelega
     // 윈도우 창에서 사용하는 단축키는 사용하지 않음
     MSG msg = MSG();
 
-    if (true == _StartFunction.IsBind())
+    if (true == _StartFunction.IsBind()) // 엔진이 beginplay 하지 않았다면 실행
     {
         _StartFunction();
     }
 
     while (0 != WindowCount)
     {
-        if (0 != PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) // PeekMessage와 PM_REMOVE를 활용하여 일정 메세지 이상으로 삭제되게 구현
+        if (0 != PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) // 메세지가 있을때만 일정 프레임 내에 처리하고 나머지 메세지는 삭제
         {
             TranslateMessage(&msg);
             DispatchMessage(&msg);

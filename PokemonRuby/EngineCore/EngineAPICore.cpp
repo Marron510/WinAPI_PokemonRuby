@@ -74,16 +74,16 @@ void UEngineAPICore::Tick()
 
 void UEngineAPICore::OpenLevel(std::string_view _LevelName)
 {
-	std::string ChangeName = _LevelName.data();
+	std::string ChangeName = _LevelName.data(); // 입력한 이름으로 레벨이름 설정
 
 	std::map<std::string, class ULevel*>::iterator FindIter = Levels.find(ChangeName);
 	std::map<std::string, class ULevel*>::iterator EndIter = Levels.end();
 
-	if (EndIter == FindIter)
+	if (EndIter == FindIter) // 찾기 실행
 	{
 		MSGASSERT(ChangeName + "라는 이름의 레벨은 존재하지 않습니다.");
 		return;
 	}
 
-	CurLevel = FindIter->second;
+	CurLevel = FindIter->second; // 찾았으면 현재 레벨로 설정
 }
