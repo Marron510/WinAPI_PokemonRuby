@@ -7,6 +7,9 @@
     <Filter Include="PreCompile">
       <UniqueIdentifier>{68046fb1-982c-453f-b58e-58af2ce9885c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{32e254be-59fc-4cb9-bf62-c4245e7f0cd3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineWindow.cpp">
@@ -15,6 +18,9 @@
     <ClCompile Include="PreCompile.cpp">
       <Filter>PreCompile</Filter>
     </ClCompile>
+    <ClCompile Include="EngineInput.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineWindow.h">
@@ -22,6 +28,9 @@
     </ClInclude>
     <ClInclude Include="PreCompile.h">
       <Filter>PreCompile</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineInput.h">
+      <Filter>Input</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

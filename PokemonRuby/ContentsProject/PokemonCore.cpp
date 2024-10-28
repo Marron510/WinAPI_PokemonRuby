@@ -17,6 +17,8 @@ PokemonCore::~PokemonCore()
 
 void PokemonCore::BeginPlay()
 {
+	UEngineAPICore::GetCore()->GetMainWindow().SetWindowTitle("Pokemon_Ruby");
+
 	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Title"); UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Play");
 	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Tutorial"); UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Play");
 	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Littleroot town"); UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Play");

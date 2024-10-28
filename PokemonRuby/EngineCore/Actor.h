@@ -1,10 +1,12 @@
 #pragma once
 #include <EngineBase/EngineMath.h>
 
+// Ό³Έν :
 class AActor
 {
 public:
 	friend class ULevel;
+
 	// constrcuter destructer
 	AActor();
 	~AActor();
@@ -16,7 +18,7 @@ public:
 	AActor& operator=(AActor&& _Other) noexcept = delete;
 
 	virtual void BeginPlay() {}
-	virtual void Tick() {}
+	virtual void Tick(float _DeltaTime) {}
 	virtual void Render();
 
 	class ULevel* GetWorld()
@@ -24,12 +26,12 @@ public:
 		return World;
 	}
 
-	void SetActorLoaction(FVector2D _Location)
+	void SetActorLocation(FVector2D _Location)
 	{
 		Location = _Location;
 	}
 
-	void AddActorLoaction(FVector2D _Direction)
+	void AddActorLocation(FVector2D _Direction)
 	{
 		Location += _Direction;
 	}
@@ -39,6 +41,10 @@ public:
 		Scale = _Scale;
 	}
 
+	FVector2D GetActorLocation()
+	{
+		return Location;
+	}
 
 protected:
 
