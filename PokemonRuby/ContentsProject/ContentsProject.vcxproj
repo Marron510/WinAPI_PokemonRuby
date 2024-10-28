@@ -151,7 +151,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="PlayGameMode.h">
+    <ClInclude Include="PokemonGameMode.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -166,7 +166,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="PlayGameMode.cpp">
+    <ClCompile Include="PokemonGameMode.cpp">
       <SubType>
       </SubType>
     </ClCompile>

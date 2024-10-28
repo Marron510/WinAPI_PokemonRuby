@@ -56,7 +56,7 @@ void UEngineAPICore::EngineBeginPlay() // 유저코어 실행
 
 void UEngineAPICore::EngineTick() // 엔진실행
 {
-	UserCore->Tick();
+	//UserCore->Tick();
 	MainCore->Tick();
 }
 void UEngineAPICore::Tick()

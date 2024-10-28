@@ -2,7 +2,7 @@
 #include "PokemonCore.h"
 #include <EngineCore/EngineAPICore.h>
 
-#include "PlayGameMode.h"
+#include "PokemonGameMode.h"
 #include "Player.h"
 
 PokemonCore::PokemonCore()
@@ -17,31 +17,31 @@ PokemonCore::~PokemonCore()
 
 void PokemonCore::BeginPlay()
 {
-	UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Title"); UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Play");
-	UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Tutorial"); UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Play");
-	UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Littleroot town"); UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Play");
-	UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Player house"); UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Play");
-	UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Professor Birch's house"); UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Play");
-	UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Labor  Professor Birch"); UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Play");
-	UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Oldale Town"); UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Play");
-	UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Pokemon Center"); UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Play");
-	UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Oldale Town Pokemon Center"); UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Play");
-	UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Oldale Town Pokemon Supermarket"); UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Play");
-	UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Oldale house 1"); UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Play");
-	UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Oldale house 2"); UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Play");
-	UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Route 101"); UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Play");
-	UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Route 102"); UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Play");
-	UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Route 103"); UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Play");
-	UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Petalburg City"); UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Play");
-	UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Petalburg City Pokemon Center"); UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Play");
-	UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Petalburg City Pokemon Supermarket"); UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Play");
-	UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Petalburg house 1"); UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Play");
-	UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Petalburg house 2"); UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Play");
-	UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Petalburg Gym"); UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Play");
-	UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Battle"); UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Play");
-	UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("PokemonUI");
-	UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("PlayerBag");
-	UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Ending");
+	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Title"); UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Play");
+	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Tutorial"); UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Play");
+	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Littleroot town"); UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Play");
+	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Player house"); UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Play");
+	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Professor Birch's house"); UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Play");
+	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Labor  Professor Birch"); UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Play");
+	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Oldale Town"); UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Play");
+	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Pokemon Center"); UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Play");
+	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Oldale Town Pokemon Center"); UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Play");
+	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Oldale Town Pokemon Supermarket"); UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Play");
+	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Oldale house 1"); UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Play");
+	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Oldale house 2"); UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Play");
+	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Route 101"); UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Play");
+	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Route 102"); UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Play");
+	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Route 103"); UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Play");
+	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Petalburg City"); UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Play");
+	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Petalburg City Pokemon Center"); UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Play");
+	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Petalburg City Pokemon Supermarket"); UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Play");
+	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Petalburg house 1"); UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Play");
+	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Petalburg house 2"); UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Play");
+	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Petalburg Gym"); UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Play");
+	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Battle"); UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Play");
+	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("PokemonUI");
+	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("PlayerBag");
+	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Ending");
 	UEngineAPICore::GetCore()->OpenLevel("Title");
 }
 

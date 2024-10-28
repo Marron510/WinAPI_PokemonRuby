@@ -10,7 +10,7 @@
     <ClInclude Include="PokemonCore.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="PlayGameMode.h">
+    <ClInclude Include="PokemonGameMode.h">
       <Filter>ContentsObject\GameMode</Filter>
     </ClInclude>
   </ItemGroup>
@@ -24,7 +24,7 @@
     <ClCompile Include="PokemonCore.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="PlayGameMode.cpp">
+    <ClCompile Include="PokemonGameMode.cpp">
       <Filter>ContentsObject\GameMode</Filter>
     </ClCompile>
   </ItemGroup>

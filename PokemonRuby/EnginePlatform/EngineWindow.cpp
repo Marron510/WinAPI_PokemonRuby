@@ -133,7 +133,7 @@ void UEngineWindow::Open(std::string_view _TitleName)
 {
     if (0 == WindowHandle)
     {
-        Create("Window");
+        Create("Pokemon Ruby");
     }
 
     if (0 == WindowHandle)
