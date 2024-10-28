@@ -17,30 +17,20 @@ APlayer::~APlayer()
 void APlayer::BeginPlay()
 {
 	// 이벤트 방식으로 처리
-	UEngineInput::GetInst().BindAction('A', KeyEvent::Press, std::bind(&APlayer::LeftMove, this, std::placeholders::_1));
-	UEngineInput::GetInst().BindAction('D', KeyEvent::Press, std::bind(&APlayer::RightMove, this, std::placeholders::_1));
-	UEngineInput::GetInst().BindAction('S', KeyEvent::Press, std::bind(&APlayer::DownMove, this, std::placeholders::_1));
-	UEngineInput::GetInst().BindAction('W', KeyEvent::Press, std::bind(&APlayer::UpMove, this, std::placeholders::_1));
+	UEngineInput::GetInst().BindAction('A', KeyEvent::Press, std::bind(&APlayer::MoveFunction, this, FVector2D::LEFT));
+	UEngineInput::GetInst().BindAction('D', KeyEvent::Press, std::bind(&APlayer::MoveFunction, this, FVector2D::RIGHT));
+	UEngineInput::GetInst().BindAction('S', KeyEvent::Press, std::bind(&APlayer::MoveFunction, this, FVector2D::DOWN));
+	UEngineInput::GetInst().BindAction('W', KeyEvent::Press, std::bind(&APlayer::MoveFunction, this, FVector2D::UP));
+
 }
 
-void APlayer::LeftMove(float _DeltaTime)
+void APlayer::MoveFunction(FVector2D _Dir)
 {
-	AddActorLocation(FVector2D::LEFT * _DeltaTime * Speed);
-}
+	
 
-void APlayer::RightMove(float _DeltaTime)
-{
-	AddActorLocation(FVector2D::RIGHT * _DeltaTime * Speed);
-}
+	float DeltaTime = UEngineAPICore::GetCore()->GetDeltaTime();
 
-void APlayer::UpMove(float _DeltaTime)
-{
-	AddActorLocation(FVector2D::UP * _DeltaTime * Speed);
-}
-
-void APlayer::DownMove(float _DeltaTime)
-{
-	AddActorLocation(FVector2D::DOWN * _DeltaTime * Speed);
+	AddActorLocation(_Dir * DeltaTime * Speed);
 }
 
 void APlayer::Tick(float _DeltaTime)

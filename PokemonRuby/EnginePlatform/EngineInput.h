@@ -28,7 +28,7 @@ public:
 
 	static UEngineInput& GetInst()
 	{
-		static UEngineInput Inst = UEngineInput();
+		static UEngineInput Inst = UEngineInput(); //전역변수처럼 사용하지만 함수가 끝날때 사라지지않을것임 다른곳에서 선언 불가
 		return Inst;
 	}
 
@@ -109,7 +109,7 @@ public:
 		return Keys[_KeyIndex].IsPress;
 	}
 
-	float IsPreeTime(int _KeyIndex)
+	float IsPressTime(int _KeyIndex)
 	{
 		if (false == Keys.contains(_KeyIndex))
 		{
