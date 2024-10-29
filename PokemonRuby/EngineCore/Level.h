@@ -34,11 +34,15 @@ public:
 protected:
 
 private:
+	void ScreenClear();
+	void DoubleBuffering();
+
 
 	template<typename GameModeType, typename MainPawnType>
 	void CreateGameMode()
 	{
 		GameMode = new GameModeType();
+
 		MainPawn = new MainPawnType();
 
 		MainPawn->World = this;
@@ -51,10 +55,9 @@ private:
 		AllActors.push_back(MainPawn);
 	}
 
-	class AGameMode* GameMode = nullptr;
+	AGameMode* GameMode = nullptr;
 
 	AActor* MainPawn = nullptr;
 
 	std::list<AActor*> AllActors;
 };
-

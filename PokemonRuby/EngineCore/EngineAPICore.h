@@ -1,5 +1,4 @@
 #pragma once
-
 #include <string>
 
 #include <Windows.h>
@@ -11,13 +10,13 @@
 
 #include "Level.h"
 
+
 class UContentsCore
 {
 public:
 	virtual void BeginPlay() = 0;
 	virtual void Tick() = 0;
 };
-
 
 class UEngineAPICore
 {
@@ -34,12 +33,12 @@ public:
 
 	static int EngineStart(HINSTANCE _Inst, UContentsCore* _UserCore);
 
-	static class UEngineAPICore* GetCore() 
+	static class UEngineAPICore* GetCore()
 	{
 		return MainCore;
 	}
 
-	UEngineWindow& GetMainWindow() 
+	UEngineWindow& GetMainWindow()
 	{
 		return EngineMainWindow;
 	}
@@ -53,13 +52,17 @@ public:
 	ULevel* CreateLevel(std::string_view _LevelName)
 	{
 		ULevel* NewLevel = new ULevel();
+
 		NewLevel->CreateGameMode<GameModeType, MainPawnType>();
+
 		Levels.insert({ _LevelName.data() , NewLevel });
 
 		return NewLevel;
 	}
 
 	void OpenLevel(std::string_view _LevelName);
+
+
 
 protected:
 
@@ -70,7 +73,7 @@ private:
 	static UContentsCore* UserCore;
 
 	UEngineTimer DeltaTimer = UEngineTimer();
-	UEngineWindow EngineMainWindow; // 엔진 메인 윈도우
+	UEngineWindow EngineMainWindow = UEngineWindow(); // 엔진 메인 윈도우
 
 	std::map<std::string, class ULevel*> Levels;
 
@@ -79,4 +82,3 @@ private:
 	void Tick();
 
 };
-

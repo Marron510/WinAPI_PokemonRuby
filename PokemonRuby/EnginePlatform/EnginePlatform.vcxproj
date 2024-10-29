@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="EngineWindow.h" />
+    <ClInclude Include="EngineWInImage.h" />
     <ClInclude Include="PreCompile.h">
       <SubType>
       </SubType>
@@ -163,6 +164,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineWindow.cpp" />
+    <ClCompile Include="EngineWInImage.cpp" />
     <ClCompile Include="PreCompile.cpp">
       <SubType>
       </SubType>

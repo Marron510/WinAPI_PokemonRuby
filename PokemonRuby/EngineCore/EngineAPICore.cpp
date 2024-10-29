@@ -6,13 +6,16 @@
 #include <EngineBase/EngineDelegate.h>
 #include <EngineBase/EngineDebug.h>
 
+
+
 UEngineAPICore* UEngineAPICore::MainCore = nullptr;
 UContentsCore* UEngineAPICore::UserCore = nullptr;
 
+#include <Windows.h>
 
 UEngineAPICore::UEngineAPICore()
 {
-	MainCore = this;
+
 }
 
 UEngineAPICore::~UEngineAPICore()
@@ -38,35 +41,35 @@ int UEngineAPICore::EngineStart(HINSTANCE _Inst, UContentsCore* _UserCore)
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
 	UserCore = _UserCore;
+
 	UEngineWindow::EngineWindowInit(_Inst);
 
 	UEngineAPICore Core = UEngineAPICore();
 	Core.EngineMainWindow.Open();
-
+	MainCore = &Core;
 
 	EngineDelegate Start = EngineDelegate(std::bind(EngineBeginPlay));
 	EngineDelegate FrameLoop = EngineDelegate(std::bind(EngineTick));;
 	return UEngineWindow::WindowMessageLoop(Start, FrameLoop);
-
 }
 
-void UEngineAPICore::EngineBeginPlay() // 유저코어 실행
+void UEngineAPICore::EngineBeginPlay()
 {
 	UserCore->BeginPlay();
 }
 
-void UEngineAPICore::EngineTick() // 엔진실행
+void UEngineAPICore::EngineTick()
 {
-	//UserCore->Tick();
+	// UserCore->Tick();
+
 	MainCore->Tick();
 }
+
 void UEngineAPICore::Tick()
 {
-	// 현재시간 재는법
 	DeltaTimer.TimeCheck();
 	float DeltaTime = DeltaTimer.GetDeltaTime();
-	
-	// 키체크
+
 	UEngineInput::GetInst().KeyCheck(DeltaTime);
 
 	if (nullptr == CurLevel)
@@ -78,21 +81,21 @@ void UEngineAPICore::Tick()
 	UEngineInput::GetInst().EventCheck(DeltaTime);
 	CurLevel->Tick(DeltaTime);
 	CurLevel->Render();
+
 }
 
 
 void UEngineAPICore::OpenLevel(std::string_view _LevelName)
 {
-	std::string ChangeName = _LevelName.data(); // 입력한 이름으로 레벨이름 설정
+	std::string ChangeName = _LevelName.data();
 
 	std::map<std::string, class ULevel*>::iterator FindIter = Levels.find(ChangeName);
 	std::map<std::string, class ULevel*>::iterator EndIter = Levels.end();
 
-	if (EndIter == FindIter) // 찾기 실행
+	if (EndIter == FindIter)
 	{
 		MSGASSERT(ChangeName + "라는 이름의 레벨은 존재하지 않습니다.");
 		return;
 	}
-
-	CurLevel = FindIter->second; // 찾았으면 현재 레벨로 설정
+	CurLevel = FindIter->second;
 }

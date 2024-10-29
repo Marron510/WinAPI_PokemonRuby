@@ -1,13 +1,14 @@
 #pragma once
-#include <Windows.h>
 
+#include <Windows.h>
 
 #include <map>
 #include <string>
 #include <functional>
 
-
 #include <EngineBase/EngineDelegate.h>
+#include <EngineBase/EngineMath.h>
+#include "EngineWinImage.h"
 
 
 class UEngineWindow
@@ -15,9 +16,9 @@ class UEngineWindow
 public:
 	static void EngineWindowInit(HINSTANCE _Instance);
 	static void CreateWindowClass(const WNDCLASSEXA& _Class);
-	
 
 	static int WindowMessageLoop(EngineDelegate _StartFunction, EngineDelegate _FrameFunction);
+	// constrcuter destructer
 	UEngineWindow();
 	~UEngineWindow();
 
@@ -26,26 +27,48 @@ public:
 	UEngineWindow(UEngineWindow&& _Other) noexcept = delete;
 	UEngineWindow& operator=(const UEngineWindow& _Other) = delete;
 	UEngineWindow& operator=(UEngineWindow&& _Other) noexcept = delete;
-	
-	void Create(std::string_view _TitleName , std::string_view _ClassName = "Default");
-	//std::string은 new를 하기 때문에 최적화를 위해 string_view를 사용하지만
-	//std::string과 달리 std::string_view 는 수정을 하지 못한다는 단점이 있다.
+
+	void Create(std::string_view _TitleName, std::string_view _ClassName = "Default");
 	void Open(std::string_view _TitleName = "Window");
 
-	inline HDC GetBackBuffer()
+	inline FVector2D GetWindowSize() const
 	{
-		return BackBuffer;
+		return WindowSize;
 	}
+
+	inline UEngineWinImage* GetWindowImage() const
+	{
+		return WindowImage;
+	}
+
+	inline UEngineWinImage* GetBackBuffer() const
+	{
+		return BackBufferImage;
+	}
+
+
 	inline void SetWindowTitle(std::string_view Text)
 	{
 		SetWindowTextA(WindowHandle, Text.data());
 	}
 
+
+	void SetWindowPosAndScale(FVector2D _Pos, FVector2D _Scale);
+
+
 protected:
 
 private:
 	static HINSTANCE hInstance;
-	static std::map<std::string, WNDCLASSEXA> WindowClasses;
-	HDC BackBuffer = nullptr;
+	static std::map<std::string, WNDCLASSEXA> WindowClasss;
+
+	FVector2D WindowSize;
+
+	UEngineWinImage* BackBufferImage = nullptr;
+
+	UEngineWinImage* WindowImage = nullptr;
+
 	HWND WindowHandle = nullptr;
 };
+
+

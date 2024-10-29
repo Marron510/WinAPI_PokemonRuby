@@ -4,9 +4,8 @@
 
 
 HINSTANCE UEngineWindow::hInstance = nullptr;
-std::map<std::string, WNDCLASSEXA> UEngineWindow::WindowClasses;
+std::map<std::string, WNDCLASSEXA> UEngineWindow::WindowClasss;
 int WindowCount = 0;
-
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -29,15 +28,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 }
 
 
-
 void UEngineWindow::EngineWindowInit(HINSTANCE _Instance)
 {
     hInstance = _Instance;
 
     WNDCLASSEXA wcex;
-
     wcex.cbSize = sizeof(WNDCLASSEX);
-
     wcex.style = CS_HREDRAW | CS_VREDRAW;
     wcex.lpfnWndProc = WndProc;
     wcex.cbClsExtra = 0;
@@ -50,28 +46,26 @@ void UEngineWindow::EngineWindowInit(HINSTANCE _Instance)
     wcex.lpszClassName = "Default";
     wcex.hIconSm = nullptr;
     CreateWindowClass(wcex);
-
-    
 }
 
-int UEngineWindow::WindowMessageLoop(EngineDelegate _StartFunction, EngineDelegate _FrameFunction) // 함수포인터로 윈도우 창에서 여러 기능들이 작동하게 만듬
+int UEngineWindow::WindowMessageLoop(EngineDelegate _StartFunction, EngineDelegate _FrameFunction)
 {
-    // 윈도우 창에서 사용하는 단축키는 사용하지 않음
     MSG msg = MSG();
 
-    if (true == _StartFunction.IsBind()) // 엔진이 beginplay 하지 않았다면 실행
+    if (true == _StartFunction.IsBind())
     {
         _StartFunction();
     }
 
     while (0 != WindowCount)
     {
-        if (0 != PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) // 메세지가 있을때만 일정 프레임 내에 처리하고 나머지 메세지는 삭제
+        if (0 != PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }
-        if (true == _FrameFunction.IsBind()) // 현재 작동하는 함수(움직임)가 없다면 실행
+
+        if (true == _FrameFunction.IsBind())
         {
             _FrameFunction();
         }
@@ -82,9 +76,8 @@ int UEngineWindow::WindowMessageLoop(EngineDelegate _StartFunction, EngineDelega
 
 void UEngineWindow::CreateWindowClass(const WNDCLASSEXA& _Class)
 {
-
-    std::map<std::string, WNDCLASSEXA>::iterator EndIter = WindowClasses.end();
-    std::map<std::string, WNDCLASSEXA>::iterator FindIter = WindowClasses.find(std::string(_Class.lpszClassName));
+    std::map<std::string, WNDCLASSEXA>::iterator EndIter = WindowClasss.end();
+    std::map<std::string, WNDCLASSEXA>::iterator FindIter = WindowClasss.find(std::string(_Class.lpszClassName));
 
     if (EndIter != FindIter)
     {
@@ -94,24 +87,33 @@ void UEngineWindow::CreateWindowClass(const WNDCLASSEXA& _Class)
 
     RegisterClassExA(&_Class);
 
-    WindowClasses.insert(std::pair{ _Class.lpszClassName, _Class }); // map으로 윈도우 classes를 구현
+    WindowClasss.insert(std::pair{ _Class.lpszClassName, _Class });
 }
-
 
 UEngineWindow::UEngineWindow()
 {
-  
+
+
 }
 
 UEngineWindow::~UEngineWindow()
 {
+    if (nullptr != WindowImage)
+    {
+        delete WindowImage;
+        WindowImage = nullptr;
+    }
 
+    if (nullptr != BackBufferImage)
+    {
+        delete BackBufferImage;
+        BackBufferImage = nullptr;
+    }
 }
-
 
 void UEngineWindow::Create(std::string_view _TitleName, std::string_view _ClassName)
 {
-    if (false == WindowClasses.contains(_ClassName.data()))
+    if (false == WindowClasss.contains(_ClassName.data()))
     {
         MSGASSERT(std::string(_ClassName) + " 등록하지 않은 클래스로 윈도우창을 만들려고 했습니다");
         return;
@@ -126,14 +128,16 @@ void UEngineWindow::Create(std::string_view _TitleName, std::string_view _ClassN
         return;
     }
 
-    BackBuffer = GetDC(WindowHandle);
+    HDC WindowMainDC = GetDC(WindowHandle);
+    WindowImage = new UEngineWinImage();
+    WindowImage->Create(WindowMainDC);
 }
 
 void UEngineWindow::Open(std::string_view _TitleName)
 {
     if (0 == WindowHandle)
     {
-        Create("Pokemon Ruby");
+        Create(_TitleName);
     }
 
     if (0 == WindowHandle)
@@ -143,5 +147,28 @@ void UEngineWindow::Open(std::string_view _TitleName)
 
     ShowWindow(WindowHandle, SW_SHOW);
     UpdateWindow(WindowHandle);
-    ++WindowCount; // 윈도우 창의 개수 추가
+    ++WindowCount;
+}
+
+void UEngineWindow::SetWindowPosAndScale(FVector2D _Pos, FVector2D _Scale)
+{
+    if (false == WindowSize.EqualToInt(_Scale))
+    {
+        if (nullptr != BackBufferImage)
+        {
+            delete BackBufferImage;
+            BackBufferImage = nullptr;
+        }
+
+        BackBufferImage = new UEngineWinImage();
+        BackBufferImage->Create(WindowImage, _Scale);
+    }
+
+    WindowSize = _Scale;
+
+    RECT Rc = { 0, 0, _Scale.iX(), _Scale.iY() };
+    
+    AdjustWindowRect(&Rc, WS_OVERLAPPEDWINDOW, FALSE);
+
+    ::SetWindowPos(WindowHandle, nullptr, _Pos.iX(), _Pos.iY(), Rc.right - Rc.left, Rc.bottom - Rc.top, SWP_NOZORDER);
 }

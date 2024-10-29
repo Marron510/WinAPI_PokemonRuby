@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "Level.h"
+#include "EngineAPICore.h"
 
 ULevel::ULevel()
 {
@@ -33,8 +34,11 @@ void ULevel::Tick(float _DeltaTime)
 		CurActor->Tick(_DeltaTime);
 	}
 }
+
 void ULevel::Render()
 {
+	ScreenClear();
+
 	std::list<AActor*>::iterator StartIter = AllActors.begin();
 	std::list<AActor*>::iterator EndIter = AllActors.end();
 
@@ -44,4 +48,30 @@ void ULevel::Render()
 
 		CurActor->Render();
 	}
+
+	DoubleBuffering();
+}
+
+void ULevel::ScreenClear()
+{
+	UEngineWindow& MainWindow = UEngineAPICore::GetCore()->GetMainWindow();
+	UEngineWinImage* BackBufferImage = MainWindow.GetBackBuffer();
+	FVector2D Size = MainWindow.GetWindowSize();
+
+	Rectangle(BackBufferImage->GetDC(), 0, 0, Size.iX(), Size.iY());
+}
+
+void ULevel::DoubleBuffering()
+{
+	UEngineWindow& MainWindow = UEngineAPICore::GetCore()->GetMainWindow();
+
+	UEngineWinImage* WindowImage = MainWindow.GetWindowImage();
+	UEngineWinImage* BackBufferImage = MainWindow.GetBackBuffer();
+
+	FTransform Trans;
+	Trans.Location = MainWindow.GetWindowSize().Half();
+	Trans.Scale = MainWindow.GetWindowSize();
+
+	BackBufferImage->CopyToBit(WindowImage, Trans);
+
 }

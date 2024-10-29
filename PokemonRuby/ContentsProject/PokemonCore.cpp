@@ -19,8 +19,10 @@ void PokemonCore::BeginPlay()
 {
 	UEngineAPICore::GetCore()->GetMainWindow().SetWindowTitle("Pokemon_Ruby");
 
+	UEngineAPICore::GetCore()->GetMainWindow().SetWindowPosAndScale({ 0, 0 }, { 1280, 720 });
+
 	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Title"); UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Play");
-	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Tutorial"); UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Play");
+	/*UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Tutorial"); UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Play");
 	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Littleroot town"); UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Play");
 	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Player house"); UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Play");
 	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Professor Birch's house"); UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Play");
@@ -43,7 +45,7 @@ void PokemonCore::BeginPlay()
 	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Battle"); UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Play");
 	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("PokemonUI");
 	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("PlayerBag");
-	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Ending");
+	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Ending");*/
 	UEngineAPICore::GetCore()->OpenLevel("Title");
 }
 
