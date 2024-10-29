@@ -4,6 +4,9 @@
 class AActor
 {
 public:
+
+	typedef AActor Super;
+
 	friend class ULevel;
 
 	// constrcuter destructer

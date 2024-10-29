@@ -8,6 +8,18 @@ UEngineFile::UEngineFile()
 
 }
 
+UEngineFile::UEngineFile(std::string_view _Path)
+	: UEnginePath(_Path)
+{
+
+}
+
+UEngineFile::UEngineFile(std::filesystem::path _Path)
+	: UEnginePath(_Path)
+{
+
+}
+
 UEngineFile::~UEngineFile()
 {
 	Close();
@@ -20,7 +32,7 @@ void UEngineFile::FileOpen(const char* _Mode)
 	if (nullptr == File)
 	{
 
-		MSGASSERT(Path);
+		MSGASSERT(Path /*+ "파일 오픈에 실패했습니다"*/);
 	}
 }
 
@@ -37,7 +49,6 @@ void UEngineFile::Write(const void* _Ptr, size_t _Size)
 		MSGASSERT("존재하지 않는 메모리를 사용하려고 했습니다.");
 	}
 
-	// w일 경우에 대한 예외처리
 	if (nullptr == File)
 	{
 		MSGASSERT("열지 않은 파일에 내용을 쓰려고 했습니다");
@@ -79,7 +90,6 @@ bool UEngineFile::IsExits()
 
 void UEngineFile::Close()
 {
-	// 방어코드
 	if (nullptr != File)
 	{
 		fclose(File);

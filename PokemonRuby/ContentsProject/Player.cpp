@@ -16,6 +16,8 @@ APlayer::~APlayer()
 
 void APlayer::BeginPlay()
 {
+	Super::BeginPlay();
+
 	// 이벤트 방식으로 처리
 	UEngineInput::GetInst().BindAction('A', KeyEvent::Press, std::bind(&APlayer::MoveFunction, this, FVector2D::LEFT));
 	UEngineInput::GetInst().BindAction('D', KeyEvent::Press, std::bind(&APlayer::MoveFunction, this, FVector2D::RIGHT));
@@ -35,6 +37,5 @@ void APlayer::MoveFunction(FVector2D _Dir)
 
 void APlayer::Tick(float _DeltaTime)
 {
-	
 	
 }
