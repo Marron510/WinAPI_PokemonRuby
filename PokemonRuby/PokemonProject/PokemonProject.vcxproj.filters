@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Core">
+      <UniqueIdentifier>{dc9506e6-a70e-4a05-ac95-57c586dd889c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Play">
+      <UniqueIdentifier>{155cd215-160b-44d1-a995-b727fccdff53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PreCompile">
+      <UniqueIdentifier>{cc1c4267-9566-4781-b1c9-77a7612ede2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PokemonObject">
+      <UniqueIdentifier>{15692bad-beb4-48f3-ae3d-826f6d64f2cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PokemonObject\GameMode">
+      <UniqueIdentifier>{541ec236-324c-48d3-a096-8ecda4b1f20d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="PokemonCore.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>PokemonObject</Filter>
+    </ClInclude>
+    <ClInclude Include="PokemonMap.h">
+      <Filter>Play</Filter>
+    </ClInclude>
+    <ClInclude Include="PreCompile.h">
+      <Filter>PreCompile</Filter>
+    </ClInclude>
+    <ClInclude Include="PokemonGameMode.h">
+      <Filter>PokemonObject\GameMode</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="PokemonCore.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>PokemonObject</Filter>
+    </ClCompile>
+    <ClCompile Include="PokemonMap.cpp">
+      <Filter>Play</Filter>
+    </ClCompile>
+    <ClCompile Include="PreCompile.cpp">
+      <Filter>PreCompile</Filter>
+    </ClCompile>
+    <ClCompile Include="PokemonGameMode.cpp">
+      <Filter>PokemonObject\GameMode</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

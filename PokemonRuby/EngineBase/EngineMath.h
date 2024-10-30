@@ -27,6 +27,11 @@ public:
 
 	}
 
+	FVector2D(long _X, long _Y) : X(static_cast<float>(_X)), Y(static_cast<float>(_Y))
+	{
+
+	}
+
 	int iX() const
 	{
 		return static_cast<int>(X);
@@ -35,6 +40,11 @@ public:
 	int iY() const
 	{
 		return static_cast<int>(Y);
+	}
+
+	bool IsZeroed() const
+	{
+		return X == 0.0f || Y == 0.0f;
 	}
 
 	FVector2D Half() const
@@ -85,8 +95,6 @@ public:
 
 	bool EqualToInt(FVector2D _Other) const
 	{
-		// const FVector* const Ptr;
-		// this = nullptr;
 		return iX() == _Other.iX() && iY() == _Other.iY();
 	}
 
@@ -95,6 +103,11 @@ public:
 		X += _Other.X;
 		Y += _Other.Y;
 		return *this;
+	}
+
+	void Normalize()
+	{
+
 	}
 };
 
@@ -114,7 +127,6 @@ public:
 		return Location + Scale.Half();
 	}
 };
-
 
 class FIntPoint
 {
@@ -173,3 +185,26 @@ class EngineMath
 {
 };
 
+
+
+class UColor
+{
+public:
+	union
+	{
+		int Color;
+		struct
+		{
+			unsigned char R;
+			unsigned char G;
+			unsigned char B;
+			unsigned char A;
+		};
+	};
+
+	UColor(unsigned char _R, unsigned char _G, unsigned char _B, unsigned char _A)
+		:R(_R), G(_G), B(_B), A(_A)
+	{
+
+	}
+};

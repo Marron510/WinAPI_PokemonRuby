@@ -1,5 +1,4 @@
 #pragma once
-
 #include <Windows.h>
 
 #include <map>
@@ -61,6 +60,7 @@ protected:
 private:
 	static HINSTANCE hInstance;
 	static std::map<std::string, WNDCLASSEXA> WindowClasss;
+
 
 	FVector2D WindowSize;
 

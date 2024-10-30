@@ -18,6 +18,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         EndPaint(hWnd, &ps);
     }
     break;
+    //case WM_SIZING:
+    //{
+    //    int a = 0;
+    //}
+    break;
     case WM_DESTROY:
         --WindowCount;
         break;
@@ -93,7 +98,6 @@ void UEngineWindow::CreateWindowClass(const WNDCLASSEXA& _Class)
 UEngineWindow::UEngineWindow()
 {
 
-
 }
 
 UEngineWindow::~UEngineWindow()
@@ -108,6 +112,12 @@ UEngineWindow::~UEngineWindow()
     {
         delete BackBufferImage;
         BackBufferImage = nullptr;
+    }
+
+    if (nullptr != WindowHandle)
+    {
+        DestroyWindow(WindowHandle);
+        WindowHandle = nullptr;
     }
 }
 
@@ -129,11 +139,12 @@ void UEngineWindow::Create(std::string_view _TitleName, std::string_view _ClassN
     }
 
     HDC WindowMainDC = GetDC(WindowHandle);
+
     WindowImage = new UEngineWinImage();
     WindowImage->Create(WindowMainDC);
 }
 
-void UEngineWindow::Open(std::string_view _TitleName)
+void UEngineWindow::Open(std::string_view _TitleName /*= "Window"*/)
 {
     if (0 == WindowHandle)
     {
@@ -167,7 +178,7 @@ void UEngineWindow::SetWindowPosAndScale(FVector2D _Pos, FVector2D _Scale)
     WindowSize = _Scale;
 
     RECT Rc = { 0, 0, _Scale.iX(), _Scale.iY() };
-    
+
     AdjustWindowRect(&Rc, WS_OVERLAPPEDWINDOW, FALSE);
 
     ::SetWindowPos(WindowHandle, nullptr, _Pos.iX(), _Pos.iY(), Rc.right - Rc.left, Rc.bottom - Rc.top, SWP_NOZORDER);

@@ -15,5 +15,5 @@ APokemonGameMode::~APokemonGameMode()
 void APokemonGameMode::BeginPlay()
 {
 
-	APokemonMap* PMAP0 = GetWorld()->SpawnActor<APokemonMap>();
+	//APokemonMap* PMAP0 = GetWorld()->SpawnActor<APokemonMap>();
 }
