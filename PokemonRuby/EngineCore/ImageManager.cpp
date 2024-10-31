@@ -3,6 +3,8 @@
 
 #include <EngineBase/EnginePath.h>
 #include <EngineBase/EngineDebug.h>
+#include <EngineBase/EngineFile.h>
+#include <EngineBase/EngineDirectory.h>
 #include <EngineBase/EngineString.h>
 #include <EngineCore/EngineAPICore.h>
 
@@ -53,6 +55,15 @@ void UImageManager::Load(std::string_view Path)
 	Load(FileName, Path);
 }
 
+void UImageManager::LoadFolder(std::string_view Path)
+{
+	UEnginePath EnginePath = UEnginePath(Path);
+
+	std::string DirName = EnginePath.GetDirectoryName();
+
+	LoadFolder(DirName, Path);
+}
+
 
 void UImageManager::Load(std::string_view _KeyName, std::string_view Path)
 {
@@ -88,6 +99,59 @@ void UImageManager::Load(std::string_view _KeyName, std::string_view Path)
 
 	Sprites.insert({ UpperName , NewSprite });
 }
+
+void UImageManager::LoadFolder(std::string_view _KeyName, std::string_view _Path)
+{
+	UEnginePath EnginePath = UEnginePath(_Path);
+
+	if (false == EnginePath.IsExists())
+	{
+		MSGASSERT("유효하지 않은 파일 경로 입니다." + std::string(_Path));
+		return;
+	}
+
+	std::string UpperName = UEngineString::ToUpper(_KeyName);
+
+	if (true == Sprites.contains(UpperName))
+	{
+		MSGASSERT("로드된 이미지를 또 로드할 수 없습니다." + UpperName);
+		return;
+	}
+
+
+	UEngineSprite* NewSprite = new UEngineSprite();
+	Sprites.insert({ UpperName , NewSprite });
+
+	UEngineWinImage* WindowImage = UEngineAPICore::GetCore()->GetMainWindow().GetWindowImage();
+
+	UEngineDirectory Dir = _Path;
+
+	std::vector<UEngineFile> ImageFiles = Dir.GetAllFile();
+
+	for (size_t i = 0; i < ImageFiles.size(); i++)
+	{
+		std::string FilePath = ImageFiles[i].GetPathToString();
+		std::string FileName = UEngineString::ToUpper(ImageFiles[i].GetFileName());
+
+		if (true == Images.contains(FileName))
+		{
+			MSGASSERT("폴더 로드중 이미 로드된 이미지를 한번더 로드하려고 했습니다." + FileName);
+			return;
+		}
+
+		UEngineWinImage* NewImage = new UEngineWinImage();
+		NewImage->Load(WindowImage, FilePath);
+		Images.insert({ FileName,  NewImage });
+
+		FTransform Transform;
+		Transform.Location = { 0, 0 };
+		Transform.Scale = NewImage->GetImageScale();
+
+		NewSprite->PushData(NewImage, Transform);
+	}
+}
+
+
 
 void UImageManager::CuttingSprite(std::string_view _KeyName, FVector2D _CuttingSize)
 {

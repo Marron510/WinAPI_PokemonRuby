@@ -26,8 +26,12 @@ public:
 	}
 
 	void Load(std::string_view Path);
-
+	
 	void Load(std::string_view _KeyName, std::string_view Path);
+	
+	void LoadFolder(std::string_view Path);
+
+	void LoadFolder(std::string_view _KeyName, std::string_view Path);
 
 	void CuttingSprite(std::string_view _KeyName, FVector2D _CuttingSize);
 
