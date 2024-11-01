@@ -24,5 +24,6 @@ protected:
 
 private:
 	ULevel* TitleLevel;
+	ULevel* LittleRootTownLevel;
 };
 

@@ -25,6 +25,9 @@ public:
 
 	virtual void Tick(float _DeltaTime) {}
 
+	virtual void LevelChangeStart() {}
+	virtual void LevelChangeEnd() {}
+
 	class ULevel* GetWorld()
 	{
 		return World;
@@ -63,7 +66,7 @@ public:
 		UActorComponent* ComponentPtr = dynamic_cast<UActorComponent*>(NewComponent);
 		
 		ComponentPtr->ParentActor = this;
-
+		
 		Components.push_back(NewComponent);
 
 		ComponentList.push_back(NewComponent);

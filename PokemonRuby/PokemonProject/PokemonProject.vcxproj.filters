@@ -39,6 +39,9 @@
     <ClInclude Include="PokemonEnum.h">
       <Filter>Global</Filter>
     </ClInclude>
+    <ClInclude Include="TitleGameMode.h">
+      <Filter>PokemonObject\GameMode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PokemonCore.cpp">
@@ -58,6 +61,9 @@
     </ClCompile>
     <ClCompile Include="PokemonEnum.cpp">
       <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleGameMode.cpp">
+      <Filter>PokemonObject\GameMode</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

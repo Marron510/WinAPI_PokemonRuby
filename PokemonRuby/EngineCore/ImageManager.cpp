@@ -122,16 +122,13 @@ void UImageManager::LoadFolder(std::string_view _KeyName, std::string_view _Path
 
 
 	UEngineSprite* NewSprite = new UEngineSprite();
-
 	NewSprite->SetName(UpperName);
 	Sprites.insert({ UpperName , NewSprite });
 
 	UEngineWinImage* WindowImage = UEngineAPICore::GetCore()->GetMainWindow().GetWindowImage();
 
 	UEngineDirectory Dir = _Path;
-
 	std::vector<UEngineFile> ImageFiles = Dir.GetAllFile();
-
 	for (size_t i = 0; i < ImageFiles.size(); i++)
 	{
 		std::string FilePath = ImageFiles[i].GetPathToString();
@@ -140,12 +137,11 @@ void UImageManager::LoadFolder(std::string_view _KeyName, std::string_view _Path
 		UEngineWinImage* NewImage = FindImage(UpperFileName);
 		if (nullptr == NewImage)
 		{
-			NewImage - new UEngineWinImage();
+			NewImage = new UEngineWinImage();
 			NewImage->SetName(UpperFileName);
 			NewImage->Load(WindowImage, FilePath);
 		}
-
-		
+		Images.insert({ UpperFileName,  NewImage });
 
 		FTransform Transform;
 		Transform.Location = { 0, 0 };

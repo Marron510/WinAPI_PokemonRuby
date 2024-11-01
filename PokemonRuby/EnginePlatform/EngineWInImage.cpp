@@ -38,7 +38,8 @@ void UEngineWinImage::Create(UEngineWinImage* _TargetImage, FVector2D _Scale)
 		MSGASSERT("Main windowDC를 넣지않고 이미지를 생성하려고 했습니다");
 		return;
 	}
-	
+
+
 	HBITMAP NewBitmap = static_cast<HBITMAP>(CreateCompatibleBitmap(_TargetImage->GetDC(), _Scale.iX(), _Scale.iY()));
 	
 	HDC NewImageDC = CreateCompatibleDC(_TargetImage->GetDC());
@@ -62,6 +63,7 @@ void UEngineWinImage::CopyToBit(UEngineWinImage* _TargetImage, const FTransform&
 
 	HDC CopyDC = ImageDC;
 	HDC TargetDC = _TargetImage->ImageDC;
+	
 	FVector2D LeftTop = _Trans.CenterLeftTop();
 	FVector2D RightBot = _Trans.CenterRightBottom();
 
@@ -131,22 +133,23 @@ void UEngineWinImage::Load(UEngineWinImage* _TargetImage, std::string_view _Path
 			return;
 		}
 
+		// 
 		delete pBitMap;
 		delete pImage;
-
 	}
 	else if (".BMP" == UpperExt)
 	{
 		HANDLE NewHandle = LoadImageA(nullptr, _Path.data(), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
 		NewBitmap = reinterpret_cast<HBITMAP>(NewHandle);
 	}
-	
+
 	if (nullptr == NewBitmap)
 	{
 		MSGASSERT("이미지 로딩에 실패했습니다");
 		return;
 	}
 
+	// 붓
 	HDC NewImageDC = CreateCompatibleDC(_TargetImage->GetDC());
 
 	HBITMAP OldBitMap = static_cast<HBITMAP>(SelectObject(NewImageDC, NewBitmap));
