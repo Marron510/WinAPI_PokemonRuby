@@ -32,6 +32,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="TItleMap.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Player.cpp" />
@@ -51,6 +55,10 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\;</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="TitleGameMode.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="TItleMap.cpp">
       <SubType>
       </SubType>
     </ClCompile>

@@ -42,6 +42,9 @@
     <ClInclude Include="TitleGameMode.h">
       <Filter>PokemonObject\GameMode</Filter>
     </ClInclude>
+    <ClInclude Include="TItleMap.h">
+      <Filter>Play</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PokemonCore.cpp">
@@ -64,6 +67,9 @@
     </ClCompile>
     <ClCompile Include="TitleGameMode.cpp">
       <Filter>PokemonObject\GameMode</Filter>
+    </ClCompile>
+    <ClCompile Include="TItleMap.cpp">
+      <Filter>Play</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

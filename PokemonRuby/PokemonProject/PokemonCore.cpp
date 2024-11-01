@@ -10,6 +10,7 @@
 #include <EngineCore/ImageManager.h>
 
 #include "PokemonGameMode.h"
+#include "TitleGameMode.h"
 #include "Player.h"
 
 PokemonCore::PokemonCore()
@@ -61,7 +62,6 @@ void PokemonCore::BeginPlay()
 
 	
 	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Play");
-
 	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Title");
 	
 	UEngineAPICore::GetCore()->OpenLevel("Title");

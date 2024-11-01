@@ -1,34 +1,20 @@
 #include "PreCompile.h"
 #include "TitleGameMode.h"
 
-#include <EnginePlatform/EngineInput.h>
-#include <EngineCore/EngineAPICore.h>
-
+#include <EngineCore/Level.h>
+#include "TItleMap.h"
 
 ATitleGameMode::ATitleGameMode()
 {
-
 }
 
 ATitleGameMode::~ATitleGameMode()
 {
-
 }
-
 
 void ATitleGameMode::BeginPlay()
 {
-	Super::BeginPlay();
-}
-
-
-void ATitleGameMode::Tick(float _DeltaTime)
-{
-	Super::Tick(_DeltaTime);
-
-	if (true == UEngineInput::GetInst().IsDown(!VK_HOME))
 	{
-		UEngineAPICore::GetCore()->OpenLevel("Play");
+		ATitleGameMode* NewActor = GetWorld()->SpawnActor<ATitleGameMode>();
 	}
-
 }
