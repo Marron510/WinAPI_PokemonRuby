@@ -25,16 +25,12 @@ APlayer::APlayer()
 		SpriteRenderer->SetSprite("Player_Walk_Down.png");
 		SpriteRenderer->SetSprite("Player_Walk_Right.png");
 		SpriteRenderer->SetSprite("Player_Walk_Left.png");
-		SpriteRenderer->SetComponentScale({ 100, 100 });
-		SpriteRenderer->SetComponentScale({ 100, 100 });
-		SpriteRenderer->SetComponentScale({ 100, 100 });
-		SpriteRenderer->SetComponentScale({ 100, 100 });
+
+		SpriteRenderer->SetComponentScale({ 150, 150 });
+
 		SpriteRenderer->CreateAnimation("Walk_Up", "Player_Walk_Up.png", 0, 2, 0.1f);
-
 		SpriteRenderer->CreateAnimation("Walk_Down", "Player_Walk_Down.png", 0, 2, 0.1f);
-
 		SpriteRenderer->CreateAnimation("Walk_Right", "Player_Walk_Right.png", 0, 2, 0.1f);
-
 		SpriteRenderer->CreateAnimation("Walk_Left", "Player_Walk_Left.png", 0, 2, 0.1f);
 
 
