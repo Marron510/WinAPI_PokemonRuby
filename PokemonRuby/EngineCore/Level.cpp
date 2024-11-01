@@ -6,6 +6,8 @@
 #include <EnginePlatform/EngineWindow.h>
 #include <EnginePlatform/EngineWInImage.h>
 
+#include "SpriteRenderer.h"
+
 ULevel::ULevel()
 {
 }
@@ -43,16 +45,6 @@ void ULevel::Render()
 {
 	ScreenClear();
 
-	std::list<AActor*>::iterator StartIter = AllActors.begin();
-	std::list<AActor*>::iterator EndIter = AllActors.end();
-
-	for (; StartIter != EndIter; ++StartIter)
-	{
-		AActor* CurActor = *StartIter;
-
-		CurActor->Render();
-	}
-
 	DoubleBuffering();
 }
 
@@ -78,4 +70,9 @@ void ULevel::DoubleBuffering()
 
 	BackBufferImage->CopyToBit(WindowImage, Trans);
 
+}
+
+void ULevel::PushRenderer(class USpriteRenderer* _Renderer)
+{
+	Renderers[_Renderer->GetOrder()].push_back(_Renderer);
 }

@@ -16,6 +16,9 @@
     <Filter Include="PokemonObject\GameMode">
       <UniqueIdentifier>{541ec236-324c-48d3-a096-8ecda4b1f20d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Global">
+      <UniqueIdentifier>{c5636967-8978-4704-88cb-dbcb16f901ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PokemonCore.h">
@@ -33,6 +36,9 @@
     <ClInclude Include="PokemonGameMode.h">
       <Filter>PokemonObject\GameMode</Filter>
     </ClInclude>
+    <ClInclude Include="PokemonEnum.h">
+      <Filter>Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PokemonCore.cpp">
@@ -49,6 +55,9 @@
     </ClCompile>
     <ClCompile Include="PokemonGameMode.cpp">
       <Filter>PokemonObject\GameMode</Filter>
+    </ClCompile>
+    <ClCompile Include="PokemonEnum.cpp">
+      <Filter>Global</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

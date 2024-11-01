@@ -87,6 +87,8 @@ void UImageManager::Load(std::string_view _KeyName, std::string_view Path)
 	UEngineWinImage* NewImage = new UEngineWinImage();
 	NewImage->Load(WindowImage, Path);
 
+
+	NewImage->SetName(UpperName);
 	Images.insert({ UpperName , NewImage });
 
 	UEngineSprite* NewSprite = new UEngineSprite();
@@ -96,7 +98,7 @@ void UImageManager::Load(std::string_view _KeyName, std::string_view Path)
 	Trans.Scale = NewImage->GetImageScale();
 
 	NewSprite->PushData(NewImage, Trans);
-
+	NewSprite->SetName(UpperName);
 	Sprites.insert({ UpperName , NewSprite });
 }
 
@@ -120,6 +122,8 @@ void UImageManager::LoadFolder(std::string_view _KeyName, std::string_view _Path
 
 
 	UEngineSprite* NewSprite = new UEngineSprite();
+
+	NewSprite->SetName(UpperName);
 	Sprites.insert({ UpperName , NewSprite });
 
 	UEngineWinImage* WindowImage = UEngineAPICore::GetCore()->GetMainWindow().GetWindowImage();
@@ -131,17 +135,17 @@ void UImageManager::LoadFolder(std::string_view _KeyName, std::string_view _Path
 	for (size_t i = 0; i < ImageFiles.size(); i++)
 	{
 		std::string FilePath = ImageFiles[i].GetPathToString();
-		std::string FileName = UEngineString::ToUpper(ImageFiles[i].GetFileName());
+		std::string UpperFileName = UEngineString::ToUpper(ImageFiles[i].GetFileName());
 
-		if (true == Images.contains(FileName))
+		UEngineWinImage* NewImage = FindImage(UpperFileName);
+		if (nullptr == NewImage)
 		{
-			MSGASSERT("폴더 로드중 이미 로드된 이미지를 한번더 로드하려고 했습니다." + FileName);
-			return;
+			NewImage - new UEngineWinImage();
+			NewImage->SetName(UpperFileName);
+			NewImage->Load(WindowImage, FilePath);
 		}
 
-		UEngineWinImage* NewImage = new UEngineWinImage();
-		NewImage->Load(WindowImage, FilePath);
-		Images.insert({ FileName,  NewImage });
+		
 
 		FTransform Transform;
 		Transform.Location = { 0, 0 };
@@ -212,6 +216,19 @@ bool UImageManager::IsLoadSprite(std::string_view _KeyName)
 	std::string UpperName = UEngineString::ToUpper(_KeyName);
 
 	return Sprites.contains(UpperName);
+}
+
+UEngineWinImage* UImageManager::FindImage(std::string_view _KeyName)
+{
+	std::string UpperName = UEngineString::ToUpper(_KeyName);
+
+	if (false == Images.contains(UpperName))
+	{
+		MSGASSERT("로드하지 않은 스프라이트를 사용하려고 했습니다" + std::string(_KeyName));
+		return nullptr;
+	}
+
+	return Images[UpperName];
 }
 
 UEngineSprite* UImageManager::FindSprite(std::string_view _KeyName)

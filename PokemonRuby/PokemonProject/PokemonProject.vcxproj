@@ -21,6 +21,10 @@
   <ItemGroup>
     <ClInclude Include="Player.h" />
     <ClInclude Include="PokemonCore.h" />
+    <ClInclude Include="PokemonEnum.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="PokemonGameMode.h" />
     <ClInclude Include="PokemonMap.h" />
     <ClInclude Include="PreCompile.h" />
@@ -28,6 +32,10 @@
   <ItemGroup>
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PokemonCore.cpp" />
+    <ClCompile Include="PokemonEnum.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="PokemonGameMode.cpp" />
     <ClCompile Include="PokemonMap.cpp" />
     <ClCompile Include="PreCompile.cpp">

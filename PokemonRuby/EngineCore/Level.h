@@ -4,6 +4,7 @@
 class ULevel
 {
 public:
+	friend class USpriteRenderer;
 	friend class UEngineAPICore;
 	// constrcuter destructer
 	ULevel();
@@ -30,13 +31,16 @@ public:
 		AllActors.push_back(NewActor);
 		return NewActor;
 	}
+	
+	void PushRenderer(class USpriteRenderer* _Renderer);
+
 
 protected:
 
 private:
 	void ScreenClear();
 	void DoubleBuffering();
-
+	
 
 	template<typename GameModeType, typename MainPawnType>
 	void CreateGameMode()
@@ -60,4 +64,6 @@ private:
 	AActor* MainPawn = nullptr;
 
 	std::list<AActor*> AllActors;
+
+	std::map<int, std::list<class USpriteRenderer*>> Renderers;
 };
