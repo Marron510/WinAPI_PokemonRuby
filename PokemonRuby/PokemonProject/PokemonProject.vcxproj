@@ -19,6 +19,26 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Pokemon.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="TruckMap.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="TruckMode.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ExteriorObject.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="InteriorObject.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="LaborProfessorBirchMap.h">
       <SubType>
       </SubType>
@@ -92,8 +112,32 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="WildPokemonSet.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Pokemon.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="TruckMap.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="TruckMode.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ExteriorObject.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="InteriorObject.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="LaborProfessorBirchMap.cpp">
       <SubType>
       </SubType>
@@ -171,6 +215,10 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\;</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="TitleGameMode.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="WildPokemonSet.cpp">
       <SubType>
       </SubType>
     </ClCompile>

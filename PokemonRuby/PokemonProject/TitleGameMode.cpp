@@ -31,7 +31,7 @@ void ATitleGameMode::Tick(float _DeltaTime)
 
 	if (true == UEngineInput::GetInst().IsDown('R'))
 	{
-		UEngineAPICore::GetCore()->OpenLevel("PlayerHouse1");
+		UEngineAPICore::GetCore()->OpenLevel("Truck");
 	}
 
 }

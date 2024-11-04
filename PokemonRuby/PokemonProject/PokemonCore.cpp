@@ -10,6 +10,7 @@
 #include <EngineCore/ImageManager.h>
 
 #include "TitleGameMode.h"
+#include "TruckMode.h"
 #include "PlayerHouse1Mode.h"
 #include "PlayerHouse1FloorMode.h"
 #include "PlayerHouse2Mode.h"
@@ -71,6 +72,7 @@ void PokemonCore::BeginPlay()
 	
 	{
 		UEngineAPICore::GetCore()->CreateLevel<ATitleGameMode, AActor>("Title");
+		UEngineAPICore::GetCore()->CreateLevel<ATruckMode, APlayer>("Truck");
 		UEngineAPICore::GetCore()->CreateLevel<APlayerHouse1Mode, APlayer>("PlayerHouse1");
 		UEngineAPICore::GetCore()->CreateLevel<APlayerHouse1FloorMode, APlayer>("PlayerHouse1Floor");
 		UEngineAPICore::GetCore()->CreateLevel<ALittleRootTownMode, APlayer>("LittleRootTown");
