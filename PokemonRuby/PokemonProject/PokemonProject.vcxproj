@@ -59,6 +59,22 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Route101Map.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Route101Mode.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Route102Map.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Route102Mode.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="TitleMap.h">
       <SubType>
       </SubType>
@@ -115,6 +131,22 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="PlayerHouse2Mode.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Route101Map.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Route101Mode.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Route102Map.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Route102Mode.cpp">
       <SubType>
       </SubType>
     </ClCompile>

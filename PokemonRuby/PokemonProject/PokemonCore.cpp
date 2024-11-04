@@ -32,6 +32,8 @@ PokemonCore::~PokemonCore()
 void PokemonCore::BeginPlay()
 {
 
+
+	
 	UEngineDirectory Dir;
 
 	if (false == Dir.MoveParentToDirectory("PokemonResources"))

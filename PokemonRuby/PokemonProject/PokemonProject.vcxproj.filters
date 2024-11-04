@@ -40,6 +40,12 @@
     <Filter Include="PokemonObject\PokemonMap\002_Route101Map">
       <UniqueIdentifier>{76923205-cacd-422d-97cb-febd8c4cbfa0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PokemonObject\PokemonGameMode\01_InGameMode\Route">
+      <UniqueIdentifier>{a49c49db-06cb-4299-96bb-053dfa6d6e5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PokemonObject\PokemonMap\003_Route102Map">
+      <UniqueIdentifier>{c67d00ca-633e-4eba-9a61-aa1567c8eaeb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PokemonCore.h">
@@ -96,6 +102,18 @@
     <ClInclude Include="LaborProfessorBirchMap.h">
       <Filter>PokemonObject\PokemonMap\001_LittleRootTownMap</Filter>
     </ClInclude>
+    <ClInclude Include="Route101Mode.h">
+      <Filter>PokemonObject\PokemonGameMode\01_InGameMode\Route</Filter>
+    </ClInclude>
+    <ClInclude Include="Route102Mode.h">
+      <Filter>PokemonObject\PokemonGameMode\01_InGameMode\Route</Filter>
+    </ClInclude>
+    <ClInclude Include="Route101Map.h">
+      <Filter>PokemonObject\PokemonMap\002_Route101Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Route102Map.h">
+      <Filter>PokemonObject\PokemonMap\003_Route102Map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PokemonCore.cpp">
@@ -151,6 +169,18 @@
     </ClCompile>
     <ClCompile Include="LaborProfessorBirchMap.cpp">
       <Filter>PokemonObject\PokemonMap\001_LittleRootTownMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Route101Mode.cpp">
+      <Filter>PokemonObject\PokemonGameMode\01_InGameMode\Route</Filter>
+    </ClCompile>
+    <ClCompile Include="Route102Mode.cpp">
+      <Filter>PokemonObject\PokemonGameMode\01_InGameMode\Route</Filter>
+    </ClCompile>
+    <ClCompile Include="Route101Map.cpp">
+      <Filter>PokemonObject\PokemonMap\002_Route101Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Route102Map.cpp">
+      <Filter>PokemonObject\PokemonMap\003_Route102Map</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
