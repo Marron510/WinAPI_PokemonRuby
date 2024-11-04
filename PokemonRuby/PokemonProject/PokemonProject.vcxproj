@@ -19,6 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="LaborProfessorBirchMap.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="LaborProfessorBirchMode.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="LittleRootTownMap.h">
       <SubType>
       </SubType>
@@ -32,6 +40,22 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="PlayerHouse1FloorMode.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="PlayerHouse2FloorMap.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="PlayerHouse2FloorMode.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="PlayerHouse2Map.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="PlayerHouse2Mode.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -54,6 +78,14 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="LaborProfessorBirchMap.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="LaborProfessorBirchMode.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="LittleRootTownMap.cpp">
       <SubType>
       </SubType>
@@ -67,6 +99,22 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="PlayerHouse1FloorMode.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="PlayerHouse2FloorMap.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="PlayerHouse2FloorMode.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="PlayerHouse2Map.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="PlayerHouse2Mode.cpp">
       <SubType>
       </SubType>
     </ClCompile>

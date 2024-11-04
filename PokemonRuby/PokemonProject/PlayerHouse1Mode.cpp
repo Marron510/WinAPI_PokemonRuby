@@ -32,7 +32,7 @@ void APlayerHouse1Mode::Tick(float _DeltaTime)
 
 	if (true == UEngineInput::GetInst().IsDown('R'))
 	{
-		UEngineAPICore::GetCore()->OpenLevel("none");
+		UEngineAPICore::GetCore()->OpenLevel("PlayerHouse1Floor");
 	}
 
 }

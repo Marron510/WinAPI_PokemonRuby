@@ -12,7 +12,10 @@
 #include "TitleGameMode.h"
 #include "PlayerHouse1Mode.h"
 #include "PlayerHouse1FloorMode.h"
+#include "PlayerHouse2Mode.h"
+#include "PlayerHouse2FloorMode.h"
 #include "LittleRootTownMode.h"
+#include "LaborProfessorBirchMode.h"
 
 #include "Player.h"
 
@@ -67,8 +70,11 @@ void PokemonCore::BeginPlay()
 	{
 		UEngineAPICore::GetCore()->CreateLevel<ATitleGameMode, AActor>("Title");
 		UEngineAPICore::GetCore()->CreateLevel<APlayerHouse1Mode, APlayer>("PlayerHouse1");
-		UEngineAPICore::GetCore()->CreateLevel<APlayerHouse1FloorMode, APlayer>("none");
+		UEngineAPICore::GetCore()->CreateLevel<APlayerHouse1FloorMode, APlayer>("PlayerHouse1Floor");
 		UEngineAPICore::GetCore()->CreateLevel<ALittleRootTownMode, APlayer>("LittleRootTown");
+		UEngineAPICore::GetCore()->CreateLevel<APlayerHouse2Mode, APlayer>("PlayerHouse2");
+		UEngineAPICore::GetCore()->CreateLevel<APlayerHouse2FloorMode, APlayer>("PlayerHouse2Floor");
+		UEngineAPICore::GetCore()->CreateLevel<ALaborProfessorBirchMode, APlayer>("LaborProfessorBirch");
 	}
 
 
