@@ -26,14 +26,12 @@ APlayer::APlayer()
 		SpriteRenderer->SetSprite("Player_Walk_Right.png");
 		SpriteRenderer->SetSprite("Player_Walk_Left.png");
 
-		SpriteRenderer->SetComponentScale({ 150, 150 });
+		SpriteRenderer->SetComponentScale({ 350, 350 });
 
-		SpriteRenderer->CreateAnimation("Walk_Up", "Player_Walk_Up.png", 0, 2, 0.1f);
-		SpriteRenderer->CreateAnimation("Walk_Down", "Player_Walk_Down.png", 0, 2, 0.1f);
-		SpriteRenderer->CreateAnimation("Walk_Right", "Player_Walk_Right.png", 0, 2, 0.1f);
-		SpriteRenderer->CreateAnimation("Walk_Left", "Player_Walk_Left.png", 0, 2, 0.1f);
-
-
+		SpriteRenderer->CreateAnimation("Walk_Up", "Player_Walk_Up.png", 1, 2, 0.2f);
+		SpriteRenderer->CreateAnimation("Walk_Down", "Player_Walk_Down.png", 1, 2, 0.2f);
+		SpriteRenderer->CreateAnimation("Walk_Right", "Player_Walk_Right.png", 1, 2, 0.2f);
+		SpriteRenderer->CreateAnimation("Walk_Left", "Player_Walk_Left.png", 1, 2, 0.2f);
 
 
 
@@ -69,12 +67,6 @@ void APlayer::Tick(float _DeltaTime)
 
 	UEngineDebug::CoreOutPutString("FPS : " + std::to_string(1.0f / _DeltaTime));
 	UEngineDebug::CoreOutPutString("PlayerPos : " + GetActorLocation().ToString());
-
-	if (true == UEngineInput::GetInst().IsDown('R'))
-	{
-		UEngineAPICore::GetCore()->OpenLevel("Title");
-	}
-
 
 	if (true == UEngineInput::GetInst().IsPress('D'))
 	{
@@ -124,6 +116,4 @@ void APlayer::LevelChangeStart()
 void APlayer::LevelChangeEnd()
 {
 	Super::LevelChangeEnd();
-
-
 }

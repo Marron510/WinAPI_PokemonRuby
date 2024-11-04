@@ -28,9 +28,10 @@ public:
 protected:
 
 private:
-	float Speed = 100.0f;
+	float Speed = 300.0f;
 	int MySpriteIndex = 0;
 
+	
 	class USpriteRenderer* SpriteRenderer;
 };
 

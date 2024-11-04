@@ -19,14 +19,34 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="LittleRootTownMap.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="LittleRootTownMode.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="PlayerHouse1FloorMap.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="PlayerHouse1FloorMode.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="TitleMap.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Player.h" />
     <ClInclude Include="PokemonCore.h" />
     <ClInclude Include="PokemonEnum.h">
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="PokemonGameMode.h" />
-    <ClInclude Include="PokemonMap.h" />
+    <ClInclude Include="PlayerHouse1Mode.h" />
+    <ClInclude Include="PlayerHouse1Map.h" />
     <ClInclude Include="PreCompile.h" />
     <ClInclude Include="TitleGameMode.h">
       <SubType>
@@ -34,14 +54,34 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="LittleRootTownMap.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="LittleRootTownMode.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="PlayerHouse1FloorMap.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="PlayerHouse1FloorMode.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="TitleMap.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PokemonCore.cpp" />
     <ClCompile Include="PokemonEnum.cpp">
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="PokemonGameMode.cpp" />
-    <ClCompile Include="PokemonMap.cpp" />
+    <ClCompile Include="PlayerHouse1Mode.cpp" />
+    <ClCompile Include="PlayerHouse1Map.cpp" />
     <ClCompile Include="PreCompile.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">PreCompile.h</PrecompiledHeaderFile>

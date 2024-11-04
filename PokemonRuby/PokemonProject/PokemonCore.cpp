@@ -9,7 +9,11 @@
 
 #include <EngineCore/ImageManager.h>
 
-#include "PokemonGameMode.h"
+#include "TitleGameMode.h"
+#include "PlayerHouse1Mode.h"
+#include "PlayerHouse1FloorMode.h"
+#include "LittleRootTownMode.h"
+
 #include "Player.h"
 
 PokemonCore::PokemonCore()
@@ -57,13 +61,18 @@ void PokemonCore::BeginPlay()
 
 	UEngineAPICore::GetCore()->GetMainWindow().SetWindowTitle("Pokemon_Ruby");
 
-	UEngineAPICore::GetCore()->GetMainWindow().SetWindowPosAndScale({ 0, 0 }, { 1280, 720 });
+	UEngineAPICore::GetCore()->GetMainWindow().SetWindowPosAndScale({ 0, 0 }, { 1200, 800 });
 
 	
-	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Play");
+	{
+		UEngineAPICore::GetCore()->CreateLevel<ATitleGameMode, AActor>("Title");
+		UEngineAPICore::GetCore()->CreateLevel<APlayerHouse1Mode, APlayer>("PlayerHouse1");
+		UEngineAPICore::GetCore()->CreateLevel<APlayerHouse1FloorMode, APlayer>("none");
+		UEngineAPICore::GetCore()->CreateLevel<ALittleRootTownMode, APlayer>("LittleRootTown");
+	}
 
-	UEngineAPICore::GetCore()->CreateLevel<APokemonGameMode, APlayer>("Title");
-	
+
+
 	UEngineAPICore::GetCore()->OpenLevel("Title");
 }
 

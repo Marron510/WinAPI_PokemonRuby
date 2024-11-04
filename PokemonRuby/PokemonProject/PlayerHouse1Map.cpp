@@ -1,12 +1,13 @@
 #include "PreCompile.h"
-#include "PokemonMap.h"
+#include "PlayerHouse1Map.h"
 
 #include <EngineCore/EngineAPICore.h>
 #include <EngineCore/SpriteRenderer.h>
 
 #include "PokemonEnum.h"
 
-APokemonMap::APokemonMap()
+
+APlayerHouse1Map::APlayerHouse1Map()
 {
 	USpriteRenderer* SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
 	SpriteRenderer->SetOrder(ERenderOrder::BACKGROUND);
@@ -17,7 +18,7 @@ APokemonMap::APokemonMap()
 
 }
 
-APokemonMap::~APokemonMap()
+APlayerHouse1Map::~APlayerHouse1Map()
 {
 
 }
