@@ -74,6 +74,11 @@ public:
 		return;
 	}
 
+	float Dot(const FVector2D& other) const
+	{
+		return X * other.X + Y * other.Y;
+	}
+
 	FVector2D operator*(float _Value) const
 	{
 		FVector2D Result;
@@ -104,6 +109,14 @@ public:
 		FVector2D Result;
 		Result.X = X / _Value;
 		Result.Y = Y / _Value;
+		return Result;
+	}
+
+	FVector2D operator/(const FVector2D& Other) const
+	{
+		FVector2D Result;
+		Result.X = X / Other.X;
+		Result.Y = Y / Other.Y;
 		return Result;
 	}
 
