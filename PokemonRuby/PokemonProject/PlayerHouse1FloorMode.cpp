@@ -31,7 +31,7 @@ void APlayerHouse1FloorMode::Tick(float _DeltaTime)
 
 	if (true == UEngineInput::GetInst().IsDown('R'))
 	{
-		UEngineAPICore::GetCore()->OpenLevel("LittleRootTown");
+		UEngineAPICore::GetCore()->OpenLevel("PokemonMap");
 	}
 
 }

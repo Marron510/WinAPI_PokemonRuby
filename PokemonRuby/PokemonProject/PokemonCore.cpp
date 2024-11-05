@@ -17,6 +17,7 @@
 #include "PlayerHouse2FloorMode.h"
 #include "LittleRootTownMode.h"
 #include "LaborProfessorBirchMode.h"
+#include "TileMapMode.h"
 
 #include "Player.h"
 
@@ -43,6 +44,8 @@ void PokemonCore::BeginPlay()
 		return;
 	}
 
+
+
 	std::vector<UEngineFile> ImageFiles = Dir.GetAllFile();
 
 	for (size_t i = 0; i < ImageFiles.size(); i++)
@@ -50,6 +53,52 @@ void PokemonCore::BeginPlay()
 		std::string FilePath = ImageFiles[i].GetPathToString();
 		UImageManager::GetInst().Load(FilePath);
 	}
+
+	{
+		UEngineDirectory Dir;
+		Dir.MoveParentToDirectory("PokemonResources//Image");
+		Dir.Append("Intro//Intro_0");
+
+		UImageManager::GetInst().LoadFolder(Dir.GetPathToString());
+
+	}
+
+
+	{
+		UEngineDirectory Dir;
+		Dir.MoveParentToDirectory("PokemonResources//Image");
+		Dir.Append("Player//Move");
+
+		UImageManager::GetInst().LoadFolder(Dir.GetPathToString());
+
+	}
+
+	{
+		UEngineDirectory Dir;
+		Dir.MoveParentToDirectory("PokemonResources//Image");
+		Dir.Append("PlayMap//Exterior");
+
+		UImageManager::GetInst().LoadFolder(Dir.GetPathToString());
+
+	}
+
+	{
+		UEngineDirectory Dir;
+		Dir.MoveParentToDirectory("PokemonResources//Image");
+		Dir.Append("PlayMap//Interior");
+
+		UImageManager::GetInst().LoadFolder(Dir.GetPathToString());
+
+	}
+
+	/*{
+		UEngineDirectory Dir;
+		Dir.MoveParentToDirectory("PokemonResources//Image");
+		Dir.Append("TileMap//TileSet");
+
+		UImageManager::GetInst().LoadFolder(Dir.GetPathToString());
+
+	}*/
 
 	{
 		UImageManager::GetInst().CuttingSprite("Player_Walk_Up.png", { 64, 64 });
@@ -75,15 +124,17 @@ void PokemonCore::BeginPlay()
 		UEngineAPICore::GetCore()->CreateLevel<ATruckMode, APlayer>("Truck");
 		UEngineAPICore::GetCore()->CreateLevel<APlayerHouse1Mode, APlayer>("PlayerHouse1");
 		UEngineAPICore::GetCore()->CreateLevel<APlayerHouse1FloorMode, APlayer>("PlayerHouse1Floor");
-		UEngineAPICore::GetCore()->CreateLevel<ALittleRootTownMode, APlayer>("LittleRootTown");
+		UEngineAPICore::GetCore()->CreateLevel<ALittleRootTownMode, APlayer>("PokemonMap");
 		UEngineAPICore::GetCore()->CreateLevel<APlayerHouse2Mode, APlayer>("PlayerHouse2");
 		UEngineAPICore::GetCore()->CreateLevel<APlayerHouse2FloorMode, APlayer>("PlayerHouse2Floor");
 		UEngineAPICore::GetCore()->CreateLevel<ALaborProfessorBirchMode, APlayer>("LaborProfessorBirch");
+		UEngineAPICore::GetCore()->CreateLevel<ATileMapMode, AActor>("TileMap");
 	}
 
 
-
-	UEngineAPICore::GetCore()->OpenLevel("Title");
+	
+		UEngineAPICore::GetCore()->OpenLevel("TileMap");
+	
 }
 
 void PokemonCore::Tick()

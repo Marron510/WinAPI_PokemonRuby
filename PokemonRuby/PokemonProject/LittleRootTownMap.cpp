@@ -11,7 +11,7 @@ ALittleRootTownMap::ALittleRootTownMap()
 {
 	USpriteRenderer* SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
 	SpriteRenderer->SetOrder(ERenderOrder::BACKGROUND);
-	SpriteRenderer->SetSprite("LittleRootTown.png");
+	SpriteRenderer->SetSprite("PokemonMap.png");
 
 	FVector2D MapScale = SpriteRenderer->SetSpriteScale(1.0f);
 	SpriteRenderer->SetComponentLocation(MapScale.Half());

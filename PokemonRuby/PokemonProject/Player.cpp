@@ -12,14 +12,12 @@
 
 void APlayer::RunSoundPlay()
 {
-	UEngineDebug::OutPutString("SoundPlay");
+	
 }
 APlayer::APlayer()
 {
-	FVector2D Half = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize().Half();
-	
 
-	SetActorLocation(Half);
+	SetActorLocation({ 9060, 6720});
 
 	{
 		SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
