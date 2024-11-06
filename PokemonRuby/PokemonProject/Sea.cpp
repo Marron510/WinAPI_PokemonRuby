@@ -10,7 +10,7 @@ ASea::ASea()
 
 	SpriteRenderer->SetSprite("Sea.png");
 	SpriteRenderer->SetComponentScale({ 100 , 100 });
-	SpriteRenderer->CreateAnimation("SeaMove", "Sea.png", 0, 7, 0.5f);
+	SpriteRenderer->CreateAnimation("SeaMove", "Sea.png", 0, 7, 0.2f);
 	SpriteRenderer->ChangeAnimation("SeaMove");
 	SpriteRenderer->SetOrder(ERenderOrder::WATER);
 }

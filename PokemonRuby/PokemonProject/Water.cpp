@@ -11,7 +11,7 @@ AWater::AWater()
 
 	SpriteRenderer->SetSprite("Water.png");
 	SpriteRenderer->SetComponentScale({ 100 , 100 });
-	SpriteRenderer->CreateAnimation("WaterMove", "Flower.png", 0, 7, 0.5f);
+	SpriteRenderer->CreateAnimation("WaterMove", "Water.png", 0, 7, 0.3f);
 	SpriteRenderer->ChangeAnimation("WaterMove");
 	SpriteRenderer->SetOrder(ERenderOrder::WATER);
 }

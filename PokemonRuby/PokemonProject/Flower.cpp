@@ -10,7 +10,7 @@ AFlower::AFlower()
 
 	SpriteRenderer->SetSprite("Flower.png");
 	SpriteRenderer->SetComponentScale({ 100 , 100 });
-	SpriteRenderer->CreateAnimation("FlowerMove", "Flower.png", 0, 2, 0.5f);
+	SpriteRenderer->CreateAnimation("FlowerMove", "Flower.png", 0, 3, 0.5f);
 	SpriteRenderer->ChangeAnimation("FlowerMove");
 	SpriteRenderer->SetOrder(ERenderOrder::FLOWER);
 }

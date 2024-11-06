@@ -119,22 +119,16 @@ void PokemonCore::BeginPlay()
 
 
 	{
-		UImageManager::GetInst().CuttingSprite("Player_Walk_Up.png", { 64, 64 });
-		UImageManager::GetInst().CuttingSprite("Player_Walk_Down.png", { 64, 64 });
-		UImageManager::GetInst().CuttingSprite("Player_Walk_Right.png", { 64, 64 });
-		UImageManager::GetInst().CuttingSprite("Player_Walk_Left.png", { 64, 64 });
+		UImageManager::GetInst().CuttingSprite("Player_Walk_Up.png", { 48, 48 });
+		UImageManager::GetInst().CuttingSprite("Player_Walk_Down.png", { 48, 48 });
+		UImageManager::GetInst().CuttingSprite("Player_Walk_Right.png", { 48, 48 });
+		UImageManager::GetInst().CuttingSprite("Player_Walk_Left.png", { 48, 48 });
 	}
 
-	/*{
-		UImageManager::GetInst().CuttingSprite("Player_Run_Up.png", { 64, 64 });
-		UImageManager::GetInst().CuttingSprite("Player_Run_Down.png", { 64, 64 });
-		UImageManager::GetInst().CuttingSprite("Player_Run_Right.png", { 64, 64 });
-		UImageManager::GetInst().CuttingSprite("Player_Run_Left.png", { 64, 64 });
-	}*/
-
+	
 
 	{
-		UImageManager::GetInst().CuttingSprite("Flower.png", { 256, 256  });
+		UImageManager::GetInst().CuttingSprite("Flower.png", { 168, 168  });
 		UImageManager::GetInst().CuttingSprite("Sea.png", { 96, 96 });
 		UImageManager::GetInst().CuttingSprite("Water.png", { 96, 96 });
 	}
