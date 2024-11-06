@@ -19,6 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Flower.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Pokemon.h">
       <SubType>
       </SubType>
@@ -126,6 +130,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Flower.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Pokemon.cpp">
       <SubType>
       </SubType>

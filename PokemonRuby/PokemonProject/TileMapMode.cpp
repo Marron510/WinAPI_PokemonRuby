@@ -21,11 +21,11 @@ ATileMapMode::~ATileMapMode()
 void ATileMapMode::BeginPlay()
 {
 	Super::BeginPlay();
-
-	
 }
 
 void ATileMapMode::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 }
+
+

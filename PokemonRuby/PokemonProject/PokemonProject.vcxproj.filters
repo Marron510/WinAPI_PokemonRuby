@@ -150,6 +150,9 @@
     <ClInclude Include="TileMapMode.h">
       <Filter>PokemonObject\2.PokemonGameMode</Filter>
     </ClInclude>
+    <ClInclude Include="Flower.h">
+      <Filter>PokemonObject\4.TIleObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PokemonCore.cpp">
@@ -241,6 +244,9 @@
     </ClCompile>
     <ClCompile Include="TileMapMode.cpp">
       <Filter>PokemonObject\2.PokemonGameMode</Filter>
+    </ClCompile>
+    <ClCompile Include="Flower.cpp">
+      <Filter>PokemonObject\4.TIleObject</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

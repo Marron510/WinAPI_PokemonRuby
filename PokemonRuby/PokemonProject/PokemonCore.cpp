@@ -100,6 +100,7 @@ void PokemonCore::BeginPlay()
 
 	}
 
+
 	{
 		UImageManager::GetInst().CuttingSprite("Player_Walk_Up.png", { 64, 64 });
 		UImageManager::GetInst().CuttingSprite("Player_Walk_Down.png", { 64, 64 });
@@ -113,6 +114,11 @@ void PokemonCore::BeginPlay()
 		UImageManager::GetInst().CuttingSprite("Player_Run_Right.png", { 64, 64 });
 		UImageManager::GetInst().CuttingSprite("Player_Run_Left.png", { 64, 64 });
 	}*/
+
+
+	{
+		UImageManager::GetInst().CuttingSprite("Flower.png", { 48, 48 });
+	}
 
 	UEngineAPICore::GetCore()->GetMainWindow().SetWindowTitle("Pokemon_Ruby");
 

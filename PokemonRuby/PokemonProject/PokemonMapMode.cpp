@@ -7,6 +7,7 @@
 
 #include "PokemonMap.h"
 #include "TileMap.h"
+#include "Flower.h"
 
 APokemonMapMode::APokemonMapMode()
 {
@@ -21,6 +22,7 @@ APokemonMapMode::~APokemonMapMode()
 
 void APokemonMapMode::BeginPlay()
 {
+	
 	{
 		APokemonMap* NewActor = GetWorld()->SpawnActor<APokemonMap>();
 		
