@@ -7,13 +7,11 @@
 #include <EngineCore/EngineCoreDebug.h>
 #include <EngineCore/SpriteRenderer.h>
 
+#include "PokemonEnum.h"
 
 
 
-void APlayer::RunSoundPlay()
-{
-	
-}
+
 APlayer::APlayer()
 {
 
@@ -43,7 +41,7 @@ APlayer::APlayer()
 
 		SpriteRenderer->ChangeAnimation("Idle_Down");
 
-		SpriteRenderer->SetAnimationEvent("Walk_Down", 2, std::bind(&APlayer::RunSoundPlay, this));
+	
 
 	}
 }
@@ -58,6 +56,7 @@ void APlayer::BeginPlay()
 	Super::BeginPlay();
 	FVector2D Size = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
 	GetWorld()->SetCameraPivot(Size.Half() * -1.0f);
+	SpriteRenderer->SetOrder(ERenderOrder::PLAYER);
 
 }
 
@@ -67,7 +66,7 @@ void APlayer::Tick(float _DeltaTime)
 	Super::Tick(_DeltaTime);
 
 	UEngineDebug::CoreOutPutString("FPS : " + std::to_string(1.0f / _DeltaTime));
-	UEngineDebug::CoreOutPutString("PlayerPos : " + GetActorLocation().ToString());
+	UEngineDebug::CoreOutPutString("PlayerPos : " + GetActorLocation().operator/(96).ToString());
 
 	if (true == UEngineInput::GetInst().IsPress('D'))
 	{

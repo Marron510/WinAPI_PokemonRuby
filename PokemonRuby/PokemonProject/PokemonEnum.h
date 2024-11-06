@@ -4,5 +4,6 @@
 enum class ERenderOrder
 {
 	BACKGROUND = -1000,
-	PLAYER = 0,
+	Tile = 0,
+	PLAYER = 100
 };

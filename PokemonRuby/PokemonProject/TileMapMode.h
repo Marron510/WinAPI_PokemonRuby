@@ -23,8 +23,7 @@ protected:
 	void Tick(float _DeltaTime) override;
 
 private:
-	ATileMap* WallTileMap = nullptr;
-	ATileMap* GroundTileMap = nullptr;
+
 
 };
 

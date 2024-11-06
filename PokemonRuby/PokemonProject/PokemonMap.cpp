@@ -1,5 +1,5 @@
 #include "PreCompile.h"
-#include "LittleRootTownMap.h"
+#include "PokemonMap.h"
 
 #include <EngineCore/EngineAPICore.h>
 #include <EngineCore/SpriteRenderer.h>
@@ -7,10 +7,10 @@
 #include "PokemonEnum.h"
 
 
-ALittleRootTownMap::ALittleRootTownMap()
+APokemonMap::APokemonMap()
 {
 	USpriteRenderer* SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
-	SpriteRenderer->SetOrder(ERenderOrder::BACKGROUND);
+	SpriteRenderer->SetOrder(ERenderOrder::Tile);
 	SpriteRenderer->SetSprite("PokemonMap.png");
 
 	FVector2D MapScale = SpriteRenderer->SetSpriteScale(1.0f);
@@ -18,7 +18,7 @@ ALittleRootTownMap::ALittleRootTownMap()
 
 }
 
-ALittleRootTownMap::~ALittleRootTownMap()
+APokemonMap::~APokemonMap()
 {
 
 }

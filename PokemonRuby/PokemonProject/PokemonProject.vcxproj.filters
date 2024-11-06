@@ -55,6 +55,9 @@
     <Filter Include="PokemonObject\3.Pokemon\WildPokemon">
       <UniqueIdentifier>{331520bb-d5c5-47e9-9339-9db879c82138}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PokemonObject\4.TIleObject">
+      <UniqueIdentifier>{e19c172b-03ac-4ba7-bdfb-5b2d3fd3daa3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PokemonCore.h">
@@ -72,7 +75,7 @@
     <ClInclude Include="Player.h">
       <Filter>PokemonObject\0.MainPlayer</Filter>
     </ClInclude>
-    <ClInclude Include="LittleRootTownMode.h">
+    <ClInclude Include="PokemonMapMode.h">
       <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\LittleRootTown</Filter>
     </ClInclude>
     <ClInclude Include="PlayerHouse1FloorMode.h">
@@ -81,7 +84,7 @@
     <ClInclude Include="PlayerHouse1Mode.h">
       <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\LittleRootTown</Filter>
     </ClInclude>
-    <ClInclude Include="LittleRootTownMap.h">
+    <ClInclude Include="PokemonMap.h">
       <Filter>PokemonObject\1.PokemonMap\001_LittleRootTownMap</Filter>
     </ClInclude>
     <ClInclude Include="PlayerHouse1FloorMap.h">
@@ -164,7 +167,7 @@
     <ClCompile Include="Player.cpp">
       <Filter>PokemonObject\0.MainPlayer</Filter>
     </ClCompile>
-    <ClCompile Include="LittleRootTownMode.cpp">
+    <ClCompile Include="PokemonMapMode.cpp">
       <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\LittleRootTown</Filter>
     </ClCompile>
     <ClCompile Include="PlayerHouse1FloorMode.cpp">
@@ -173,7 +176,7 @@
     <ClCompile Include="PlayerHouse1Mode.cpp">
       <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\LittleRootTown</Filter>
     </ClCompile>
-    <ClCompile Include="LittleRootTownMap.cpp">
+    <ClCompile Include="PokemonMap.cpp">
       <Filter>PokemonObject\1.PokemonMap\001_LittleRootTownMap</Filter>
     </ClCompile>
     <ClCompile Include="PlayerHouse1FloorMap.cpp">
