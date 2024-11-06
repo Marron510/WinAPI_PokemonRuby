@@ -1,39 +1,40 @@
 #include "PreCompile.h"
-#include "Flower.h"
+#include "Water.h"
 #include <EngineCore/SpriteRenderer.h>
+
 #include "PokemonEnum.h"
 
 
-AFlower::AFlower()
+AWater::AWater()
 {
 	SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
 
-	SpriteRenderer->SetSprite("Flower.png");
+	SpriteRenderer->SetSprite("Water.png");
 	SpriteRenderer->SetComponentScale({ 100 , 100 });
-	SpriteRenderer->CreateAnimation("FlowerMove", "Flower.png", 0, 2, 0.5f);
-	SpriteRenderer->ChangeAnimation("FlowerMove");
-	SpriteRenderer->SetOrder(ERenderOrder::FLOWER);
+	SpriteRenderer->CreateAnimation("WaterMove", "Flower.png", 0, 7, 0.5f);
+	SpriteRenderer->ChangeAnimation("WaterMove");
+	SpriteRenderer->SetOrder(ERenderOrder::WATER);
 }
 
-AFlower::~AFlower()
+AWater::~AWater()
 {
 
 }
 
-void AFlower::BeginPlay()
+void AWater::BeginPlay()
 {
 	Super::BeginPlay();
 
 }
 
-void AFlower::Tick(float _DeltaTime)
+void AWater::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 
 }
 
 
-void AFlower::SetActorLocationTile(FVector2D _location)
+void AWater::SetActorLocationTile(FVector2D _location)
 {
 	FVector2D Newloacation = _location.operator*(96);
 	Newloacation.X += 48;

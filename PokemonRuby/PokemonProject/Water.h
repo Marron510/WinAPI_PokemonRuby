@@ -1,20 +1,19 @@
 #pragma once
 #include <EngineCore/Actor.h>
 
-
-class AFlower : public AActor
+class AWater : public AActor
 {
 public:
 	// 持失切 社瑚切
-	AFlower();
-	~AFlower();
+	AWater();
+	~AWater();
 
 	// delete funcion
 
-	AFlower(const AFlower& _Other) = delete;
-	AFlower(AFlower&& _Other) noexcept = delete;
-	AFlower& operator=(const AFlower& _Other) = delete;
-	AFlower& operator=(AFlower&& _Other) noexcept = delete;
+	AWater(const AWater& _Other) = delete;
+	AWater(AWater&& _Other) noexcept = delete;
+	AWater& operator=(const AWater& _Other) = delete;
+	AWater& operator=(AWater&& _Other) noexcept = delete;
 
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;

@@ -23,6 +23,6 @@ protected:
 
 private:
 
-
+	ATileMap* GroundTileMap = nullptr;
 };
 

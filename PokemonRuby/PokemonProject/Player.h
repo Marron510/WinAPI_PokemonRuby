@@ -19,11 +19,13 @@ public:
 
 	void LevelChangeStart();
 	void LevelChangeEnd();
+	void SetObject(FVector2D _location);
+	void SetActorLocationTile(FVector2D _location);
 
 protected:
 
 private:
-	float Speed = 300.0f;
+	float Speed = 1500.0f;
 	int MySpriteIndex = 0;
 
 	

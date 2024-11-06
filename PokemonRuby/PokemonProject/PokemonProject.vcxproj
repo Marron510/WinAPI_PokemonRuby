@@ -27,6 +27,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Sea.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="TileMap.h">
       <SubType>
       </SubType>
@@ -124,6 +128,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Water.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="WildPokemonSet.h">
       <SubType>
       </SubType>
@@ -135,6 +143,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Pokemon.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Sea.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -239,6 +251,10 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\;</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="TitleGameMode.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Water.cpp">
       <SubType>
       </SubType>
     </ClCompile>

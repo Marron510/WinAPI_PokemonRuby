@@ -100,6 +100,23 @@ void PokemonCore::BeginPlay()
 
 	}
 
+	{
+		UEngineDirectory Dir;
+		Dir.MoveParentToDirectory("PokemonResources//Image");
+		Dir.Append("TileMap//Flower");
+
+		UImageManager::GetInst().LoadFolder(Dir.GetPathToString());
+
+	}
+	{
+		UEngineDirectory Dir;
+		Dir.MoveParentToDirectory("PokemonResources//Image");
+		Dir.Append("TileMap//Water");
+
+		UImageManager::GetInst().LoadFolder(Dir.GetPathToString());
+
+	}
+
 
 	{
 		UImageManager::GetInst().CuttingSprite("Player_Walk_Up.png", { 64, 64 });
@@ -117,7 +134,9 @@ void PokemonCore::BeginPlay()
 
 
 	{
-		UImageManager::GetInst().CuttingSprite("Flower.png", { 48, 48 });
+		UImageManager::GetInst().CuttingSprite("Flower.png", { 256, 256  });
+		UImageManager::GetInst().CuttingSprite("Sea.png", { 96, 96 });
+		UImageManager::GetInst().CuttingSprite("Water.png", { 96, 96 });
 	}
 
 	UEngineAPICore::GetCore()->GetMainWindow().SetWindowTitle("Pokemon_Ruby");
@@ -134,7 +153,7 @@ void PokemonCore::BeginPlay()
 		UEngineAPICore::GetCore()->CreateLevel<APlayerHouse2Mode, APlayer>("PlayerHouse2");
 		UEngineAPICore::GetCore()->CreateLevel<APlayerHouse2FloorMode, APlayer>("PlayerHouse2Floor");
 		UEngineAPICore::GetCore()->CreateLevel<ALaborProfessorBirchMode, APlayer>("LaborProfessorBirch");
-		UEngineAPICore::GetCore()->CreateLevel<ATileMapMode, APlayer>("TileMap");
+		
 	}
 
 

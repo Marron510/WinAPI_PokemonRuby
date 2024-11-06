@@ -23,6 +23,6 @@ protected:
 
 private:
 	class ATileMap* GroundTileMap = nullptr;
-	class AFlower* TileFlower = nullptr;
 };
+
 

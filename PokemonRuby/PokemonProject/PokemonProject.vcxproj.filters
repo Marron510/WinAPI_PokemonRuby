@@ -153,6 +153,12 @@
     <ClInclude Include="Flower.h">
       <Filter>PokemonObject\4.TIleObject</Filter>
     </ClInclude>
+    <ClInclude Include="Water.h">
+      <Filter>PokemonObject\4.TIleObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Sea.h">
+      <Filter>PokemonObject\4.TIleObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PokemonCore.cpp">
@@ -246,6 +252,12 @@
       <Filter>PokemonObject\2.PokemonGameMode</Filter>
     </ClCompile>
     <ClCompile Include="Flower.cpp">
+      <Filter>PokemonObject\4.TIleObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Water.cpp">
+      <Filter>PokemonObject\4.TIleObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Sea.cpp">
       <Filter>PokemonObject\4.TIleObject</Filter>
     </ClCompile>
   </ItemGroup>

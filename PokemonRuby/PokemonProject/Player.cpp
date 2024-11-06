@@ -15,7 +15,7 @@
 APlayer::APlayer()
 {
 
-	SetActorLocation({ 9060, 6720});
+	SetActorLocationTile({ 94,70 });
 
 	{
 		SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
@@ -116,4 +116,23 @@ void APlayer::LevelChangeStart()
 void APlayer::LevelChangeEnd()
 {
 	Super::LevelChangeEnd();
+}
+
+void APlayer::SetObject(FVector2D _location)
+{
+	FVector2D ObjectLocation = _location;
+	ObjectLocation.operator*(96);
+	int LocationX = static_cast<int>(ObjectLocation.iX());
+	int LocationY = static_cast<int>(ObjectLocation.iY());
+
+	SetActorLocation({ LocationX , LocationY });
+}
+
+
+void APlayer::SetActorLocationTile(FVector2D _location)
+{
+	FVector2D Newloacation = _location.operator*(96);
+	Newloacation.X += 48;
+	Newloacation.Y += 48;
+	SetActorLocation(Newloacation);
 }
