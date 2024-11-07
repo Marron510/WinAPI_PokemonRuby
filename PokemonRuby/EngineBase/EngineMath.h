@@ -58,6 +58,11 @@ public:
 		return { X * 0.5f, Y * 0.5f };
 	}
 
+	FVector2D TileVector() const
+	{
+		return { X / 96, Y / 96 };
+	}
+
 	float Length() const
 	{
 		return sqrtf(X * X + Y * Y);
@@ -78,7 +83,7 @@ public:
 	{
 		return X * other.X + Y * other.Y;
 	}
-
+	
 	FVector2D operator*(float _Value) const
 	{
 		FVector2D Result;

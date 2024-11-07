@@ -10,7 +10,7 @@
 
 ATruckMap::ATruckMap()
 {
-	USpriteRenderer* SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
+	SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
 	SpriteRenderer->SetOrder(ERenderOrder::BACKGROUND);
 	SpriteRenderer->SetSprite("Truck.png");
 

@@ -22,6 +22,7 @@ void ALaborProfessorBirchMode::BeginPlay()
 {
 	{
 		ALaborProfessorBirchMap* NewActor = GetWorld()->SpawnActor<ALaborProfessorBirchMap>();
+		Map = NewActor->GetCurMap();
 	}
 }
 

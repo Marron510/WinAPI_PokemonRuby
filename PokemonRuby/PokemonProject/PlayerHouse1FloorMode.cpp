@@ -22,6 +22,7 @@ void APlayerHouse1FloorMode::BeginPlay()
 {
 	{
 		APlayerHouse1FloorMap* NewActor = GetWorld()->SpawnActor<APlayerHouse1FloorMap>();
+		Map = NewActor->GetCurMap();
 	}
 }
 

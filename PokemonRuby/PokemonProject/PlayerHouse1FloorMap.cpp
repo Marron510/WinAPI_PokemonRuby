@@ -9,7 +9,7 @@
 
 APlayerHouse1FloorMap::APlayerHouse1FloorMap()
 {
-	USpriteRenderer* SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
+	SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
 	SpriteRenderer->SetOrder(ERenderOrder::BACKGROUND);
 	SpriteRenderer->SetSprite("PlayerHouse1Floor.png");
 

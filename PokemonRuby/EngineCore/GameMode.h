@@ -15,8 +15,8 @@ public:
 	AGameMode& operator=(AGameMode&& _Other) noexcept = delete;
 
 
-	class USpriteRenderer* Map = nullptr;
 
+	class USpriteRenderer* Map = nullptr;
 protected:
 	class ATileMap* GroundTileMap = nullptr;
 

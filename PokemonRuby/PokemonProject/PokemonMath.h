@@ -1,20 +1,27 @@
 #pragma once
-class PokemonMath
+#include <EngineBase/EngineMath.h>
+
+
+
+class UPokemonMath 
 {
 public:
 	// 持失切 社瑚切
-	PokemonMath();
-	~PokemonMath();
+	UPokemonMath();
+	~UPokemonMath();
 
 	// delete funcion
 
-	PokemonMath(const PokemonMath& _Other) = delete;
-	PokemonMath(PokemonMath&& _Other) noexcept = delete;
-	PokemonMath& operator=(const PokemonMath& _Other) = delete;
-	PokemonMath& operator=(PokemonMath&& _Other) noexcept = delete;
+	UPokemonMath(const UPokemonMath& _Other) = delete;
+	UPokemonMath(UPokemonMath&& _Other) noexcept = delete;
+	UPokemonMath& operator=(const UPokemonMath& _Other) = delete;
+	UPokemonMath& operator=(UPokemonMath&& _Other) noexcept = delete;
 
-	void Lerp(FVector2D _Start, FVector2D _End, float _t);
-	FVector2D ToTileFvector2D(FVector2D _Value);
+	
+	FVector2D Lerp(const FVector2D& _Start, const FVector2D& _End, float _t);
+
+
+
 
 protected:
 

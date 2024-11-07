@@ -9,15 +9,13 @@
 
 #include "PokemonMapMode.h"
 #include "PokemonEnum.h"
+#include "PokemonMath.h"
 
 
 
 
 APlayer::APlayer()
 {
-
-	SetActorLocationTile({ 94,70 });
-
 	{
 		SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
 		
@@ -28,10 +26,10 @@ APlayer::APlayer()
 
 		SpriteRenderer->SetComponentScale({ 300, 300 });
 
-		SpriteRenderer->CreateAnimation("Walk_Up", "Player_Walk_Up.png", 0, 4, 0.3f);
-		SpriteRenderer->CreateAnimation("Walk_Down", "Player_Walk_Down.png", 0, 4, 0.3f);
-		SpriteRenderer->CreateAnimation("Walk_Right", "Player_Walk_Right.png", 0, 4, 0.3f);
-		SpriteRenderer->CreateAnimation("Walk_Left", "Player_Walk_Left.png", 0, 4, 0.3f);
+		SpriteRenderer->CreateAnimation("Walk_Up", "Player_Walk_Up.png", 0, 4, 0.2f);
+		SpriteRenderer->CreateAnimation("Walk_Down", "Player_Walk_Down.png", 0, 4, 0.2f);
+		SpriteRenderer->CreateAnimation("Walk_Right", "Player_Walk_Right.png", 0, 4, 0.2f);
+		SpriteRenderer->CreateAnimation("Walk_Left", "Player_Walk_Left.png", 0, 4, 0.2f);
 
 
 
@@ -40,9 +38,6 @@ APlayer::APlayer()
 		SpriteRenderer->CreateAnimation("Idle_Left", "Player_Walk_Left.png", 0, 0, 0.1f);
 		SpriteRenderer->CreateAnimation("Idle_Right", "Player_Walk_Right.png", 0, 0, 0.1f);
 
-		SpriteRenderer->ChangeAnimation("Idle_Down");
-
-	
 
 	}
 }
@@ -62,83 +57,18 @@ void APlayer::BeginPlay()
 	AGameMode* Curmode = UEngineAPICore::GetCore()->GetCurLevel()->GetGameMode();
 	SpriteMapRenderer = Curmode->Map;
 	MapSize = SpriteMapRenderer->GetComponentScale();
-	int a = 0123;
+	CurPos = { MapSize.Half().TileVector().X, MapSize.Half().TileVector().Y };
+	SetActorLocationTile(CurPos);
 }
 
 
 void APlayer::Tick(float _DeltaTime)
-{
-	
+{	
 	Super::Tick(_DeltaTime);
 
+	PlayerCameraCheck();
+	PlayerDebugCheck(_DeltaTime);
 	
-	FVector2D Size = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
-	
-	FVector2D MapEnd = MapSize - Size;
-	GetWorld()->SetCameraPos(GetActorLocation() - Size.Half());
-
-	FVector2D CamPos = GetWorld()->GetCameraPos();
-	if (0 >= CamPos.X)
-	{
-		CamPos.X = 0.0f;
-	}
-	if (MapEnd.X <= CamPos.X)
-	{
-		CamPos.X = MapEnd.X;
-	}
-	if (0 >= CamPos.Y)
-	{
-		CamPos.Y = 0.0f;
-	}
-	if (MapEnd.Y <= CamPos.Y)
-	{
-		CamPos.Y = MapEnd.Y;
-	}
-
-	GetWorld()->SetCameraPos(CamPos);
-
-
-	UEngineDebug::CoreOutPutString("FPS : " + std::to_string(1.0f / _DeltaTime));
-	UEngineDebug::CoreOutPutString("PlayerPos : " + GetActorLocation().operator/(96).ToString());
-	UEngineDebug::CoreOutPutString("CamPos : " + CamPos.ToString());
-
-	if (true == UEngineInput::GetInst().IsPress('D'))
-	{
-		SpriteRenderer->ChangeAnimation("Walk_Right");
-		AddActorLocation(FVector2D::RIGHT * _DeltaTime * Speed);
-	}
-	if (true == UEngineInput::GetInst().IsPress('A'))
-	{
-		SpriteRenderer->ChangeAnimation("Walk_Left");
-		AddActorLocation(FVector2D::LEFT * _DeltaTime * Speed);
-	}
-	if (true == UEngineInput::GetInst().IsPress('S'))
-	{
-		SpriteRenderer->ChangeAnimation("Walk_Down");
-		AddActorLocation(FVector2D::DOWN * _DeltaTime * Speed);
-	}
-	if (true == UEngineInput::GetInst().IsPress('W'))
-	{
-		SpriteRenderer->ChangeAnimation("Walk_Up");
-		AddActorLocation(FVector2D::UP * _DeltaTime * Speed);
-	}
-	if (true == UEngineInput::GetInst().IsUp('D'))
-	{
-		SpriteRenderer->ChangeAnimation("Idle_Right");
-	}
-	if (true == UEngineInput::GetInst().IsUp('A'))
-	{
-		SpriteRenderer->ChangeAnimation("Idle_Left");
-	}
-	if (true == UEngineInput::GetInst().IsUp('W'))
-	{
-		SpriteRenderer->ChangeAnimation("Idle_Up");
-	}
-	if (true == UEngineInput::GetInst().IsUp('S'))
-	{
-		SpriteRenderer->ChangeAnimation("Idle_Down");
-	}
-
 }
 
 
@@ -151,6 +81,7 @@ void APlayer::LevelChangeEnd()
 {
 	Super::LevelChangeEnd();
 }
+
 
 void APlayer::SetObject(FVector2D _location)
 {
@@ -169,4 +100,136 @@ void APlayer::SetActorLocationTile(FVector2D _location)
 	Newloacation.X += 48;
 	Newloacation.Y += 48;
 	SetActorLocation(Newloacation);
+}
+
+
+
+FVector2D APlayer::TileLerp(FVector2D _Start, FVector2D _End, float _t)
+{
+	return Lerp(_Start, _End, _t);
+}
+
+
+FVector2D APlayer::Lerp(const FVector2D& _Start, const FVector2D& _End, float _t)
+{
+	if (_t <= 0.0f)
+	{
+		return _Start;
+	}
+
+	if (_t >= 1.0f)
+	{
+		return _End;
+	}
+
+	return _Start + ((_End - _Start) * _t);
+}
+
+void APlayer::PlayerCameraCheck()
+{
+	FVector2D Size = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
+	FVector2D MapEnd = MapSize - Size;
+	GetWorld()->SetCameraPos(GetActorLocation() - Size.Half());
+	FVector2D CamPos = GetWorld()->GetCameraPos();
+	if (0 >= CamPos.X)
+	{
+		CamPos.X = 0.0f;
+	}
+	if (MapEnd.X <= CamPos.X)
+	{
+		CamPos.X = MapEnd.X;
+	}
+	if (0 >= MapEnd.X)
+	{
+		CamPos.X = MapSize.Half().X - Size.Half().X;
+	}
+	if (0 >= CamPos.Y)
+	{
+		CamPos.Y = 0.0f;
+	}
+	if (MapEnd.Y <= CamPos.Y)
+	{
+		CamPos.Y = MapEnd.Y;
+	}if (0 >= MapEnd.Y)
+	{
+		CamPos.Y = MapSize.Half().Y - Size.Half().Y;
+	}
+
+}
+void APlayer::PlayerDebugCheck(float _DeltaTime)
+{
+	FVector2D CamPos = GetWorld()->GetCameraPos();
+	UEngineDebug::CoreOutPutString("FPS : " + std::to_string(1.0f / _DeltaTime));
+	UEngineDebug::CoreOutPutString("PlayerPos : " + GetActorLocation().operator/(96).ToString());
+	UEngineDebug::CoreOutPutString("CamPos : " + CamPos.ToString());
+}
+
+
+void APlayer::StateUpdate(float _DeltaTime)
+{
+	switch (CurPlayerState)
+	{
+	case APlayerState::None:
+		StateChange(APlayerState::Idle);
+		break;
+	case APlayerState::Idle:
+		Idle(_DeltaTime);
+		break;
+	case APlayerState::Walk:
+		Walk(_DeltaTime);
+		break;
+	case APlayerState::Run:
+		Walk(_DeltaTime);
+		break;
+	case APlayerState::Jump:
+		Jump(_DeltaTime);
+		break;
+	default:
+		break;
+	}
+}
+
+void APlayer::StateChange(APlayerState _State, bool _Restart)
+{
+	if (false == _Restart && CurPlayerState == _State)
+	{
+		return;
+	}
+
+	switch (_State)
+	{
+	case APlayerState::Idle:
+		IdleStart();
+		break;
+	case APlayerState::Walk:
+		WalkStart();
+		break;
+	case APlayerState::Run:
+		WalkStart();
+		break;
+	case APlayerState::Jump:
+		JumpStart();
+		break;
+	default:
+		break;
+	}
+
+	CurPlayerState = _State;
+}
+
+void APlayer::ChangeAnimation(APlayerState _State)
+{
+	switch (_State)
+	{
+	case APlayerState::Idle:
+		SpriteRenderer->ChangeAnimation("Idle_Down");
+		break;
+	case APlayerState::Walk:
+		SpriteRenderer->ChangeAnimation("Walk_Down");
+		break;
+	
+	default:
+		break;
+	}
+
 }

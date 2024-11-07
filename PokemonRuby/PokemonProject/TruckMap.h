@@ -15,10 +15,13 @@ public:
 	ATruckMap& operator=(const ATruckMap& _Other) = delete;
 	ATruckMap& operator=(ATruckMap&& _Other) noexcept = delete;
 
+	USpriteRenderer* GetCurMap()
+	{
+		return SpriteRenderer;
+	}
 
 protected:
 
 private:
-
+	USpriteRenderer* SpriteRenderer;
 };
-

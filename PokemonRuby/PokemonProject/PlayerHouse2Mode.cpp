@@ -20,6 +20,7 @@ void APlayerHouse2Mode::BeginPlay()
 {
 	{
 		APlayerHouse2Map* NewActor = GetWorld()->SpawnActor<APlayerHouse2Map>();
+		Map = NewActor->GetCurMap();
 	}
 }
 

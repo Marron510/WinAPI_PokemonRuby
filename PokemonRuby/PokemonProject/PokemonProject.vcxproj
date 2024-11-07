@@ -27,6 +27,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="PokemonMath.h" />
     <ClInclude Include="Sea.h">
       <SubType>
       </SubType>
@@ -146,6 +147,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="PokemonMath.cpp" />
     <ClCompile Include="Sea.cpp">
       <SubType>
       </SubType>

@@ -13,10 +13,15 @@ public:
 	APlayerHouse2Map(APlayerHouse2Map&& _Other) noexcept = delete;
 	APlayerHouse2Map& operator=(const APlayerHouse2Map& _Other) = delete;
 	APlayerHouse2Map& operator=(APlayerHouse2Map&& _Other) noexcept = delete;
+	
+	USpriteRenderer* GetCurMap()
+	{
+		return SpriteRenderer;
+	}
 
 protected:
 
 private:
-
+	USpriteRenderer* SpriteRenderer;
 };
 

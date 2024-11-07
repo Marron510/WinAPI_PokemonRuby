@@ -159,6 +159,9 @@
     <ClInclude Include="Sea.h">
       <Filter>PokemonObject\4.TIleObject</Filter>
     </ClInclude>
+    <ClInclude Include="PokemonMath.h">
+      <Filter>Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PokemonCore.cpp">
@@ -259,6 +262,9 @@
     </ClCompile>
     <ClCompile Include="Sea.cpp">
       <Filter>PokemonObject\4.TIleObject</Filter>
+    </ClCompile>
+    <ClCompile Include="PokemonMath.cpp">
+      <Filter>Global</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

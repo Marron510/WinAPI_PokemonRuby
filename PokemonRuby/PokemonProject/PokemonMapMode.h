@@ -19,10 +19,6 @@ public:
 
 	void Tick(float _DeltaTime) override;
 
-	/*USpriteRenderer* GetMap() override
-	{
-		return Map;
-	}*/
 protected:
 
 private:

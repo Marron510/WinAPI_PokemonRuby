@@ -23,6 +23,7 @@ void ATruckMode::BeginPlay()
 {
 	{
 		ATruckMap* NewActor = GetWorld()->SpawnActor<ATruckMap>();
+		Map = NewActor->GetCurMap();
 	}
 }
 

@@ -14,11 +14,16 @@ public:
 	ALaborProfessorBirchMap(ALaborProfessorBirchMap&& _Other) noexcept = delete;
 	ALaborProfessorBirchMap& operator=(const ALaborProfessorBirchMap& _Other) = delete;
 	ALaborProfessorBirchMap& operator=(ALaborProfessorBirchMap&& _Other) noexcept = delete;
+	
+	USpriteRenderer* GetCurMap()
+	{
+		return SpriteRenderer;
+	}
 
 
 protected:
 
 private:
-
+	USpriteRenderer* SpriteRenderer;
 };
 

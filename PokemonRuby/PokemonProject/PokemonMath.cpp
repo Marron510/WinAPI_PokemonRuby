@@ -3,17 +3,27 @@
 
 FVector2D TileSize;
 
-PokemonMath::PokemonMath()
+UPokemonMath::UPokemonMath()
 {
 
 }
 
-PokemonMath::~PokemonMath()
+UPokemonMath::~UPokemonMath()
 {
 
 }
 
-void PokemonMath::Lerp(FVector2D _Start, FVector2D _End, float _t)
+FVector2D UPokemonMath::Lerp(const FVector2D& _Start, const FVector2D& _End, float _t)
 {
-	
+	if (_t <= 0.0f)
+	{
+		return _Start;
+	}
+
+	if (_t >= 1.0f)
+	{
+		return _End;
+	}
+
+	return _Start * (1 - _t) + _End * _t;
 }
