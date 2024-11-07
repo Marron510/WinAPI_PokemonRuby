@@ -14,15 +14,12 @@ public:
 	AGameMode& operator=(const AGameMode& _Other) = delete;
 	AGameMode& operator=(AGameMode&& _Other) noexcept = delete;
 
-	USpriteRenderer* GetMap()
-	{
-		return Map;
-	}
+
+	class USpriteRenderer* Map = nullptr;
 
 protected:
 	class ATileMap* GroundTileMap = nullptr;
-	class USpriteRenderer* Map = nullptr;
-	
+
 private:
 
 };

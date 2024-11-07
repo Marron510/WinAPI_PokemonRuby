@@ -27,9 +27,10 @@ protected:
 private:
 	float Speed = 200.0f;
 	int MySpriteIndex = 0;
-
+	FVector2D MapSize = FVector2D::ZERO;
 	
 	class USpriteRenderer* SpriteRenderer;
-	class USpriteMapRenderer* SpriteMapRenderer;
+	class USpriteRenderer* SpriteMapRenderer;
+	
 };
 

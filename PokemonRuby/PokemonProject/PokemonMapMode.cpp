@@ -5,6 +5,7 @@
 #include <EngineCore/EngineAPICore.h>
 #include <EngineCore/Level.h>
 
+#include <EngineCore/SpriteRenderer.h>
 #include "PokemonMap.h"
 #include "TileMap.h"
 #include "Flower.h"
@@ -425,7 +426,7 @@ void APokemonMapMode::BeginPlay()
 	}
 
 	// AWater
-	{
+{
 		AWater* newWater1 = GetWorld()->SpawnActor<AWater>();
 		AWater* newWater2 = GetWorld()->SpawnActor<AWater>();
 		AWater* newWater3 = GetWorld()->SpawnActor<AWater>();
@@ -791,7 +792,7 @@ void APokemonMapMode::BeginPlay()
 		newWater180->SetActorLocationTile({ 6, 30 });
 		newWater181->SetActorLocationTile({ 6, 31 });
 		newWater182->SetActorLocationTile({ 6, 32 });	
-	}
+}
 
 
 
@@ -799,7 +800,7 @@ void APokemonMapMode::BeginPlay()
 		APokemonMap* NewActor = GetWorld()->SpawnActor<APokemonMap>();
 		Map = NewActor->GetCurMap();
 
-		Map->GetComponentScale();
+		//Map->GetComponentScale();
 		{
 
 			FIntPoint TileSize;

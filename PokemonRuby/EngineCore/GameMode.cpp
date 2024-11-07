@@ -1,7 +1,10 @@
 #include "PreCompile.h"
 #include "GameMode.h"
 
-#include <EngineCore/SpriteRenderer.h>
+
+#include "SpriteRenderer.h"
+
+
 
 AGameMode::AGameMode()
 {

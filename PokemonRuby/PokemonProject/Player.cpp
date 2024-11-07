@@ -59,9 +59,10 @@ void APlayer::BeginPlay()
 	GetWorld()->SetCameraPivot(Size.Half() * -1.0f);
 	GetWorld()->SetCameraToMainPawn(false);
 	SpriteRenderer->SetOrder(ERenderOrder::PLAYER);
-
-	
-	
+	AGameMode* Curmode = UEngineAPICore::GetCore()->GetCurLevel()->GetGameMode();
+	SpriteMapRenderer = Curmode->Map;
+	MapSize = SpriteMapRenderer->GetComponentScale();
+	int a = 0123;
 }
 
 
@@ -69,9 +70,11 @@ void APlayer::Tick(float _DeltaTime)
 {
 	
 	Super::Tick(_DeltaTime);
-	
+
 	
 	FVector2D Size = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
+	
+	FVector2D MapEnd = MapSize - Size;
 	GetWorld()->SetCameraPos(GetActorLocation() - Size.Half());
 
 	FVector2D CamPos = GetWorld()->GetCameraPos();
@@ -79,19 +82,18 @@ void APlayer::Tick(float _DeltaTime)
 	{
 		CamPos.X = 0.0f;
 	}
-	if (9550 <= CamPos.X)
+	if (MapEnd.X <= CamPos.X)
 	{
-		CamPos.X = 9550.0f;
+		CamPos.X = MapEnd.X;
 	}
 	if (0 >= CamPos.Y)
 	{
 		CamPos.Y = 0.0f;
 	}
-	if (7060 <= CamPos.Y)
+	if (MapEnd.Y <= CamPos.Y)
 	{
-		CamPos.Y = 7060.0f;
+		CamPos.Y = MapEnd.Y;
 	}
-
 
 	GetWorld()->SetCameraPos(CamPos);
 
