@@ -30,5 +30,6 @@ private:
 
 	
 	class USpriteRenderer* SpriteRenderer;
+	class USpriteMapRenderer* SpriteMapRenderer;
 };
 

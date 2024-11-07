@@ -27,7 +27,6 @@ public:
 
 	virtual void LevelChangeStart() {}
 	virtual void LevelChangeEnd() {}
-
 	class ULevel* GetWorld()
 	{
 		return World;
@@ -66,7 +65,9 @@ public:
 
 		ComponentList.push_back(NewComponent);
 		return NewComponent;
-	}
+	};
+
+	
 
 protected:
 

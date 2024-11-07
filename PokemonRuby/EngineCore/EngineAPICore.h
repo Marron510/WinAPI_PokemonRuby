@@ -43,6 +43,11 @@ public:
 		return EngineMainWindow;
 	}
 
+	ULevel* GetCurLevel()
+	{
+		return CurLevel;
+	}
+
 	float GetDeltaTime()
 	{
 		return DeltaTimer.GetDeltaTime();

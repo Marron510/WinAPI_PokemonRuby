@@ -22,7 +22,6 @@ public:
 protected:
 
 private:
-	class ATileMap* GroundTileMap = nullptr;
 };
 
 

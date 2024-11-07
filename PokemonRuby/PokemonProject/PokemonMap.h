@@ -15,10 +15,14 @@ public:
 	APokemonMap& operator=(const APokemonMap& _Other) = delete;
 	APokemonMap& operator=(APokemonMap&& _Other) noexcept = delete;
 
+	USpriteRenderer* GetCurMap()
+	{
+		return SpriteRenderer;
+	}
 
 protected:
 
 private:
-
+	USpriteRenderer* SpriteRenderer;
 };
 

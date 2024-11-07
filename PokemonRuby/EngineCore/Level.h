@@ -61,6 +61,10 @@ public:
 		return CameraPos;
 	}
 
+	AGameMode* GetGameMode()
+	{
+		return GameMode;
+	}
 
 protected:
 
@@ -100,6 +104,7 @@ private:
 
 	FVector2D CameraPos;
 	FVector2D CameraPivot;
+
 
 	// 오더링을 할것이다.
 	std::map<int, std::list<class USpriteRenderer*>> Renderers;

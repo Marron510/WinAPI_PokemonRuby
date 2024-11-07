@@ -14,7 +14,7 @@
 
 APokemonMapMode::APokemonMapMode()
 {
-
+	
 }
 
 APokemonMapMode::~APokemonMapMode()
@@ -25,6 +25,7 @@ APokemonMapMode::~APokemonMapMode()
 
 void APokemonMapMode::BeginPlay()
 {
+	// AFlower
 	{
 		AFlower* newflower1 = GetWorld()->SpawnActor<AFlower>();
 		AFlower* newflower2 = GetWorld()->SpawnActor<AFlower>();
@@ -55,7 +56,7 @@ void APokemonMapMode::BeginPlay()
 		newflower13->SetActorLocationTile({ 84,78 });
 		newflower14->SetActorLocationTile({ 85,78 });
 	}
-
+	// AFlower
 	{
 		AFlower* newflower1 = GetWorld()->SpawnActor<AFlower>();
 		AFlower* newflower2 = GetWorld()->SpawnActor<AFlower>();
@@ -73,7 +74,7 @@ void APokemonMapMode::BeginPlay()
 		newflower6->SetActorLocationTile({ 90,30 });
 		newflower7->SetActorLocationTile({ 91,28 });
 	}
-	
+	// AFlower
 	{
 		AFlower* newflower1 = GetWorld()->SpawnActor<AFlower>();
 		AFlower* newflower2 = GetWorld()->SpawnActor<AFlower>();
@@ -83,7 +84,7 @@ void APokemonMapMode::BeginPlay()
 		newflower2->SetActorLocationTile({ 63,24 });
 		newflower3->SetActorLocationTile({ 62,25 });
 	}
-
+	// AFlower
 	{
 		AFlower* newflower1 = GetWorld()->SpawnActor<AFlower>();
 		AFlower* newflower2 = GetWorld()->SpawnActor<AFlower>();
@@ -118,7 +119,7 @@ void APokemonMapMode::BeginPlay()
 		newflower15->SetActorLocationTile({ 24,34 });
 		newflower16->SetActorLocationTile({ 24,35 });
 	}
-
+	// Asea
 	{
 		ASea* newsea1 = GetWorld()->SpawnActor<ASea>();
 		ASea* newsea2 = GetWorld()->SpawnActor<ASea>();
@@ -423,6 +424,7 @@ void APokemonMapMode::BeginPlay()
 		newsea150->SetActorLocationTile({ 111, 11 });
 	}
 
+	// AWater
 	{
 		AWater* newWater1 = GetWorld()->SpawnActor<AWater>();
 		AWater* newWater2 = GetWorld()->SpawnActor<AWater>();
@@ -788,16 +790,16 @@ void APokemonMapMode::BeginPlay()
 		newWater179->SetActorLocationTile({ 6, 29 });
 		newWater180->SetActorLocationTile({ 6, 30 });
 		newWater181->SetActorLocationTile({ 6, 31 });
-		newWater182->SetActorLocationTile({ 6, 32 });
-		
+		newWater182->SetActorLocationTile({ 6, 32 });	
 	}
 
 
 
 	{
 		APokemonMap* NewActor = GetWorld()->SpawnActor<APokemonMap>();
-		
+		Map = NewActor->GetCurMap();
 
+		Map->GetComponentScale();
 		{
 
 			FIntPoint TileSize;

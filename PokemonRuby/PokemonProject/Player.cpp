@@ -7,6 +7,7 @@
 #include <EngineCore/EngineCoreDebug.h>
 #include <EngineCore/SpriteRenderer.h>
 
+#include "PokemonMapMode.h"
 #include "PokemonEnum.h"
 
 
@@ -59,13 +60,17 @@ void APlayer::BeginPlay()
 	GetWorld()->SetCameraToMainPawn(false);
 	SpriteRenderer->SetOrder(ERenderOrder::PLAYER);
 
+	
+	
 }
 
 
 void APlayer::Tick(float _DeltaTime)
 {
+	
 	Super::Tick(_DeltaTime);
-
+	
+	
 	FVector2D Size = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
 	GetWorld()->SetCameraPos(GetActorLocation() - Size.Half());
 
