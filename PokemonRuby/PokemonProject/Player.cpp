@@ -188,34 +188,34 @@ void APlayer::Walk(float _DeltaTime)
 {
     PlayerCameraCheck();
 
-    FVector2D Vector = FVector2D::ZERO;
+   // FVector2D Vector = FVector2D::ZERO;
 
     if (true == UEngineInput::GetInst().IsPress('D'))
     {
         CurDir = EPlayerDir::RIGHT;
         FSM.ChangeState(APlayerState::WALK);
-        Vector += FVector2D::RIGHT;
+        //Vector += FVector2D::RIGHT;
     }
     if (true == UEngineInput::GetInst().IsPress('A'))
     {
         CurDir = EPlayerDir::LEFT;
         FSM.ChangeState(APlayerState::WALK);
-        Vector += FVector2D::LEFT;
+        //Vector += FVector2D::LEFT;
     }
     if (true == UEngineInput::GetInst().IsPress('S'))
     {
         CurDir = EPlayerDir::DOWN;
         FSM.ChangeState(APlayerState::WALK);
-        Vector += FVector2D::DOWN;
+        //Vector += FVector2D::DOWN;
     }
     if (true == UEngineInput::GetInst().IsPress('W'))
     {
         CurDir = EPlayerDir::UP;
         FSM.ChangeState(APlayerState::WALK);
-        Vector += FVector2D::UP;
+        //Vector += FVector2D::UP;
     }
 
-      AddActorLocation(Vector * _DeltaTime * WalkSpeed);
+    //  AddActorLocation(Vector * _DeltaTime * WalkSpeed);
     
 
 
@@ -259,11 +259,13 @@ void APlayer::SetObject()
     GetWorld()->SetCameraPivot(Size.Half() * -1.0f);
     GetWorld()->SetCameraToMainPawn(false);
     SpriteRenderer->SetOrder(ERenderOrder::PLAYER);
+
     AGameMode* Curmode = UEngineAPICore::GetCore()->GetCurLevel()->GetGameMode();
     SpriteMapRenderer = Curmode->Map;
     MapSize = SpriteMapRenderer->GetComponentScale();
     CurPos = { MapSize.Half().X, MapSize.Half().Y };
     SetActorLocation(CurPos);
+    
     State = APlayerState::NONE;
 }
 
@@ -320,15 +322,6 @@ void APlayer::WalkStart()
     }
 }
 
-void APlayer::CreatePlayerDirState(APlayer::EPlayerDir _Dir)
-{
-    FSM.CreateState(APlayer::APlayerState::IDLE, std::bind(&APlayer::Idle, this, std::placeholders::_1),
-        [this]()
-        {
-            SpriteRenderer->ChangeAnimation("Idle_Right");
-        }
-    );
-}
 
 
 APlayer::EPlayerDir APlayer::GetPressDirection()
@@ -353,4 +346,29 @@ APlayer::EPlayerDir APlayer::GetPressDirection()
     }
 
     return NextDirection;
+}
+
+void APlayer::PlayerLerp(EPlayerDir _DIr)
+{
+    PrevPos = GetActorLocation();
+    
+    switch (_DIr)
+    {
+    case APlayer::EPlayerDir::LEFT:
+        NextPos = PrevPos + FVector2D::LEFT;
+        break;
+    case APlayer::EPlayerDir::RIGHT:
+        NextPos = PrevPos + FVector2D::RIGHT;
+        break;
+    case APlayer::EPlayerDir::UP:
+        NextPos = PrevPos + FVector2D::UP;
+        break;
+    case APlayer::EPlayerDir::DOWN:
+        NextPos = PrevPos + FVector2D::DOWN;
+        break;
+    default:
+        break;
+    }
+
+
 }

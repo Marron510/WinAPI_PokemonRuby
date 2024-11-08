@@ -36,7 +36,8 @@ public:
 	{
 
 	}
-
+	
+	
 	FVector2D(long _X, long _Y) : X(static_cast<float>(_X)), Y(static_cast<float>(_Y))
 	{
 
@@ -50,6 +51,11 @@ public:
 	int iY() const
 	{
 		return static_cast<int>(Y);
+	}
+
+	int Toint() const
+	{
+		return static_cast<int>(X) & static_cast<int>(Y);
 	}
 
 	bool IsZeroed() const
@@ -115,7 +121,7 @@ public:
 		return *this;
 	}
 
-
+	
 	FVector2D operator-(FVector2D _Other) const
 	{
 		FVector2D Result;

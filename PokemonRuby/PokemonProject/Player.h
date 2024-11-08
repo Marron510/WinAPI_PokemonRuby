@@ -63,8 +63,8 @@ public:
     void IdleStart();
     void WalkStart();
 
-    void CreatePlayerDirState(APlayer::EPlayerDir _Dir);
-
+    
+    void PlayerLerp(EPlayerDir _DIr);
     EPlayerDir GetPressDirection();
    
 protected:
@@ -80,9 +80,9 @@ private:
     APlayerState CurPlayerState = APlayerState::IDLE;
 
     EPlayerDir CurDir = EPlayerDir::DOWN;
-    FTileVector PrevPos;
     FVector2D CurPos;
-    FTileVector NextPos;
+    FVector2D PrevPos;
+    FVector2D NextPos;
 
 
     int MySpriteIndex = 0;
