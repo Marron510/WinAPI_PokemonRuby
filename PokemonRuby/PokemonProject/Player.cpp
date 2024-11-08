@@ -29,17 +29,17 @@ APlayer::APlayer()
 
         SpriteRenderer->SetComponentScale({ 300, 300 });
 
-        SpriteRenderer->CreateAnimation("Walk_Up", "Player_Walk_Up.png", 0, 4, 0.2f);
-        SpriteRenderer->CreateAnimation("Walk_Down", "Player_Walk_Down.png", 0, 4, 0.2f);
-        SpriteRenderer->CreateAnimation("Walk_Right", "Player_Walk_Right.png", 0, 4, 0.2f);
-        SpriteRenderer->CreateAnimation("Walk_Left", "Player_Walk_Left.png", 0, 4, 0.2f);
+        SpriteRenderer->CreateAnimation("Walk_Up", "Player_Walk_Up.png", 0, 4, 0.3f);
+        SpriteRenderer->CreateAnimation("Walk_Down", "Player_Walk_Down.png", 0, 4, 0.3f);
+        SpriteRenderer->CreateAnimation("Walk_Right", "Player_Walk_Right.png", 0, 4, 0.3f);
+        SpriteRenderer->CreateAnimation("Walk_Left", "Player_Walk_Left.png", 0, 4, 0.3f);
 
 
 
-        SpriteRenderer->CreateAnimation("Idle_Up", "Player_Walk_Up.png", 0, 0, 0.1f);
-        SpriteRenderer->CreateAnimation("Idle_Down", "Player_Walk_Down.png", 0, 0, 0.1f);
-        SpriteRenderer->CreateAnimation("Idle_Left", "Player_Walk_Left.png", 0, 0, 0.1f);
-        SpriteRenderer->CreateAnimation("Idle_Right", "Player_Walk_Right.png", 0, 0, 0.1f);
+        SpriteRenderer->CreateAnimation("Idle_Up", "Player_Walk_Up.png", 0, 0, 0.3f);
+        SpriteRenderer->CreateAnimation("Idle_Down", "Player_Walk_Down.png", 0, 0, 0.3f);
+        SpriteRenderer->CreateAnimation("Idle_Left", "Player_Walk_Left.png", 0, 0, 0.3f);
+        SpriteRenderer->CreateAnimation("Idle_Right", "Player_Walk_Right.png", 0, 0, 0.3f);
 
     }
 }
@@ -190,29 +190,30 @@ void APlayer::Walk(float _DeltaTime)
 
    // FVector2D Vector = FVector2D::ZERO;
 
-    if (true == UEngineInput::GetInst().IsPress('D'))
+    if (true == UEngineInput::GetInst().IsDown('D'))
     {
         CurDir = EPlayerDir::RIGHT;
         FSM.ChangeState(APlayerState::WALK);
-        //Vector += FVector2D::RIGHT;
+        PlayerLerp(CurDir, _DeltaTime);
     }
-    if (true == UEngineInput::GetInst().IsPress('A'))
+    if (true == UEngineInput::GetInst().IsDown('A'))
     {
         CurDir = EPlayerDir::LEFT;
         FSM.ChangeState(APlayerState::WALK);
-        //Vector += FVector2D::LEFT;
+        PlayerLerp(CurDir, _DeltaTime);
     }
-    if (true == UEngineInput::GetInst().IsPress('S'))
+    //초기값 셋팅을 잘해야 할듯
+    if (true == UEngineInput::GetInst().IsDown('S'))
     {
         CurDir = EPlayerDir::DOWN;
         FSM.ChangeState(APlayerState::WALK);
-        //Vector += FVector2D::DOWN;
+        PlayerLerp(CurDir, _DeltaTime);
     }
-    if (true == UEngineInput::GetInst().IsPress('W'))
+    if (true == UEngineInput::GetInst().IsDown('W'))
     {
         CurDir = EPlayerDir::UP;
         FSM.ChangeState(APlayerState::WALK);
-        //Vector += FVector2D::UP;
+        PlayerLerp(CurDir, _DeltaTime);
     }
 
     //  AddActorLocation(Vector * _DeltaTime * WalkSpeed);
@@ -255,16 +256,18 @@ void APlayer::Idle(float _DeltaTime)
 
 void APlayer::SetObject()
 {
-    FVector2D Size = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
-    GetWorld()->SetCameraPivot(Size.Half() * -1.0f);
+    FVector2D WindowSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
+    GetWorld()->SetCameraPos(GetActorLocation() - WindowSize.Half());
     GetWorld()->SetCameraToMainPawn(false);
     SpriteRenderer->SetOrder(ERenderOrder::PLAYER);
 
     AGameMode* Curmode = UEngineAPICore::GetCore()->GetCurLevel()->GetGameMode();
     SpriteMapRenderer = Curmode->Map;
     MapSize = SpriteMapRenderer->GetComponentScale();
-    CurPos = { MapSize.Half().X, MapSize.Half().Y };
+    CurPos = { MapSize.Half().ConvertToPoint().X , MapSize.Half().ConvertToPoint().Y};
+    
     SetActorLocation(CurPos);
+    
     
     State = APlayerState::NONE;
 }
@@ -348,27 +351,32 @@ APlayer::EPlayerDir APlayer::GetPressDirection()
     return NextDirection;
 }
 
-void APlayer::PlayerLerp(EPlayerDir _DIr)
+void APlayer::PlayerLerp(EPlayerDir _DIr, float _DeltaTime)
 {
     PrevPos = GetActorLocation();
     
     switch (_DIr)
     {
     case APlayer::EPlayerDir::LEFT:
-        NextPos = PrevPos + FVector2D::LEFT;
+        NextPos = PrevPos + (FVector2D::LEFT * 96);
         break;
     case APlayer::EPlayerDir::RIGHT:
-        NextPos = PrevPos + FVector2D::RIGHT;
+        NextPos = PrevPos + (FVector2D::RIGHT * 96);
         break;
     case APlayer::EPlayerDir::UP:
-        NextPos = PrevPos + FVector2D::UP;
+        NextPos = PrevPos + (FVector2D::UP * 96);
         break;
     case APlayer::EPlayerDir::DOWN:
-        NextPos = PrevPos + FVector2D::DOWN;
+        NextPos = PrevPos + (FVector2D::DOWN * 96);
         break;
     default:
         break;
     }
 
+    CurWalkTime -= _DeltaTime;
+    float t = (WalkTime - CurWalkTime) / WalkTime;
+
+    FVector2D TargetPos = UPokemonMath::Lerp(PrevPos, NextPos, t);
+    SetActorLocation(TargetPos);
 
 }

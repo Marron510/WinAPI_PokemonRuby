@@ -1,7 +1,7 @@
 #include "PreCompile.h"
 #include "PokemonMath.h"
 
-
+const FTileVector FTileVector::Zero = { 0, 0 };
 const FTileVector FTileVector::Up = { 0, -1 };
 const FTileVector FTileVector::Down = { 0, 1 };
 const FTileVector FTileVector::Left = { -1, 0 };

@@ -6,7 +6,7 @@
 struct FTileVector
 {
 public:
-    
+    const static FTileVector Zero;
     const static FTileVector Up;
     const static FTileVector Down;
     const static FTileVector Left;

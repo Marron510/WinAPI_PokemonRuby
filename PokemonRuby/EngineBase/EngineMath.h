@@ -183,6 +183,18 @@ public:
 		Stream += "]";
 		return Stream;
 	}
+
+	std::string IntToString()
+	{
+		std::string Stream;
+
+		Stream += "X : [";
+		Stream += std::to_string(static_cast<int>(X));
+		Stream += "] Y : [";
+		Stream += std::to_string(static_cast<int>(Y));
+		Stream += "]";
+		return Stream;
+	}
 };
 
 class FTransform

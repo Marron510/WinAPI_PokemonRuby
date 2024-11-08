@@ -64,13 +64,15 @@ public:
     void WalkStart();
 
     
-    void PlayerLerp(EPlayerDir _DIr);
+    void PlayerLerp(EPlayerDir _DIr, float _DeltaTime);
     EPlayerDir GetPressDirection();
    
 protected:
 
 private:
-    float WalkSpeed = 30.0f;
+    float WalkSpeed = 0.01f;
+    float WalkTime = 1.0f;
+    float CurWalkTime = WalkTime;
 
     bool IsRotate = false;
     int IsGround = false;
@@ -84,6 +86,9 @@ private:
     FVector2D PrevPos;
     FVector2D NextPos;
 
+
+    FTileVector Point = FTileVector::Zero;
+    FTileVector Direction = FTileVector::Down;
 
     int MySpriteIndex = 0;
     FVector2D MapSize = FVector2D::ZERO;
