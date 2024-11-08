@@ -50,12 +50,10 @@ APlayer::~APlayer()
 
 std::string DirString[static_cast<int>(APlayer::EPlayerDir::MAX)] =
 {
-    "_ZERO"
     "_Left",
     "_Right",
     "_Up",
-    "_Down",
-    "_MAX"
+    "_Down"
 };
 
 
@@ -195,21 +193,25 @@ void APlayer::Walk(float _DeltaTime)
     if (true == UEngineInput::GetInst().IsPress('D'))
     {
         CurDir = EPlayerDir::RIGHT;
+        FSM.ChangeState(APlayerState::WALK);
         Vector += FVector2D::RIGHT;
     }
     if (true == UEngineInput::GetInst().IsPress('A'))
     {
         CurDir = EPlayerDir::LEFT;
+        FSM.ChangeState(APlayerState::WALK);
         Vector += FVector2D::LEFT;
     }
     if (true == UEngineInput::GetInst().IsPress('S'))
     {
         CurDir = EPlayerDir::DOWN;
+        FSM.ChangeState(APlayerState::WALK);
         Vector += FVector2D::DOWN;
     }
     if (true == UEngineInput::GetInst().IsPress('W'))
     {
         CurDir = EPlayerDir::UP;
+        FSM.ChangeState(APlayerState::WALK);
         Vector += FVector2D::UP;
     }
 
@@ -236,6 +238,7 @@ void APlayer::Idle(float _DeltaTime)
     PlayerCameraCheck();
 
      APlayer::EPlayerDir CurKeyDir = APlayer::GetPressDirection();
+
      if (CurDir == CurKeyDir)
      {
          StateChange(APlayerState::WALK);
@@ -297,22 +300,22 @@ void APlayer::WalkStart()
 {
     if (true == UEngineInput::GetInst().IsUp('W'))
     {
-        SpriteRenderer->ChangeAnimation("WALK_UP");
+        SpriteRenderer->ChangeAnimation("Walk_Up");
         return;
     }
     else if (true == UEngineInput::GetInst().IsUp('A'))
     {
-        SpriteRenderer->ChangeAnimation("WALK_LEFT");
+        SpriteRenderer->ChangeAnimation("Walk_Left");
         return;
     }
     else if (true == UEngineInput::GetInst().IsUp('S'))
     {
-        SpriteRenderer->ChangeAnimation("WALK_DOWN");
+        SpriteRenderer->ChangeAnimation("WALK_Down");
         return;
     }
     else if (true == UEngineInput::GetInst().IsUp('D'))
     {
-        SpriteRenderer->ChangeAnimation("WALK_RIGHT");
+        SpriteRenderer->ChangeAnimation("Walk_Right");
 
     }
 }
@@ -330,7 +333,8 @@ void APlayer::CreatePlayerDirState(APlayer::EPlayerDir _Dir)
 
 APlayer::EPlayerDir APlayer::GetPressDirection()
 {
-    APlayer::EPlayerDir NextDirection = APlayer::EPlayerDir::ZERO;
+    APlayer::EPlayerDir NextDirection = CurDir;
+
     if (UEngineInput::GetInst().IsPress('S'))
     {
         NextDirection = APlayer::EPlayerDir::DOWN;

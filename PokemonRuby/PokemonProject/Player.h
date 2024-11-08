@@ -18,7 +18,6 @@ public:
 
     enum class EPlayerDir
     {
-        ZERO,
         LEFT,
         RIGHT,
         UP,
