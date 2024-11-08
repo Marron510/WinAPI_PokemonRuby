@@ -1,5 +1,7 @@
 #pragma once
 #include <EngineCore/Actor.h>
+#include <EngineCore/ImageManager.h>
+#include <EngineBase/FSMStateManager.h>
 #include "PokemonMath.h"
 
 class APlayer : public AActor
@@ -14,12 +16,14 @@ public:
         JUMP,
     };
 
-    enum class APlayerDir
+    enum class EPlayerDir
     {
+        ZERO,
         LEFT,
         RIGHT,
         UP,
         DOWN,
+        MAX
     };
 
 
@@ -37,45 +41,48 @@ public:
     void Tick(float _DeltaTime) override;
     void PlayerCameraCheck();
     void PlayerDebugCheck(float _DeltaTime);
+    void SetObject();
 
     void LevelChangeStart();
     void LevelChangeEnd();
-    void SetObject(FVector2D _location);
-    FTileVector SetActorTileLocation(FTileVector _CurPos);
+    
+    //void PlayerGroundCheck(FVector2D _MovePos);
+
+    /*FTileVector SetActorTileLocation(FTileVector _CurPos);
 
     void StateUpdate(float _DeltaTime);
 
     void ChangeAnimation(APlayerState _State, FTileVector _Direction);
-    void StateChange(APlayerState _State, bool _Restart = false);
+    void StateChange(APlayerState _State, bool _Restart = false);*/
 
 
 
     void Idle(float _DeltaTime);
     void Walk(float _DeltaTime);
+    void StateChange(APlayerState _State);
+    void StateUpdate(float _DeltaTime);
     void IdleStart();
     void WalkStart();
 
+    void CreatePlayerDirState(APlayer::EPlayerDir _Dir);
 
-
-
+    EPlayerDir GetPressDirection();
+   
 protected:
 
 private:
-    float WalkSpeed = 3.0f;
-    float WalkTime = 1.0f / WalkSpeed;
-    float CurWalkTime = WalkTime;
-    float WalkInputLatency = 0.75f;
-    float RotateTime = 0.5f / WalkSpeed;
-    float CurRotateTime = RotateTime;
+    float WalkSpeed = 30.0f;
 
     bool IsRotate = false;
-    bool IsExecutingMovingLogic = false;
+    int IsGround = false;
+    bool IsMove = false;
 
+    APlayerState State;
     APlayerState CurPlayerState = APlayerState::IDLE;
 
-    FTileVector Direction = FTileVector::Down;
+    EPlayerDir CurDir = EPlayerDir::DOWN;
     FTileVector PrevPos;
-    FTileVector CurPos;
+    FVector2D CurPos;
     FTileVector NextPos;
 
 
@@ -84,7 +91,7 @@ private:
 
     class USpriteRenderer* SpriteRenderer = nullptr;
     class USpriteRenderer* SpriteMapRenderer = nullptr;
-
+    class UEngineWinImage* ColImage = nullptr;
 
     UFSMStateManager FSM;
 };
