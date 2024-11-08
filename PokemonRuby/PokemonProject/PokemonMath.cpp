@@ -1,29 +1,44 @@
 #include "PreCompile.h"
 #include "PokemonMath.h"
 
-FVector2D TileSize;
+const FTileVector FTileVector::Zero = { 0, 0 };
+const FTileVector FTileVector::Up = { 0, -1 };
+const FTileVector FTileVector::Down = { 0, 1 };
+const FTileVector FTileVector::Left = { -1, 0 };
+const FTileVector FTileVector::Right = { 1, 0 };
 
-UPokemonMath::UPokemonMath()
+float UPokemonMath::Lerp(float _Start, float _End, float _t)
 {
+    if (_t <= 0.0f)
+    {
+        return _Start;
+    }
 
-}
+    if (_t >= 1.0f)
+    {
+        return _End;
+    }
 
-UPokemonMath::~UPokemonMath()
-{
-
+    return _Start * (1 - _t) + _End * _t;
 }
 
 FVector2D UPokemonMath::Lerp(const FVector2D& _Start, const FVector2D& _End, float _t)
 {
-	if (_t <= 0.0f)
-	{
-		return _Start;
-	}
+    if (_t <= 0.0f)
+    {
+        return _Start;
+    }
 
-	if (_t >= 1.0f)
-	{
-		return _End;
-	}
+    if (_t >= 1.0f)
+    {
+        return _End;
+    }
 
-	return _Start * (1 - _t) + _End * _t;
+    return _Start * (1 - _t) + _End * _t;
 }
+
+FVector2D UPokemonMath::Lerp(const FTileVector& _Start, const FTileVector& _End, float _t)
+{
+    return Lerp(_Start.ToFVector(), _End.ToFVector(), _t);
+}
+

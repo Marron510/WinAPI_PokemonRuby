@@ -162,6 +162,9 @@
     <ClInclude Include="PokemonMath.h">
       <Filter>Global</Filter>
     </ClInclude>
+    <ClInclude Include="PokemonInput.h">
+      <Filter>Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PokemonCore.cpp">
@@ -264,6 +267,9 @@
       <Filter>PokemonObject\4.TIleObject</Filter>
     </ClCompile>
     <ClCompile Include="PokemonMath.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="PokemonInput.cpp">
       <Filter>Global</Filter>
     </ClCompile>
   </ItemGroup>
