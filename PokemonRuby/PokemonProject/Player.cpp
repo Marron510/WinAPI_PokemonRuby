@@ -50,11 +50,14 @@ APlayer::~APlayer()
 
 std::string DirString[static_cast<int>(APlayer::EPlayerDir::MAX)] =
 {
+    "_ZERO"
     "_Left",
     "_Right",
     "_Up",
     "_Down",
+    "_MAX"
 };
+
 
 void APlayer::BeginPlay()
 {

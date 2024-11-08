@@ -17,7 +17,7 @@ APokemonMap::APokemonMap()
 	SpriteRenderer->SetComponentLocation(MapScale.Half());
 	}
 
-AtitleMap::~AtitleMap()
+APokemonMap::~APokemonMap()
 {
 
 }

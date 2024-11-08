@@ -1,7 +1,7 @@
 #pragma once
 #include <EngineCore/Actor.h>
 
-class AtitleMap : public AActor
+class APokemonMap : public AActor
 {
 public:
 	// 持失切 社瑚切
