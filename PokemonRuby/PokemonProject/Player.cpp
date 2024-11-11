@@ -2,7 +2,9 @@
 #include "Player.h"
 
 #include <EngineBase/EngineMath.h>
+#include <EngineBase/EngineString.h>
 #include <EnginePlatform/EngineInput.h>
+
 
 #include <EngineCore/EngineAPICore.h>
 #include <EngineCore/EngineCoreDebug.h>
@@ -11,7 +13,7 @@
 #include "PokemonMapMode.h"
 #include "PokemonEnum.h"
 #include "PokemonInput.h"
-
+#include "EventTarget.h"
 
 
 
@@ -72,10 +74,10 @@ void APlayer::BeginPlay()
     FSM.CreateState(APlayer::APlayerState::WALK, std::bind(&APlayer::Walk, this, std::placeholders::_1),
         [this]()
         {
-            SpriteRenderer->ChangeAnimation("Walk" + DirString[static_cast<int>(CurDir)]);        
+            SpriteRenderer->ChangeAnimation("Walk" + DirString[static_cast<int>(CurDir)]);
         }
     );
-
+    
     FSM.ChangeState(APlayerState::IDLE);
 
 }
@@ -84,11 +86,221 @@ void APlayer::BeginPlay()
 void APlayer::Tick(float _DeltaTime)
 {
     Super::Tick(_DeltaTime);
-    PlayerCameraCheck();
-    PlayerDebugCheck(_DeltaTime);
-    StateUpdate(_DeltaTime);
+
+    // 이동 중인지 확인하고, Lerp로 이동할 목표 설정
+    if (bIsMoving)
+    {
+        FVector2D TargetLocation = GetTargetLocation();
+        FVector2D CurrentLocation = GetActorLocation();
+
+        // Lerp로 부드럽게 이동
+        FVector2D NewLocation = UPokemonMath::Lerp(CurrentLocation, TargetLocation, WalkSpeed * _DeltaTime);
+
+        // 목표에 가까워지면 위치를 정확히 설정하고 이동 종료
+        if ((NewLocation - TargetLocation).Length() < 1.0f)
+        {
+            NewLocation = TargetLocation;
+            bIsMoving = false; // 이동 종료
+        }
+
+        SetActorLocation(NewLocation);
+    }
+
+    FSM.Update(_DeltaTime);
 }
 
+
+void APlayer::Idle(float _DeltaTime)
+{
+    PlayerCameraCheck();
+    PlayerDebugCheck(_DeltaTime);
+
+    //버튼을 눌렀을 때
+    if (true == UEngineInput::GetInst().IsPress('W'))
+    {
+        CurDir = EPlayerDir::UP;
+        ChangeState(APlayerState::WALK);
+        FSM.ChangeState(APlayerState::WALK);
+        return;
+
+    }
+    if (true == UEngineInput::GetInst().IsPress('A'))
+    {
+        CurDir = EPlayerDir::LEFT;
+        ChangeState(APlayerState::WALK);
+        FSM.ChangeState(APlayerState::WALK);
+        return;
+
+    }
+    if (true == UEngineInput::GetInst().IsPress('S'))
+    {
+        CurDir = EPlayerDir::DOWN;
+        ChangeState(APlayerState::WALK);
+        FSM.ChangeState(APlayerState::WALK);
+        return;
+
+    }
+    if (true == UEngineInput::GetInst().IsPress('D'))
+    {
+        CurDir = EPlayerDir::RIGHT;
+        ChangeState(APlayerState::WALK);
+        FSM.ChangeState(APlayerState::WALK);
+        return;
+
+    }
+        
+}
+
+
+
+void APlayer::Walk(float _DeltaTime) // 움직임
+{
+    PlayerCameraCheck();
+    PlayerDebugCheck(_DeltaTime);
+
+    FVector2D MoveDirection = FVector2D::ZERO;
+    FVector2D TargetLocation = GetActorLocation();
+
+    if (true == UEngineInput::GetInst().IsPress('D'))
+    {
+        MoveDirection += FVector2D::RIGHT;
+        UEngineDebug::CoreOutPutString("Moving Right");
+        TargetLocation.X += 96; 
+    }
+    if (true == UEngineInput::GetInst().IsPress('A'))
+    {
+        MoveDirection += FVector2D::LEFT;
+        UEngineDebug::CoreOutPutString("Moving Left");
+        TargetLocation.X -= 96; 
+    }
+    if (true == UEngineInput::GetInst().IsPress('S'))
+    {
+        MoveDirection += FVector2D::DOWN;
+        UEngineDebug::CoreOutPutString("Moving Down");
+        TargetLocation.Y += 96; 
+    }
+    if (true == UEngineInput::GetInst().IsPress('W'))
+    {
+        MoveDirection += FVector2D::UP;
+        UEngineDebug::CoreOutPutString("Moving Up");
+        TargetLocation.Y -= 96; 
+    }
+
+    SetTargetLocation(TargetLocation);
+    bIsMoving = true;
+
+
+    if (true == UEngineInput::GetInst().IsUp('W'))
+    {
+        CurDir = EPlayerDir::UP;
+        ChangeState(APlayerState::IDLE);
+        FSM.ChangeState(APlayerState::IDLE);
+        bIsMoving = false;
+        return;
+
+    }
+    if (true == UEngineInput::GetInst().IsUp('A'))
+    {
+        CurDir = EPlayerDir::LEFT;
+        ChangeState(APlayerState::IDLE);
+        FSM.ChangeState(APlayerState::IDLE);
+        bIsMoving = false;
+        return;
+
+    }
+    if (true == UEngineInput::GetInst().IsUp('S'))
+    {
+        CurDir = EPlayerDir::DOWN;
+        ChangeState(APlayerState::IDLE);
+        FSM.ChangeState(APlayerState::IDLE);
+        bIsMoving = false;
+        return;
+
+    }
+    if (true == UEngineInput::GetInst().IsUp('D'))
+    {
+        CurDir = EPlayerDir::RIGHT;
+        ChangeState(APlayerState::IDLE);
+        FSM.ChangeState(APlayerState::IDLE);
+        bIsMoving = false;
+        return;
+
+    }
+
+
+}
+
+
+void APlayer::ChangeState(APlayerState _CurPlayerState)
+{
+    switch (_CurPlayerState)
+    {
+    case APlayerState::IDLE:
+        IdleStart();
+        break;
+    case APlayerState::WALK:
+        WalkStart();
+        break;
+    default:
+        break;
+    }
+
+    CurPlayerState = _CurPlayerState;
+
+}
+
+void APlayer::IdleStart()
+{
+    if (true == UEngineInput::GetInst().IsUp('D'))
+    {
+        SpriteRenderer->ChangeAnimation("Idle_Right");
+        return;
+    }
+    if (true == UEngineInput::GetInst().IsUp('A'))
+    {
+        SpriteRenderer->ChangeAnimation("Idle_Left");
+        return;
+    }
+    if (true == UEngineInput::GetInst().IsUp('S'))
+    {
+        SpriteRenderer->ChangeAnimation("Idle_Down");
+        return;
+    }
+    if (true == UEngineInput::GetInst().IsUp('W'))
+    {
+        SpriteRenderer->ChangeAnimation("Idle_Up");
+        return;
+    }
+
+    
+    
+}
+
+
+void APlayer::WalkStart()
+{
+    if (true == UEngineInput::GetInst().IsPress('D'))
+    {
+        SpriteRenderer->ChangeAnimation("Walk_Right");
+        return;
+    }
+    if (true == UEngineInput::GetInst().IsPress('A'))
+    {
+        SpriteRenderer->ChangeAnimation("Walk_Left");
+        return;
+    }
+    if (true == UEngineInput::GetInst().IsPress('S'))
+    {
+        SpriteRenderer->ChangeAnimation("Walk_Down");
+        return;
+    }
+    if (true == UEngineInput::GetInst().IsPress('W'))
+    {
+        SpriteRenderer->ChangeAnimation("Walk_Up");
+        return;
+    }
+    
+}
 
 void APlayer::LevelChangeStart()
 {
@@ -105,9 +317,18 @@ void APlayer::LevelChangeEnd()
 void APlayer::PlayerCameraCheck()
 {
     FVector2D Size = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
-    FVector2D MapEnd = MapSize - Size;
     GetWorld()->SetCameraPos(GetActorLocation() - Size.Half());
+    MapSizeCheck(Size);
+  
+}
+
+void APlayer::MapSizeCheck(FVector2D _Size)
+{
+   
+    FVector2D MapEnd = MapSize - _Size;
     FVector2D CamPos = GetWorld()->GetCameraPos();
+    FVector2D ActorLocation = GetActorLocation();
+
     if (0 >= CamPos.X)
     {
         CamPos.X = 0.0f;
@@ -118,7 +339,7 @@ void APlayer::PlayerCameraCheck()
     }
     if (0 >= MapEnd.X)
     {
-        CamPos.X = MapSize.Half().X - Size.Half().X;
+        CamPos.X = MapSize.Half().X - _Size.Half().X;
     }
     if (0 >= CamPos.Y)
     {
@@ -127,202 +348,66 @@ void APlayer::PlayerCameraCheck()
     if (MapEnd.Y <= CamPos.Y)
     {
         CamPos.Y = MapEnd.Y;
-    }if (0 >= MapEnd.Y)
+    }
+    if (0 >= MapEnd.Y)
     {
-        CamPos.Y = MapSize.Half().Y - Size.Half().Y;
+        CamPos.Y = MapSize.Half().Y - _Size.Half().Y;
     }
 
+    if (ActorLocation.X < 0)
+    {
+        ActorLocation.X = 0;
+    }
+    if (ActorLocation.X > MapSize.X)
+    {
+        ActorLocation.X = MapSize.X;
+    }
+
+    if (ActorLocation.Y < 0)
+    {
+        ActorLocation.Y = 0;
+    }
+    if (ActorLocation.Y > MapSize.Y)
+    {
+        ActorLocation.Y = MapSize.Y;
+    }
+
+    SetActorLocation(ActorLocation);
+
+    GetWorld()->SetCameraPos(CamPos);
 }
+
 void APlayer::PlayerDebugCheck(float _DeltaTime)
 {
     FVector2D CamPos = GetWorld()->GetCameraPos();
     UEngineDebug::CoreOutPutString("FPS : " + std::to_string(1.0f / _DeltaTime));
-    UEngineDebug::CoreOutPutString("PlayerPos : " + GetActorLocation().operator/(96).ToString());
+    UEngineDebug::CoreOutPutString("PlayerPos : " + std::to_string(GetActorLocation().iX() / 96) + ", " + std::to_string(GetActorLocation().iY() / 96));
     UEngineDebug::CoreOutPutString("CamPos : " + CamPos.ToString());
-}
-
-void APlayer::StateUpdate(float _DeltaTime)
-{
-    switch (State)
-    {
-    case APlayerState::NONE:
-        StateChange(APlayer::APlayerState::IDLE);
-        FSM.Update(_DeltaTime);
-        break;
-    case APlayerState::IDLE:
-        Idle(_DeltaTime);
-        FSM.Update(_DeltaTime);
-        break;
-    case APlayerState::WALK:
-        
-        Walk(_DeltaTime);
-        FSM.Update(_DeltaTime);
-        break;
-
-    default:
-        break;
-    }
-}
-void APlayer::StateChange(APlayer::APlayerState _State)
-{
-    switch (_State)
-    {
-    case APlayer::APlayerState::NONE:
-
-        break;
-    case APlayer::APlayerState::IDLE:
-
-        IdleStart();
-
-        break;
-    case APlayer::APlayerState::WALK:
-
-        WalkStart();
-
-        break;
-        
-    }
-}
-
-void APlayer::Walk(float _DeltaTime)
-{
-    PlayerCameraCheck();
-
-   // FVector2D Vector = FVector2D::ZERO;
-
-    if (true == UEngineInput::GetInst().IsDown('D'))
-    {
-        CurDir = EPlayerDir::RIGHT;
-        FSM.ChangeState(APlayerState::WALK);
-        PlayerLerp(CurDir, _DeltaTime);
-    }
-    if (true == UEngineInput::GetInst().IsDown('A'))
-    {
-        CurDir = EPlayerDir::LEFT;
-        FSM.ChangeState(APlayerState::WALK);
-        PlayerLerp(CurDir, _DeltaTime);
-    }
-    //초기값 셋팅을 잘해야 할듯
-    if (true == UEngineInput::GetInst().IsDown('S'))
-    {
-        CurDir = EPlayerDir::DOWN;
-        FSM.ChangeState(APlayerState::WALK);
-        PlayerLerp(CurDir, _DeltaTime);
-    }
-    if (true == UEngineInput::GetInst().IsDown('W'))
-    {
-        CurDir = EPlayerDir::UP;
-        FSM.ChangeState(APlayerState::WALK);
-        PlayerLerp(CurDir, _DeltaTime);
-    }
-
-    //  AddActorLocation(Vector * _DeltaTime * WalkSpeed);
-    
 
 
-    if (false == UEngineInput::GetInst().IsPress('A') &&
-        false == UEngineInput::GetInst().IsPress('D') &&
-        false == UEngineInput::GetInst().IsPress('W') &&
-        false == UEngineInput::GetInst().IsPress('S'))
-    {
-        FSM.ChangeState(APlayerState::IDLE);
-        return;
-    }
+    FVector2D Size = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
+    FVector2D NewCameraPos = GetActorLocation() - Size.Half();
 
-    
+    // 카메라 위치를 부드럽게 이동
+    GetWorld()->SetCameraPos(UPokemonMath::Lerp(GetWorld()->GetCameraPos(), NewCameraPos, WalkSpeed * 0.5f));
+    MapSizeCheck(Size);
 
 }
-
-
-void APlayer::Idle(float _DeltaTime)
-{
-    PlayerCameraCheck();
-
-     APlayer::EPlayerDir CurKeyDir = APlayer::GetPressDirection();
-
-     if (CurDir == CurKeyDir)
-     {
-         StateChange(APlayerState::WALK);
-     }
-     else if (CurDir != CurKeyDir)
-     {
-         CurDir = CurKeyDir;
-         StateChange(APlayerState::WALK);
-     }
-}
-
 
 
 
 void APlayer::SetObject()
 {
-    FVector2D WindowSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
-    GetWorld()->SetCameraPos(GetActorLocation() - WindowSize.Half());
+    PlayerCameraCheck();
     GetWorld()->SetCameraToMainPawn(false);
     SpriteRenderer->SetOrder(ERenderOrder::PLAYER);
 
     AGameMode* Curmode = UEngineAPICore::GetCore()->GetCurLevel()->GetGameMode();
     SpriteMapRenderer = Curmode->Map;
     MapSize = SpriteMapRenderer->GetComponentScale();
-    CurPos = { MapSize.Half().ConvertToPoint().X , MapSize.Half().ConvertToPoint().Y};
-    
-    SetActorLocation(CurPos);
-    
-    
-    State = APlayerState::NONE;
-}
-
-
-void APlayer::IdleStart()
-{
-    if (true == UEngineInput::GetInst().IsDown('W'))
-    {
-        SpriteRenderer->ChangeAnimation("IDLE_UP");
-        FSM.ChangeState(APlayerState::WALK);
-        return;
-    }
-    else if (true == UEngineInput::GetInst().IsDown('A'))
-    {
-        SpriteRenderer->ChangeAnimation("IDLE_LEFT");
-        FSM.ChangeState(APlayerState::WALK);
-        return;
-    }
-    else if (true == UEngineInput::GetInst().IsDown('S'))
-    {
-        SpriteRenderer->ChangeAnimation("IDLE_DOWN");
-        FSM.ChangeState(APlayerState::WALK);
-        return;
-    }
-    else if (true == UEngineInput::GetInst().IsDown('D'))
-    {
-        SpriteRenderer->ChangeAnimation("IDLE_RIGHT");
-        FSM.ChangeState(APlayerState::WALK);
-        return;
-    }
-}
-
-void APlayer::WalkStart()
-{
-    if (true == UEngineInput::GetInst().IsUp('W'))
-    {
-        SpriteRenderer->ChangeAnimation("Walk_Up");
-        return;
-    }
-    else if (true == UEngineInput::GetInst().IsUp('A'))
-    {
-        SpriteRenderer->ChangeAnimation("Walk_Left");
-        return;
-    }
-    else if (true == UEngineInput::GetInst().IsUp('S'))
-    {
-        SpriteRenderer->ChangeAnimation("WALK_Down");
-        return;
-    }
-    else if (true == UEngineInput::GetInst().IsUp('D'))
-    {
-        SpriteRenderer->ChangeAnimation("Walk_Right");
-
-    }
+    SpriteRenderer->SetComponentLocation({ 48, 24 });
+    FTileVector startPos = { 92, 70 };
+    SetActorLocation(startPos.ToFVector());
 }
 
 
@@ -351,32 +436,17 @@ APlayer::EPlayerDir APlayer::GetPressDirection()
     return NextDirection;
 }
 
-void APlayer::PlayerLerp(EPlayerDir _DIr, float _DeltaTime)
+
+
+
+// 목표 위치 설정 함수
+void APlayer::SetTargetLocation(const FVector2D& NewTarget)
 {
-    PrevPos = GetActorLocation();
-    
-    switch (_DIr)
-    {
-    case APlayer::EPlayerDir::LEFT:
-        NextPos = PrevPos + (FVector2D::LEFT * 96);
-        break;
-    case APlayer::EPlayerDir::RIGHT:
-        NextPos = PrevPos + (FVector2D::RIGHT * 96);
-        break;
-    case APlayer::EPlayerDir::UP:
-        NextPos = PrevPos + (FVector2D::UP * 96);
-        break;
-    case APlayer::EPlayerDir::DOWN:
-        NextPos = PrevPos + (FVector2D::DOWN * 96);
-        break;
-    default:
-        break;
-    }
+    TargetLocation = NewTarget;
+}
 
-    CurWalkTime -= _DeltaTime;
-    float t = (WalkTime - CurWalkTime) / WalkTime;
-
-    FVector2D TargetPos = UPokemonMath::Lerp(PrevPos, NextPos, t);
-    SetActorLocation(TargetPos);
-
+// 목표 위치 반환 함수
+FVector2D APlayer::GetTargetLocation() const
+{
+    return TargetLocation;
 }

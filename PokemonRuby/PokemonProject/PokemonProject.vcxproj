@@ -19,6 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EventTarget.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Flower.h">
       <SubType>
       </SubType>
@@ -143,6 +147,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="EventTarget.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Flower.cpp">
       <SubType>
       </SubType>

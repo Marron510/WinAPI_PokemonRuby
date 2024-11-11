@@ -58,6 +58,9 @@
     <Filter Include="PokemonObject\4.TIleObject">
       <UniqueIdentifier>{e19c172b-03ac-4ba7-bdfb-5b2d3fd3daa3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PokemonObject\5.Event">
+      <UniqueIdentifier>{afaf515f-82ab-4a02-b4db-e8d0d4565d01}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PokemonCore.h">
@@ -168,6 +171,9 @@
     <ClInclude Include="TItleMap.h">
       <Filter>Play</Filter>
     </ClInclude>
+    <ClInclude Include="EventTarget.h">
+      <Filter>PokemonObject\5.Event</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PokemonCore.cpp">
@@ -277,6 +283,9 @@
     </ClCompile>
     <ClCompile Include="TItleMap.cpp">
       <Filter>Play</Filter>
+    </ClCompile>
+    <ClCompile Include="EventTarget.cpp">
+      <Filter>PokemonObject\5.Event</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

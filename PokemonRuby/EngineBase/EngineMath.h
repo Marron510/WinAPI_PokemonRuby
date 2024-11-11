@@ -93,6 +93,8 @@ public:
 		return;
 	}
 
+
+
 	float Dot(const FVector2D& other) const
 	{
 		return X * other.X + Y * other.Y;
