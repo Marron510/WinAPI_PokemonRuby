@@ -31,10 +31,10 @@ APlayer::APlayer()
 
         SpriteRenderer->SetComponentScale({ 300, 300 });
 
-        SpriteRenderer->CreateAnimation("Walk_Up", "Player_Walk_Up.png", 0, 4, 0.3f);
-        SpriteRenderer->CreateAnimation("Walk_Down", "Player_Walk_Down.png", 0, 4, 0.3f);
-        SpriteRenderer->CreateAnimation("Walk_Right", "Player_Walk_Right.png", 0, 4, 0.3f);
-        SpriteRenderer->CreateAnimation("Walk_Left", "Player_Walk_Left.png", 0, 4, 0.3f);
+        SpriteRenderer->CreateAnimation("Walk_Up", "Player_Walk_Up.png", 0, 4, 0.24f);
+        SpriteRenderer->CreateAnimation("Walk_Down", "Player_Walk_Down.png", 0, 4, 0.24f);
+        SpriteRenderer->CreateAnimation("Walk_Right", "Player_Walk_Right.png", 0, 4, 0.24f);
+        SpriteRenderer->CreateAnimation("Walk_Left", "Player_Walk_Left.png", 0, 4, 0.24f);
 
 
 
@@ -82,19 +82,44 @@ void APlayer::BeginPlay()
 
 }
 
-
+//
+//void APlayer::Tick(float _DeltaTime)
+//{
+//    Super::Tick(_DeltaTime);
+//
+//    // 이동 중일 때
+//    if (bIsMoving)
+//    {
+//        FVector2D TargetLocation = GetTargetLocation();
+//        FVector2D CurrentLocation = GetActorLocation();
+//
+//        // Lerp로 부드럽게 이동
+//        FVector2D NewLocation = UPokemonMath::Lerp(CurrentLocation, TargetLocation, WalkSpeed * _DeltaTime);
+//
+//        // 목표에 가까워지면 위치를 정확히 설정하고 이동 종료
+//        if ((NewLocation - TargetLocation).Length() < 1.0f)
+//        {
+//            NewLocation = TargetLocation;
+//            bIsMoving = false; // 이동 종료
+//        }
+//
+//        SetActorLocation(NewLocation);
+//    }
+//
+//    FSM.Update(_DeltaTime);
+//}
 void APlayer::Tick(float _DeltaTime)
 {
     Super::Tick(_DeltaTime);
 
-    // 이동 중인지 확인하고, Lerp로 이동할 목표 설정
+    // 이동 중일 때
     if (bIsMoving)
     {
         FVector2D TargetLocation = GetTargetLocation();
         FVector2D CurrentLocation = GetActorLocation();
 
-        // Lerp로 부드럽게 이동
-        FVector2D NewLocation = UPokemonMath::Lerp(CurrentLocation, TargetLocation, WalkSpeed * _DeltaTime);
+        // Lerp로 부드럽게 이동 (1초에 한 타일 이동)
+        FVector2D NewLocation = UPokemonMath::Lerp(CurrentLocation, TargetLocation, _DeltaTime);
 
         // 목표에 가까워지면 위치를 정확히 설정하고 이동 종료
         if ((NewLocation - TargetLocation).Length() < 1.0f)
@@ -110,50 +135,95 @@ void APlayer::Tick(float _DeltaTime)
 }
 
 
+//
+//void APlayer::Idle(float _DeltaTime)
+//{
+//    PlayerCameraCheck();
+//    PlayerDebugCheck(_DeltaTime);
+//
+//    // 버튼을 눌렀을 때 이동 시작
+//    if (true == UEngineInput::GetInst().IsPress('W') && !bIsMoving)
+//    {
+//        CurDir = EPlayerDir::UP;
+//        FVector2D CurrentLocation = GetActorLocation();
+//        SetTargetLocation(CurrentLocation + FVector2D(0, -96));  // 위로 한 타일
+//        bIsMoving = true;
+//        FSM.ChangeState(APlayerState::WALK);  // 이동 상태로 변경
+//        return;
+//    }
+//    if (true == UEngineInput::GetInst().IsPress('A') && !bIsMoving)
+//    {
+//        CurDir = EPlayerDir::LEFT;
+//        FVector2D CurrentLocation = GetActorLocation();
+//        SetTargetLocation(CurrentLocation + FVector2D(-96, 0));  // 왼쪽으로 한 타일
+//        bIsMoving = true;
+//        FSM.ChangeState(APlayerState::WALK);  // 이동 상태로 변경
+//        return;
+//    }
+//    if (true == UEngineInput::GetInst().IsPress('S') && !bIsMoving)
+//    {
+//        CurDir = EPlayerDir::DOWN;
+//        FVector2D CurrentLocation = GetActorLocation();
+//        SetTargetLocation(CurrentLocation + FVector2D(0, 96));  // 아래로 한 타일
+//        bIsMoving = true;
+//        FSM.ChangeState(APlayerState::WALK);  // 이동 상태로 변경
+//        return;
+//    }
+//    if (true == UEngineInput::GetInst().IsPress('D') && !bIsMoving)
+//    {
+//        CurDir = EPlayerDir::RIGHT;
+//        FVector2D CurrentLocation = GetActorLocation();
+//        SetTargetLocation(CurrentLocation + FVector2D(96, 0));  // 오른쪽으로 한 타일
+//        bIsMoving = true;
+//        FSM.ChangeState(APlayerState::WALK);  // 이동 상태로 변경
+//        return;
+//    }
+//}
 void APlayer::Idle(float _DeltaTime)
 {
     PlayerCameraCheck();
     PlayerDebugCheck(_DeltaTime);
 
-    //버튼을 눌렀을 때
-    if (true == UEngineInput::GetInst().IsPress('W'))
+    // 이동을 시작할 때
+    if (!bIsMoving)
     {
-        CurDir = EPlayerDir::UP;
-        ChangeState(APlayerState::WALK);
-        FSM.ChangeState(APlayerState::WALK);
-        return;
+        FVector2D CurrentLocation = GetActorLocation();
 
+        if (UEngineInput::GetInst().IsPress('W'))
+        {
+            CurDir = EPlayerDir::UP;
+            SetTargetLocation(CurrentLocation + FVector2D(0, -96));  // 위로 한 타일
+            bIsMoving = true;
+            FSM.ChangeState(APlayerState::WALK);  // 이동 상태로 변경
+        }
+        else if (UEngineInput::GetInst().IsPress('A'))
+        {
+            CurDir = EPlayerDir::LEFT;
+            SetTargetLocation(CurrentLocation + FVector2D(-96, 0));  // 왼쪽으로 한 타일
+            bIsMoving = true;
+            FSM.ChangeState(APlayerState::WALK);  // 이동 상태로 변경
+        }
+        else if (UEngineInput::GetInst().IsPress('S'))
+        {
+            CurDir = EPlayerDir::DOWN;
+            SetTargetLocation(CurrentLocation + FVector2D(0, 96));  // 아래로 한 타일
+            bIsMoving = true;
+            FSM.ChangeState(APlayerState::WALK);  // 이동 상태로 변경
+        }
+        else if (UEngineInput::GetInst().IsPress('D'))
+        {
+            CurDir = EPlayerDir::RIGHT;
+            SetTargetLocation(CurrentLocation + FVector2D(96, 0));  // 오른쪽으로 한 타일
+            bIsMoving = true;
+            FSM.ChangeState(APlayerState::WALK);  // 이동 상태로 변경
+        }
     }
-    if (true == UEngineInput::GetInst().IsPress('A'))
-    {
-        CurDir = EPlayerDir::LEFT;
-        ChangeState(APlayerState::WALK);
-        FSM.ChangeState(APlayerState::WALK);
-        return;
-
-    }
-    if (true == UEngineInput::GetInst().IsPress('S'))
-    {
-        CurDir = EPlayerDir::DOWN;
-        ChangeState(APlayerState::WALK);
-        FSM.ChangeState(APlayerState::WALK);
-        return;
-
-    }
-    if (true == UEngineInput::GetInst().IsPress('D'))
-    {
-        CurDir = EPlayerDir::RIGHT;
-        ChangeState(APlayerState::WALK);
-        FSM.ChangeState(APlayerState::WALK);
-        return;
-
-    }
-        
 }
 
 
 
-void APlayer::Walk(float _DeltaTime) // 움직임
+
+void APlayer::Walk(float _DeltaTime)
 {
     PlayerCameraCheck();
     PlayerDebugCheck(_DeltaTime);
@@ -164,71 +234,41 @@ void APlayer::Walk(float _DeltaTime) // 움직임
     if (true == UEngineInput::GetInst().IsPress('D'))
     {
         MoveDirection += FVector2D::RIGHT;
-        UEngineDebug::CoreOutPutString("Moving Right");
-        TargetLocation.X += 96; 
+        TargetLocation.X += 96;  // 오른쪽으로 한 타일 이동
+        CurDir = EPlayerDir::RIGHT;
     }
     if (true == UEngineInput::GetInst().IsPress('A'))
     {
         MoveDirection += FVector2D::LEFT;
-        UEngineDebug::CoreOutPutString("Moving Left");
-        TargetLocation.X -= 96; 
+        TargetLocation.X -= 96;  // 왼쪽으로 한 타일 이동
+        CurDir = EPlayerDir::LEFT;
     }
     if (true == UEngineInput::GetInst().IsPress('S'))
     {
         MoveDirection += FVector2D::DOWN;
-        UEngineDebug::CoreOutPutString("Moving Down");
-        TargetLocation.Y += 96; 
+        TargetLocation.Y += 96;  // 아래로 한 타일 이동
+        CurDir = EPlayerDir::DOWN;
     }
     if (true == UEngineInput::GetInst().IsPress('W'))
     {
         MoveDirection += FVector2D::UP;
-        UEngineDebug::CoreOutPutString("Moving Up");
-        TargetLocation.Y -= 96; 
+        TargetLocation.Y -= 96;  // 위로 한 타일 이동
+        CurDir = EPlayerDir::UP;
     }
 
     SetTargetLocation(TargetLocation);
     bIsMoving = true;
 
-
-    if (true == UEngineInput::GetInst().IsUp('W'))
+    // 이동 완료 시 상태 변경
+    if (true == UEngineInput::GetInst().IsUp('W') || true == UEngineInput::GetInst().IsUp('A') ||
+        true == UEngineInput::GetInst().IsUp('S') || true == UEngineInput::GetInst().IsUp('D'))
     {
-        CurDir = EPlayerDir::UP;
         ChangeState(APlayerState::IDLE);
         FSM.ChangeState(APlayerState::IDLE);
         bIsMoving = false;
-        return;
-
     }
-    if (true == UEngineInput::GetInst().IsUp('A'))
-    {
-        CurDir = EPlayerDir::LEFT;
-        ChangeState(APlayerState::IDLE);
-        FSM.ChangeState(APlayerState::IDLE);
-        bIsMoving = false;
-        return;
-
-    }
-    if (true == UEngineInput::GetInst().IsUp('S'))
-    {
-        CurDir = EPlayerDir::DOWN;
-        ChangeState(APlayerState::IDLE);
-        FSM.ChangeState(APlayerState::IDLE);
-        bIsMoving = false;
-        return;
-
-    }
-    if (true == UEngineInput::GetInst().IsUp('D'))
-    {
-        CurDir = EPlayerDir::RIGHT;
-        ChangeState(APlayerState::IDLE);
-        FSM.ChangeState(APlayerState::IDLE);
-        bIsMoving = false;
-        return;
-
-    }
-
-
 }
+
 
 
 void APlayer::ChangeState(APlayerState _CurPlayerState)
@@ -279,28 +319,24 @@ void APlayer::IdleStart()
 
 void APlayer::WalkStart()
 {
-    if (true == UEngineInput::GetInst().IsPress('D'))
+    if (CurDir == EPlayerDir::RIGHT)
     {
         SpriteRenderer->ChangeAnimation("Walk_Right");
-        return;
     }
-    if (true == UEngineInput::GetInst().IsPress('A'))
+    else if (CurDir == EPlayerDir::LEFT)
     {
         SpriteRenderer->ChangeAnimation("Walk_Left");
-        return;
     }
-    if (true == UEngineInput::GetInst().IsPress('S'))
+    else if (CurDir == EPlayerDir::DOWN)
     {
         SpriteRenderer->ChangeAnimation("Walk_Down");
-        return;
     }
-    if (true == UEngineInput::GetInst().IsPress('W'))
+    else if (CurDir == EPlayerDir::UP)
     {
         SpriteRenderer->ChangeAnimation("Walk_Up");
-        return;
     }
-    
 }
+
 
 void APlayer::LevelChangeStart()
 {
