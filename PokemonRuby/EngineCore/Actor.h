@@ -23,10 +23,11 @@ public:
 
 	virtual void BeginPlay() {}
 
-	virtual void Tick(float _DeltaTime) {}
+	virtual void Tick(float _DeltaTime);
 
 	virtual void LevelChangeStart() {}
 	virtual void LevelChangeEnd() {}
+
 	class ULevel* GetWorld()
 	{
 		return World;
@@ -58,16 +59,14 @@ public:
 		ComponentType* NewComponent = new ComponentType();
 
 		UActorComponent* ComponentPtr = dynamic_cast<UActorComponent*>(NewComponent);
-		
 		ComponentPtr->ParentActor = this;
-		
+
 		Components.push_back(NewComponent);
 
 		ComponentList.push_back(NewComponent);
 		return NewComponent;
-	};
+	}
 
-	
 
 protected:
 
@@ -78,6 +77,7 @@ private:
 	static std::list<class UActorComponent*> ComponentList;
 
 	void ReleaseCheck(float _DeltaTime) override;
+	void ReleaseTimeCheck(float _DeltaTime) override;
 
 	class ULevel* World = nullptr;
 	FTransform Transform;

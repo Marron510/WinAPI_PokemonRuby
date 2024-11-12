@@ -1,12 +1,34 @@
 #pragma once
 
-
 class UEngineMath
 {
 public:
 	static float Sqrt(float _Value)
 	{
 		return ::sqrtf(_Value);
+	}
+
+	template <typename DataType>
+	DataType ClampMax(DataType value, DataType maxValue)
+	{
+		return (value > maxValue) ? maxValue : value;
+	}
+
+	template <typename DataType>
+	DataType ClampMin(DataType value, DataType minValue)
+	{
+		return (value < minValue) ? minValue : value;
+	}
+
+	template <typename DataType>
+	DataType Clamp(DataType value, DataType minValue, DataType maxValue)
+	{
+		if (value < minValue)
+			return minValue;
+		else if (value > maxValue)
+			return maxValue;
+		else
+			return value;
 	}
 };
 
@@ -36,8 +58,7 @@ public:
 	{
 
 	}
-	
-	
+
 	FVector2D(long _X, long _Y) : X(static_cast<float>(_X)), Y(static_cast<float>(_Y))
 	{
 
@@ -53,9 +74,14 @@ public:
 		return static_cast<int>(Y);
 	}
 
-	int Toint() const
+	float hX() const
 	{
-		return static_cast<int>(X) & static_cast<int>(Y);
+		return X * 0.5f;
+	}
+
+	float hY() const
+	{
+		return Y * 0.5f;
 	}
 
 	bool IsZeroed() const
@@ -68,7 +94,6 @@ public:
 		return { X * 0.5f, Y * 0.5f };
 	}
 
-	// 빗변의 길이입니다.
 	float Length() const
 	{
 		return UEngineMath::Sqrt(X * X + Y * Y);
@@ -92,8 +117,6 @@ public:
 		}
 		return;
 	}
-
-
 
 	float Dot(const FVector2D& other) const
 	{
@@ -123,7 +146,7 @@ public:
 		return *this;
 	}
 
-	
+
 	FVector2D operator-(FVector2D _Other) const
 	{
 		FVector2D Result;
@@ -156,6 +179,7 @@ public:
 		return Result;
 	}
 
+	// ture가 나오는 
 	bool operator==(FVector2D _Other) const
 	{
 		return X == _Other.X && Y == _Other.Y;
@@ -185,34 +209,62 @@ public:
 		Stream += "]";
 		return Stream;
 	}
+};
 
-	std::string IntToString()
-	{
-		std::string Stream;
-
-		Stream += "X : [";
-		Stream += std::to_string(static_cast<int>(X));
-		Stream += "] Y : [";
-		Stream += std::to_string(static_cast<int>(Y));
-		Stream += "]";
-		return Stream;
-	}
+enum class ECollisionType
+{
+	Point,
+	Rect,
+	CirCle,
+	Max
 };
 
 class FTransform
 {
+private:
+	friend class CollisionFunctionInit;
+
+	static std::function<bool(const FTransform&, const FTransform&)> AllCollisionFunction[static_cast<int>(ECollisionType::Max)][static_cast<int>(ECollisionType::Max)];
+
 public:
+	static bool Collision(ECollisionType _LeftType, const FTransform& _Left, ECollisionType _RightType, const FTransform& _Right);
+
+	static bool RectToRect(const FTransform& _Left, const FTransform& _Right);
+
+	static bool CirCleToCirCle(const FTransform& _Left, const FTransform& _Right);
+
 	FVector2D Scale;
 	FVector2D Location;
+
 
 	FVector2D CenterLeftTop() const
 	{
 		return Location - Scale.Half();
 	}
 
+	float CenterLeft() const
+	{
+		return Location.X - Scale.hX();
+	}
+
+	float CenterTop() const
+	{
+		return Location.Y - Scale.hY();
+	}
+
 	FVector2D CenterRightBottom() const
 	{
 		return Location + Scale.Half();
+	}
+
+	float CenterRight() const
+	{
+		return Location.X + Scale.hX();
+	}
+
+	float CenterBottom() const
+	{
+		return Location.Y + Scale.hY();
 	}
 };
 

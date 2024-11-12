@@ -813,16 +813,17 @@ void APokemonMapMode::Tick(float _DeltaTime)
 
 void APokemonMapMode::LevelChange()
 {
-	FVector2D MainPlayerLocation = UEngineAPICore::GetCore()->GetCurLevel()->GetMainPawn()->GetActorLocation();
+	Mainpawn = UEngineAPICore::GetCore()->GetCurLevel()->GetPawn();
+	FVector2D MainPlayerLocation = Mainpawn->GetActorLocation();
 
 	FTileVector TargetPos1 = { 85, 68 };
-	FTileVector TargetPos1NextLevelPos = { 8, 8 }; // house1 涝备
+	FTileVector TargetPos1NextLevelPos = { 8, 8 }; // house1 免备
 
 	FTileVector TargetPos2 = { 94, 68 };
-	FTileVector TargetPos2NextLevelPos = { 5, 6 }; // house2 涝备
+	FTileVector TargetPos2NextLevelPos = { 1, 8 }; // house2 免备
 
 	FTileVector TargetPos3 = { 87, 76 };
-	FTileVector TargetPos3NextLevelPos = { 5, 6 }; // 楷备家 涝备
+	FTileVector TargetPos3NextLevelPos = { 6, 12 }; // 楷备家 免备
 
 
 	if (MainPlayerLocation == TargetPos1.ToFVector())
@@ -833,10 +834,16 @@ void APokemonMapMode::LevelChange()
 	if (MainPlayerLocation == TargetPos2.ToFVector())
 	{
 		UEngineAPICore::GetCore()->OpenLevel("PlayerHouse2Floor");
-	}
+		if (UEngineAPICore::GetCore()->GetCurLevel())
+		{
 
-	if (MainPlayerLocation == TargetPos3.ToFVector())
+		}
+	}
+	
+
+	
+	/*if (MainPlayerLocation == TargetPos3.ToFVector())
 	{
 		UEngineAPICore::GetCore()->OpenLevel("LaborProfessorBirch");
-	}
+	}*/
 }

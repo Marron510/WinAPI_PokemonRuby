@@ -31,11 +31,20 @@ void APlayerHouse1FloorMode::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 
-	FVector2D MainPlayerLocation = UEngineAPICore::GetCore()->GetCurLevel()->GetMainPawn()->GetActorLocation();
+	LevelChange();
+}
+
+void APlayerHouse1FloorMode::LevelChange()
+{
+	FVector2D MainPlayerLocation = UEngineAPICore::GetCore()->GetCurLevel()->GetPawn()->GetActorLocation();
 
 	FTileVector TargetPos1 = { 8, 9 };
+	FTileVector TargetPos1NextLevelPos = { 85, 69 }; // house1 출구
 	FTileVector TargetPos2 = { 9, 9 };
+	FTileVector TargetPos2NextLevelPos = { 85, 69 }; // house1 출구
 	FTileVector TargetPos3 = { 8, 2 };
+	FTileVector TargetPos3NextLevelPos = { 1, 2 }; // house1 2층 출구
+
 
 	if (MainPlayerLocation == TargetPos1.ToFVector() || MainPlayerLocation == TargetPos2.ToFVector())
 	{

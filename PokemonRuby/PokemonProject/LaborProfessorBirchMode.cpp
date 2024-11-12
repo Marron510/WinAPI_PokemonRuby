@@ -31,15 +31,20 @@ void ALaborProfessorBirchMode::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 
-	FVector2D MainPlayerLocation = UEngineAPICore::GetCore()->GetCurLevel()->GetMainPawn()->GetActorLocation();
+	LevelChange();
+}
+
+void ALaborProfessorBirchMode::LevelChange()
+{
+	FVector2D MainPlayerLocation = UEngineAPICore::GetCore()->GetCurLevel()->GetPawn()->GetActorLocation();
 
 	FTileVector TargetPos1 = { 6, 13 };
+	FTileVector TargetPos1NextLevelPos = { 87, 77 }; // 楷备家 免备
 	FTileVector TargetPos2 = { 7, 13 };
+	FTileVector TargetPos2NextLevelPos = { 87, 77 }; // 楷备家 免备
 
 	if (MainPlayerLocation == TargetPos1.ToFVector() || MainPlayerLocation == TargetPos2.ToFVector())
 	{
 		UEngineAPICore::GetCore()->OpenLevel("PokemonMap");
 	}
-
-
 }

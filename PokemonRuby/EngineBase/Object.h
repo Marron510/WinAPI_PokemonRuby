@@ -30,6 +30,7 @@ public:
 		Name = _Name.data();
 	}
 
+	// bool IsActive()
 	virtual bool IsActive()
 	{
 		return IsActiveValue && false == IsDestroyValue;
@@ -53,7 +54,7 @@ public:
 		IsDestroyValue = true;
 	}
 
-	virtual void ReleaseCheck(float _DeltaTime)
+	virtual void ReleaseTimeCheck(float _DeltaTime)
 	{
 		if (false == IsDeathTimeCheck)
 		{
@@ -68,11 +69,40 @@ public:
 		}
 	}
 
-	bool SetActive(bool _IsActive)
+	virtual void ReleaseCheck(float _DeltaTime)
+	{
+
+	}
+
+	void SetActive(bool _IsActive)
 	{
 		IsActiveValue = _IsActive;
 	}
 
+	void SetActiveSwitch()
+	{
+		IsActiveValue = !IsActiveValue;
+	}
+
+	bool IsDebug()
+	{
+		return IsDebugValue;
+	}
+
+	void DebugOn()
+	{
+		IsDebugValue = true;
+	}
+
+	void DebugOff()
+	{
+		IsDebugValue = false;
+	}
+
+	void DebugSwitch()
+	{
+		IsDebugValue = !IsDebugValue;
+	}
 
 protected:
 
@@ -85,6 +115,8 @@ private:
 	float CurDeathTime = 0.0f;
 
 	std::string Name;
+
+	bool IsDebugValue = false;
 
 };
 

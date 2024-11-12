@@ -33,9 +33,12 @@ void ATruckMode::Tick(float _DeltaTime)
 	Super::Tick(_DeltaTime);
 	
 	
-	FVector2D MainPlayerLocation = UEngineAPICore::GetCore()->GetCurLevel()->GetMainPawn()->GetActorLocation();
+	FVector2D MainPlayerLocation = UEngineAPICore::GetCore()->GetCurLevel()->GetPawn()->GetActorLocation();
+	
 	FTileVector TargetPos1 = { 5, 2 };
 	FTileVector TargetPos2 = { 5, 3 };
+
+
 	if (MainPlayerLocation == TargetPos1.ToFVector())
 	{
 		UEngineAPICore::GetCore()->OpenLevel("PokemonMap");

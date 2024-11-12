@@ -47,7 +47,11 @@ public:
 	{
 		return CurLevel;
 	}
-
+	
+	ULevel* GetNextLevel()
+	{
+		return NextLevel;
+	}
 	float GetDeltaTime()
 	{
 		return DeltaTimer.GetDeltaTime();

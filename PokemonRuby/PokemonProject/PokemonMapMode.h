@@ -18,11 +18,14 @@ public:
 	void BeginPlay() override;
 
 	void Tick(float _DeltaTime) override;
+
 	void LevelChange();
 
 protected:
 
 private:
+
+	AActor* Mainpawn = nullptr;
 };
 
 

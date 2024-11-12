@@ -28,15 +28,19 @@ void APlayerHouse2Mode::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 
+	LevelChange();
+}
 
 
-	FVector2D MainPlayerLocation = UEngineAPICore::GetCore()->GetCurLevel()->GetMainPawn()->GetActorLocation();
+void APlayerHouse2Mode::LevelChange()
+{
+	FVector2D MainPlayerLocation = UEngineAPICore::GetCore()->GetCurLevel()->GetPawn()->GetActorLocation();
 
 	FTileVector TargetPos1 = { 1, 1 };
+	FTileVector TargetPos1NextLevelPos = { 2, 3 }; // house2floor 계단 입구
 
 	if (MainPlayerLocation == TargetPos1.ToFVector())
 	{
 		UEngineAPICore::GetCore()->OpenLevel("PlayerHouse2Floor");
 	}
-
 }
