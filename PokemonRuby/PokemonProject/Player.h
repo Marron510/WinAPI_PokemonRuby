@@ -70,25 +70,22 @@ protected:
 
 private:
     float WalkSpeed = 0.96;
-    APlayerState CurPlayerState = APlayerState::IDLE;
-
+    float WalkTime = 0.0f;
+    bool IsMoving = false;
+    const float TileMoveTime = 2.4f;
+    
     EPlayerDir CurDir = EPlayerDir::DOWN;
-
-    FVector2D MapSize = FVector2D::ZERO;
-
-    class USpriteRenderer* SpriteRenderer = nullptr;
-    class USpriteRenderer* SpriteMapRenderer = nullptr;
-
-    UFSMStateManager FSM;
-
+    APlayerState CurPlayerState = APlayerState::IDLE;
 
     FVector2D TargetLocation = FVector2D::ZERO;
     FVector2D CurrentDirection = FVector2D::ZERO;
-    bool bIsMoving = false;
-    float WalkTime = 0.0f;
-    const float TileMoveTime = 2.4f;
+
+    class USpriteRenderer* SpriteRenderer = nullptr;
+    class USpriteRenderer* SpriteMapRenderer = nullptr;
+    FVector2D MapSize = FVector2D::ZERO;
+
+    UFSMStateManager FSM;
+    
     FVector2D TileSize = FVector2D(96, 96);
-
-
 };
 

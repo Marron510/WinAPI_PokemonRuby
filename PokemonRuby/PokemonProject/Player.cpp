@@ -86,14 +86,14 @@ void APlayer::Tick(float _DeltaTime)
 {
     Super::Tick(_DeltaTime);
 
-    if (true == bIsMoving)
+    if (true == IsMoving)
     {
         WalkTime += _DeltaTime;
 
         if (WalkTime >= TileMoveTime)
         {
             SetActorLocation(TargetLocation);
-            bIsMoving = false;
+            IsMoving = false;
             WalkTime = 0.0f;
             FSM.ChangeState(APlayerState::IDLE);
         }
@@ -113,12 +113,12 @@ void APlayer::Idle(float _DeltaTime)
     PlayerCameraCheck();
     PlayerDebugCheck(_DeltaTime);
 
-    if (bIsMoving)
+    if (true == IsMoving)
     {
         return;
     }
 
-    if (UEngineInput::GetInst().IsPress('W') && !bIsMoving)
+    if (UEngineInput::GetInst().IsPress('W') && true != IsMoving)
     {
         CurDir = EPlayerDir::UP;
         FVector2D CurrentLocation = GetActorLocation();
@@ -126,7 +126,7 @@ void APlayer::Idle(float _DeltaTime)
         FSM.ChangeState(APlayerState::WALK);
         return;
     }
-    if (UEngineInput::GetInst().IsPress('A') && !bIsMoving)
+    if (UEngineInput::GetInst().IsPress('A') && true != IsMoving)
     {
         CurDir = EPlayerDir::LEFT;
         FVector2D CurrentLocation = GetActorLocation();
@@ -134,7 +134,7 @@ void APlayer::Idle(float _DeltaTime)
         FSM.ChangeState(APlayerState::WALK);
         return;
     }
-    if (UEngineInput::GetInst().IsPress('S') && !bIsMoving)
+    if (UEngineInput::GetInst().IsPress('S') && true != IsMoving)
     {
         CurDir = EPlayerDir::DOWN;
         FVector2D CurrentLocation = GetActorLocation();
@@ -142,7 +142,7 @@ void APlayer::Idle(float _DeltaTime)
         FSM.ChangeState(APlayerState::WALK);
         return;
     }
-    if (UEngineInput::GetInst().IsPress('D') && !bIsMoving)
+    if (UEngineInput::GetInst().IsPress('D') && true != IsMoving)
     {
         CurDir = EPlayerDir::RIGHT;
         FVector2D CurrentLocation = GetActorLocation();
@@ -178,7 +178,7 @@ void APlayer::Walk(float _DeltaTime)
     if ((NewLocation - TargetLocation).Length() < 0.1f)
     {
         NewLocation = TargetLocation;
-        bIsMoving = false;
+        IsMoving = false;
         FSM.ChangeState(APlayerState::IDLE);
     }
 
@@ -269,12 +269,10 @@ void APlayer::PlayerCameraCheck()
     FVector2D Size = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
     GetWorld()->SetCameraPos(GetActorLocation() - Size.Half());
     MapSizeCheck(Size);
-
 }
 
 void APlayer::MapSizeCheck(FVector2D _Size)
 {
-
     FVector2D MapEnd = MapSize - _Size;
     FVector2D CamPos = GetWorld()->GetCameraPos();
     FVector2D ActorLocation = GetActorLocation();
@@ -322,8 +320,6 @@ void APlayer::MapSizeCheck(FVector2D _Size)
         ActorLocation.Y = MapSize.Y;
     }
 
-    // SetActorLocation(ActorLocation);
-
     GetWorld()->SetCameraPos(CamPos);
 }
 
@@ -334,13 +330,11 @@ void APlayer::PlayerDebugCheck(float _DeltaTime)
     UEngineDebug::CoreOutPutString("PlayerPos : " + std::to_string(GetActorLocation().iX() / 96) + ", " + std::to_string(GetActorLocation().iY() / 96));
     UEngineDebug::CoreOutPutString("CamPos : " + CamPos.ToString());
 
-
     FVector2D Size = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
     FVector2D NewCameraPos = GetActorLocation() - Size.Half();
 
     GetWorld()->SetCameraPos(UPokemonMath::Lerp(GetWorld()->GetCameraPos(), NewCameraPos, WalkSpeed * 0.5f));
     MapSizeCheck(Size);
-
 }
 
 
@@ -355,8 +349,6 @@ void APlayer::SetObject()
     SpriteMapRenderer = Curmode->Map;
     MapSize = SpriteMapRenderer->GetComponentScale();
     SpriteRenderer->SetComponentLocation({ 48, 24 });
-    
-    
 }
 
 
@@ -396,7 +388,7 @@ void APlayer::SetTargetLocation(const FVector2D& NewTarget)
     );
 
     TargetLocation = Target;
-    bIsMoving = true;
+    IsMoving = true;
     WalkTime = 0.0f;
     CurrentDirection = TargetLocation - GetActorLocation();
     CurrentDirection.Normalize();
