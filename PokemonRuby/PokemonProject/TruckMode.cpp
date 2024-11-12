@@ -7,7 +7,7 @@
 
 #include "TruckMap.h"
 #include "Player.h"
-
+#include "PokemonMapMode.h"
 
 ATruckMode::ATruckMode()
 {
@@ -23,8 +23,10 @@ ATruckMode::~ATruckMode()
 void ATruckMode::BeginPlay()
 {
 	{
+		FTileVector StartPos = { 2, 2 };
 		ATruckMap* NewActor = GetWorld()->SpawnActor<ATruckMap>();
 		Map = NewActor->GetCurMap();
+		UEngineAPICore::GetCore()->GetCurLevel()->GetPawn()->SetActorLocation(StartPos.ToFVector());
 	}
 }
 
@@ -46,9 +48,11 @@ void ATruckMode::LevelChange()
 	if (MainPlayerLocation == TargetPos1.ToFVector())
 	{
 		UEngineAPICore::GetCore()->OpenLevel("PokemonMap");
+		APokemonMapMode::PokemonMapModeChangePos = { 92 , 70 };
 	}
 	if (MainPlayerLocation == TargetPos2.ToFVector())
 	{
 		UEngineAPICore::GetCore()->OpenLevel("PokemonMap");
+		APokemonMapMode::PokemonMapModeChangePos = { 92 , 70 };
 	}
 }

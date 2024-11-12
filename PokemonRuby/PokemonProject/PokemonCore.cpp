@@ -152,7 +152,7 @@ void PokemonCore::BeginPlay()
 
 
 	
-		UEngineAPICore::GetCore()->OpenLevel("LaborProfessorBirch");
+		UEngineAPICore::GetCore()->OpenLevel("Truck");
 	
 }
 
