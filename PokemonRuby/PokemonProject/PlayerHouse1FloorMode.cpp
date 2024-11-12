@@ -8,6 +8,9 @@
 #include "PokemonMath.h"
 #include "PlayerHouse1FloorMap.h"
 
+#include "PokemonMapMode.h"
+#include "PlayerHouse1Mode.h"
+ 
 FIntPoint APlayerHouse1FloorMode::APlayerHouse1FloorModeChangePos;
 
 APlayerHouse1FloorMode::APlayerHouse1FloorMode()
@@ -44,7 +47,7 @@ void APlayerHouse1FloorMode::LevelChange()
 	FTileVector TargetPos1 = { 8, 9 };
 	FTileVector TargetPos1NextLevelPos = { 85, 69 }; // house1 출구
 	FTileVector TargetPos2 = { 9, 9 };
-	FTileVector TargetPos2NextLevelPos = { 85, 69 }; // house1 출구
+	FTileVector TargetPos2NextLevelPos = { 94 , 69 }; // house1 출구
 	FTileVector TargetPos3 = { 8, 2 };
 	FTileVector TargetPos3NextLevelPos = { 1, 2 }; // house1 2층 출구
 
@@ -52,10 +55,12 @@ void APlayerHouse1FloorMode::LevelChange()
 	if (MainPlayerLocation == TargetPos1.ToFVector() || MainPlayerLocation == TargetPos2.ToFVector())
 	{
 		UEngineAPICore::GetCore()->OpenLevel("PokemonMap");
+		APokemonMapMode::PokemonMapModeChangePos = { 85 , 69 };
 	}
 	if (MainPlayerLocation == TargetPos3.ToFVector())
 	{
 		UEngineAPICore::GetCore()->OpenLevel("PlayerHouse1");
+		APlayerHouse1Mode::PlayerHouse1MapModeChangePos = { 7 , 2 };
 	}
 }
 

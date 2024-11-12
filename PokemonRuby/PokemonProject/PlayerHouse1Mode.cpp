@@ -8,6 +8,8 @@
 #include "PlayerHouse1Map.h"
 #include "Player.h"
 
+#include "PlayerHouse1FloorMode.h"
+
 FIntPoint APlayerHouse1Mode::PlayerHouse1MapModeChangePos;
 
 APlayerHouse1Mode::APlayerHouse1Mode()
@@ -39,13 +41,14 @@ void APlayerHouse1Mode::LevelChange()
 	FVector2D MainPlayerLocation = UEngineAPICore::GetCore()->GetCurLevel()->GetPawn()->GetActorLocation();
 
 
-	FTileVector TargetPos1 = { 1, 1 };
+	FTileVector TargetPos1 = { 7, 1 };
 	FTileVector TargetPos1NextLevelPos = { 8, 3 }; // house1floor 계단 입구
 
 
 	if (MainPlayerLocation == TargetPos1.ToFVector())
 	{
 		UEngineAPICore::GetCore()->OpenLevel("PlayerHouse1Floor");
+		APlayerHouse1FloorMode::APlayerHouse1FloorModeChangePos = { 8 , 3 };
 	}
 
 }

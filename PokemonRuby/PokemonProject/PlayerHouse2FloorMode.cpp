@@ -56,7 +56,7 @@ void APlayerHouse2FloorMode::LevelChange()
 	if (MainPlayerLocation == TargetPos1.ToFVector() || MainPlayerLocation == TargetPos2.ToFVector())
 	{
 		UEngineAPICore::GetCore()->OpenLevel("PokemonMap");
-		APokemonMapMode::PokemonMapModeChangePos = { 85 , 69 };
+		APokemonMapMode::PokemonMapModeChangePos = { 94 , 69 };
 	}
 	if (MainPlayerLocation == TargetPos3.ToFVector())
 	{

@@ -837,6 +837,7 @@ void APokemonMapMode::LevelChange()
 	if (MainPlayerLocation == TargetPos1.ToFVector())
 	{
 		UEngineAPICore::GetCore()->OpenLevel("PlayerHouse1Floor");
+		APlayerHouse1FloorMode::APlayerHouse1FloorModeChangePos = { 8, 8 };
 	}
 
 	if (MainPlayerLocation == TargetPos2.ToFVector())

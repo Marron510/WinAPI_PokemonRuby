@@ -8,6 +8,7 @@
 #include "PlayerHouse2Map.h"
 #include "Player.h"
 
+#include "PlayerHouse2FloorMode.h"
 
 FIntPoint APlayerHouse2Mode::PlayerHouse2MapModeChangePos;
 
@@ -46,6 +47,7 @@ void APlayerHouse2Mode::LevelChange()
 	if (MainPlayerLocation == TargetPos1.ToFVector())
 	{
 		UEngineAPICore::GetCore()->OpenLevel("PlayerHouse2Floor");
+		APlayerHouse2FloorMode::PlayerHouse2FloorMapModeChangePos = { 2 , 3 };
 	}
 }
 
