@@ -3,6 +3,7 @@
 
 enum class ERenderOrder
 {
+	COLLISION = -100,
 	WATER = -20,
 	BACKGROUND = -10,
 	Tile = 0,
@@ -11,3 +12,8 @@ enum class ERenderOrder
 };
 
 
+//enum class EBackGroundCollision
+//{
+//	Player,
+//	CollisionObject
+//};
