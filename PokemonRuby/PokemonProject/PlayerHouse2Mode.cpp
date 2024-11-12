@@ -30,8 +30,11 @@ void APlayerHouse2Mode::Tick(float _DeltaTime)
 
 
 
+	FVector2D MainPlayerLocation = UEngineAPICore::GetCore()->GetCurLevel()->GetMainPawn()->GetActorLocation();
 
-	if (true == UEngineInput::GetInst().IsDown('R'))
+	FTileVector TargetPos1 = { 1, 1 };
+
+	if (MainPlayerLocation == TargetPos1.ToFVector())
 	{
 		UEngineAPICore::GetCore()->OpenLevel("PlayerHouse2Floor");
 	}

@@ -6,6 +6,8 @@
 #include <EngineCore/Level.h>
 
 #include <EngineCore/SpriteRenderer.h>
+
+#include "PokemonMath.h"
 #include "PokemonMap.h"
 #include "TileMap.h"
 #include "Flower.h"
@@ -426,7 +428,7 @@ void APokemonMapMode::BeginPlay()
 	}
 
 	// AWater
-{
+	{
 		AWater* newWater1 = GetWorld()->SpawnActor<AWater>();
 		AWater* newWater2 = GetWorld()->SpawnActor<AWater>();
 		AWater* newWater3 = GetWorld()->SpawnActor<AWater>();
@@ -609,8 +611,7 @@ void APokemonMapMode::BeginPlay()
 		AWater* newWater180 = GetWorld()->SpawnActor<AWater>();
 		AWater* newWater181 = GetWorld()->SpawnActor<AWater>();
 		AWater* newWater182 = GetWorld()->SpawnActor<AWater>();
-
-
+	
 		newWater1->SetActorLocationTile({ 70, 22 });
 		newWater2->SetActorLocationTile({ 70, 23 });
 		newWater3->SetActorLocationTile({ 70, 24 });
@@ -792,41 +793,50 @@ void APokemonMapMode::BeginPlay()
 		newWater180->SetActorLocationTile({ 6, 30 });
 		newWater181->SetActorLocationTile({ 6, 31 });
 		newWater182->SetActorLocationTile({ 6, 32 });	
-}
+	}
 
 
 
 	{
 		APokemonMap* NewActor = GetWorld()->SpawnActor<APokemonMap>();
 		Map = NewActor->GetCurMap();
-
-		//Map->GetComponentScale();
-		{
-
-			FIntPoint TileSize;
-			
-			GroundTileMap = GetWorld()->SpawnActor<ATileMap>();
-			GroundTileMap->Create("TileSet", {113, 82}, { 96, 96 });
-			
-
-			for (int y = 0; y < 82; y++)
-			{
-				for (int x = 0; x < 113; x++)
-				{
-					GroundTileMap->SetTileIndex({ x,y }, { 0, 0 }, { 96, 96 }, 0);
-				}
-			}
-		}
 	}
 }
 
 void APokemonMapMode::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
+	
+	LevelChange();
+}
 
-	/*if (true == UEngineInput::GetInst().IsDown('R'))
+
+void APokemonMapMode::LevelChange()
+{
+	FVector2D MainPlayerLocation = UEngineAPICore::GetCore()->GetCurLevel()->GetMainPawn()->GetActorLocation();
+
+	FTileVector TargetPos1 = { 85, 68 };
+	FTileVector TargetPos1NextLevelPos = { 8, 8 }; // house1 涝备
+
+	FTileVector TargetPos2 = { 94, 68 };
+	FTileVector TargetPos2NextLevelPos = { 5, 6 }; // house2 涝备
+
+	FTileVector TargetPos3 = { 87, 76 };
+	FTileVector TargetPos3NextLevelPos = { 5, 6 }; // 楷备家 涝备
+
+
+	if (MainPlayerLocation == TargetPos1.ToFVector())
 	{
-		UEngineAPICore::GetCore()->OpenLevel("PlayerHouse2");
-	}*/
+		UEngineAPICore::GetCore()->OpenLevel("PlayerHouse1Floor");
+	}
 
+	if (MainPlayerLocation == TargetPos2.ToFVector())
+	{
+		UEngineAPICore::GetCore()->OpenLevel("PlayerHouse2Floor");
+	}
+
+	if (MainPlayerLocation == TargetPos3.ToFVector())
+	{
+		UEngineAPICore::GetCore()->OpenLevel("LaborProfessorBirch");
+	}
 }

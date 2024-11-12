@@ -9,7 +9,7 @@ class APlayer : public AActor
 public:
     enum class APlayerState
     {
-        
+
         IDLE,
         WALK,
         RUN,
@@ -46,40 +46,30 @@ public:
 
     void LevelChangeStart();
     void LevelChangeEnd();
-    
+
     void Idle(float _DeltaTime);
     void Walk(float _DeltaTime);
     void ChangeState(APlayerState _CurPlayerState);
     void IdleStart();
     void WalkStart();
 
-    
 
-    
+
+
     FVector2D GetTargetLocation() const;
     void SetTargetLocation(const FVector2D& NewTarget);
 
     EPlayerDir GetPressDirection();
-    FVector2D GetActualLocation() const 
-    {
-        return CurPos;
-    }
 
-
-
+    
+   
 protected:
 
 private:
-   float WalkSpeed = 96;
-   APlayerState CurPlayerState = APlayerState::IDLE;
+    float WalkSpeed = 0.96;
+    APlayerState CurPlayerState = APlayerState::IDLE;
 
-
-    bool bIsMoving = false;           // 이동 중인지 여부
-    FVector2D TargetLocation = FVector2D::ZERO; // 목표 위치
     EPlayerDir CurDir = EPlayerDir::DOWN;
-    FVector2D CurPos;
-
-
 
     FVector2D MapSize = FVector2D::ZERO;
 
@@ -87,5 +77,15 @@ private:
     class USpriteRenderer* SpriteMapRenderer = nullptr;
 
     UFSMStateManager FSM;
+
+
+    FVector2D TargetLocation = FVector2D::ZERO;
+    FVector2D CurrentDirection = FVector2D::ZERO;
+    bool bIsMoving = false;
+    float WalkTime = 0.0f;
+    const float TileMoveTime = 2.4f;
+    FVector2D TileSize = FVector2D(96, 96);
+
+
 };
 

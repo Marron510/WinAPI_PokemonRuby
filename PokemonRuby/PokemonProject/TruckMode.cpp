@@ -1,4 +1,3 @@
-
 #include "PreCompile.h"
 #include "TruckMode.h"
 
@@ -7,6 +6,8 @@
 #include <EngineCore/Level.h>
 
 #include "TruckMap.h"
+#include "Player.h"
+
 
 ATruckMode::ATruckMode()
 {
@@ -30,10 +31,17 @@ void ATruckMode::BeginPlay()
 void ATruckMode::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
-
-	if (true == UEngineInput::GetInst().IsDown('R'))
+	
+	
+	FVector2D MainPlayerLocation = UEngineAPICore::GetCore()->GetCurLevel()->GetMainPawn()->GetActorLocation();
+	FTileVector TargetPos1 = { 5, 2 };
+	FTileVector TargetPos2 = { 5, 3 };
+	if (MainPlayerLocation == TargetPos1.ToFVector())
 	{
-		UEngineAPICore::GetCore()->OpenLevel("PlayerHouse1");
+		UEngineAPICore::GetCore()->OpenLevel("PokemonMap");
 	}
-
+	if (MainPlayerLocation == TargetPos2.ToFVector())
+	{
+		UEngineAPICore::GetCore()->OpenLevel("PokemonMap");
+	}
 }

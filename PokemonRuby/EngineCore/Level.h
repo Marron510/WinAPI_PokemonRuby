@@ -66,6 +66,12 @@ public:
 		return GameMode;
 	}
 
+	AActor* GetMainPawn()
+	{
+		return MainPawn;
+	}
+
+
 protected:
 
 private:
