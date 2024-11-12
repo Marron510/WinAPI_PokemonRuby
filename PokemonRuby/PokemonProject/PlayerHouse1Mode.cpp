@@ -8,6 +8,8 @@
 #include "PlayerHouse1Map.h"
 #include "Player.h"
 
+FIntPoint APlayerHouse1Mode::PlayerHouse1MapModeChangePos;
+
 APlayerHouse1Mode::APlayerHouse1Mode()
 {
 }
@@ -18,6 +20,7 @@ APlayerHouse1Mode::~APlayerHouse1Mode()
 
 void APlayerHouse1Mode::BeginPlay()
 {
+	Super::BeginPlay();
 	{
 		APlayerHouse1Map* NewActor = GetWorld()->SpawnActor<APlayerHouse1Map>();
 		Map = NewActor->GetCurMap();
@@ -46,3 +49,15 @@ void APlayerHouse1Mode::LevelChange()
 	}
 
 }
+
+
+void APlayerHouse1Mode::LevelChangeStart()
+{
+	AActor* Actor = GetWorld()->GetPawn();
+
+	FTileVector StartPos = { PlayerHouse1MapModeChangePos.X, PlayerHouse1MapModeChangePos.Y };
+
+	Actor->SetActorLocation(StartPos.ToFVector());
+
+}
+

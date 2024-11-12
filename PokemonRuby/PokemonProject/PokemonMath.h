@@ -34,6 +34,9 @@ public:
         return FTileVector(-X, -Y);
     }
 
+    
+
+
     FTileVector& operator=(const FTileVector& _Other)
     {
         X = _Other.X;

@@ -4,6 +4,8 @@
 class APokemonMapMode : public AGameMode
 {
 public:
+	static FIntPoint PokemonMapModeChangePos;
+
 	// 持失切 社瑚切
 	APokemonMapMode();
 	~APokemonMapMode();
@@ -21,11 +23,14 @@ public:
 
 	void LevelChange();
 
+	void LevelChangeStart() override;
+
+	
 protected:
 
 private:
 
-	AActor* Mainpawn = nullptr;
+	
 };
 
 

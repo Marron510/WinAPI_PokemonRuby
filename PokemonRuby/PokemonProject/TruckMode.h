@@ -21,6 +21,7 @@ public:
 
 	void LevelChange();
 
+
 protected:
 
 private:

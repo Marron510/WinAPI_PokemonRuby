@@ -7,13 +7,20 @@
 
 #include <EngineCore/SpriteRenderer.h>
 
+#include "LaborProfessorBirchMode.h"
+#include "PlayerHouse1FloorMode.h"
+#include "PlayerHouse2FloorMode.h" 
+
 #include "PokemonMath.h"
 #include "PokemonMap.h"
 #include "TileMap.h"
 #include "Flower.h"
 #include "Water.h"
 #include "Sea.h"
+#include "Player.h"
 
+
+FIntPoint APokemonMapMode::PokemonMapModeChangePos;
 
 APokemonMapMode::APokemonMapMode()
 {
@@ -28,6 +35,8 @@ APokemonMapMode::~APokemonMapMode()
 
 void APokemonMapMode::BeginPlay()
 {
+	Super::BeginPlay();
+
 	// AFlower
 	{
 		AFlower* newflower1 = GetWorld()->SpawnActor<AFlower>();
@@ -806,16 +815,16 @@ void APokemonMapMode::BeginPlay()
 void APokemonMapMode::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
-	
+
 	LevelChange();
 }
 
 
 void APokemonMapMode::LevelChange()
 {
-	Mainpawn = UEngineAPICore::GetCore()->GetCurLevel()->GetPawn();
-	FVector2D MainPlayerLocation = Mainpawn->GetActorLocation();
-
+	
+	FVector2D MainPlayerLocation = UEngineAPICore::GetCore()->GetCurLevel()->GetPawn()->GetActorLocation();
+	
 	FTileVector TargetPos1 = { 85, 68 };
 	FTileVector TargetPos1NextLevelPos = { 8, 8 }; // house1 免备
 
@@ -825,7 +834,6 @@ void APokemonMapMode::LevelChange()
 	FTileVector TargetPos3 = { 87, 76 };
 	FTileVector TargetPos3NextLevelPos = { 6, 12 }; // 楷备家 免备
 
-
 	if (MainPlayerLocation == TargetPos1.ToFVector())
 	{
 		UEngineAPICore::GetCore()->OpenLevel("PlayerHouse1Floor");
@@ -834,16 +842,23 @@ void APokemonMapMode::LevelChange()
 	if (MainPlayerLocation == TargetPos2.ToFVector())
 	{
 		UEngineAPICore::GetCore()->OpenLevel("PlayerHouse2Floor");
-		if (UEngineAPICore::GetCore()->GetCurLevel())
-		{
-
-		}
+		APlayerHouse2FloorMode::PlayerHouse2FloorMapModeChangePos = { 1, 8 };
 	}
 	
-
-	
-	/*if (MainPlayerLocation == TargetPos3.ToFVector())
+	if (MainPlayerLocation == TargetPos3.ToFVector())
 	{
 		UEngineAPICore::GetCore()->OpenLevel("LaborProfessorBirch");
-	}*/
+		ALaborProfessorBirchMode::LaborProfessorBirchModeChangePos = { 6, 12 };
+	}
+}
+
+
+void APokemonMapMode::LevelChangeStart()
+{
+	AActor* Actor = GetWorld()->GetPawn();
+
+	FTileVector StartPos = { PokemonMapModeChangePos.X, PokemonMapModeChangePos.Y };
+
+	Actor->SetActorLocation(StartPos.ToFVector());
+	
 }

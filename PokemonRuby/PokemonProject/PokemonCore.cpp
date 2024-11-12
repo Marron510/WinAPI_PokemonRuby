@@ -152,7 +152,7 @@ void PokemonCore::BeginPlay()
 
 
 	
-		UEngineAPICore::GetCore()->OpenLevel("PokemonMap");
+		UEngineAPICore::GetCore()->OpenLevel("LaborProfessorBirch");
 	
 }
 

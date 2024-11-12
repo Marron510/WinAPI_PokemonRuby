@@ -8,6 +8,8 @@
 #include "PokemonMath.h"
 #include "PlayerHouse1FloorMap.h"
 
+FIntPoint APlayerHouse1FloorMode::APlayerHouse1FloorModeChangePos;
+
 APlayerHouse1FloorMode::APlayerHouse1FloorMode()
 {
 
@@ -21,6 +23,7 @@ APlayerHouse1FloorMode::~APlayerHouse1FloorMode()
 
 void APlayerHouse1FloorMode::BeginPlay()
 {
+	Super::BeginPlay();
 	{
 		APlayerHouse1FloorMap* NewActor = GetWorld()->SpawnActor<APlayerHouse1FloorMap>();
 		Map = NewActor->GetCurMap();
@@ -55,3 +58,16 @@ void APlayerHouse1FloorMode::LevelChange()
 		UEngineAPICore::GetCore()->OpenLevel("PlayerHouse1");
 	}
 }
+
+
+
+void APlayerHouse1FloorMode::LevelChangeStart()
+{
+	AActor* Actor = GetWorld()->GetPawn();
+
+	FTileVector StartPos = { APlayerHouse1FloorModeChangePos.X, APlayerHouse1FloorModeChangePos.Y };
+
+	Actor->SetActorLocation(StartPos.ToFVector());
+
+}
+

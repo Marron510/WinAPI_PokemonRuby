@@ -322,7 +322,7 @@ void APlayer::MapSizeCheck(FVector2D _Size)
         ActorLocation.Y = MapSize.Y;
     }
 
-    SetActorLocation(ActorLocation);
+    // SetActorLocation(ActorLocation);
 
     GetWorld()->SetCameraPos(CamPos);
 }
@@ -355,8 +355,8 @@ void APlayer::SetObject()
     SpriteMapRenderer = Curmode->Map;
     MapSize = SpriteMapRenderer->GetComponentScale();
     SpriteRenderer->SetComponentLocation({ 48, 24 });
-    FTileVector startPos = { 97, 70 };
-    SetActorLocation(startPos.ToFVector());
+    
+    
 }
 
 

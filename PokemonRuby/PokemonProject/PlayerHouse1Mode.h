@@ -4,6 +4,8 @@
 class APlayerHouse1Mode : public AGameMode
 {
 public:
+	static FIntPoint PlayerHouse1MapModeChangePos;
+
 	// constrcuter destructer
 	APlayerHouse1Mode();
 	~APlayerHouse1Mode();
@@ -19,6 +21,8 @@ public:
 	void Tick(float _DeltaTime) override;
 
 	void LevelChange();
+
+	void LevelChangeStart() override;
 
 protected:
 

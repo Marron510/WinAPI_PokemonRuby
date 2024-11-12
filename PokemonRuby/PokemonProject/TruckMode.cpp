@@ -32,9 +32,13 @@ void ATruckMode::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 	
-	
+	LevelChange();
+}
+
+void ATruckMode::LevelChange()
+{
 	FVector2D MainPlayerLocation = UEngineAPICore::GetCore()->GetCurLevel()->GetPawn()->GetActorLocation();
-	
+
 	FTileVector TargetPos1 = { 5, 2 };
 	FTileVector TargetPos2 = { 5, 3 };
 

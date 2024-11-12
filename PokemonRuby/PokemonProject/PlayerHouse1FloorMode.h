@@ -4,6 +4,8 @@
 class APlayerHouse1FloorMode : public AGameMode
 {
 public:
+	static FIntPoint APlayerHouse1FloorModeChangePos;
+
 	// 持失切 社瑚切
 	APlayerHouse1FloorMode();
 	~APlayerHouse1FloorMode();
@@ -20,6 +22,8 @@ public:
 	void Tick(float _DeltaTime) override;
 
 	void LevelChange();
+
+	void LevelChangeStart() override;
 
 protected:
 

@@ -8,6 +8,9 @@
 #include "PlayerHouse2Map.h"
 #include "Player.h"
 
+
+FIntPoint APlayerHouse2Mode::PlayerHouse2MapModeChangePos;
+
 APlayerHouse2Mode::APlayerHouse2Mode()
 {
 }
@@ -18,6 +21,7 @@ APlayerHouse2Mode::~APlayerHouse2Mode()
 
 void APlayerHouse2Mode::BeginPlay()
 {
+	Super::BeginPlay();
 	{
 		APlayerHouse2Map* NewActor = GetWorld()->SpawnActor<APlayerHouse2Map>();
 		Map = NewActor->GetCurMap();
@@ -43,4 +47,16 @@ void APlayerHouse2Mode::LevelChange()
 	{
 		UEngineAPICore::GetCore()->OpenLevel("PlayerHouse2Floor");
 	}
+}
+
+
+
+void APlayerHouse2Mode::LevelChangeStart()
+{
+	AActor* Actor = GetWorld()->GetPawn();
+
+	FTileVector StartPos = { PlayerHouse2MapModeChangePos.X, PlayerHouse2MapModeChangePos.Y };
+
+	Actor->SetActorLocation(StartPos.ToFVector());
+
 }

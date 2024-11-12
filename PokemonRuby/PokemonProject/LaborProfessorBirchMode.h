@@ -1,9 +1,12 @@
 #pragma once
 #include <EngineCore/GameMode.h>
+#include "PokemonMath.h"
 
 class ALaborProfessorBirchMode : public AGameMode
 {
 public:
+	static FIntPoint LaborProfessorBirchModeChangePos;
+
 	// 持失切 社瑚切
 	ALaborProfessorBirchMode();
 	~ALaborProfessorBirchMode();
@@ -19,7 +22,9 @@ public:
 
 	void Tick(float _DeltaTime) override;
 
-	void LevelChange();
+	void LevelChange(float _DeltaTime);
+
+	void LevelChangeStart() override;
 
 protected:
 

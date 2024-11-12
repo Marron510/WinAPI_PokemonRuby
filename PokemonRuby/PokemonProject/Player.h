@@ -53,7 +53,10 @@ public:
     void IdleStart();
     void WalkStart();
 
-
+    EPlayerDir GetCurDir()
+    {
+        return CurDir;
+    }
 
 
     FVector2D GetTargetLocation() const;

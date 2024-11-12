@@ -4,6 +4,8 @@
 class APlayerHouse2FloorMode : public AGameMode
 {
 public:
+	static FIntPoint PlayerHouse2FloorMapModeChangePos;
+
 	// 持失切 社瑚切
 	APlayerHouse2FloorMode();
 	~APlayerHouse2FloorMode();
@@ -20,6 +22,8 @@ public:
 	void Tick(float _DeltaTime) override;
 
 	void LevelChange();
+
+	void LevelChangeStart() override;
 
 protected:
 

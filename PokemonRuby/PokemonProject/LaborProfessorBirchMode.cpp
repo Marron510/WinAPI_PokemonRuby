@@ -5,8 +5,12 @@
 #include <EngineCore/EngineAPICore.h>
 #include <EngineCore/Level.h>
 
-#include "PokemonMath.h"
+
 #include "LaborProfessorBirchMap.h"
+#include "Player.h"
+#include "PokemonMapMode.h"
+
+FIntPoint ALaborProfessorBirchMode::LaborProfessorBirchModeChangePos;
 
 ALaborProfessorBirchMode::ALaborProfessorBirchMode()
 {
@@ -21,6 +25,7 @@ ALaborProfessorBirchMode::~ALaborProfessorBirchMode()
 
 void ALaborProfessorBirchMode::BeginPlay()
 {
+	Super::BeginPlay();
 	{
 		ALaborProfessorBirchMap* NewActor = GetWorld()->SpawnActor<ALaborProfessorBirchMap>();
 		Map = NewActor->GetCurMap();
@@ -29,14 +34,18 @@ void ALaborProfessorBirchMode::BeginPlay()
 
 void ALaborProfessorBirchMode::Tick(float _DeltaTime)
 {
+
+
 	Super::Tick(_DeltaTime);
 
-	LevelChange();
+	LevelChange(_DeltaTime);
 }
 
-void ALaborProfessorBirchMode::LevelChange()
+void ALaborProfessorBirchMode::LevelChange(float _DeltaTime)
 {
-	FVector2D MainPlayerLocation = UEngineAPICore::GetCore()->GetCurLevel()->GetPawn()->GetActorLocation();
+	AActor* MainPlayer = UEngineAPICore::GetCore()->GetCurLevel()->GetPawn();
+	FVector2D MainPlayerLocation = MainPlayer->GetActorLocation();
+
 
 	FTileVector TargetPos1 = { 6, 13 };
 	FTileVector TargetPos1NextLevelPos = { 87, 77 }; // 연구소 출구
@@ -45,6 +54,21 @@ void ALaborProfessorBirchMode::LevelChange()
 
 	if (MainPlayerLocation == TargetPos1.ToFVector() || MainPlayerLocation == TargetPos2.ToFVector())
 	{
+		MainPlayer->SetActorLocation(TargetPos1.ToFVector() + FTileVector::Up.ToFVector());
 		UEngineAPICore::GetCore()->OpenLevel("PokemonMap");
+		APokemonMapMode::PokemonMapModeChangePos = { 87, 77 };
 	}
 }
+
+
+
+void ALaborProfessorBirchMode::LevelChangeStart()
+{
+	AActor* Actor = GetWorld()->GetPawn();
+
+	FTileVector StartPos = { LaborProfessorBirchModeChangePos.X, LaborProfessorBirchModeChangePos.Y };
+
+	Actor->SetActorLocation(StartPos.ToFVector());
+
+}
+
