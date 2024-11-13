@@ -32,7 +32,7 @@ void APlayerHouse1FloorMode::BeginPlay()
 		APlayerHouse1FloorMap* NewActor = GetWorld()->SpawnActor<APlayerHouse1FloorMap>();
 		Map = NewActor->GetCurMap();
 		APlayer* Player = GetWorld()->GetPawn<APlayer>();
-		Player->SetColImage("PlayerHouse_1 Collision.png");
+		Player->SetColImage("PlayerHouse1Floor Collision.png");
 	}
 }
 
@@ -51,7 +51,7 @@ void APlayerHouse1FloorMode::LevelChange()
 	FTileVector TargetPos1NextLevelPos = { 85, 69 }; // house1 출구
 	FTileVector TargetPos2 = { 9, 9 };
 	FTileVector TargetPos2NextLevelPos = { 94 , 69 }; // house1 출구
-	FTileVector TargetPos3 = { 8, 2 };
+	FTileVector TargetPos3 = { 9, 2 };
 	FTileVector TargetPos3NextLevelPos = { 1, 2 }; // house1 2층 출구
 
 
@@ -63,7 +63,7 @@ void APlayerHouse1FloorMode::LevelChange()
 	if (MainPlayerLocation == TargetPos3.ToFVector())
 	{
 		UEngineAPICore::GetCore()->OpenLevel("PlayerHouse1");
-		APlayerHouse1Mode::PlayerHouse1MapModeChangePos = { 7 , 2 };
+		APlayerHouse1Mode::PlayerHouse1MapModeChangePos = { 8 , 2 };
 	}
 }
 

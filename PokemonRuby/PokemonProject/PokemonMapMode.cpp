@@ -837,7 +837,7 @@ void APokemonMapMode::LevelChange()
 	FTileVector TargetPos1NextLevelPos = { 8, 8 }; // house1 免备
 
 	FTileVector TargetPos2 = { 94, 68 };
-	FTileVector TargetPos2NextLevelPos = { 1, 8 }; // house2 免备
+	FTileVector TargetPos2NextLevelPos = { 3, 8 }; // house2 免备
 
 	FTileVector TargetPos3 = { 87, 76 };
 	FTileVector TargetPos3NextLevelPos = { 6, 12 }; // 楷备家 免备
@@ -845,19 +845,19 @@ void APokemonMapMode::LevelChange()
 	if (MainPlayerLocation == TargetPos1.ToFVector())
 	{
 		UEngineAPICore::GetCore()->OpenLevel("PlayerHouse1Floor");
-		APlayerHouse1FloorMode::APlayerHouse1FloorModeChangePos = { 8, 8 };
+		APlayerHouse1FloorMode::APlayerHouse1FloorModeChangePos = { 9, 8 };
 	}
 
 	if (MainPlayerLocation == TargetPos2.ToFVector())
 	{
 		UEngineAPICore::GetCore()->OpenLevel("PlayerHouse2Floor");
-		APlayerHouse2FloorMode::PlayerHouse2FloorMapModeChangePos = { 1, 8 };
+		APlayerHouse2FloorMode::PlayerHouse2FloorMapModeChangePos = { 3, 8 };
 	}
 	
 	if (MainPlayerLocation == TargetPos3.ToFVector())
 	{
 		UEngineAPICore::GetCore()->OpenLevel("LaborProfessorBirch");
-		ALaborProfessorBirchMode::LaborProfessorBirchModeChangePos = { 6, 12 };
+		ALaborProfessorBirchMode::LaborProfessorBirchModeChangePos = { 7, 12 };
 	}
 }
 

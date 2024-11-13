@@ -1,12 +1,13 @@
+#include "PreCompile.h"
 #include "Combat.h"
 
 
-Combat::Combat()
+ACombat::ACombat()
 {
 
 }
 
-Combat::~Combat()
+ACombat::~ACombat()
 {
 
 }

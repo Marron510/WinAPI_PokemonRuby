@@ -26,6 +26,8 @@ void APlayerHouse2Mode::BeginPlay()
 	{
 		APlayerHouse2Map* NewActor = GetWorld()->SpawnActor<APlayerHouse2Map>();
 		Map = NewActor->GetCurMap();
+		APlayer* Player = GetWorld()->GetPawn<APlayer>();
+		Player->SetColImage("PlayerHouse_2Collision.png");
 	}
 }
 
@@ -41,13 +43,13 @@ void APlayerHouse2Mode::LevelChange()
 {
 	FVector2D MainPlayerLocation = UEngineAPICore::GetCore()->GetCurLevel()->GetPawn()->GetActorLocation();
 
-	FTileVector TargetPos1 = { 1, 1 };
-	FTileVector TargetPos1NextLevelPos = { 2, 3 }; // house2floor 계단 입구
+	FTileVector TargetPos1 = { 2, 1 };
+	FTileVector TargetPos1NextLevelPos = { 3, 3 }; // house2floor 계단 입구
 
 	if (MainPlayerLocation == TargetPos1.ToFVector())
 	{
 		UEngineAPICore::GetCore()->OpenLevel("PlayerHouse2Floor");
-		APlayerHouse2FloorMode::PlayerHouse2FloorMapModeChangePos = { 2 , 3 };
+		APlayerHouse2FloorMode::PlayerHouse2FloorMapModeChangePos = { 3 , 3 };
 	}
 }
 

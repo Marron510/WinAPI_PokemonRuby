@@ -43,14 +43,14 @@ void APlayerHouse1Mode::LevelChange()
 	FVector2D MainPlayerLocation = UEngineAPICore::GetCore()->GetCurLevel()->GetPawn()->GetActorLocation();
 
 
-	FTileVector TargetPos1 = { 7, 1 };
+	FTileVector TargetPos1 = { 8, 1 };
 	FTileVector TargetPos1NextLevelPos = { 8, 3 }; // house1floor 계단 입구
 
 
 	if (MainPlayerLocation == TargetPos1.ToFVector())
 	{
 		UEngineAPICore::GetCore()->OpenLevel("PlayerHouse1Floor");
-		APlayerHouse1FloorMode::APlayerHouse1FloorModeChangePos = { 8 , 3 };
+		APlayerHouse1FloorMode::APlayerHouse1FloorModeChangePos = { 9 , 3 };
 	}
 
 }

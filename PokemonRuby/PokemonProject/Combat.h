@@ -1,19 +1,19 @@
 #pragma once
 #include <EngineCore/Actor.h>
 
-class Combat : public AActor
+class ACombat : public AActor
 {
 public:
 	// 持失切 社瑚切
-	Combat();
-	~Combat();
+	ACombat();
+	~ACombat();
 
 	// delete funcion
 
-	Combat(const Combat& _Other) = delete;
-	Combat(Combat&& _Other) noexcept = delete;
-	Combat& operator=(const Combat& _Other) = delete;
-	Combat& operator=(Combat&& _Other) noexcept = delete;
+	ACombat(const ACombat& _Other) = delete;
+	ACombat(ACombat&& _Other) noexcept = delete;
+	ACombat& operator=(const ACombat& _Other) = delete;
+	ACombat& operator=(ACombat&& _Other) noexcept = delete;
 
 
 protected:
