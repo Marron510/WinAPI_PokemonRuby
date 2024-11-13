@@ -8,7 +8,8 @@ enum class ERenderOrder
 	BACKGROUND = -10,
 	Tile = 0,
 	FLOWER = 10,
-	PLAYER = 100
+	PLAYER = 100,
+	FADE = 200
 };
 
 

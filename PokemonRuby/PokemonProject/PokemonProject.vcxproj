@@ -23,6 +23,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Fade.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Flower.h">
       <SubType>
       </SubType>
@@ -148,6 +152,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Combat.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Fade.cpp">
       <SubType>
       </SubType>
     </ClCompile>
