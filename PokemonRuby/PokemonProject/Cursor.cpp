@@ -1,12 +1,13 @@
 #include "PreCompile.h"
 #include "Cursor.h"
 
+#include <EngineBase/EngineString.h>
 #include <EngineCore/SpriteRenderer.h>
 
 #include"PokemonEnum.h"
 
 
-std::string DirString[static_cast<int>(ACursor::ECursorDir::MAX)] =
+std::string CursorString[static_cast<int>(ACursor::ECursorDir::MAX)] =
 {
     "LEFTUP",
     "RIGHTUP",
@@ -25,7 +26,7 @@ ACursor::ACursor()
         SpriteRenderer->CreateAnimation("Cursor", "Cursor.png", 0, 0, 0.3f);
         SpriteRenderer->SetOrder(ERenderOrder::CURSOR);
 
-        SpriteRenderer->SetComponentLocation({ 500, 500 });
+        SpriteRenderer->SetComponentLocation({ 700, 700 });
     }
 }
 

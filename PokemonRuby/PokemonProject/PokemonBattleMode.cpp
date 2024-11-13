@@ -17,8 +17,12 @@ void APokemonBattleMode::BeginPlay()
 	Super::BeginPlay();
 
 	{
-		APokemonBattleMap* NewActor = GetWorld()->SpawnActor<APokemonBattleMap>();
-		Map = NewActor->GetCurMap();
+		APokemonBattleMap* BackImage = GetWorld()->SpawnActor<APokemonBattleMap>();
+		Map = BackImage->GetCurMap();
+		/*APokemonBattleMap* PokemonShadowImage = GetWorld()->SpawnActor<APokemonBattleMap>();
+		APokemonBattleMap* PlayerShadowImage = GetWorld()->SpawnActor<APokemonBattleMap>();
+		PokemonShadowImage->*/
+
 	}
 }
 
@@ -26,4 +30,10 @@ void APokemonBattleMode::BeginPlay()
 void APokemonBattleMode::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
+
+
+
+
+
+
 }

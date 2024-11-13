@@ -25,6 +25,9 @@ protected:
 private:
 
 	USpriteRenderer* SpriteRenderer;
+	USpriteRenderer* SpriteRendererShadow1;
+	USpriteRenderer* SpriteRendererShadow2;
+
 
 };
 
