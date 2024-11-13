@@ -19,8 +19,7 @@
 #include "LaborProfessorBirchMode.h"
 #include "TileMapMode.h"
 #include "PokemonBattleMode.h"
-#include "Cursor.h"
-
+#include "MyPokemon.h"
 #include "Player.h"
 
 PokemonCore::PokemonCore()
@@ -148,6 +147,10 @@ void PokemonCore::BeginPlay()
 		UImageManager::GetInst().CuttingSprite("Cursor.png", { 96, 96 });
 	}
 
+	{
+		UImageManager::GetInst().CuttingSprite("Treecko.png", { 288, 288 });
+	}
+
 	UEngineAPICore::GetCore()->GetMainWindow().SetWindowTitle("Pokemon_Ruby");
 
 	UEngineAPICore::GetCore()->GetMainWindow().SetWindowPosAndScale({ 0, 0 }, { 1200, 800 });
@@ -162,13 +165,13 @@ void PokemonCore::BeginPlay()
 		UEngineAPICore::GetCore()->CreateLevel<APlayerHouse2Mode, APlayer>("PlayerHouse2");
 		UEngineAPICore::GetCore()->CreateLevel<APlayerHouse2FloorMode, APlayer>("PlayerHouse2Floor");
 		UEngineAPICore::GetCore()->CreateLevel<ALaborProfessorBirchMode, APlayer>("LaborProfessorBirch");
-		UEngineAPICore::GetCore()->CreateLevel<APokemonBattleMode, ACursor>("PokemonBattleMap");
-		
+
+		UEngineAPICore::GetCore()->CreateLevel<APokemonBattleMode, AActor>("PokemonBattleMap");
 	}
 
 
 	
-		UEngineAPICore::GetCore()->OpenLevel("Truck");
+		UEngineAPICore::GetCore()->OpenLevel("PokemonBattleMap");
 	
 }
 

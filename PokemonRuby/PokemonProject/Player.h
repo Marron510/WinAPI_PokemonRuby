@@ -38,6 +38,8 @@ public:
 
     void BeginPlay() override;
     void Tick(float _DeltaTime) override;
+
+
     void PlayerCameraCheck();
     void PlayerDebugCheck(float _DeltaTime);
     void MapSizeCheck(FVector2D _Size);

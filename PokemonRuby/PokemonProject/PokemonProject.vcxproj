@@ -35,7 +35,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="Pokemon.h">
+    <ClInclude Include="MyPokemon.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -137,7 +137,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="WildPokemonSet.h">
+    <ClInclude Include="WildPokemon.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -159,7 +159,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="Pokemon.cpp">
+    <ClCompile Include="MyPokemon.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -268,7 +268,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="WildPokemonSet.cpp">
+    <ClCompile Include="WildPokemon.cpp">
       <SubType>
       </SubType>
     </ClCompile>

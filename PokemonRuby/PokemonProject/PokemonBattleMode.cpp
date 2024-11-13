@@ -1,6 +1,14 @@
 #include "PreCompile.h"
 #include "PokemonBattleMode.h"
+
+#include <EngineCore/EngineAPICore.h>
+#include <EngineCore/Level.h>
+
+
 #include "PokemonBattleMap.h"
+#include "MyPokemon.h"
+#include "WildPokemon.h"
+
 
 APokemonBattleMode::APokemonBattleMode()
 {
@@ -19,21 +27,16 @@ void APokemonBattleMode::BeginPlay()
 	{
 		APokemonBattleMap* BackImage = GetWorld()->SpawnActor<APokemonBattleMap>();
 		Map = BackImage->GetCurMap();
-		/*APokemonBattleMap* PokemonShadowImage = GetWorld()->SpawnActor<APokemonBattleMap>();
-		APokemonBattleMap* PlayerShadowImage = GetWorld()->SpawnActor<APokemonBattleMap>();
-		PokemonShadowImage->*/
-
+		
+		
 	}
-}
+	{
+		AMyPokemon* Pokemon = GetWorld()->SpawnActor<AMyPokemon>();
+		
+	}
 
-
-void APokemonBattleMode::Tick(float _DeltaTime)
-{
-	Super::Tick(_DeltaTime);
-
-
-
-
-
-
+	{
+		AWildPokemon* WildPokemon = GetWorld()->SpawnActor<AWildPokemon>();
+		WildPokemon->SetActorLocation({ 500,500 });
+	}
 }

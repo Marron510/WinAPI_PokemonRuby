@@ -129,10 +129,10 @@
     <ClInclude Include="TruckMap.h">
       <Filter>PokemonObject\1.PokemonMap\001_LittleRootTownMap</Filter>
     </ClInclude>
-    <ClInclude Include="WildPokemonSet.h">
+    <ClInclude Include="WildPokemon.h">
       <Filter>PokemonObject\3.Pokemon\WildPokemon</Filter>
     </ClInclude>
-    <ClInclude Include="Pokemon.h">
+    <ClInclude Include="MyPokemon.h">
       <Filter>PokemonObject\3.Pokemon</Filter>
     </ClInclude>
     <ClInclude Include="TileMapMode.h">
@@ -239,10 +239,10 @@
     <ClCompile Include="TruckMap.cpp">
       <Filter>PokemonObject\1.PokemonMap\001_LittleRootTownMap</Filter>
     </ClCompile>
-    <ClCompile Include="WildPokemonSet.cpp">
+    <ClCompile Include="WildPokemon.cpp">
       <Filter>PokemonObject\3.Pokemon\WildPokemon</Filter>
     </ClCompile>
-    <ClCompile Include="Pokemon.cpp">
+    <ClCompile Include="MyPokemon.cpp">
       <Filter>PokemonObject\3.Pokemon</Filter>
     </ClCompile>
     <ClCompile Include="TileMapMode.cpp">
