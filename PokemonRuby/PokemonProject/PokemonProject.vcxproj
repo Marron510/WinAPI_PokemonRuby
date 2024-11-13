@@ -23,7 +23,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="PokemonBattle.h">
+    <ClInclude Include="PokemonBattleMap.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -112,14 +112,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="Route101Map.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="Route102Map.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="TitleMap.h">
       <SubType>
       </SubType>
@@ -155,7 +147,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="PokemonBattle.cpp">
+    <ClCompile Include="PokemonBattleMap.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -241,14 +233,6 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="PlayerHouse2Mode.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="Route101Map.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="Route102Map.cpp">
       <SubType>
       </SubType>
     </ClCompile>

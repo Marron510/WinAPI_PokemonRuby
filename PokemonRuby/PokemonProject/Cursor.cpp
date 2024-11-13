@@ -1,17 +1,31 @@
 #include "PreCompile.h"
 #include "Cursor.h"
+
 #include <EngineCore/SpriteRenderer.h>
+
+#include"PokemonEnum.h"
+
+
+std::string DirString[static_cast<int>(ACursor::ECursorDir::MAX)] =
+{
+    "LEFTUP",
+    "RIGHTUP",
+    "LEFTDOWN",
+    "RIGHTDOWN"
+};
 
 ACursor::ACursor()
 {
     {
         SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
-
         SpriteRenderer->SetSprite("Cursor.png");
 
         SpriteRenderer->SetComponentScale({ 100, 100 });
 
-        SpriteRenderer->CreateAnimation("Cursor", "Cursor.png", 0, 0, 0.1f);
+        SpriteRenderer->CreateAnimation("Cursor", "Cursor.png", 0, 0, 0.3f);
+        SpriteRenderer->SetOrder(ERenderOrder::CURSOR);
+
+        SpriteRenderer->SetComponentLocation({ 500, 500 });
     }
 }
 
@@ -20,9 +34,14 @@ ACursor::~ACursor()
 
 }
 
+
+
+
 void ACursor::BeginPlay()
 {
     Super::BeginPlay();
+
+    
 }
 
 void ACursor::Tick(float _DeltaTime)

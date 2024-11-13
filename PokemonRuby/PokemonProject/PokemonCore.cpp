@@ -144,6 +144,10 @@ void PokemonCore::BeginPlay()
 		UImageManager::GetInst().CuttingSprite("Water.png", { 96, 96 });
 	}
 
+	{
+		UImageManager::GetInst().CuttingSprite("Cursor.png", { 96, 96 });
+	}
+
 	UEngineAPICore::GetCore()->GetMainWindow().SetWindowTitle("Pokemon_Ruby");
 
 	UEngineAPICore::GetCore()->GetMainWindow().SetWindowPosAndScale({ 0, 0 }, { 1200, 800 });

@@ -1,12 +1,12 @@
 #include "PreCompile.h"
-#include "PokemonBattle.h"
+#include "PokemonBattleMap.h"
 
 #include <EngineCore/EngineAPICore.h>
 #include <EngineCore/SpriteRenderer.h>
 
 #include "PokemonEnum.h"
 
-APokemonBattle::APokemonBattle()
+APokemonBattleMap::APokemonBattleMap()
 {
 	SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
 	SpriteRenderer->SetOrder(ERenderOrder::BACKGROUND);
@@ -16,7 +16,7 @@ APokemonBattle::APokemonBattle()
 	SpriteRenderer->SetComponentLocation(MapScale.Half());
 }
 
-APokemonBattle::~APokemonBattle()
+APokemonBattleMap::~APokemonBattleMap()
 {
 
 }

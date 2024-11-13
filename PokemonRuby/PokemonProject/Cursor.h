@@ -2,9 +2,20 @@
 #include <EngineCore/Actor.h>
 
 
+
+
 class ACursor : public AActor
 {
 public:
+	enum class ECursorDir
+	{
+		LEFTUP,
+		RIGHTUP,
+		LEFTDOWN,
+		RIGHTDOWN,
+		MAX
+	};
+
 	// 持失切 社瑚切
 	ACursor();
 	~ACursor();

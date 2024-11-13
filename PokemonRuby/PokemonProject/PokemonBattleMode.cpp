@@ -1,6 +1,6 @@
 #include "PreCompile.h"
 #include "PokemonBattleMode.h"
-#include "PokemonBattle.h"
+#include "PokemonBattleMap.h"
 
 APokemonBattleMode::APokemonBattleMode()
 {
@@ -17,7 +17,7 @@ void APokemonBattleMode::BeginPlay()
 	Super::BeginPlay();
 
 	{
-		APokemonBattle* NewActor = GetWorld()->SpawnActor<APokemonBattle>();
+		APokemonBattleMap* NewActor = GetWorld()->SpawnActor<APokemonBattleMap>();
 		Map = NewActor->GetCurMap();
 	}
 }

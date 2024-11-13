@@ -9,7 +9,8 @@ enum class ERenderOrder
 	Tile = 0,
 	FLOWER = 10,
 	PLAYER = 100,
-	FADE = 200
+	CURSOR = 200,
+	FADE = 1000
 };
 
 
