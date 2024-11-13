@@ -49,6 +49,7 @@ public:
 	}
 
 	UColor GetColor(FIntPoint _Point, UColor _DefaultColor = UColor::WHITE);
+
 protected:
 
 private:

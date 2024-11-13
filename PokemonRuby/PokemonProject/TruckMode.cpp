@@ -27,6 +27,9 @@ void ATruckMode::BeginPlay()
 		ATruckMap* NewActor = GetWorld()->SpawnActor<ATruckMap>();
 		Map = NewActor->GetCurMap();
 		UEngineAPICore::GetCore()->GetCurLevel()->GetPawn()->SetActorLocation(StartPos.ToFVector());
+
+		APlayer* Player = GetWorld()->GetPawn<APlayer>();
+		Player->SetColImage("TruckCollision.png");
 	}
 }
 

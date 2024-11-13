@@ -26,6 +26,8 @@ void APlayerHouse1Mode::BeginPlay()
 	{
 		APlayerHouse1Map* NewActor = GetWorld()->SpawnActor<APlayerHouse1Map>();
 		Map = NewActor->GetCurMap();
+		APlayer* Player = GetWorld()->GetPawn<APlayer>();
+		Player->SetColImage("PlayerHouse_1 Collision.png");
 	}
 }
 

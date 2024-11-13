@@ -171,7 +171,7 @@
     <ClInclude Include="TItleMap.h">
       <Filter>Play</Filter>
     </ClInclude>
-    <ClInclude Include="EventTarget.h">
+    <ClInclude Include="Combat.h">
       <Filter>PokemonObject\5.Event</Filter>
     </ClInclude>
   </ItemGroup>
@@ -284,7 +284,7 @@
     <ClCompile Include="TItleMap.cpp">
       <Filter>Play</Filter>
     </ClCompile>
-    <ClCompile Include="EventTarget.cpp">
+    <ClCompile Include="Combat.cpp">
       <Filter>PokemonObject\5.Event</Filter>
     </ClCompile>
   </ItemGroup>

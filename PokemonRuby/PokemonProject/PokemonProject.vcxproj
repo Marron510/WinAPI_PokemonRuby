@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EventTarget.h">
+    <ClInclude Include="Combat.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -147,7 +147,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="EventTarget.cpp">
+    <ClCompile Include="Combat.cpp">
       <SubType>
       </SubType>
     </ClCompile>

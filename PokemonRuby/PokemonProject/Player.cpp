@@ -4,7 +4,7 @@
 #include <EngineBase/EngineMath.h>
 #include <EngineBase/EngineString.h>
 #include <EnginePlatform/EngineInput.h>
-
+#include <EnginePlatform/EngineWInImage.h>
 
 #include <EngineCore/EngineAPICore.h>
 #include <EngineCore/EngineCoreDebug.h>
@@ -13,7 +13,7 @@
 
 #include "PokemonEnum.h"
 #include "PokemonInput.h"
-#include "EventTarget.h"
+
 
 
 
@@ -85,7 +85,7 @@ void APlayer::BeginPlay()
 void APlayer::Tick(float _DeltaTime)
 {
     Super::Tick(_DeltaTime);
-
+    
     if (true == IsMoving)
     {
         WalkTime += _DeltaTime;
@@ -112,6 +112,7 @@ void APlayer::Idle(float _DeltaTime)
 {
     PlayerCameraCheck();
     PlayerDebugCheck(_DeltaTime);
+    
 
     if (true == IsMoving)
     {
@@ -170,6 +171,13 @@ void APlayer::Walk(float _DeltaTime)
     FVector2D CurrentLocation = GetActorLocation();
     FVector2D TargetLocation = GetTargetLocation();
 
+    if (false == IsMoving)
+    {
+        TargetLocation = CurrentLocation;
+    }
+    
+    PlayerGroundCheck(TargetLocation);
+    
     FVector2D Direction = TargetLocation - CurrentLocation;
     Direction.Normalize();
 
@@ -179,6 +187,12 @@ void APlayer::Walk(float _DeltaTime)
     {
         NewLocation = TargetLocation;
         IsMoving = false;
+
+        if (UColor::GREEN == CheckColor)
+        {
+            //openlevel 전투레벨 오픈
+        }
+
         FSM.ChangeState(APlayerState::IDLE);
     }
 
@@ -390,6 +404,18 @@ void APlayer::SetTargetLocation(const FVector2D& NewTarget)
     TargetLocation = Target;
     IsMoving = true;
     WalkTime = 0.0f;
+    PlayerGroundCheck(TargetLocation);
+
+    if (CheckColor == UColor::WHITE)
+    {
+        IsMoving = true;
+    }
+    if (CheckColor == UColor::RED)
+    {
+        IsMoving = false;
+        TargetLocation == GetActorLocation();
+    }
+
     CurrentDirection = TargetLocation - GetActorLocation();
     CurrentDirection.Normalize();
 }
@@ -397,4 +423,18 @@ void APlayer::SetTargetLocation(const FVector2D& NewTarget)
 FVector2D APlayer::GetTargetLocation() const
 {
     return TargetLocation;
+}
+
+void APlayer::PlayerGroundCheck(FVector2D _MovePos)
+{
+    if (nullptr != ColImage)
+    {
+        FVector2D NextPos = _MovePos;
+        CheckColor = ColImage->GetColor(NextPos);
+    }
+}
+
+void APlayer::SetColImage(std::string_view _ColImageName)
+{
+    ColImage = UImageManager::GetInst().FindImage(_ColImageName);
 }

@@ -6,8 +6,8 @@
 #include <EngineCore/Level.h>
 
 
-#include "LaborProfessorBirchMap.h"
 #include "Player.h"
+#include "LaborProfessorBirchMap.h"
 #include "PokemonMapMode.h"
 
 FIntPoint ALaborProfessorBirchMode::LaborProfessorBirchModeChangePos;
@@ -29,6 +29,8 @@ void ALaborProfessorBirchMode::BeginPlay()
 	{
 		ALaborProfessorBirchMap* NewActor = GetWorld()->SpawnActor<ALaborProfessorBirchMap>();
 		Map = NewActor->GetCurMap();
+		APlayer* Player = GetWorld()->GetPawn<APlayer>();
+		Player->SetColImage("LaborProfessorBirch Collision.png");
 	}
 }
 

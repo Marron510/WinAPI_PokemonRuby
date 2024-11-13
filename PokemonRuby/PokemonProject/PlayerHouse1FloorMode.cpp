@@ -5,6 +5,7 @@
 #include <EngineCore/EngineAPICore.h>
 #include <EngineCore/Level.h>
 
+#include "Player.h"
 #include "PokemonMath.h"
 #include "PlayerHouse1FloorMap.h"
 
@@ -30,6 +31,8 @@ void APlayerHouse1FloorMode::BeginPlay()
 	{
 		APlayerHouse1FloorMap* NewActor = GetWorld()->SpawnActor<APlayerHouse1FloorMap>();
 		Map = NewActor->GetCurMap();
+		APlayer* Player = GetWorld()->GetPawn<APlayer>();
+		Player->SetColImage("PlayerHouse_1 Collision.png");
 	}
 }
 

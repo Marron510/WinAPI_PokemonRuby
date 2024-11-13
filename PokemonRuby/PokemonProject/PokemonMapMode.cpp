@@ -36,6 +36,8 @@ APokemonMapMode::~APokemonMapMode()
 void APokemonMapMode::BeginPlay()
 {
 	Super::BeginPlay();
+	APlayer* Player = GetWorld()->GetPawn<APlayer>();
+	Player->SetColImage("PokemonMapCollision.png");
 
 	// AFlower
 	{
@@ -436,6 +438,12 @@ void APokemonMapMode::BeginPlay()
 		newsea150->SetActorLocationTile({ 111, 11 });
 	}
 
+	//---------------------------------------------------------
+	{
+		
+	}
+	
+	
 	// AWater
 	{
 		AWater* newWater1 = GetWorld()->SpawnActor<AWater>();
