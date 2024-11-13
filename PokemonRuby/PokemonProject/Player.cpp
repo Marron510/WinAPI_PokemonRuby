@@ -190,7 +190,7 @@ void APlayer::Walk(float _DeltaTime)
 
         if (UColor::GREEN == CheckColor)
         {
-            //openlevel 전투레벨 오픈
+            UEngineAPICore::GetCore()->OpenLevel("PokemonBattleMap");
         }
 
         FSM.ChangeState(APlayerState::IDLE);

@@ -18,6 +18,8 @@
 #include "PokemonMapMode.h"
 #include "LaborProfessorBirchMode.h"
 #include "TileMapMode.h"
+#include "PokemonBattleMode.h"
+#include "Cursor.h"
 
 #include "Player.h"
 
@@ -90,6 +92,15 @@ void PokemonCore::BeginPlay()
 		UImageManager::GetInst().LoadFolder(Dir.GetPathToString());
 
 	}
+	
+	{
+		UEngineDirectory Dir;
+		Dir.MoveParentToDirectory("PokemonResources//Image");
+		Dir.Append("PlayMap//UI");
+
+		UImageManager::GetInst().LoadFolder(Dir.GetPathToString());
+
+	}
 
 	{
 		UEngineDirectory Dir;
@@ -147,6 +158,7 @@ void PokemonCore::BeginPlay()
 		UEngineAPICore::GetCore()->CreateLevel<APlayerHouse2Mode, APlayer>("PlayerHouse2");
 		UEngineAPICore::GetCore()->CreateLevel<APlayerHouse2FloorMode, APlayer>("PlayerHouse2Floor");
 		UEngineAPICore::GetCore()->CreateLevel<ALaborProfessorBirchMode, APlayer>("LaborProfessorBirch");
+		UEngineAPICore::GetCore()->CreateLevel<APokemonBattleMode, ACursor>("PokemonBattleMap");
 		
 	}
 

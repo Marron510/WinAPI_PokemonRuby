@@ -17,6 +17,9 @@ public:
 	ATileMapMode& operator=(const ATileMapMode& _Other) = delete;
 	ATileMapMode& operator=(ATileMapMode&& _Other) noexcept = delete;
 
+
+
+
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;

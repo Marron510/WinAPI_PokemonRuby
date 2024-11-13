@@ -46,9 +46,6 @@
     <Filter Include="PokemonObject\2.PokemonGameMode\01_InGameMode\LittleRootTown">
       <UniqueIdentifier>{e9deb932-bcef-455e-87e5-2e4ba7d81b75}</UniqueIdentifier>
     </Filter>
-    <Filter Include="PokemonObject\2.PokemonGameMode\01_InGameMode\Route">
-      <UniqueIdentifier>{a49c49db-06cb-4299-96bb-053dfa6d6e5f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="PokemonObject\3.Pokemon">
       <UniqueIdentifier>{1918b076-d2ac-48d1-87f1-773a5e9d2839}</UniqueIdentifier>
     </Filter>
@@ -60,6 +57,9 @@
     </Filter>
     <Filter Include="PokemonObject\5.Event">
       <UniqueIdentifier>{afaf515f-82ab-4a02-b4db-e8d0d4565d01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PokemonObject\2.PokemonGameMode\01_InGameMode\PokemonBattle">
+      <UniqueIdentifier>{f6f48a32-cd7c-4d8d-b401-ba688d072f52}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -117,12 +117,6 @@
     <ClInclude Include="LaborProfessorBirchMap.h">
       <Filter>PokemonObject\1.PokemonMap\001_LittleRootTownMap</Filter>
     </ClInclude>
-    <ClInclude Include="Route101Mode.h">
-      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\Route</Filter>
-    </ClInclude>
-    <ClInclude Include="Route102Mode.h">
-      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\Route</Filter>
-    </ClInclude>
     <ClInclude Include="Route101Map.h">
       <Filter>PokemonObject\1.PokemonMap\002_Route101Map</Filter>
     </ClInclude>
@@ -171,11 +165,17 @@
     <ClInclude Include="TItleMap.h">
       <Filter>Play</Filter>
     </ClInclude>
-    <ClInclude Include="Combat.h">
+    <ClInclude Include="PokemonBattle.h">
       <Filter>PokemonObject\5.Event</Filter>
     </ClInclude>
     <ClInclude Include="Fade.h">
       <Filter>PokemonObject\1.PokemonMap</Filter>
+    </ClInclude>
+    <ClInclude Include="PokemonBattleMode.h">
+      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\PokemonBattle</Filter>
+    </ClInclude>
+    <ClInclude Include="Cursor.h">
+      <Filter>PokemonObject\5.Event</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -233,12 +233,6 @@
     <ClCompile Include="LaborProfessorBirchMap.cpp">
       <Filter>PokemonObject\1.PokemonMap\001_LittleRootTownMap</Filter>
     </ClCompile>
-    <ClCompile Include="Route101Mode.cpp">
-      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\Route</Filter>
-    </ClCompile>
-    <ClCompile Include="Route102Mode.cpp">
-      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\Route</Filter>
-    </ClCompile>
     <ClCompile Include="Route101Map.cpp">
       <Filter>PokemonObject\1.PokemonMap\002_Route101Map</Filter>
     </ClCompile>
@@ -287,11 +281,17 @@
     <ClCompile Include="TItleMap.cpp">
       <Filter>Play</Filter>
     </ClCompile>
-    <ClCompile Include="Combat.cpp">
+    <ClCompile Include="PokemonBattle.cpp">
       <Filter>PokemonObject\5.Event</Filter>
     </ClCompile>
     <ClCompile Include="Fade.cpp">
       <Filter>PokemonObject\1.PokemonMap</Filter>
+    </ClCompile>
+    <ClCompile Include="PokemonBattleMode.cpp">
+      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\PokemonBattle</Filter>
+    </ClCompile>
+    <ClCompile Include="Cursor.cpp">
+      <Filter>PokemonObject\5.Event</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
