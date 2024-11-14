@@ -7,7 +7,7 @@ class APokemonBattleMode : public AGameMode
 {
 public:
 
-	std::string_view CapitalString[static_cast<int>(UPokemoncharacter::ECapitals::END)] =
+	/*std::string_view CapitalString[static_cast<int>(UPokemoncharacter::ECapitals::END)] =
 	{
 		"A",
 		"B",
@@ -35,7 +35,9 @@ public:
 		"X",
 		"Y",
 		"Z"
-	};
+	};*/
+
+
 	// 持失切 社瑚切
 	APokemonBattleMode();
 	~APokemonBattleMode();
@@ -59,15 +61,16 @@ public:
 	void EnemyPokemonUISetting();
 
 	void PlayerSetting();
-	void ThrowMonsterball(float _DeltaTime);
+	void ThrowMonsterball();
 	void SpawnMyPokemon();
-
+	void ThrowedMosterBall();
 
 protected:
 
 private:
 	USpriteRenderer* SpriteRenderer = nullptr;
 	USpriteRenderer* PlayerRenderer = nullptr;
+	USpriteRenderer* MonsterBall = nullptr;
 
 	class AMyPokemon* MyPokemon = nullptr;
 	class AWildPokemon* EnemyPokemon = nullptr;
@@ -78,7 +81,7 @@ private:
 	USpriteRenderer* EnemyPokemonUI = nullptr;
 
 	float ThrowingTime = 0.0f;
-	float BallThrowTime = 0.005f;
+	float BallThrowTime = 2.5f;
 
 	bool IsThrow = false;
 

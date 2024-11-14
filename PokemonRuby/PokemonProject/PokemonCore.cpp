@@ -113,6 +113,15 @@ void PokemonCore::BeginPlay()
 	{
 		UEngineDirectory Dir;
 		Dir.MoveParentToDirectory("PokemonResources//Image");
+		Dir.Append("PlayMap//ThrowedBall");
+
+		UImageManager::GetInst().LoadFolder(Dir.GetPathToString());
+
+	}
+
+	{
+		UEngineDirectory Dir;
+		Dir.MoveParentToDirectory("PokemonResources//Image");
 		Dir.Append("TileMap//TileSet");
 
 		UImageManager::GetInst().LoadFolder(Dir.GetPathToString());
@@ -156,6 +165,7 @@ void PokemonCore::BeginPlay()
 	{
 		UImageManager::GetInst().CuttingSprite("Cursor.png", { 96, 96 });
 		UImageManager::GetInst().CuttingSprite("Font.png", { 24, 36 });
+		UImageManager::GetInst().CuttingSprite("ThrowBall.png", { 102, 168 });
 	}
 
 	{
@@ -183,7 +193,7 @@ void PokemonCore::BeginPlay()
 
 
 	
-		UEngineAPICore::GetCore()->OpenLevel("Truck");
+		UEngineAPICore::GetCore()->OpenLevel("PokemonBattle");
 	
 }
 
