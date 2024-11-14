@@ -25,14 +25,17 @@ public:
 	{
 		return PlayerPokemonShadow;
 	}
+
 	USpriteRenderer* GetEnemyPokemonShadow()
 	{
 		return EnemyPokemonShadow;
 	}
+
 	USpriteRenderer* GetPokemonUI()
 	{
 		return PlayerPokemonUI;
 	}
+
 	USpriteRenderer* GetEnemyPokemonUI()
 	{
 		return EnemyPokemonUI;

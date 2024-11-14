@@ -27,37 +27,6 @@ APokemonBattleMap::APokemonBattleMap()
 		SpriteRenderer->SetComponentLocation(Scale.Half());
 	}
 
-	{
-		PlayerPokemonShadow = CreateDefaultSubObject<USpriteRenderer>();
-		PlayerPokemonShadow->SetOrder(ERenderOrder::POKEMONSHADOW);
-		PlayerPokemonShadow->SetSprite("PlayerPokemonShadow.png");
-		FVector2D Scale = PlayerPokemonShadow->SetSpriteScale(1.0f);
-		PlayerPokemonShadow->SetComponentLocation({ 1500 , 520 }); 
-	}
-
-	{
-		EnemyPokemonShadow = CreateDefaultSubObject<USpriteRenderer>();
-		EnemyPokemonShadow->SetOrder(ERenderOrder::POKEMONSHADOW);
-		EnemyPokemonShadow->SetSprite("EnemyPokemonShadow.png");
-		FVector2D Scale = EnemyPokemonShadow->SetSpriteScale(1.0f);
-		EnemyPokemonShadow->SetComponentLocation({ -300 , 308 }); 
-	}
-
-	{
-		PlayerPokemonUI = CreateDefaultSubObject<USpriteRenderer>();
-		PlayerPokemonUI->SetOrder(ERenderOrder::POKEMONSHADOW);
-		PlayerPokemonUI->SetSprite("PlayerPokemonUI.png");
-		FVector2D Scale = PlayerPokemonUI->SetSpriteScale(1.0f);
-		PlayerPokemonUI->SetComponentLocation({ 1600 , 460 }); 
-	}
-
-	{
-		EnemyPokemonUI = CreateDefaultSubObject<USpriteRenderer>();
-		EnemyPokemonUI->SetOrder(ERenderOrder::POKEMONSHADOW);
-		EnemyPokemonUI->SetSprite("EnemyPokemonUI.png");
-		FVector2D Scale = EnemyPokemonUI->SetSpriteScale(1.0f);
-		EnemyPokemonUI->SetComponentLocation({ -400 , 166 }); 
-	}
 }
 
 APokemonBattleMap::~APokemonBattleMap()

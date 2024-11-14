@@ -21,9 +21,9 @@ APokemonBattleMode::APokemonBattleMode()
 	//PlayerRenderer->CreateAnimation("PlayerThrowMonsterBall", "Player_Throw_MonsterBall.png", 0, 3, 0.5f);
 	
 	//PlayerRenderer->ChangeAnimation("PlayerThrowMonsterBallReady");
-	PlayerRenderer->SetComponentLocation({ 1524 ,416 });
-	PlayerRenderer->SetSpriteScale(1.0f);
-	PlayerRenderer->SetOrder(ERenderOrder::CURSOR);
+	//PlayerRenderer->SetComponentLocation({ 1524 ,416 });
+	//PlayerRenderer->SetSpriteScale(1.0f);
+	//PlayerRenderer->SetOrder(ERenderOrder::CURSOR);
 
 
 	/*PlayerRenderer->ChangeAnimation("PlayerThrowMonsterBall");*/
@@ -52,6 +52,11 @@ void APokemonBattleMode::BeginPlay()
 		EnemyPokemon = GetWorld()->SpawnActor<AWildPokemon>();
 		EnemyPokemon->SetActorLocation({ -132 , 260 });
 	}
+
+	{ 
+		MyPokemon = GetWorld()->SpawnActor<AMyPokemon>(); 
+		MyPokemon->SetActorLocation({ -500, -500});
+	}
 }
 
 void APokemonBattleMode::Tick(float _DeltaTime)
@@ -62,7 +67,7 @@ void APokemonBattleMode::Tick(float _DeltaTime)
 
 	BattleGroundSetting();
 
-	PlayerSetting();
+	//PlayerSetting();
 	/*ThrowMonsterball();
 	SpawnMyPokemon();*/
 
@@ -151,29 +156,29 @@ void APokemonBattleMode::PlayerPokemonUISetting()
 	PlayerPokemonUI->SetComponentLocation(Curloc);
 }
 
-void APokemonBattleMode::PlayerSetting()
-{
-	FVector2D TargetLocation = FVector2D({ 336 ,416 });
-	FVector2D Curloc = PlayerRenderer->GetComponentLocation();
-	Curloc += FVector2D::LEFT.Half();
-
-	if (TargetLocation == Curloc)
-	{
-		PlayerRenderer->GetComponentLocation() = TargetLocation;
-		return;
-	}
-
-	PlayerRenderer->SetComponentLocation(Curloc);
-}
-
-void APokemonBattleMode::ThrowMonsterball()
-{
-	PlayerRenderer->ChangeAnimation("PlayerThrowMonsterBall");
-}
-
+//void APokemonBattleMode::PlayerSetting()
+//{
+//	FVector2D TargetLocation = FVector2D({ 336 ,416 });
+//	FVector2D Curloc = PlayerRenderer->GetComponentLocation();
+//	Curloc += FVector2D::LEFT.Half();
+//
+//	if (TargetLocation == Curloc)
+//	{
+//		PlayerRenderer->GetComponentLocation() = TargetLocation;
+//		return;
+//	}
+//
+//	PlayerRenderer->SetComponentLocation(Curloc);
+//}
+//
+//void APokemonBattleMode::ThrowMonsterball()
+//{
+//	PlayerRenderer->ChangeAnimation("PlayerThrowMonsterBall");
+//}
+//
 
 void APokemonBattleMode::SpawnMyPokemon()
 {
-	MyPokemon = GetWorld()->SpawnActor<AMyPokemon>();
+	
 	MyPokemon->SetActorLocation({ 336 ,416 });
 }
