@@ -41,5 +41,8 @@ private:
 	// 맵으로 포켓몬 이름에 따른 렌더를 가져오게 설정
 	// 포켓몬 이름은 enum class EWildPokemonEnum를 따를것임
 	USpriteRenderer* WildPokemon;
+
+
+
 };
 

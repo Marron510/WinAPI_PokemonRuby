@@ -1,5 +1,5 @@
 #pragma once
-
+#include <EngineBase/Object.h>
 
 enum class ERenderOrder
 {
@@ -15,5 +15,55 @@ enum class ERenderOrder
 	CURSOR = 500,
 	SKILLEFFECT = 350,
 	FADE = 1000
+};
+
+
+class UPokemoncharacter : public UObject
+{
+public:
+	UPokemoncharacter();
+	~UPokemoncharacter();
+
+	// delete Function
+	UPokemoncharacter(const UPokemoncharacter& _Other) = delete;
+	UPokemoncharacter(UPokemoncharacter&& _Other) noexcept = delete;
+	UPokemoncharacter& operator=(const UPokemoncharacter& _Other) = delete;
+	UPokemoncharacter& operator=(UPokemoncharacter&& _Other) noexcept = delete;
+
+
+	static enum class ECapitals
+	{
+		A,
+		B,
+		C,
+		D,
+		E,
+		F,
+		G,
+		H,
+		I,
+		J,
+		K,
+		L,
+		M,
+		N,
+		O,
+		P,
+		Q,
+		R,
+		S,
+		T,
+		U,
+		V,
+		W,
+		X,
+		Y,
+		Z,
+		END
+	};
+	
+
+private:
+
 };
 

@@ -1,10 +1,41 @@
 #pragma once
 #include <EngineBase/EngineMath.h>
 #include <EngineCore/GameMode.h>
+#include "PokemonEnum.h"
 
 class APokemonBattleMode : public AGameMode
 {
 public:
+
+	std::string_view CapitalString[static_cast<int>(UPokemoncharacter::ECapitals::END)] =
+	{
+		"A",
+		"B",
+		"C",
+		"D",
+		"E",
+		"F",
+		"G",
+		"H",
+		"I",
+		"J",
+		"K",
+		"L",
+		"M",
+		"N",
+		"O",
+		"P",
+		"Q",
+		"R",
+		"S",
+		"T",
+		"U",
+		"V",
+		"W",
+		"X",
+		"Y",
+		"Z"
+	};
 	// 持失切 社瑚切
 	APokemonBattleMode();
 	~APokemonBattleMode();

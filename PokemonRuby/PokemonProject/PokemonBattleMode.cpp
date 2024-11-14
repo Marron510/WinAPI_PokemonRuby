@@ -3,12 +3,13 @@
 
 #include <EngineCore/EngineAPICore.h>
 #include <EngineCore/Level.h>
-
 #include <EngineCore/SpriteRenderer.h>
+
 #include "PokemonMath.h"
 #include "PokemonBattleMap.h"
 #include "MyPokemon.h"
 #include "WildPokemon.h"
+
 
 
 APokemonBattleMode::APokemonBattleMode()
