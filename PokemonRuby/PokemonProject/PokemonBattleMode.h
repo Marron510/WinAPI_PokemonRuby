@@ -56,10 +56,17 @@ public:
 	void PokemonSetting();
 	void PlayerPokemonUISetting();
 	void EnemyPokemonUISetting();
+
+	void PlayerSetting();
+	void ThrowMonsterball();
+	void SpawnMyPokemon();
+
+
 protected:
 
 private:
 	USpriteRenderer* SpriteRenderer = nullptr;
+	USpriteRenderer* PlayerRenderer = nullptr;
 
 	class AMyPokemon* MyPokemon = nullptr;
 	class AWildPokemon* EnemyPokemon = nullptr;

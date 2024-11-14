@@ -77,6 +77,15 @@ void PokemonCore::BeginPlay()
 	{
 		UEngineDirectory Dir;
 		Dir.MoveParentToDirectory("PokemonResources//Image");
+		Dir.Append("Player//Battle");
+
+		UImageManager::GetInst().LoadFolder(Dir.GetPathToString());
+
+	}
+
+	{
+		UEngineDirectory Dir;
+		Dir.MoveParentToDirectory("PokemonResources//Image");
 		Dir.Append("PlayMap//Exterior");
 
 		UImageManager::GetInst().LoadFolder(Dir.GetPathToString());
@@ -133,6 +142,7 @@ void PokemonCore::BeginPlay()
 		UImageManager::GetInst().CuttingSprite("Player_Walk_Down.png", { 48, 48 });
 		UImageManager::GetInst().CuttingSprite("Player_Walk_Right.png", { 48, 48 });
 		UImageManager::GetInst().CuttingSprite("Player_Walk_Left.png", { 48, 48 });
+		UImageManager::GetInst().CuttingSprite("Player_Throw_MonsterBall.png", { 400, 288 });
 	}
 
 	
