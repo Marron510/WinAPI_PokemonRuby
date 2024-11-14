@@ -19,15 +19,6 @@
     <Filter Include="PokemonObject\1.PokemonMap">
       <UniqueIdentifier>{155cd215-160b-44d1-a995-b727fccdff53}</UniqueIdentifier>
     </Filter>
-    <Filter Include="PokemonObject\1.PokemonMap\001_LittleRootTownMap">
-      <UniqueIdentifier>{07a5d395-99f8-4667-93ef-3e9563485d59}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="PokemonObject\1.PokemonMap\000_TitleMap">
-      <UniqueIdentifier>{852a13db-36f8-49fc-949a-21e18cc49c2d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="PokemonObject\1.PokemonMap\100_MapObject">
-      <UniqueIdentifier>{1986958f-b17b-469d-8ac8-f7beff20f5dc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="PokemonObject\2.PokemonGameMode">
       <UniqueIdentifier>{541ec236-324c-48d3-a096-8ecda4b1f20d}</UniqueIdentifier>
     </Filter>
@@ -52,14 +43,23 @@
     <Filter Include="PokemonObject\5.Event">
       <UniqueIdentifier>{afaf515f-82ab-4a02-b4db-e8d0d4565d01}</UniqueIdentifier>
     </Filter>
-    <Filter Include="PokemonObject\2.PokemonGameMode\01_InGameMode\PokemonBattle">
+    <Filter Include="PokemonObject\2.PokemonGameMode\01_InGameMode\Battle">
       <UniqueIdentifier>{f6f48a32-cd7c-4d8d-b401-ba688d072f52}</UniqueIdentifier>
     </Filter>
-    <Filter Include="PokemonObject\1.PokemonMap\999.BattleMap">
-      <UniqueIdentifier>{ea10e67d-75d1-46f4-8d60-98cda9fb0a5b}</UniqueIdentifier>
+    <Filter Include="PokemonObject\1.PokemonMap\00_TitleMap">
+      <UniqueIdentifier>{852a13db-36f8-49fc-949a-21e18cc49c2d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="PokemonObject\1.PokemonMap\101_MapEvent">
+    <Filter Include="PokemonObject\1.PokemonMap\01_LittleRootTownMap">
+      <UniqueIdentifier>{07a5d395-99f8-4667-93ef-3e9563485d59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PokemonObject\1.PokemonMap\02_MapObject">
+      <UniqueIdentifier>{1986958f-b17b-469d-8ac8-f7beff20f5dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PokemonObject\1.PokemonMap\03_MapEvent">
       <UniqueIdentifier>{d4808bae-2116-4b9d-bc56-ff9555ff6193}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PokemonObject\1.PokemonMap\04.BattleMap">
+      <UniqueIdentifier>{ea10e67d-75d1-46f4-8d60-98cda9fb0a5b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -88,16 +88,16 @@
       <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\LittleRootTown</Filter>
     </ClInclude>
     <ClInclude Include="PokemonMap.h">
-      <Filter>PokemonObject\1.PokemonMap\001_LittleRootTownMap</Filter>
+      <Filter>PokemonObject\1.PokemonMap\01_LittleRootTownMap</Filter>
     </ClInclude>
     <ClInclude Include="PlayerHouse1FloorMap.h">
-      <Filter>PokemonObject\1.PokemonMap\001_LittleRootTownMap</Filter>
+      <Filter>PokemonObject\1.PokemonMap\01_LittleRootTownMap</Filter>
     </ClInclude>
     <ClInclude Include="PlayerHouse1Map.h">
-      <Filter>PokemonObject\1.PokemonMap\001_LittleRootTownMap</Filter>
+      <Filter>PokemonObject\1.PokemonMap\01_LittleRootTownMap</Filter>
     </ClInclude>
     <ClInclude Include="TitleMap.h">
-      <Filter>PokemonObject\1.PokemonMap\000_TitleMap</Filter>
+      <Filter>PokemonObject\1.PokemonMap\00_TitleMap</Filter>
     </ClInclude>
     <ClInclude Include="PlayerHouse2FloorMode.h">
       <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\LittleRootTown</Filter>
@@ -106,28 +106,28 @@
       <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\LittleRootTown</Filter>
     </ClInclude>
     <ClInclude Include="PlayerHouse2FloorMap.h">
-      <Filter>PokemonObject\1.PokemonMap\001_LittleRootTownMap</Filter>
+      <Filter>PokemonObject\1.PokemonMap\01_LittleRootTownMap</Filter>
     </ClInclude>
     <ClInclude Include="PlayerHouse2Map.h">
-      <Filter>PokemonObject\1.PokemonMap\001_LittleRootTownMap</Filter>
+      <Filter>PokemonObject\1.PokemonMap\01_LittleRootTownMap</Filter>
     </ClInclude>
     <ClInclude Include="LaborProfessorBirchMode.h">
       <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\LittleRootTown</Filter>
     </ClInclude>
     <ClInclude Include="LaborProfessorBirchMap.h">
-      <Filter>PokemonObject\1.PokemonMap\001_LittleRootTownMap</Filter>
+      <Filter>PokemonObject\1.PokemonMap\01_LittleRootTownMap</Filter>
     </ClInclude>
     <ClInclude Include="InteriorObject.h">
-      <Filter>PokemonObject\1.PokemonMap\100_MapObject</Filter>
+      <Filter>PokemonObject\1.PokemonMap\02_MapObject</Filter>
     </ClInclude>
     <ClInclude Include="ExteriorObject.h">
-      <Filter>PokemonObject\1.PokemonMap\100_MapObject</Filter>
+      <Filter>PokemonObject\1.PokemonMap\02_MapObject</Filter>
     </ClInclude>
     <ClInclude Include="TruckMode.h">
       <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\LittleRootTown</Filter>
     </ClInclude>
     <ClInclude Include="TruckMap.h">
-      <Filter>PokemonObject\1.PokemonMap\001_LittleRootTownMap</Filter>
+      <Filter>PokemonObject\1.PokemonMap\01_LittleRootTownMap</Filter>
     </ClInclude>
     <ClInclude Include="WildPokemon.h">
       <Filter>PokemonObject\3.Pokemon\WildPokemon</Filter>
@@ -157,19 +157,19 @@
       <Filter>Play</Filter>
     </ClInclude>
     <ClInclude Include="PokemonBattleMode.h">
-      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\PokemonBattle</Filter>
+      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\Battle</Filter>
     </ClInclude>
     <ClInclude Include="Cursor.h">
       <Filter>PokemonObject\5.Event</Filter>
     </ClInclude>
     <ClInclude Include="PokemonBattleMap.h">
-      <Filter>PokemonObject\1.PokemonMap\999.BattleMap</Filter>
+      <Filter>PokemonObject\1.PokemonMap\04.BattleMap</Filter>
     </ClInclude>
     <ClInclude Include="Fade.h">
-      <Filter>PokemonObject\1.PokemonMap\101_MapEvent</Filter>
+      <Filter>PokemonObject\1.PokemonMap\03_MapEvent</Filter>
     </ClInclude>
     <ClInclude Include="TileMap.h">
-      <Filter>PokemonObject\1.PokemonMap\101_MapEvent</Filter>
+      <Filter>PokemonObject\1.PokemonMap\03_MapEvent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -198,16 +198,16 @@
       <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\LittleRootTown</Filter>
     </ClCompile>
     <ClCompile Include="PokemonMap.cpp">
-      <Filter>PokemonObject\1.PokemonMap\001_LittleRootTownMap</Filter>
+      <Filter>PokemonObject\1.PokemonMap\01_LittleRootTownMap</Filter>
     </ClCompile>
     <ClCompile Include="PlayerHouse1FloorMap.cpp">
-      <Filter>PokemonObject\1.PokemonMap\001_LittleRootTownMap</Filter>
+      <Filter>PokemonObject\1.PokemonMap\01_LittleRootTownMap</Filter>
     </ClCompile>
     <ClCompile Include="PlayerHouse1Map.cpp">
-      <Filter>PokemonObject\1.PokemonMap\001_LittleRootTownMap</Filter>
+      <Filter>PokemonObject\1.PokemonMap\01_LittleRootTownMap</Filter>
     </ClCompile>
     <ClCompile Include="TitleMap.cpp">
-      <Filter>PokemonObject\1.PokemonMap\000_TitleMap</Filter>
+      <Filter>PokemonObject\1.PokemonMap\00_TitleMap</Filter>
     </ClCompile>
     <ClCompile Include="PlayerHouse2FloorMode.cpp">
       <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\LittleRootTown</Filter>
@@ -216,28 +216,28 @@
       <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\LittleRootTown</Filter>
     </ClCompile>
     <ClCompile Include="PlayerHouse2FloorMap.cpp">
-      <Filter>PokemonObject\1.PokemonMap\001_LittleRootTownMap</Filter>
+      <Filter>PokemonObject\1.PokemonMap\01_LittleRootTownMap</Filter>
     </ClCompile>
     <ClCompile Include="PlayerHouse2Map.cpp">
-      <Filter>PokemonObject\1.PokemonMap\001_LittleRootTownMap</Filter>
+      <Filter>PokemonObject\1.PokemonMap\01_LittleRootTownMap</Filter>
     </ClCompile>
     <ClCompile Include="LaborProfessorBirchMode.cpp">
       <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\LittleRootTown</Filter>
     </ClCompile>
     <ClCompile Include="LaborProfessorBirchMap.cpp">
-      <Filter>PokemonObject\1.PokemonMap\001_LittleRootTownMap</Filter>
+      <Filter>PokemonObject\1.PokemonMap\01_LittleRootTownMap</Filter>
     </ClCompile>
     <ClCompile Include="InteriorObject.cpp">
-      <Filter>PokemonObject\1.PokemonMap\100_MapObject</Filter>
+      <Filter>PokemonObject\1.PokemonMap\02_MapObject</Filter>
     </ClCompile>
     <ClCompile Include="ExteriorObject.cpp">
-      <Filter>PokemonObject\1.PokemonMap\100_MapObject</Filter>
+      <Filter>PokemonObject\1.PokemonMap\02_MapObject</Filter>
     </ClCompile>
     <ClCompile Include="TruckMode.cpp">
       <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\LittleRootTown</Filter>
     </ClCompile>
     <ClCompile Include="TruckMap.cpp">
-      <Filter>PokemonObject\1.PokemonMap\001_LittleRootTownMap</Filter>
+      <Filter>PokemonObject\1.PokemonMap\01_LittleRootTownMap</Filter>
     </ClCompile>
     <ClCompile Include="WildPokemon.cpp">
       <Filter>PokemonObject\3.Pokemon\WildPokemon</Filter>
@@ -267,19 +267,19 @@
       <Filter>Play</Filter>
     </ClCompile>
     <ClCompile Include="PokemonBattleMode.cpp">
-      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\PokemonBattle</Filter>
+      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\Battle</Filter>
     </ClCompile>
     <ClCompile Include="Cursor.cpp">
       <Filter>PokemonObject\5.Event</Filter>
     </ClCompile>
     <ClCompile Include="PokemonBattleMap.cpp">
-      <Filter>PokemonObject\1.PokemonMap\999.BattleMap</Filter>
+      <Filter>PokemonObject\1.PokemonMap\04.BattleMap</Filter>
     </ClCompile>
     <ClCompile Include="Fade.cpp">
-      <Filter>PokemonObject\1.PokemonMap\101_MapEvent</Filter>
+      <Filter>PokemonObject\1.PokemonMap\03_MapEvent</Filter>
     </ClCompile>
     <ClCompile Include="TileMap.cpp">
-      <Filter>PokemonObject\1.PokemonMap\101_MapEvent</Filter>
+      <Filter>PokemonObject\1.PokemonMap\03_MapEvent</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

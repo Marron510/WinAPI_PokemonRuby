@@ -4,6 +4,7 @@
 class APokemonBattleMap : public AActor
 {
 public:
+
 	// 持失切 社瑚切
 	APokemonBattleMap();
 	~APokemonBattleMap();
@@ -20,13 +21,34 @@ public:
 		return SpriteRenderer;
 	}
 
+	USpriteRenderer* GetPlayerPKMShadow()
+	{
+		return PlayerPokemonShadow;
+	}
+	USpriteRenderer* GetEnemyPokemonShadow()
+	{
+		return EnemyPokemonShadow;
+	}
+	USpriteRenderer* GetPokemonUI()
+	{
+		return PlayerPokemonUI;
+	}
+	USpriteRenderer* GetEnemyPokemonUI()
+	{
+		return EnemyPokemonUI;
+	}
+
+
+
 protected:
 
 private:
 
 	USpriteRenderer* SpriteRenderer;
-	USpriteRenderer* SpriteRendererShadow1;
-	USpriteRenderer* SpriteRendererShadow2;
+	USpriteRenderer* PlayerPokemonShadow;
+	USpriteRenderer* EnemyPokemonShadow;
+	USpriteRenderer* PlayerPokemonUI;
+	USpriteRenderer* EnemyPokemonUI;
 
 
 };

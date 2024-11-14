@@ -18,12 +18,17 @@ public:
 	
 	void BeginPlay() override;
 
-	
+	void Tick(float _DeltaTime) override;
 
 
 protected:
 
 private:
-	
+	USpriteRenderer* SpriteRenderer = nullptr;
+	USpriteRenderer* PlayerPokemonShadow = nullptr;
+	USpriteRenderer* EnemyPokemonShadow = nullptr;
+	USpriteRenderer* PlayerPokemonUI = nullptr;
+	USpriteRenderer* EnemyPokemonUI = nullptr;
+
 };
 

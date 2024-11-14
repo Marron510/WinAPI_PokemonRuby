@@ -17,6 +17,10 @@ public:
 
 
 	class USpriteRenderer* Map = nullptr;
+
+
+
+
 protected:
 	class ATileMap* GroundTileMap = nullptr;
 
