@@ -145,11 +145,14 @@ void PokemonCore::BeginPlay()
 
 	{
 		UImageManager::GetInst().CuttingSprite("Cursor.png", { 96, 96 });
+		UImageManager::GetInst().CuttingSprite("Font.png", { 24, 36 });
 	}
 
 	{
 		UImageManager::GetInst().CuttingSprite("Treecko.png", { 288, 288 });
 	}
+
+
 
 	UEngineAPICore::GetCore()->GetMainWindow().SetWindowTitle("Pokemon_Ruby");
 
@@ -165,13 +168,12 @@ void PokemonCore::BeginPlay()
 		UEngineAPICore::GetCore()->CreateLevel<APlayerHouse2Mode, APlayer>("PlayerHouse2");
 		UEngineAPICore::GetCore()->CreateLevel<APlayerHouse2FloorMode, APlayer>("PlayerHouse2Floor");
 		UEngineAPICore::GetCore()->CreateLevel<ALaborProfessorBirchMode, APlayer>("LaborProfessorBirch");
-
-		UEngineAPICore::GetCore()->CreateLevel<APokemonBattleMode, AActor>("PokemonBattleMap");
+		UEngineAPICore::GetCore()->CreateLevel<APokemonBattleMode, AActor>("PokemonBattle");
 	}
 
 
 	
-		UEngineAPICore::GetCore()->OpenLevel("PokemonBattleMap");
+		UEngineAPICore::GetCore()->OpenLevel("PokemonBattle");
 	
 }
 

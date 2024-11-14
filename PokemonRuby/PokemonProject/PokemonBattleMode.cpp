@@ -32,11 +32,11 @@ void APokemonBattleMode::BeginPlay()
 	}
 	{
 		AMyPokemon* Pokemon = GetWorld()->SpawnActor<AMyPokemon>();
-		
+		Pokemon->SetActorLocation({ 336 ,416 }); // 내 포켓몬 도착지점
 	}
 
 	{
 		AWildPokemon* WildPokemon = GetWorld()->SpawnActor<AWildPokemon>();
-		WildPokemon->SetActorLocation({ 500,500 });
+		WildPokemon->SetActorLocation({ 1020,284 }); // 상대 포켓몬 도착지점
 	}
 }

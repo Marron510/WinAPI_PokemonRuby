@@ -11,11 +11,13 @@ UEngineSerializer::~UEngineSerializer()
 
 void UEngineSerializer::Write(void* _Data, unsigned int _Size)
 {
+
 	if (WriteOffset + _Size >= Data.size())
 	{
 		Data.resize(Data.size() * 2 + _Size);
 	}
 
+	
 	memcpy_s(&Data[WriteOffset], _Size, _Data, _Size);
 	WriteOffset += _Size;
 }

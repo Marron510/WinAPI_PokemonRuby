@@ -15,6 +15,40 @@ USpriteRenderer::~USpriteRenderer()
 
 void USpriteRenderer::Render(float _DeltaTime)
 {
+    
+    if (nullptr == Sprite)
+    {
+        MSGASSERT("스프라이트가 세팅되지 않은 액터를 랜더링을 할수 없습니다.");
+        return;
+    }
+
+    UEngineWindow& MainWindow = UEngineAPICore::GetCore()->GetMainWindow();
+    UEngineWinImage* BackBufferImage = MainWindow.GetBackBuffer();
+    UEngineSprite::USpriteData CurData = Sprite->GetSpriteData(CurIndex);
+
+    FTransform Trans = GetActorTransform();
+
+    ULevel* Level = GetActor()->GetWorld();
+
+    Trans.Location = Trans.Location - Level->CameraPos;
+
+    CurData.Image->CopyToTrans(BackBufferImage, Trans, CurData.Transform);
+}
+
+void USpriteRenderer::BeginPlay()
+{
+    Super::BeginPlay();
+
+    AActor* Actor = GetActor();
+    ULevel* Level = Actor->GetWorld();
+
+    Level->PushRenderer(this);
+}
+
+void USpriteRenderer::ComponentTick(float _DeltaTime)
+{
+    Super::ComponentTick(_DeltaTime);
+
     if (nullptr != CurAnimation)
     {
         std::vector<int>& Indexs = CurAnimation->FrameIndex;
@@ -60,38 +94,7 @@ void USpriteRenderer::Render(float _DeltaTime)
         CurIndex = Indexs[CurAnimation->CurIndex];
     }
 
-    if (nullptr == Sprite)
-    {
-        MSGASSERT("스프라이트가 세팅되지 않은 액터를 랜더링을 할수 없습니다.");
-        return;
-    }
 
-    UEngineWindow& MainWindow = UEngineAPICore::GetCore()->GetMainWindow();
-    UEngineWinImage* BackBufferImage = MainWindow.GetBackBuffer();
-    UEngineSprite::USpriteData CurData = Sprite->GetSpriteData(CurIndex);
-
-    FTransform Trans = GetActorTransform();
-
-    ULevel* Level = GetActor()->GetWorld();
-
-    Trans.Location = Trans.Location - Level->CameraPos;
-
-    CurData.Image->CopyToTrans(BackBufferImage, Trans, CurData.Transform);
-}
-
-void USpriteRenderer::BeginPlay()
-{
-    Super::BeginPlay();
-
-    AActor* Actor = GetActor();
-    ULevel* Level = Actor->GetWorld();
-
-    Level->PushRenderer(this);
-}
-
-void USpriteRenderer::ComponentTick(float _DeltaTime)
-{
-    Super::ComponentTick(_DeltaTime);
 }
 
 void USpriteRenderer::SetSprite(std::string_view _Name, int _CurIndex /*= 0*/)

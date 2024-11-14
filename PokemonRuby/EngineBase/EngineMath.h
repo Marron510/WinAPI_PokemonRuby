@@ -1,4 +1,10 @@
 #pragma once
+// FVector로 통일하겠습니다.
+// FVector2D xy
+// FVector3D xyz
+// FVector4D xyzw
+// FVector4D == FVector;
+
 
 class UEngineMath
 {
@@ -9,13 +15,13 @@ public:
 	}
 
 	template <typename DataType>
-	static DataType ClampMax(DataType value, DataType maxValue)
+	DataType ClampMax(DataType value, DataType maxValue)
 	{
 		return (value > maxValue) ? maxValue : value;
 	}
 
 	template <typename DataType>
-	static DataType ClampMin(DataType value, DataType minValue)
+	DataType ClampMin(DataType value, DataType minValue)
 	{
 		return (value < minValue) ? minValue : value;
 	}
@@ -84,6 +90,7 @@ public:
 		return Y * 0.5f;
 	}
 
+	// X든 Y든 0이있으면 터트리는 함수.
 	bool IsZeroed() const
 	{
 		return X == 0.0f || Y == 0.0f;
@@ -94,6 +101,7 @@ public:
 		return { X * 0.5f, Y * 0.5f };
 	}
 
+	// 빗변의 길이입니다.
 	float Length() const
 	{
 		return UEngineMath::Sqrt(X * X + Y * Y);
@@ -131,7 +139,7 @@ public:
 		return Result;
 	}
 
-	FVector2D operator+(FVector2D _Other) const
+	FVector2D operator+(const FVector2D& _Other) const
 	{
 		FVector2D Result;
 		Result.X = X + _Other.X;
@@ -139,7 +147,7 @@ public:
 		return Result;
 	}
 
-	FVector2D& operator-=(FVector2D _Other)
+	FVector2D& operator-=(const FVector2D& _Other)
 	{
 		X -= _Other.X;
 		Y -= _Other.Y;
@@ -147,7 +155,7 @@ public:
 	}
 
 
-	FVector2D operator-(FVector2D _Other) const
+	FVector2D operator-(const FVector2D& _Other) const
 	{
 		FVector2D Result;
 		Result.X = X - _Other.X;
@@ -180,23 +188,46 @@ public:
 	}
 
 	// ture가 나오는 
-	bool operator==(FVector2D _Other) const
+	bool operator==(const FVector2D& _Other) const
 	{
 		return X == _Other.X && Y == _Other.Y;
 	}
 
+	// float은 비교가 굉장히 위험
+	// const가 붙은 함수에서는 const가 붙은 함수 호출할수 없다.
 	bool EqualToInt(FVector2D _Other) const
 	{
+		// const FVector* const Ptr;
+		// this = nullptr;
 		return iX() == _Other.iX() && iY() == _Other.iY();
 	}
 
+	//bool Compare(FVector2D _Other, float _limite = 0.0f) const
+	//{
+	//	return X == _Other.X && Y == _Other.Y;
+	//}
 
-	FVector2D& operator+=(FVector2D _Other)
+	FVector2D& operator+=(const FVector2D& _Other)
 	{
 		X += _Other.X;
 		Y += _Other.Y;
 		return *this;
 	}
+
+	FVector2D& operator*=(const FVector2D& _Other)
+	{
+		X *= _Other.X;
+		Y *= _Other.Y;
+		return *this;
+	}
+
+	FVector2D& operator*=(float _Other)
+	{
+		X *= _Other;
+		Y *= _Other;
+		return *this;
+	}
+
 
 	std::string ToString()
 	{
@@ -215,10 +246,15 @@ enum class ECollisionType
 {
 	Point,
 	Rect,
-	CirCle,
+	CirCle, // 타원이 아닌 정방원 
 	Max
+
+	//AABB,
+	//OBB,
 };
 
+// 대부분 오브젝트에서 크기와 위치는 한쌍입니다.
+// 그래서 그 2가지를 모두 묶는 자료형을 만들어서 그걸 써요.
 class FTransform
 {
 private:
@@ -229,9 +265,16 @@ private:
 public:
 	static bool Collision(ECollisionType _LeftType, const FTransform& _Left, ECollisionType _RightType, const FTransform& _Right);
 
+	// 완전히 같은 형의 함수죠?
+	static bool PointToCirCle(const FTransform& _Left, const FTransform& _Right);
+	static bool PointToRect(const FTransform& _Left, const FTransform& _Right);
+
 	static bool RectToRect(const FTransform& _Left, const FTransform& _Right);
+	static bool RectToCirCle(const FTransform& _Left, const FTransform& _Right);
 
 	static bool CirCleToCirCle(const FTransform& _Left, const FTransform& _Right);
+	static bool CirCleToRect(const FTransform& _Left, const FTransform& _Right);
+
 
 	FVector2D Scale;
 	FVector2D Location;
@@ -242,6 +285,14 @@ public:
 		return Location - Scale.Half();
 	}
 
+	FVector2D CenterLeftBottom() const
+	{
+		FVector2D Location;
+		Location.X = Location.X - Scale.hX();
+		Location.Y = Location.Y + Scale.hY();
+		return Location;
+	}
+
 	float CenterLeft() const
 	{
 		return Location.X - Scale.hX();
@@ -250,6 +301,14 @@ public:
 	float CenterTop() const
 	{
 		return Location.Y - Scale.hY();
+	}
+
+	FVector2D CenterRightTop() const
+	{
+		FVector2D Location;
+		Location.X = Location.X + Scale.hX();
+		Location.Y = Location.Y - Scale.hY();
+		return Location;
 	}
 
 	FVector2D CenterRightBottom() const
@@ -327,9 +386,10 @@ class UColor
 public:
 	static const UColor WHITE;
 	static const UColor BLACK;
-	static const UColor RED;
 	static const UColor GREEN;
 	static const UColor BLUE;
+	static const UColor RED;
+
 
 	union
 	{

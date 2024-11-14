@@ -40,11 +40,12 @@ public:
 
 	void operator<<(std::string& _Data)
 	{
-		// int하나랑 포인터 하나 들고 있죠?
-		// 길이도 같이 저장해야 한다.
 		int Size = static_cast<int>(_Data.size());
 		operator<<(Size);
-		Write(&_Data[0], static_cast<int>(_Data.size()));
+		if (0 != Size)
+		{
+			Write(&_Data[0], static_cast<int>(_Data.size()));
+		}
 	}
 
 	void operator<<(class ISerializObject& _Data);
@@ -126,7 +127,7 @@ protected:
 
 private:
 	int WriteOffset = 0;
-	
+
 	int ReadOffset = 0;
 
 	std::vector<char> Data;
@@ -134,9 +135,9 @@ private:
 
 class ISerializObject
 {
+	
+
 public:
 	virtual void Serialize(UEngineSerializer& _Ser) = 0;
-	
 	virtual void DeSerialize(UEngineSerializer& _Ser) = 0;
 };
-

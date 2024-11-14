@@ -14,7 +14,7 @@ AWildPokemon::AWildPokemon()
 	WildPokemon = CreateDefaultSubObject<USpriteRenderer>();
 	WildPokemon->SetOrder(ERenderOrder::POKEMON);
 	WildPokemon->SetSprite("Zigzagoon.png");
-	WildPokemon->SetComponentScale({ 300, 300 });
+	FVector2D Scale = WildPokemon->SetSpriteScale(1.0f);
 	WildPokemon->CreateAnimation("Zigzagoon", "Zigzagoon.png", 0, 0, 0.2f);
 	
 }
