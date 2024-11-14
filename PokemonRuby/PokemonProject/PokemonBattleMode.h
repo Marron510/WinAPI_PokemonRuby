@@ -51,6 +51,7 @@ public:
 
 	void Tick(float _DeltaTime) override;
 
+	void SetBackGround();
 	void BattleGroundSetting();
 
 	void PokemonSetting();
@@ -58,7 +59,7 @@ public:
 	void EnemyPokemonUISetting();
 
 	void PlayerSetting();
-	void ThrowMonsterball();
+	void ThrowMonsterball(float _DeltaTime);
 	void SpawnMyPokemon();
 
 
@@ -75,6 +76,11 @@ private:
 	USpriteRenderer* EnemyPokemonShadow = nullptr;
 	USpriteRenderer* PlayerPokemonUI = nullptr;
 	USpriteRenderer* EnemyPokemonUI = nullptr;
+
+	float ThrowingTime = 0.0f;
+	float BallThrowTime = 0.005f;
+
+	bool IsThrow = false;
 
 };
 

@@ -142,7 +142,7 @@ void PokemonCore::BeginPlay()
 		UImageManager::GetInst().CuttingSprite("Player_Walk_Down.png", { 48, 48 });
 		UImageManager::GetInst().CuttingSprite("Player_Walk_Right.png", { 48, 48 });
 		UImageManager::GetInst().CuttingSprite("Player_Walk_Left.png", { 48, 48 });
-		//UImageManager::GetInst().CuttingSprite("Player_Throw_MonsterBall.png", { 400, 288 });
+		UImageManager::GetInst().CuttingSprite("Player_Throw_MonsterBall.png", { 400, 288 });
 	}
 
 	
@@ -183,7 +183,7 @@ void PokemonCore::BeginPlay()
 
 
 	
-		UEngineAPICore::GetCore()->OpenLevel("PokemonBattle");
+		UEngineAPICore::GetCore()->OpenLevel("Truck");
 	
 }
 
