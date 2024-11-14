@@ -17,9 +17,3 @@ enum class ERenderOrder
 	FADE = 1000
 };
 
-
-//enum class EBackGroundCollision
-//{
-//	Player,
-//	CollisionObject
-//};

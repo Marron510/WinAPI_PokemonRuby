@@ -44,11 +44,11 @@ protected:
 
 private:
 
-	USpriteRenderer* SpriteRenderer;
-	USpriteRenderer* PlayerPokemonShadow;
-	USpriteRenderer* EnemyPokemonShadow;
-	USpriteRenderer* PlayerPokemonUI;
-	USpriteRenderer* EnemyPokemonUI;
+	static USpriteRenderer* SpriteRenderer;
+	static USpriteRenderer* PlayerPokemonShadow;
+	static USpriteRenderer* EnemyPokemonShadow;
+	static USpriteRenderer* PlayerPokemonUI;
+	static USpriteRenderer* EnemyPokemonUI;
 
 
 };

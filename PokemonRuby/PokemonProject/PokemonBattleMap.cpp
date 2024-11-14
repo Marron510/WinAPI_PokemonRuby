@@ -7,6 +7,15 @@
 #include "PokemonEnum.h"
 #include "PokemonBattleMode.h"
 
+
+USpriteRenderer* APokemonBattleMap::SpriteRenderer = nullptr;
+USpriteRenderer* APokemonBattleMap::PlayerPokemonShadow = nullptr;
+USpriteRenderer* APokemonBattleMap::EnemyPokemonShadow = nullptr;
+USpriteRenderer* APokemonBattleMap::PlayerPokemonUI = nullptr;
+USpriteRenderer* APokemonBattleMap::EnemyPokemonUI = nullptr;
+
+
+
 APokemonBattleMap::APokemonBattleMap()
 {
 	{
@@ -19,27 +28,19 @@ APokemonBattleMap::APokemonBattleMap()
 	}
 
 	{
-		EnemyPokemonShadow = CreateDefaultSubObject<USpriteRenderer>();
-		EnemyPokemonShadow->SetOrder(ERenderOrder::POKEMONSHADOW);
-		EnemyPokemonShadow->SetSprite("EnemyPokemonShadow.png");
-		FVector2D Scale = EnemyPokemonShadow->SetSpriteScale(1.0f);
-		EnemyPokemonShadow->SetComponentLocation({ 840 , 308 }); // 적 포켓몬 타일의 최종 도착지점 추후 수정예정
-	}
-
-	{
 		PlayerPokemonShadow = CreateDefaultSubObject<USpriteRenderer>();
 		PlayerPokemonShadow->SetOrder(ERenderOrder::POKEMONSHADOW);
 		PlayerPokemonShadow->SetSprite("PlayerPokemonShadow.png");
 		FVector2D Scale = PlayerPokemonShadow->SetSpriteScale(1.0f);
-		PlayerPokemonShadow->SetComponentLocation({ 336 , 520 }); // 내 포켓몬 타일의 최종 도착지점 추후 수정예정
+		PlayerPokemonShadow->SetComponentLocation({ 1500 , 520 }); 
 	}
 
 	{
-		EnemyPokemonUI = CreateDefaultSubObject<USpriteRenderer>();
-		EnemyPokemonUI->SetOrder(ERenderOrder::POKEMONSHADOW);
-		EnemyPokemonUI->SetSprite("EnemyPokemonUI.png");
-		FVector2D Scale = EnemyPokemonUI->SetSpriteScale(1.0f);
-		EnemyPokemonUI->SetComponentLocation({ 336 , 166 }); // 적 상태 UI 위치 
+		EnemyPokemonShadow = CreateDefaultSubObject<USpriteRenderer>();
+		EnemyPokemonShadow->SetOrder(ERenderOrder::POKEMONSHADOW);
+		EnemyPokemonShadow->SetSprite("EnemyPokemonShadow.png");
+		FVector2D Scale = EnemyPokemonShadow->SetSpriteScale(1.0f);
+		EnemyPokemonShadow->SetComponentLocation({ -300 , 308 }); 
 	}
 
 	{
@@ -47,11 +48,16 @@ APokemonBattleMap::APokemonBattleMap()
 		PlayerPokemonUI->SetOrder(ERenderOrder::POKEMONSHADOW);
 		PlayerPokemonUI->SetSprite("PlayerPokemonUI.png");
 		FVector2D Scale = PlayerPokemonUI->SetSpriteScale(1.0f);
-		PlayerPokemonUI->SetComponentLocation({ 902 , 460 }); // 타일의 최종 도착지점 추후 수정예정
+		PlayerPokemonUI->SetComponentLocation({ 1600 , 460 }); 
 	}
 
-
-
+	{
+		EnemyPokemonUI = CreateDefaultSubObject<USpriteRenderer>();
+		EnemyPokemonUI->SetOrder(ERenderOrder::POKEMONSHADOW);
+		EnemyPokemonUI->SetSprite("EnemyPokemonUI.png");
+		FVector2D Scale = EnemyPokemonUI->SetSpriteScale(1.0f);
+		EnemyPokemonUI->SetComponentLocation({ -400 , 166 }); 
+	}
 }
 
 APokemonBattleMap::~APokemonBattleMap()

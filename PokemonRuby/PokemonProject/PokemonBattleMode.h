@@ -20,11 +20,19 @@ public:
 
 	void Tick(float _DeltaTime) override;
 
+	void BattleGroundSetting();
 
+	void PokemonSetting();
+	void PlayerPokemonUISetting();
+	void EnemyPokemonUISetting();
 protected:
 
 private:
 	USpriteRenderer* SpriteRenderer = nullptr;
+
+	class AMyPokemon* MyPokemon = nullptr;
+	class AWildPokemon* EnemyPokemon = nullptr;
+	
 	USpriteRenderer* PlayerPokemonShadow = nullptr;
 	USpriteRenderer* EnemyPokemonShadow = nullptr;
 	USpriteRenderer* PlayerPokemonUI = nullptr;
