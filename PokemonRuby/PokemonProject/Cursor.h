@@ -34,7 +34,7 @@ protected:
 
 private:
 
-	class USpriteRenderer* SpriteRenderer = nullptr;
+	class USpriteRenderer* CursorRender = nullptr;
 
 };
 

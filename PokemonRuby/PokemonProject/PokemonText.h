@@ -130,8 +130,10 @@ protected:
 
 private:
 	int CurTextPrint = 0;
+	int TextSize = 0;
 	float InterTime = 0.0;
 	float CurTime = 0.0;
+	
 	std::string PrintText;
 	// std::vector<std::string> PrintTexts;
 

@@ -1,6 +1,6 @@
 #include "PreCompile.h"
 #include "PokemonText.h"
-
+#include "Cursor.h"
 
 
 APokemonText::APokemonText()
@@ -96,17 +96,41 @@ void APokemonText::PrintTextUpdate(float _DeltaTime)
 		{
 			CapitalValue = Value - '?' + 66;
 		}
+
 		if (Value == '［')
 		{
 			CapitalValue = Value - '［' + 67;
 		}
+
 		if (Value == '］')
 		{
 			CapitalValue = Value - '］' + 68;
 		}
 
+		if (Value == '\/')
+		{
+			CapitalValue = Value - '\/' + 69;
+		}
 
+		if (Value == '\"')
+		{
+			CapitalValue = Value - '\"' + 70;
+		}
 
+		if (Value == '\"')
+		{
+			CapitalValue = Value - '\"' + 71;
+		}
+
+		if (Value == '\'')
+		{
+			CapitalValue = Value - '\'' + 72;
+		}
+
+		if (Value == '\'')
+		{
+			CapitalValue = Value - '\'' + 73;
+		}
 
 
 		if (Value >= '0' && Value <= '9')
@@ -121,6 +145,7 @@ void APokemonText::PrintTextUpdate(float _DeltaTime)
 			Renders[i]->SetComponentScale(TextScale);
 			Renders[i]->SetComponentLocation(Pos);
 			Pos.X += TextScale.X;
+			TextSize += 1;
 			Renders[i]->SetActive(true);
 		}
 		else {
@@ -140,7 +165,7 @@ void APokemonText::SetText(std::string_view _Text, float _InterValue /*= 0.0f*/)
 {
 	
 
-	FVector2D Pos = FVector2D::ZERO;
+	
 
 	PrintText = _Text;
 
@@ -171,7 +196,7 @@ void APokemonText::SetText(std::string_view _Text, float _InterValue /*= 0.0f*/)
 
 void APokemonText::IsEnd()
 {
-	/*int RenderSize = Renders.size()*/
+	int EndPos = TextSize + 1;
 
 
 }

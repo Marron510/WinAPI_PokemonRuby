@@ -18,15 +18,15 @@ std::string CursorString[static_cast<int>(ACursor::ECursorDir::MAX)] =
 ACursor::ACursor()
 {
     {
-        SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
-        SpriteRenderer->SetSprite("Cursor.png");
+        CursorRender = CreateDefaultSubObject<USpriteRenderer>();
+        CursorRender->SetSprite("Cursor.png");
 
-        SpriteRenderer->SetComponentScale({ 100, 100 });
+        CursorRender->SetComponentScale({ 100, 100 });
 
-        SpriteRenderer->CreateAnimation("Cursor", "Cursor.png", 0, 0, 0.3f);
-        SpriteRenderer->SetOrder(ERenderOrder::CURSOR);
+        CursorRender->CreateAnimation("Cursor", "Cursor.png", 0, 0, 0.3f);
+        CursorRender->SetOrder(ERenderOrder::CURSOR);
 
-        SpriteRenderer->SetComponentLocation({ 700, 700 });
+        CursorRender->SetComponentLocation({ 700, 700 });
     }
 }
 

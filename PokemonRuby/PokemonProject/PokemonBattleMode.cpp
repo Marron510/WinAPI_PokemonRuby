@@ -76,8 +76,7 @@ void APokemonBattleMode::BeginPlay()
 		Text->SetTextSpriteName("Text.png");
 		Text->SetOrder(ERenderOrder::FONT);
 		Text->SetTextScale({ 30, 40 });
-		Text->SetText("Wild Pokemon Appeared 0123 !? ., ¡Î¡Ï", 0.1f);
-
+		Text->SetText("Wild Zigzagoon Appeared!", 0.05f);
 	}
 
 }
