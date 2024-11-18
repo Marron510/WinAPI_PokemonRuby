@@ -13,7 +13,8 @@
 #include "PokemonBattleMap.h"
 #include "MyPokemon.h"
 #include "WildPokemon.h"
-
+#include "PokemonFont.h"
+#include "PokemonEnum.h"
 
 
 
@@ -68,6 +69,17 @@ void APokemonBattleMode::BeginPlay()
 		MyPokemon = GetWorld()->SpawnActor<AMyPokemon>(); // 내 포켓몬 추가
 		MyPokemon->SetActorLocation({ -500, -500});
 	}
+	
+	{
+		Font = GetWorld()->SpawnActor<APokemonFont>();
+		Font->SetActorLocation({ 100, 640 });
+		Font->SetTextSpriteName("Font.png");
+		Font->SetOrder(ERenderOrder::FONT);
+		Font->SetTextScale({ 40, 40 });
+		Font->SetFont("HELLOMYPOKEMONSKEMDIEKDMIEKDM", 0.1f);
+
+	}
+
 }
 
 void APokemonBattleMode::Tick(float _DeltaTime)
@@ -79,6 +91,11 @@ void APokemonBattleMode::Tick(float _DeltaTime)
 	BattleGroundSetting();
 
 	PlayerSetting();
+
+	if (true == IsPlayerSetting)
+	{
+		
+	}
 
 	if (UEngineInput::GetInst().IsDown('Z'))
 	{
@@ -205,7 +222,7 @@ void APokemonBattleMode::PlayerSetting()
 	if (TargetLocation == Curloc)
 	{
 		PlayerRenderer->GetComponentLocation() = TargetLocation;
-		
+		IsPlayerSetting = true;
 		return;
 	}
 

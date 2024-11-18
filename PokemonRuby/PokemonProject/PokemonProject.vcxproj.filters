@@ -28,9 +28,6 @@
     <Filter Include="PokemonObject\2.PokemonGameMode\01_InGameMode">
       <UniqueIdentifier>{bbde34f6-08c4-47be-a4e8-7d8f705e1096}</UniqueIdentifier>
     </Filter>
-    <Filter Include="PokemonObject\2.PokemonGameMode\01_InGameMode\LittleRootTown">
-      <UniqueIdentifier>{e9deb932-bcef-455e-87e5-2e4ba7d81b75}</UniqueIdentifier>
-    </Filter>
     <Filter Include="PokemonObject\3.Pokemon">
       <UniqueIdentifier>{1918b076-d2ac-48d1-87f1-773a5e9d2839}</UniqueIdentifier>
     </Filter>
@@ -42,9 +39,6 @@
     </Filter>
     <Filter Include="PokemonObject\5.Event">
       <UniqueIdentifier>{afaf515f-82ab-4a02-b4db-e8d0d4565d01}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="PokemonObject\2.PokemonGameMode\01_InGameMode\Battle">
-      <UniqueIdentifier>{f6f48a32-cd7c-4d8d-b401-ba688d072f52}</UniqueIdentifier>
     </Filter>
     <Filter Include="PokemonObject\1.PokemonMap\00_TitleMap">
       <UniqueIdentifier>{852a13db-36f8-49fc-949a-21e18cc49c2d}</UniqueIdentifier>
@@ -60,6 +54,12 @@
     </Filter>
     <Filter Include="PokemonObject\1.PokemonMap\04.BattleMap">
       <UniqueIdentifier>{ea10e67d-75d1-46f4-8d60-98cda9fb0a5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PokemonObject\2.PokemonGameMode\01_InGameMode\01.LittleRootTown">
+      <UniqueIdentifier>{e9deb932-bcef-455e-87e5-2e4ba7d81b75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PokemonObject\2.PokemonGameMode\01_InGameMode\02.Battle">
+      <UniqueIdentifier>{f6f48a32-cd7c-4d8d-b401-ba688d072f52}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -79,13 +79,13 @@
       <Filter>PokemonObject\0.MainPlayer</Filter>
     </ClInclude>
     <ClInclude Include="PokemonMapMode.h">
-      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\LittleRootTown</Filter>
+      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\01.LittleRootTown</Filter>
     </ClInclude>
     <ClInclude Include="PlayerHouse1FloorMode.h">
-      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\LittleRootTown</Filter>
+      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\01.LittleRootTown</Filter>
     </ClInclude>
     <ClInclude Include="PlayerHouse1Mode.h">
-      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\LittleRootTown</Filter>
+      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\01.LittleRootTown</Filter>
     </ClInclude>
     <ClInclude Include="PokemonMap.h">
       <Filter>PokemonObject\1.PokemonMap\01_LittleRootTownMap</Filter>
@@ -100,10 +100,10 @@
       <Filter>PokemonObject\1.PokemonMap\00_TitleMap</Filter>
     </ClInclude>
     <ClInclude Include="PlayerHouse2FloorMode.h">
-      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\LittleRootTown</Filter>
+      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\01.LittleRootTown</Filter>
     </ClInclude>
     <ClInclude Include="PlayerHouse2Mode.h">
-      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\LittleRootTown</Filter>
+      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\01.LittleRootTown</Filter>
     </ClInclude>
     <ClInclude Include="PlayerHouse2FloorMap.h">
       <Filter>PokemonObject\1.PokemonMap\01_LittleRootTownMap</Filter>
@@ -112,7 +112,7 @@
       <Filter>PokemonObject\1.PokemonMap\01_LittleRootTownMap</Filter>
     </ClInclude>
     <ClInclude Include="LaborProfessorBirchMode.h">
-      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\LittleRootTown</Filter>
+      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\01.LittleRootTown</Filter>
     </ClInclude>
     <ClInclude Include="LaborProfessorBirchMap.h">
       <Filter>PokemonObject\1.PokemonMap\01_LittleRootTownMap</Filter>
@@ -124,7 +124,7 @@
       <Filter>PokemonObject\1.PokemonMap\02_MapObject</Filter>
     </ClInclude>
     <ClInclude Include="TruckMode.h">
-      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\LittleRootTown</Filter>
+      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\01.LittleRootTown</Filter>
     </ClInclude>
     <ClInclude Include="TruckMap.h">
       <Filter>PokemonObject\1.PokemonMap\01_LittleRootTownMap</Filter>
@@ -157,7 +157,7 @@
       <Filter>Play</Filter>
     </ClInclude>
     <ClInclude Include="PokemonBattleMode.h">
-      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\Battle</Filter>
+      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\02.Battle</Filter>
     </ClInclude>
     <ClInclude Include="Cursor.h">
       <Filter>PokemonObject\5.Event</Filter>
@@ -172,7 +172,10 @@
       <Filter>PokemonObject\1.PokemonMap\03_MapEvent</Filter>
     </ClInclude>
     <ClInclude Include="PokemonSkill.h">
-      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\Battle</Filter>
+      <Filter>PokemonObject\3.Pokemon</Filter>
+    </ClInclude>
+    <ClInclude Include="PokemonFont.h">
+      <Filter>Global</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -192,13 +195,13 @@
       <Filter>PokemonObject\0.MainPlayer</Filter>
     </ClCompile>
     <ClCompile Include="PokemonMapMode.cpp">
-      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\LittleRootTown</Filter>
+      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\01.LittleRootTown</Filter>
     </ClCompile>
     <ClCompile Include="PlayerHouse1FloorMode.cpp">
-      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\LittleRootTown</Filter>
+      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\01.LittleRootTown</Filter>
     </ClCompile>
     <ClCompile Include="PlayerHouse1Mode.cpp">
-      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\LittleRootTown</Filter>
+      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\01.LittleRootTown</Filter>
     </ClCompile>
     <ClCompile Include="PokemonMap.cpp">
       <Filter>PokemonObject\1.PokemonMap\01_LittleRootTownMap</Filter>
@@ -213,10 +216,10 @@
       <Filter>PokemonObject\1.PokemonMap\00_TitleMap</Filter>
     </ClCompile>
     <ClCompile Include="PlayerHouse2FloorMode.cpp">
-      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\LittleRootTown</Filter>
+      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\01.LittleRootTown</Filter>
     </ClCompile>
     <ClCompile Include="PlayerHouse2Mode.cpp">
-      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\LittleRootTown</Filter>
+      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\01.LittleRootTown</Filter>
     </ClCompile>
     <ClCompile Include="PlayerHouse2FloorMap.cpp">
       <Filter>PokemonObject\1.PokemonMap\01_LittleRootTownMap</Filter>
@@ -225,7 +228,7 @@
       <Filter>PokemonObject\1.PokemonMap\01_LittleRootTownMap</Filter>
     </ClCompile>
     <ClCompile Include="LaborProfessorBirchMode.cpp">
-      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\LittleRootTown</Filter>
+      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\01.LittleRootTown</Filter>
     </ClCompile>
     <ClCompile Include="LaborProfessorBirchMap.cpp">
       <Filter>PokemonObject\1.PokemonMap\01_LittleRootTownMap</Filter>
@@ -237,7 +240,7 @@
       <Filter>PokemonObject\1.PokemonMap\02_MapObject</Filter>
     </ClCompile>
     <ClCompile Include="TruckMode.cpp">
-      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\LittleRootTown</Filter>
+      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\01.LittleRootTown</Filter>
     </ClCompile>
     <ClCompile Include="TruckMap.cpp">
       <Filter>PokemonObject\1.PokemonMap\01_LittleRootTownMap</Filter>
@@ -270,7 +273,7 @@
       <Filter>Play</Filter>
     </ClCompile>
     <ClCompile Include="PokemonBattleMode.cpp">
-      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\Battle</Filter>
+      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\02.Battle</Filter>
     </ClCompile>
     <ClCompile Include="Cursor.cpp">
       <Filter>PokemonObject\5.Event</Filter>
@@ -285,7 +288,10 @@
       <Filter>PokemonObject\1.PokemonMap\03_MapEvent</Filter>
     </ClCompile>
     <ClCompile Include="PokemonSkill.cpp">
-      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\Battle</Filter>
+      <Filter>PokemonObject\3.Pokemon</Filter>
+    </ClCompile>
+    <ClCompile Include="PokemonFont.cpp">
+      <Filter>Global</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
