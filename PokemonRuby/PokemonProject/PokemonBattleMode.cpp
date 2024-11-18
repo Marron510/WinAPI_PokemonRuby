@@ -13,7 +13,7 @@
 #include "PokemonBattleMap.h"
 #include "MyPokemon.h"
 #include "WildPokemon.h"
-#include "PokemonFont.h"
+#include "PokemonText.h"
 #include "PokemonEnum.h"
 
 
@@ -71,12 +71,12 @@ void APokemonBattleMode::BeginPlay()
 	}
 	
 	{
-		Font = GetWorld()->SpawnActor<APokemonFont>();
-		Font->SetActorLocation({ 100, 640 });
-		Font->SetTextSpriteName("Font.png");
-		Font->SetOrder(ERenderOrder::FONT);
-		Font->SetTextScale({ 40, 40 });
-		Font->SetFont("HELLOMYPOKEMONSKEMDIEKDMIEKDM", 0.1f);
+		Text = GetWorld()->SpawnActor<APokemonText>();
+		Text->SetActorLocation({ 100, 640 });
+		Text->SetTextSpriteName("Text.png");
+		Text->SetOrder(ERenderOrder::FONT);
+		Text->SetTextScale({ 30, 40 });
+		Text->SetText("Wild Pokemon Appeared 0123 !? ., ¡Î¡Ï", 0.1f);
 
 	}
 

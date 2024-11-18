@@ -43,7 +43,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="PokemonFont.h">
+    <ClInclude Include="PokemonText.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -175,7 +175,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="PokemonFont.cpp">
+    <ClCompile Include="PokemonText.cpp">
       <SubType>
       </SubType>
     </ClCompile>

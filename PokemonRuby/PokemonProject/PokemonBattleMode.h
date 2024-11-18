@@ -67,6 +67,6 @@ private:
 	bool IsPlayerSetting = false;
 	bool IsThrowing = false;   
 
-	class APokemonFont* Font = nullptr;
+	class APokemonText* Text = nullptr;
 };
 

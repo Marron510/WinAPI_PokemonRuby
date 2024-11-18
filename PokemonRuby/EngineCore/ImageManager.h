@@ -44,6 +44,8 @@ public:
 	
 	UEngineSprite* FindSprite(std::string_view _KeyName);
 	
+	UEngineSprite* FindPKMSprite(std::string_view _KeyName);
+
 	UEngineWinImage* FindImage(std::string_view _KeyName);
 
 protected:

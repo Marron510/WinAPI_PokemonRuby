@@ -1,39 +1,39 @@
 #include "PreCompile.h"
-#include "PokemonFont.h"
+#include "PokemonText.h"
 
 
 
-APokemonFont::APokemonFont()
+APokemonText::APokemonText()
 {
 }
 
 
-APokemonFont::~APokemonFont()
+APokemonText::~APokemonText()
 {
 }
 
-void APokemonFont::SetTextSpriteName(const std::string _Text)
+void APokemonText::SetTextSpriteName(const std::string _Text)
 {
 	TextSpriteName = _Text;
 
 	for (size_t i = 0; i < Renders.size(); i++)
 	{
-		Renders[i]->SetSprite(TextSpriteName);
+		Renders[i]->SetPKMSprite(TextSpriteName);
 	}
 }
 
-void APokemonFont::BeginPlay()
+void APokemonText::BeginPlay()
 {
 }
 
-void APokemonFont::Tick(float _DeltaTime)
+void APokemonText::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 
 	PrintTextUpdate(_DeltaTime);
 }
 
-void APokemonFont::SetOrder(int _Order)
+void APokemonText::SetOrder(int _Order)
 {
 	for (size_t i = 0; i < Renders.size(); i++)
 	{
@@ -42,7 +42,7 @@ void APokemonFont::SetOrder(int _Order)
 
 }
 
-void APokemonFont::PrintTextUpdate(float _DeltaTime)
+void APokemonText::PrintTextUpdate(float _DeltaTime)
 {
 	FVector2D Pos = FVector2D::ZERO;
 
@@ -54,7 +54,7 @@ void APokemonFont::PrintTextUpdate(float _DeltaTime)
 
 		if (CurTextPrint >= PrintText.size())
 		{
-			CurTextPrint = PrintText.size() - 1;
+			CurTextPrint = PrintText.size();
 		}
 
 		CurTime = InterTime;
@@ -64,13 +64,60 @@ void APokemonFont::PrintTextUpdate(float _DeltaTime)
 		char Value = PrintText[i];
 		int CapitalValue = -1;
 
-		if (Value >= 'A' && Value <= 'Z') {
+		if (Value >= 'A' && Value <= 'Z') 
+		{
 			CapitalValue = Value - 'A';
+		}
+		if (Value >= 'a' && Value <= 'z')
+		{
+			CapitalValue = Value - 'a' + 26;
+		}
+		if (Value == ' ')
+		{
+			CapitalValue = Value - ' ' + 52;
+		}
+
+		if (Value == ',')
+		{
+			CapitalValue = Value - ',' + 53;
+		}
+
+		if (Value == '.')
+		{
+			CapitalValue = Value - '.' + 54;
+		}
+
+		if (Value == '!')
+		{
+			CapitalValue = Value - '!' + 65;
+		}
+
+		if (Value == '?')
+		{
+			CapitalValue = Value - '?' + 66;
+		}
+		if (Value == '［')
+		{
+			CapitalValue = Value - '［' + 67;
+		}
+		if (Value == '］')
+		{
+			CapitalValue = Value - '］' + 68;
+		}
+
+
+
+
+
+		if (Value >= '0' && Value <= '9')
+		{
+			CapitalValue = Value - '0' + 55;
 		}
 
 		if (CapitalValue != -1 && CapitalValue < static_cast<int>(UPokemoncharacter::ECapitals::END))
 		{
-			Renders[i]->SetSprite(TextSpriteName, CapitalValue);
+			
+			Renders[i]->SetSprite(TextSpriteName, CapitalValue); 
 			Renders[i]->SetComponentScale(TextScale);
 			Renders[i]->SetComponentLocation(Pos);
 			Pos.X += TextScale.X;
@@ -86,7 +133,10 @@ void APokemonFont::PrintTextUpdate(float _DeltaTime)
 	}
 }
 
-void APokemonFont::SetFont(std::string_view _Text, float _InterValue /*= 0.0f*/)
+
+
+
+void APokemonText::SetText(std::string_view _Text, float _InterValue /*= 0.0f*/)
 {
 	
 
@@ -116,5 +166,12 @@ void APokemonFont::SetFont(std::string_view _Text, float _InterValue /*= 0.0f*/)
 		CurTime = 0.0f;
 		CurTextPrint = _Text.size();
 	}
+
+}
+
+void APokemonText::IsEnd()
+{
+	/*int RenderSize = Renders.size()*/
+
 
 }

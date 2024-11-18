@@ -164,7 +164,7 @@ void PokemonCore::BeginPlay()
 
 	{
 		UImageManager::GetInst().CuttingSprite("Cursor.png", { 96, 96 });
-		UImageManager::GetInst().CuttingSprite("Font.png", { 24, 36 });
+		UImageManager::GetInst().CuttingSprite("Text.png", { 24, 36 });
 		UImageManager::GetInst().CuttingSprite("ThrowBall.png", { 153, 252 });
 	}
 

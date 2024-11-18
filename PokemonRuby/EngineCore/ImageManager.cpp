@@ -316,6 +316,19 @@ UEngineSprite* UImageManager::FindSprite(std::string_view _KeyName)
 	return Sprites[UpperName];
 }
 
+UEngineSprite* UImageManager::FindPKMSprite(std::string_view _KeyName)
+{
+	std::string UpperName = std::string(_KeyName);
+
+	if (false == Sprites.contains(UpperName))
+	{
+		MSGASSERT("로드하지 않은 스프라이트를 사용하려고 했습니다" + std::string(_KeyName));
+		return nullptr;
+	}
+
+	return Sprites[UpperName];
+}
+
 UEngineWinImage* UImageManager::FindImage(std::string_view _KeyName)
 {
 	std::string UpperName = UEngineString::ToUpper(_KeyName);

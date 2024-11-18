@@ -110,6 +110,19 @@ void USpriteRenderer::SetSprite(std::string_view _Name, int _CurIndex /*= 0*/)
     CurIndex = _CurIndex;
 }
 
+void USpriteRenderer::SetPKMSprite(std::string_view _Name, int _CurIndex /*= 0*/)
+{
+    Sprite = UImageManager::GetInst().FindPKMSprite(_Name);
+
+    if (nullptr == Sprite)
+    {
+        MSGASSERT("로드하지 않은 스프라이트를 사용하려고 했습니다" + std::string(_Name));
+        return;
+    }
+
+    CurIndex = _CurIndex;
+}
+
 void USpriteRenderer::SetOrder(int _Order)
 {
     int PrevOrder = Order;

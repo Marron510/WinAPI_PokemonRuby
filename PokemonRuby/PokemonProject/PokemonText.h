@@ -7,7 +7,7 @@
 
 #include "PokemonEnum.h"
 
-class APokemonFont : public AActor
+class APokemonText : public AActor
 {
 public:
 	std::string_view CapitalString[static_cast<int>(UPokemoncharacter::ECapitals::END)] =
@@ -63,19 +63,41 @@ public:
 		"w",
 		"x",
 		"y",
-		"z"
+		"z",
+		" ",
+		",",
+		".",
+		"0",
+		"1",
+		"2",
+		"3",
+		"4",
+		"5",
+		"6",
+		"7",
+		"8",
+		"9",
+		"!",
+		"?",
+		"［",
+		"］",
+		"/",
+		"\"",
+		"\"",
+		"\'",
+		"\'"
 	};
 
 	// 持失切 社瑚切
-	APokemonFont();
-	~APokemonFont();
+	APokemonText();
+	~APokemonText();
 
 	// delete funcion
 
-	APokemonFont(const APokemonFont& _Other) = delete;
-	APokemonFont(APokemonFont&& _Other) noexcept = delete;
-	APokemonFont& operator=(const APokemonFont& _Other) = delete;
-	APokemonFont& operator=(APokemonFont&& _Other) noexcept = delete;
+	APokemonText(const APokemonText& _Other) = delete;
+	APokemonText(APokemonText&& _Other) noexcept = delete;
+	APokemonText& operator=(const APokemonText& _Other) = delete;
+	APokemonText& operator=(APokemonText&& _Other) noexcept = delete;
 	
 	
 	void BeginPlay();
@@ -96,7 +118,7 @@ public:
 
 	void SetOrder(int _Order);
 
-	void SetFont(std::string_view _Text, float _InterValue = 0.0f);
+	void SetText(std::string_view _Text, float _InterValue = 0.0f);
 
 	// void SetFont(std::vector<std::string_view> _Text, float _InterValue = 0.0f);
 

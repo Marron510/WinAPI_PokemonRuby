@@ -174,7 +174,7 @@
     <ClInclude Include="PokemonSkill.h">
       <Filter>PokemonObject\3.Pokemon</Filter>
     </ClInclude>
-    <ClInclude Include="PokemonFont.h">
+    <ClInclude Include="PokemonText.h">
       <Filter>Global</Filter>
     </ClInclude>
   </ItemGroup>
@@ -290,7 +290,7 @@
     <ClCompile Include="PokemonSkill.cpp">
       <Filter>PokemonObject\3.Pokemon</Filter>
     </ClCompile>
-    <ClCompile Include="PokemonFont.cpp">
+    <ClCompile Include="PokemonText.cpp">
       <Filter>Global</Filter>
     </ClCompile>
   </ItemGroup>
