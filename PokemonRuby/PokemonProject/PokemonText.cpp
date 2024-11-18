@@ -30,7 +30,7 @@ void APokemonText::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 
-	PrintTextUpdate(_DeltaTime);
+	//PrintTextUpdate(_DeltaTime);
 }
 
 void APokemonText::SetOrder(int _Order)

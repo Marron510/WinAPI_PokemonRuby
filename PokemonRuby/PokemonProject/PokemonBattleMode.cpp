@@ -85,6 +85,7 @@ void APokemonBattleMode::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 
+
 	PokemonSetting();
 
 	BattleGroundSetting();
@@ -93,7 +94,7 @@ void APokemonBattleMode::Tick(float _DeltaTime)
 
 	if (true == IsPlayerSetting)
 	{
-		
+	Text->PrintTextUpdate(_DeltaTime);
 	}
 
 	if (UEngineInput::GetInst().IsDown('Z'))
