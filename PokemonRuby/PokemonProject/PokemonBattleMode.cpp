@@ -34,16 +34,16 @@ APokemonBattleMode::APokemonBattleMode()
 	PlayerRenderer->ChangeAnimation("PlayerThrowMonsterBallReady");
 
 	MonsterBall = CreateDefaultSubObject<USpriteRenderer>();
-	
 	MonsterBall->SetSprite("ThrowBall.png");
+	
 	MonsterBall->CreateAnimation("ThrowBallReady", "ThrowBall.png", 0, 0, 0.1f);
 	MonsterBall->CreateAnimation("ThrowBall", "ThrowBall.png", 0, 42, 0.1f, false);
+	
+	MonsterBall->SetComponentLocation({ 300 ,222 }); // 336 까지
 	MonsterBall->SetSpriteScale(1.0f);
-	MonsterBall->SetComponentLocation({ -500 ,-500 });
-
 	MonsterBall->SetOrder(ERenderOrder::CURSOR);
-	MonsterBall->ChangeAnimation("ThrowBallReady");
 
+	MonsterBall->ChangeAnimation("ThrowBallReady");
 }
 
 APokemonBattleMode::~APokemonBattleMode()
@@ -65,7 +65,7 @@ void APokemonBattleMode::BeginPlay()
 	}
 
 	{ 
-		MyPokemon = GetWorld()->SpawnActor<AMyPokemon>(); // 내 포켄몬 추가
+		MyPokemon = GetWorld()->SpawnActor<AMyPokemon>(); // 내 포켓몬 추가
 		MyPokemon->SetActorLocation({ -500, -500});
 	}
 }
@@ -83,9 +83,30 @@ void APokemonBattleMode::Tick(float _DeltaTime)
 	if (UEngineInput::GetInst().IsDown('Z'))
 	{
 		ThrowMonsterball();
-		ThrowedMosterBall();
+		MonsterBall->ChangeAnimation("ThrowBall");
 	}
 
+	FVector2D Curloc = MonsterBall->GetComponentLocation();
+	Curloc += FVector2D::RIGHT * 500;
+	MonsterBall->SetComponentLocation(Curloc);
+
+	if (UEngineInput::GetInst().IsDown('Z'))
+	{
+		ThrowMonsterball();
+		if (!IsThrowing)
+		{
+			ElapsedTime = 0.0f;  
+			IsThrowing = true;   
+		}
+
+		ElapsedTime += _DeltaTime;
+
+		if (ElapsedTime >= 0.3f)
+		{
+			
+			IsThrowing = false;
+		}
+	}
 }
 
 
@@ -93,7 +114,7 @@ void APokemonBattleMode::PokemonSetting()
 {
 	
 	{
-		FVector2D TargetLocation = FVector2D({ 1068 , 260 }); 
+		FVector2D TargetLocation = FVector2D({ 1054 , 260 }); 
 		FVector2D Curloc = EnemyPokemon->GetActorLocation();
 		Curloc += FVector2D::RIGHT.Half();
 
@@ -138,17 +159,17 @@ void APokemonBattleMode::BattleGroundSetting()
 	}
 
 	{
-		FVector2D TargetLocation = FVector2D({ 840 , 308 }); // EnemyPokemonShadow의 최종 목적지
-		FVector2D Curloc = EnemyPokemonShadow->GetComponentLocation();
+		FVector2D EnemyShadowTargetLocation = FVector2D({ 840 , 308 }); // EnemyPokemonShadow의 최종 목적지
+		FVector2D EnemyCurloc = EnemyPokemonShadow->GetComponentLocation();
 
-		if (TargetLocation == Curloc)
+		if (EnemyShadowTargetLocation == EnemyCurloc)
 		{
-			EnemyPokemonShadow->GetComponentLocation() = TargetLocation;
+			EnemyPokemonShadow->GetComponentLocation() = EnemyShadowTargetLocation;
 			return;
 		}
 
-		Curloc += FVector2D::RIGHT.Half();
-		EnemyPokemonShadow->SetComponentLocation(Curloc);
+		EnemyCurloc += FVector2D::RIGHT.Half();
+		EnemyPokemonShadow->SetComponentLocation(EnemyCurloc);
 	}
 
 	
@@ -220,17 +241,7 @@ void APokemonBattleMode::SpawnMyPokemon()
 	MyPokemon->SetActorLocation({ 336 ,416 });
 }
 
+
 void APokemonBattleMode::ThrowedMosterBall()
 {
-	MonsterBall->SetComponentLocation({ 0 ,416 }); // 336 까지
-	FVector2D Curloc = MonsterBall->GetComponentLocation();
-	FVector2D Targetloc = FVector2D({ 336 , 900 });
-	MonsterBall->ChangeAnimation("ThrowBall");
-	Curloc += FVector2D::RIGHT * 5;
-
-	if (Targetloc.X <= Curloc.X)
-	{
-		MonsterBall->SetComponentLocation(Targetloc);
-	}
-	MonsterBall->SetComponentLocation(Curloc);
 }

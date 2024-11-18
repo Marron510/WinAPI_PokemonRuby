@@ -40,7 +40,7 @@ APokemonBattleMap::APokemonBattleMap()
 		EnemyPokemonShadow->SetOrder(ERenderOrder::POKEMONSHADOW);
 		EnemyPokemonShadow->SetSprite("EnemyPokemonShadow.png");
 		FVector2D Scale = EnemyPokemonShadow->SetSpriteScale(1.0f);
-		EnemyPokemonShadow->SetComponentLocation({ -300 , 308 }); 
+		EnemyPokemonShadow->SetComponentLocation({ -360 , 308 }); 
 	}
 
 	{

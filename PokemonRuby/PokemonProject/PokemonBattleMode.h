@@ -83,7 +83,8 @@ private:
 	float ThrowingTime = 0.0f;
 	float BallThrowTime = 2.5f;
 
-	bool IsThrow = false;
 
+	float ElapsedTime = 0.0f;  // Z 키를 누른 후 경과 시간 추적용
+	bool IsThrowing = false;   // 공 던지기를 시작했는지 여부
 };
 
