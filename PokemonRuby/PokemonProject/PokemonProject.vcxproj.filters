@@ -171,6 +171,9 @@
     <ClInclude Include="TileMap.h">
       <Filter>PokemonObject\1.PokemonMap\03_MapEvent</Filter>
     </ClInclude>
+    <ClInclude Include="PokemonSkill.h">
+      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\Battle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PokemonCore.cpp">
@@ -280,6 +283,9 @@
     </ClCompile>
     <ClCompile Include="TileMap.cpp">
       <Filter>PokemonObject\1.PokemonMap\03_MapEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="PokemonSkill.cpp">
+      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\Battle</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

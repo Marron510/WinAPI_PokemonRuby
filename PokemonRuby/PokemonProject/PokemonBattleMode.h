@@ -80,11 +80,20 @@ private:
 	USpriteRenderer* PlayerPokemonUI = nullptr;
 	USpriteRenderer* EnemyPokemonUI = nullptr;
 
+
+
+	FVector2D PlayerLocation = FVector2D::ZERO;
+	FVector2D MosterBallLocation = FVector2D::ZERO;
+
+
+
 	float ThrowingTime = 0.0f;
 	float BallThrowTime = 2.5f;
 
 
-	float ElapsedTime = 0.0f;  // Z 키를 누른 후 경과 시간 추적용
-	bool IsThrowing = false;   // 공 던지기를 시작했는지 여부
+	float ElapsedTime = 0.0f;  
+	bool IsThrowing = false;   
+
+	
 };
 
