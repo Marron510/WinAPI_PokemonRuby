@@ -31,6 +31,8 @@ public:
 	void PokemonSetting();
 	void PlayerPokemonUISetting();
 	void EnemyPokemonUISetting();
+	void EnemyPokemonTextSetting();
+
 
 	void PlayerSetting();
 	void ThrowMonsterball();
@@ -67,6 +69,7 @@ private:
 	bool IsPlayerSetting = false;
 	bool IsThrowing = false;   
 
-	class APokemonText* Text = nullptr;
+	class APokemonText* TextWhite = nullptr;
+	class APokemonText* TextBlack = nullptr;
 };
 

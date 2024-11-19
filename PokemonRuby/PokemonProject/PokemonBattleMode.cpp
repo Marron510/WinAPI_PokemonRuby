@@ -71,13 +71,23 @@ void APokemonBattleMode::BeginPlay()
 	}
 	
 	{
-		Text = GetWorld()->SpawnActor<APokemonText>();
-		Text->SetActorLocation({ 100, 640 });
-		Text->SetTextSpriteName("Text.png");
-		Text->SetOrder(ERenderOrder::FONT);
-		Text->SetTextScale({ 30, 40 });
-		Text->SetText("Wild Zigzagoon Appeared!", 0.05f);
+		TextWhite = GetWorld()->SpawnActor<APokemonText>();
+		TextWhite->SetActorLocation({ 100, 640 });
+		TextWhite->SetTextSpriteName("TextWhite.png");
+		TextWhite->SetTextScale({ 30, 40 });
+		TextWhite->SetText("Wild Zigzagoon Appeared!", 0.05f);
+		TextWhite->SetOrder(ERenderOrder::FONT);
 	}
+
+	{
+		TextBlack = GetWorld()->SpawnActor<APokemonText>();
+		TextBlack->SetTextSpriteName("TextBlack.png");
+		TextBlack->SetTextScale({ 25, 30 });
+		TextBlack->SetText("POOCHANA");
+		TextBlack->SetActorLocation({ -600 , 135 });
+		TextBlack->SetOrder(ERenderOrder::FONT);
+	}
+
 
 }
 
@@ -89,12 +99,15 @@ void APokemonBattleMode::Tick(float _DeltaTime)
 	PokemonSetting();
 
 	BattleGroundSetting();
+	
 
 	PlayerSetting();
 
+	TextBlack->PrintTextUpdate(_DeltaTime);
+
 	if (true == IsPlayerSetting)
 	{
-	Text->PrintTextUpdate(_DeltaTime);
+	TextWhite->PrintTextUpdate(_DeltaTime);
 	}
 
 	if (UEngineInput::GetInst().IsDown('Z'))
@@ -129,6 +142,7 @@ void APokemonBattleMode::PokemonSetting()
 		{
 			EnemyPokemon->GetActorLocation() = TargetLocation;
 			EnemyPokemonUISetting();
+			EnemyPokemonTextSetting();
 			return;
 		}
 
@@ -194,8 +208,30 @@ void APokemonBattleMode::EnemyPokemonUISetting()
 		return;
 	}
 
+	if (TargetLocation == Curloc)
+	{
+		TextBlack->GetActorLocation() = TargetLocation;
+	}
+
 	EnemyPokemonUI->SetComponentLocation(Curloc);
 }
+
+void APokemonBattleMode::EnemyPokemonTextSetting()
+{
+	FVector2D TargetLocation = FVector2D({ 130 , 135 }); // EnemyPokemonUI의 최종 목적지
+	FVector2D Curloc = TextBlack->GetActorLocation();
+
+	Curloc += FVector2D::RIGHT;
+	
+	if (TargetLocation == Curloc)
+	{
+		TextBlack->GetActorLocation() = TargetLocation;
+		return;
+	}
+
+	TextBlack->SetActorLocation(Curloc);
+}
+
 
 void APokemonBattleMode::PlayerPokemonUISetting()
 {
