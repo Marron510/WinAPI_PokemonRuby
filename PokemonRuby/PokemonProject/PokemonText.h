@@ -128,11 +128,16 @@ public:
 
 	bool IsEnd() const;
 
+	static int GetTextSize()
+	{
+		return TextSize;
+	}
+
 protected:
 
 private:
 	int CurTextPrint = 0;
-	int TextSize = 0;
+	static int TextSize;
 	float InterTime = 0.0;
 	float CurTime = 0.0;
 	

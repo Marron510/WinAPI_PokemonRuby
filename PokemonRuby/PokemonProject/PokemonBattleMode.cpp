@@ -111,6 +111,7 @@ void APokemonBattleMode::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 
+	
 
 	PokemonSetting();
 

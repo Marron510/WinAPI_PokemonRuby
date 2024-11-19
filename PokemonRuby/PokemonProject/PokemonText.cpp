@@ -2,6 +2,7 @@
 #include "PokemonText.h"
 #include "Cursor.h"
 
+int APokemonText::TextSize = 0;
 
 APokemonText::APokemonText()
 {
