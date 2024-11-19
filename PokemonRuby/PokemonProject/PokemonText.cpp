@@ -211,3 +211,8 @@ void APokemonText::ClearText()
 
 	TextSize = 0;
 }
+
+bool APokemonText::IsEnd() const
+{
+	return CurTextPrint >= PrintText.size();
+}

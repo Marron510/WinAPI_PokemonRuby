@@ -22,30 +22,37 @@
 
 APokemonBattleMode::APokemonBattleMode()
 {
-	PlayerRenderer = CreateDefaultSubObject<USpriteRenderer>();
-	PlayerRenderer->SetSprite("Player_Throw_MonsterBall.png");
+	{
+		PlayerRenderer = CreateDefaultSubObject<USpriteRenderer>();
+		PlayerRenderer->SetSprite("Player_Throw_MonsterBall.png");
 
-	PlayerRenderer->CreateAnimation("PlayerThrowMonsterBallReady", "Player_Throw_MonsterBall.png", 0, 0, 0.5f);
-	PlayerRenderer->CreateAnimation("PlayerThrowMonsterBall", "Player_Throw_MonsterBall.png", 0, 3, 0.1f, false);
-	PlayerRenderer->CreateAnimation("PlayerThrowMonsterBallEnd", "Player_Throw_MonsterBall.png", 3, 3, 0.1f);
+		PlayerRenderer->CreateAnimation("PlayerThrowMonsterBallReady", "Player_Throw_MonsterBall.png", 0, 0, 0.5f);
+		PlayerRenderer->CreateAnimation("PlayerThrowMonsterBall", "Player_Throw_MonsterBall.png", 0, 3, 0.1f, false);
+		PlayerRenderer->CreateAnimation("PlayerThrowMonsterBallEnd", "Player_Throw_MonsterBall.png", 3, 3, 0.1f);
 
-	PlayerRenderer->SetComponentLocation({ 1524.0f ,416.0f });
-	PlayerRenderer->SetSpriteScale(1.0f);
-	PlayerRenderer->SetOrder(ERenderOrder::CURSOR);
+		PlayerRenderer->SetComponentLocation({ 1524.0f ,416.0f });
+		PlayerRenderer->SetSpriteScale(1.0f);
+		PlayerRenderer->SetOrder(ERenderOrder::CURSOR);
 
-	PlayerRenderer->ChangeAnimation("PlayerThrowMonsterBallReady");
+		PlayerRenderer->ChangeAnimation("PlayerThrowMonsterBallReady");
+	}
 
-	MonsterBall = CreateDefaultSubObject<USpriteRenderer>();
-	MonsterBall->SetSprite("ThrowBall.png");
-	
-	MonsterBall->CreateAnimation("ThrowBallReady", "ThrowBall.png", 0, 0, 0.1f);
-	MonsterBall->CreateAnimation("ThrowBall", "ThrowBall.png", 5, 61, 0.025f, false);
-	
-	
-	MonsterBall->SetSpriteScale(1.0f);
-	MonsterBall->SetOrder(ERenderOrder::UI);
+	{
+		MonsterBall = CreateDefaultSubObject<USpriteRenderer>();
+		MonsterBall->SetSprite("ThrowBall.png");
 
-	MonsterBall->ChangeAnimation("ThrowBallReady");
+		MonsterBall->CreateAnimation("ThrowBallReady", "ThrowBall.png", 0, 0, 0.1f);
+		MonsterBall->CreateAnimation("ThrowBall", "ThrowBall.png", 5, 61, 0.025f, false);
+
+
+		MonsterBall->SetSpriteScale(1.0f);
+		MonsterBall->SetOrder(ERenderOrder::UI);
+
+		MonsterBall->ChangeAnimation("ThrowBallReady");
+	}
+	{
+		
+	}
 }
 
 APokemonBattleMode::~APokemonBattleMode()
@@ -72,23 +79,31 @@ void APokemonBattleMode::BeginPlay()
 	}
 	
 	{
-		TextWhite = GetWorld()->SpawnActor<APokemonText>();
-		TextWhite->SetActorLocation({ 100.0f, 640.0f });
-		TextWhite->SetTextSpriteName("TextWhite.png");
-		TextWhite->SetTextScale({ 30, 40 });
-		TextWhite->SetText("Wild Zigzagoon Appeared!", 0.05f);
-		TextWhite->SetOrder(ERenderOrder::FONT);
+		ChatText = GetWorld()->SpawnActor<APokemonText>();
+		ChatText->SetActorLocation({ 100.0f, 640.0f });
+		ChatText->SetTextSpriteName("TextWhite.png");
+		ChatText->SetTextScale({ 30, 40 });
+		ChatText->SetText("Wild Zigzagoon Appeared!", 0.05f);
+		ChatText->SetOrder(ERenderOrder::FONT);
 	}
 
 	{
-		TextBlack = GetWorld()->SpawnActor<APokemonText>();
-		TextBlack->SetTextSpriteName("TextBlack.png");
-		TextBlack->SetTextScale({ 25, 30 });
-		TextBlack->SetText("POOCHANA");
-		TextBlack->SetActorLocation({ -600.0f , 135.0f });
-		TextBlack->SetOrder(ERenderOrder::FONT);
+		EnemyPokemonStat = GetWorld()->SpawnActor<APokemonText>();
+		EnemyPokemonStat->SetTextSpriteName("TextBlack.png");
+		EnemyPokemonStat->SetTextScale({ 25, 30 });
+		EnemyPokemonStat->SetText("ZIGZAGOON");
+		EnemyPokemonStat->SetActorLocation({ -600.0f , 135.0f });
+		EnemyPokemonStat->SetOrder(ERenderOrder::FONT);
 	}
 
+	{
+		MyPokemonStat = GetWorld()->SpawnActor<APokemonText>();
+		MyPokemonStat->SetTextSpriteName("TextBlack.png");
+		MyPokemonStat->SetTextScale({ 25, 30 });
+		MyPokemonStat->SetText("TREEKO");
+		MyPokemonStat->SetActorLocation({ 1440.0f , 415.0f });
+		MyPokemonStat->SetOrder(ERenderOrder::FONT);
+	}
 
 }
 
@@ -101,35 +116,15 @@ void APokemonBattleMode::Tick(float _DeltaTime)
 
 	BattleGroundSetting();
 	
+	PokemonStatUpdate(_DeltaTime);
 
 	PlayerSetting();
 
-	TextBlack->PrintTextUpdate(_DeltaTime);
-
-	if (true == IsBackGroundSetting)
-	{
-	TextWhite->PrintTextUpdate(_DeltaTime);
-	}
-
-	if (UEngineInput::GetInst().IsDown('Z'))
-	{
-		ThrowMonsterball();
-		MonsterBall->ChangeAnimation("ThrowBall");
-		ThrowedMosterBall();
-		TextWhite->ClearText();
-		
-	}
+	SpawnPokemon(_DeltaTime);
 	
-	if (IsThrowing == true)
-	{
-		TextWhite->SetText("Go Treeko!", 0.01f);
-	}
 	
-	SpawnPokemon();
-
-
-
-
+	
+	
 }
 
 
@@ -162,6 +157,7 @@ void APokemonBattleMode::SetBackGround()
 	EnemyPokemonShadow = BackImage->GetEnemyPokemonShadow();
 	PlayerPokemonUI = BackImage->GetPokemonUI();
 	EnemyPokemonUI = BackImage->GetEnemyPokemonUI();
+	SelectMenu = BackImage->GetSelectMenu();
 }
 
 
@@ -212,46 +208,63 @@ void APokemonBattleMode::EnemyPokemonUISetting()
 		return;
 	}
 
-	if (TargetLocation == Curloc)
-	{
-		TextBlack->GetActorLocation() = TargetLocation;
-	}
-
 	EnemyPokemonUI->SetComponentLocation(Curloc);
 }
 
 void APokemonBattleMode::EnemyPokemonTextSetting()
 {
-	FVector2D TargetLocation = FVector2D({ 130.0f , 135.0f }); // EnemyPokemonUI의 최종 목적지
-	FVector2D Curloc = TextBlack->GetActorLocation();
+	FVector2D TargetLocation = FVector2D({ 130.0f , 135.0f }); 
+	FVector2D Curloc = EnemyPokemonStat->GetActorLocation();
 
 	Curloc += FVector2D::RIGHT;
 	
 	if (TargetLocation == Curloc)
 	{
-		TextBlack->GetActorLocation() = TargetLocation;
+		EnemyPokemonStat->GetActorLocation() = TargetLocation;
 		return;
 	}
 
-	TextBlack->SetActorLocation(Curloc);
+	EnemyPokemonStat->SetActorLocation(Curloc);
 }
 
 
 void APokemonBattleMode::PlayerPokemonUISetting()
 {
 	FVector2D TargetLocation = FVector2D({ 902.0f , 460.0f }); // PlayerPokemonUI의 최종 목적지
-
 	FVector2D Curloc = PlayerPokemonUI->GetComponentLocation();
 
-	Curloc += FVector2D::LEFT.Half();
+	Curloc += FVector2D::LEFT;
+	
 	if (TargetLocation == Curloc)
 	{
 		PlayerPokemonUI->GetComponentLocation() = TargetLocation;
+		
 		return;
 	}
 
 	PlayerPokemonUI->SetComponentLocation(Curloc);
 }
+
+void APokemonBattleMode::PlayerPokemonTextSetting()
+{
+	FVector2D TargetLocation = FVector2D({ 740.0f , 415.0f });
+	FVector2D Curloc = MyPokemonStat->GetActorLocation();
+	
+	Curloc += FVector2D::LEFT;
+
+	if (TargetLocation == Curloc)
+	{
+		MyPokemonStat->GetActorLocation() = TargetLocation;
+		ChatText->ClearText();
+		IsChatOn = false;
+		SpawnSelectMenu();
+		return;
+	}
+
+	MyPokemonStat->SetActorLocation(Curloc);
+}
+
+
 
 void APokemonBattleMode::PlayerSetting()
 {
@@ -278,21 +291,40 @@ void APokemonBattleMode::ThrowMonsterball()
 	PlayerLocation = PlayerRenderer->GetComponentLocation();
 	PlayerLocation += FVector2D::LEFT * 2;
 	PlayerRenderer->SetComponentLocation(PlayerLocation);
-	IsThrowing = true;
+	IsChatOn = true;
 }
 
-void APokemonBattleMode::SpawnPokemon()
+void APokemonBattleMode::SpawnPokemon(float _DeltaTime)
 {
-	SpawnMyPokemon();
+	if (true == IsBackGroundSetting)
+	{
+		ChatText->PrintTextUpdate(_DeltaTime);
+	}
+
+	if (UEngineInput::GetInst().IsDown('Z'))
+	{
+		ThrowMonsterball();
+		MonsterBall->ChangeAnimation("ThrowBall");
+		ThrowedMosterBall();
+		ChatText->ClearText();
+	}
+
 	SpawnMyPokemonText();
+	SpawnMyPokemon();
+
+
 }
+
 void APokemonBattleMode::SpawnMyPokemon()
 {
 	if (-300 > PlayerLocation.X)
 	{
 		MyPokemon->SetActorLocation({ 336 ,416 });
 		PlayerRenderer->SetActive(false);
+		PlayerPokemonUISetting();
+		PlayerPokemonTextSetting();
 	}
+
 }
 
 
@@ -303,6 +335,23 @@ void APokemonBattleMode::ThrowedMosterBall()
 
 void APokemonBattleMode::SpawnMyPokemonText()
 {
-	
-	
+	if (IsChatOn == true)
+	{
+		ChatText->SetText("Go Treeko!", 0.01f);
+	}
+}
+
+void APokemonBattleMode::PokemonStatUpdate(float _DeltaTime)
+{
+	EnemyPokemonStat->PrintTextUpdate(_DeltaTime);
+	MyPokemonStat->PrintTextUpdate(_DeltaTime);
+}
+
+
+
+void APokemonBattleMode::SpawnSelectMenu()
+{
+	SelectMenu->SetOrder(ERenderOrder::UI);
+	IsMenuOn = true;
+	//ChatText->SetText("What should TREEKO do?", 0.01f);
 }

@@ -30,13 +30,16 @@ public:
 
 	void PokemonSetting();
 	void PlayerPokemonUISetting();
+	void PlayerPokemonTextSetting();
 	void EnemyPokemonUISetting();
 	void EnemyPokemonTextSetting();
+	void PokemonStatUpdate(float _delatime);
+	void SpawnSelectMenu();
 
 
 	void PlayerSetting();
 	void ThrowMonsterball();
-	void SpawnPokemon();
+	void SpawnPokemon(float _DeltaTime);
 	void SpawnMyPokemon();
 	void SpawnMyPokemonText();
 	void ThrowedMosterBall();
@@ -55,7 +58,7 @@ private:
 	USpriteRenderer* EnemyPokemonShadow = nullptr;
 	USpriteRenderer* PlayerPokemonUI = nullptr;
 	USpriteRenderer* EnemyPokemonUI = nullptr;
-
+	USpriteRenderer* SelectMenu = nullptr;
 
 
 	FVector2D PlayerLocation = FVector2D::ZERO;
@@ -70,8 +73,11 @@ private:
 
 	bool IsBackGroundSetting = false;
 	bool IsThrowing = false;   
+	bool IsChatOn = false;
+	bool IsMenuOn = false;
 
-	class APokemonText* TextWhite = nullptr;
-	class APokemonText* TextBlack = nullptr;
+	class APokemonText* ChatText = nullptr;
+	class APokemonText* MyPokemonStat = nullptr;
+	class APokemonText* EnemyPokemonStat = nullptr;
 };
 

@@ -13,7 +13,7 @@ USpriteRenderer* APokemonBattleMap::PlayerPokemonShadow = nullptr;
 USpriteRenderer* APokemonBattleMap::EnemyPokemonShadow = nullptr;
 USpriteRenderer* APokemonBattleMap::PlayerPokemonUI = nullptr;
 USpriteRenderer* APokemonBattleMap::EnemyPokemonUI = nullptr;
-
+USpriteRenderer* APokemonBattleMap::SelectMenu = nullptr;
 
 
 APokemonBattleMap::APokemonBattleMap()
@@ -25,6 +25,15 @@ APokemonBattleMap::APokemonBattleMap()
 
 		FVector2D Scale = SpriteRenderer->SetSpriteScale(1.0f);
 		SpriteRenderer->SetComponentLocation(Scale.Half());
+	}
+
+	{
+		SelectMenu = CreateDefaultSubObject<USpriteRenderer>();
+		SelectMenu->SetOrder(ERenderOrder::WATER);
+		SelectMenu->SetSprite("BattleMap2.png");
+
+		FVector2D Scale = SelectMenu->SetSpriteScale(1.0f);
+		SelectMenu->SetComponentLocation({ 600,680 });
 	}
 
 	{

@@ -41,6 +41,12 @@ public:
 		return EnemyPokemonUI;
 	}
 
+	USpriteRenderer* GetSelectMenu()
+	{
+		return SelectMenu;
+	}
+
+
 
 
 protected:
@@ -52,7 +58,7 @@ private:
 	static USpriteRenderer* EnemyPokemonShadow;
 	static USpriteRenderer* PlayerPokemonUI;
 	static USpriteRenderer* EnemyPokemonUI;
-
+	static USpriteRenderer* SelectMenu;
 
 };
 

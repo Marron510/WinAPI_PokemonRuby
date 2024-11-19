@@ -126,6 +126,7 @@ public:
 	
 	void ClearText();
 
+	bool IsEnd() const;
 
 protected:
 
