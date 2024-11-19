@@ -26,7 +26,7 @@ APokemonBattleMode::APokemonBattleMode()
 	PlayerRenderer->SetSprite("Player_Throw_MonsterBall.png");
 
 	PlayerRenderer->CreateAnimation("PlayerThrowMonsterBallReady", "Player_Throw_MonsterBall.png", 0, 0, 0.5f);
-	PlayerRenderer->CreateAnimation("PlayerThrowMonsterBall", "Player_Throw_MonsterBall.png", 0, 3, 0.15f, false);
+	PlayerRenderer->CreateAnimation("PlayerThrowMonsterBall", "Player_Throw_MonsterBall.png", 0, 3, 0.1f, false);
 
 	PlayerRenderer->SetComponentLocation({ 1524 ,416 });
 	PlayerRenderer->SetSpriteScale(1.0f);
@@ -38,11 +38,11 @@ APokemonBattleMode::APokemonBattleMode()
 	MonsterBall->SetSprite("ThrowBall.png");
 	
 	MonsterBall->CreateAnimation("ThrowBallReady", "ThrowBall.png", 0, 0, 0.1f);
-	MonsterBall->CreateAnimation("ThrowBall", "ThrowBall.png", 0, 42, 0.03f, false);
+	MonsterBall->CreateAnimation("ThrowBall", "ThrowBall.png", 5, 61, 0.03f, false);
 	
 	
 	MonsterBall->SetSpriteScale(1.0f);
-	MonsterBall->SetOrder(ERenderOrder::CURSOR);
+	MonsterBall->SetOrder(ERenderOrder::UI);
 
 	MonsterBall->ChangeAnimation("ThrowBallReady");
 }
@@ -113,7 +113,7 @@ void APokemonBattleMode::Tick(float _DeltaTime)
 	if (UEngineInput::GetInst().IsDown('Z'))
 	{
 		ThrowMonsterball();
-		
+		MonsterBall->ChangeAnimation("ThrowBall");
 		if (0 > PlayerLocation.X)
 		{
 			IsThrowing = true;
@@ -122,7 +122,7 @@ void APokemonBattleMode::Tick(float _DeltaTime)
 	
 	if (true == IsThrowing)
 	{
-		MonsterBall->SetComponentLocation({ 200 ,432 }); // 336 ±îÁö
+		MonsterBall->SetComponentLocation({ 200 ,432 }); 
 		MonsterBall->ChangeAnimation("ThrowBall");
 		ThrowedMosterBall();
 	}
@@ -258,6 +258,7 @@ void APokemonBattleMode::PlayerSetting()
 	if (TargetLocation == Curloc)
 	{
 		PlayerRenderer->GetComponentLocation() = TargetLocation;
+		ThrowedMosterBall();
 		IsPlayerSetting = true;
 		return;
 	}
@@ -274,8 +275,13 @@ void APokemonBattleMode::ThrowMonsterball()
 	PlayerRenderer->ChangeAnimation("PlayerThrowMonsterBall");
 	FVector2D PlayerLocation = PlayerRenderer->GetComponentLocation();
 	PlayerLocation += FVector2D::LEFT * 2;
+	float LocX = PlayerLocation.X;
 	PlayerRenderer->SetComponentLocation(PlayerLocation);
 	
+	if (-100 > LocX)
+	{
+		SpawnMyPokemon();
+	}
 }
 
 
@@ -288,8 +294,7 @@ void APokemonBattleMode::SpawnMyPokemon()
 
 void APokemonBattleMode::ThrowedMosterBall()
 {
-
-	
-	
+	MonsterBall->SetComponentLocation({ 300 , 420 });
 	
 }
+
