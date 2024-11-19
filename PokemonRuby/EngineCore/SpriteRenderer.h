@@ -29,9 +29,11 @@ public:
         int ResultIndex = 0;
         float CurTime = 0.0f;
         bool Loop = true;
+        bool IsEnd = false;
 
         void Reset()
         {
+            IsEnd = false;
             CurIndex = 0;
             CurTime = 0;
             ResultIndex = 0;
