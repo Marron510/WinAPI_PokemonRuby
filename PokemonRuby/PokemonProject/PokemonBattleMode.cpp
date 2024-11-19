@@ -27,8 +27,9 @@ APokemonBattleMode::APokemonBattleMode()
 
 	PlayerRenderer->CreateAnimation("PlayerThrowMonsterBallReady", "Player_Throw_MonsterBall.png", 0, 0, 0.5f);
 	PlayerRenderer->CreateAnimation("PlayerThrowMonsterBall", "Player_Throw_MonsterBall.png", 0, 3, 0.1f, false);
+	PlayerRenderer->CreateAnimation("PlayerThrowMonsterBallEnd", "Player_Throw_MonsterBall.png", 3, 3, 0.1f);
 
-	PlayerRenderer->SetComponentLocation({ 1524 ,416 });
+	PlayerRenderer->SetComponentLocation({ 1524.0f ,416.0f });
 	PlayerRenderer->SetSpriteScale(1.0f);
 	PlayerRenderer->SetOrder(ERenderOrder::CURSOR);
 
@@ -38,7 +39,7 @@ APokemonBattleMode::APokemonBattleMode()
 	MonsterBall->SetSprite("ThrowBall.png");
 	
 	MonsterBall->CreateAnimation("ThrowBallReady", "ThrowBall.png", 0, 0, 0.1f);
-	MonsterBall->CreateAnimation("ThrowBall", "ThrowBall.png", 5, 61, 0.03f, false);
+	MonsterBall->CreateAnimation("ThrowBall", "ThrowBall.png", 5, 61, 0.025f, false);
 	
 	
 	MonsterBall->SetSpriteScale(1.0f);
@@ -62,17 +63,17 @@ void APokemonBattleMode::BeginPlay()
 
 	{
 		EnemyPokemon = GetWorld()->SpawnActor<AWildPokemon>(); // 적 포켓몬 추가
-		EnemyPokemon->SetActorLocation({ -132 , 260 });
+		EnemyPokemon->SetActorLocation({ -132.0f , 260.0f });
 	}
 
 	{ 
 		MyPokemon = GetWorld()->SpawnActor<AMyPokemon>(); // 내 포켓몬 추가
-		MyPokemon->SetActorLocation({ -500, -500});
+		MyPokemon->SetActorLocation({ -500.0f, -500.0f });
 	}
 	
 	{
 		TextWhite = GetWorld()->SpawnActor<APokemonText>();
-		TextWhite->SetActorLocation({ 100, 640 });
+		TextWhite->SetActorLocation({ 100.0f, 640.0f });
 		TextWhite->SetTextSpriteName("TextWhite.png");
 		TextWhite->SetTextScale({ 30, 40 });
 		TextWhite->SetText("Wild Zigzagoon Appeared!", 0.05f);
@@ -84,7 +85,7 @@ void APokemonBattleMode::BeginPlay()
 		TextBlack->SetTextSpriteName("TextBlack.png");
 		TextBlack->SetTextScale({ 25, 30 });
 		TextBlack->SetText("POOCHANA");
-		TextBlack->SetActorLocation({ -600 , 135 });
+		TextBlack->SetActorLocation({ -600.0f , 135.0f });
 		TextBlack->SetOrder(ERenderOrder::FONT);
 	}
 
@@ -105,7 +106,7 @@ void APokemonBattleMode::Tick(float _DeltaTime)
 
 	TextBlack->PrintTextUpdate(_DeltaTime);
 
-	if (true == IsPlayerSetting)
+	if (true == IsBackGroundSetting)
 	{
 	TextWhite->PrintTextUpdate(_DeltaTime);
 	}
@@ -114,19 +115,21 @@ void APokemonBattleMode::Tick(float _DeltaTime)
 	{
 		ThrowMonsterball();
 		MonsterBall->ChangeAnimation("ThrowBall");
-		if (0 > PlayerLocation.X)
-		{
-			IsThrowing = true;
-		}
-	}
-	
-	if (true == IsThrowing)
-	{
-		MonsterBall->SetComponentLocation({ 200 ,432 }); 
-		MonsterBall->ChangeAnimation("ThrowBall");
 		ThrowedMosterBall();
+		TextWhite->ClearText();
+		
 	}
 	
+	if (IsThrowing == true)
+	{
+		TextWhite->SetText("Go Treeko!", 0.01f);
+	}
+	
+	SpawnPokemon();
+
+
+
+
 }
 
 
@@ -134,7 +137,7 @@ void APokemonBattleMode::PokemonSetting()
 {
 	
 	{
-		FVector2D TargetLocation = FVector2D({ 1054 , 260 }); 
+		FVector2D TargetLocation = FVector2D({ 1054.0f , 260.0f }); 
 		FVector2D Curloc = EnemyPokemon->GetActorLocation();
 		Curloc += FVector2D::RIGHT.Half();
 
@@ -167,12 +170,13 @@ void APokemonBattleMode::BattleGroundSetting()
 	
 	
 	{
-		FVector2D TargetLocation = FVector2D({ 336 , 520 }); // PlayerPokemonShadow의 최종 목적지
+		FVector2D TargetLocation = FVector2D({ 336.0f , 520.0f }); // PlayerPokemonShadow의 최종 목적지
 		FVector2D Curloc = PlayerPokemonShadow->GetComponentLocation();
 		Curloc += FVector2D::LEFT.Half();
 		if (TargetLocation == Curloc)
 		{
 			PlayerPokemonShadow->GetComponentLocation() = TargetLocation;
+			IsBackGroundSetting = true;
 			return;
 		}
 
@@ -180,7 +184,7 @@ void APokemonBattleMode::BattleGroundSetting()
 	}
 
 	{
-		FVector2D EnemyShadowTargetLocation = FVector2D({ 840 , 308 }); // EnemyPokemonShadow의 최종 목적지
+		FVector2D EnemyShadowTargetLocation = FVector2D({ 840.0f , 308.0f }); // EnemyPokemonShadow의 최종 목적지
 		FVector2D EnemyCurloc = EnemyPokemonShadow->GetComponentLocation();
 
 		if (EnemyShadowTargetLocation == EnemyCurloc)
@@ -198,7 +202,7 @@ void APokemonBattleMode::BattleGroundSetting()
 
 void APokemonBattleMode::EnemyPokemonUISetting()
 {
-	FVector2D TargetLocation = FVector2D({ 336 , 166 }); // EnemyPokemonUI의 최종 목적지
+	FVector2D TargetLocation = FVector2D({ 336.0f , 166.0f }); // EnemyPokemonUI의 최종 목적지
 	FVector2D Curloc = EnemyPokemonUI->GetComponentLocation();
 
 	Curloc += FVector2D::RIGHT;
@@ -218,7 +222,7 @@ void APokemonBattleMode::EnemyPokemonUISetting()
 
 void APokemonBattleMode::EnemyPokemonTextSetting()
 {
-	FVector2D TargetLocation = FVector2D({ 130 , 135 }); // EnemyPokemonUI의 최종 목적지
+	FVector2D TargetLocation = FVector2D({ 130.0f , 135.0f }); // EnemyPokemonUI의 최종 목적지
 	FVector2D Curloc = TextBlack->GetActorLocation();
 
 	Curloc += FVector2D::RIGHT;
@@ -235,7 +239,7 @@ void APokemonBattleMode::EnemyPokemonTextSetting()
 
 void APokemonBattleMode::PlayerPokemonUISetting()
 {
-	FVector2D TargetLocation = FVector2D({ 902 , 460 }); // PlayerPokemonUI의 최종 목적지
+	FVector2D TargetLocation = FVector2D({ 902.0f , 460.0f }); // PlayerPokemonUI의 최종 목적지
 
 	FVector2D Curloc = PlayerPokemonUI->GetComponentLocation();
 
@@ -251,19 +255,17 @@ void APokemonBattleMode::PlayerPokemonUISetting()
 
 void APokemonBattleMode::PlayerSetting()
 {
-	FVector2D TargetLocation = FVector2D({ 336 ,416 });
-	FVector2D Curloc = PlayerRenderer->GetComponentLocation();
-	Curloc += FVector2D::LEFT.Half();
+	FVector2D TargetLocation = FVector2D({ 336.0f ,416.0f });
+	PlayerLocation = PlayerRenderer->GetComponentLocation();
+	PlayerLocation += FVector2D::LEFT.Half();
 
-	if (TargetLocation == Curloc)
+	if (TargetLocation == PlayerLocation)
 	{
 		PlayerRenderer->GetComponentLocation() = TargetLocation;
-		ThrowedMosterBall();
-		IsPlayerSetting = true;
 		return;
 	}
 
-	PlayerRenderer->SetComponentLocation(Curloc);
+	PlayerRenderer->SetComponentLocation(PlayerLocation);
 
 	
 
@@ -271,30 +273,36 @@ void APokemonBattleMode::PlayerSetting()
 
 void APokemonBattleMode::ThrowMonsterball()
 {
-
+	FVector2D TargetLocation = FVector2D({ -100.0f ,416.0f });
 	PlayerRenderer->ChangeAnimation("PlayerThrowMonsterBall");
-	FVector2D PlayerLocation = PlayerRenderer->GetComponentLocation();
+	PlayerLocation = PlayerRenderer->GetComponentLocation();
 	PlayerLocation += FVector2D::LEFT * 2;
-	float LocX = PlayerLocation.X;
 	PlayerRenderer->SetComponentLocation(PlayerLocation);
-	
-	if (-100 > LocX)
-	{
-		SpawnMyPokemon();
-	}
+	IsThrowing = true;
 }
 
-
+void APokemonBattleMode::SpawnPokemon()
+{
+	SpawnMyPokemon();
+	SpawnMyPokemonText();
+}
 void APokemonBattleMode::SpawnMyPokemon()
 {
-	
-	MyPokemon->SetActorLocation({ 336 ,416 });
+	if (-300 > PlayerLocation.X)
+	{
+		MyPokemon->SetActorLocation({ 336 ,416 });
+		PlayerRenderer->SetActive(false);
+	}
 }
 
 
 void APokemonBattleMode::ThrowedMosterBall()
 {
 	MonsterBall->SetComponentLocation({ 300 , 420 });
-	
 }
 
+void APokemonBattleMode::SpawnMyPokemonText()
+{
+	
+	
+}

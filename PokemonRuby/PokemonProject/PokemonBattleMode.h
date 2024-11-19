@@ -36,7 +36,9 @@ public:
 
 	void PlayerSetting();
 	void ThrowMonsterball();
+	void SpawnPokemon();
 	void SpawnMyPokemon();
+	void SpawnMyPokemonText();
 	void ThrowedMosterBall();
 
 protected:
@@ -57,6 +59,7 @@ private:
 
 
 	FVector2D PlayerLocation = FVector2D::ZERO;
+	
 	FVector2D MosterBallLocation = FVector2D::ZERO;
 
 
@@ -65,8 +68,7 @@ private:
 	float BallThrowTime = 2.5f;
 
 
-	float ElapsedTime = 0.0f;  
-	bool IsPlayerSetting = false;
+	bool IsBackGroundSetting = false;
 	bool IsThrowing = false;   
 
 	class APokemonText* TextWhite = nullptr;

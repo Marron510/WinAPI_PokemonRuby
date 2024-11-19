@@ -123,8 +123,9 @@ public:
 	// void SetFont(std::vector<std::string_view> _Text, float _InterValue = 0.0f);
 
 	void PrintTextUpdate(float _DeltaTime);
+	
+	void ClearText();
 
-	void IsEnd();
 
 protected:
 

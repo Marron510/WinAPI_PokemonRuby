@@ -104,6 +104,7 @@ public:
 		men,
 		women,
 		slash,
+		dotdot,
 		doublequotationstart,
 		doublequotationend,
 		singlestart,

@@ -114,22 +114,22 @@ void APokemonText::PrintTextUpdate(float _DeltaTime)
 
 		if (Value == '\"')
 		{
-			CapitalValue = Value - '\"' + 70;
+			CapitalValue = Value - '\"' + 71;
 		}
 
 		if (Value == '\"')
 		{
-			CapitalValue = Value - '\"' + 71;
-		}
-
-		if (Value == '\'')
-		{
-			CapitalValue = Value - '\'' + 72;
+			CapitalValue = Value - '\"' + 72;
 		}
 
 		if (Value == '\'')
 		{
 			CapitalValue = Value - '\'' + 73;
+		}
+
+		if (Value == '\'')
+		{
+			CapitalValue = Value - '\'' + 74;
 		}
 
 
@@ -165,8 +165,6 @@ void APokemonText::SetText(std::string_view _Text, float _InterValue /*= 0.0f*/)
 {
 	
 
-	
-
 	PrintText = _Text;
 
 	int Value = _Text.size() - Renders.size();
@@ -194,9 +192,22 @@ void APokemonText::SetText(std::string_view _Text, float _InterValue /*= 0.0f*/)
 
 }
 
-void APokemonText::IsEnd()
+
+void APokemonText::ClearText()
 {
-	int EndPos = TextSize + 1;
+	PrintText.clear();
 
+	CurTextPrint = 0;
 
+	for (size_t i = 0; i < Renders.size(); i++)
+	{
+		Renders[i]->SetActive(false);
+		
+	}
+
+	Renders.clear();
+	
+	CurTime = 0.0f;
+
+	TextSize = 0;
 }
