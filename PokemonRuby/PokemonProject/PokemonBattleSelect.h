@@ -1,63 +1,51 @@
 #pragma once
 #include <EngineCore/Actor.h>
 #include "Cursor.h"
-#include <vector>
 
 class PokemonBattleSelect : public AActor
 {
 private:
-	enum ECursorName
-	{
-		Fight,
-		Bag,
-		Pokemon,
-		Run
-	};
+    enum ECursorName
+    {
+        Fight,
+        Bag,
+        Pokemon,
+        Run
+    };
 
-	enum class ESubstate
-	{
-		None,
-		Select,
-		MoveSelect,
-		PokemonSelect,
-		ItemSelect,
-		CantRunMessage1,
-		CantRunMessage2,
-		End
-	};
+    enum class ESubstate
+    {
+        None,
+        SkillSelect,
+        MoveSelect,
+        PokemonSelect,
+        ItemSelect,
+        CantRunMessage1,
+        CantRunMessage2,
+        End
+    };
+
+    int CurrentSelectionRow = 0;  
+    int CurrentSelectionCol = 0;  
+    int MaxRows = 2;  
+    int MaxCols = 2; 
+
+    ESubstate CurrentSubstate = ESubstate::None;
+
+    std::vector<std::vector<ECursorName>> MenuOptions = {
+        { ECursorName::Fight, ECursorName::Bag },
+        { ECursorName::Pokemon, ECursorName::Run }
+    };
 
 public:
-	// 持失切 社瑚切
-	PokemonBattleSelect();
-	~PokemonBattleSelect();
+    PokemonBattleSelect();
+    ~PokemonBattleSelect();
 
-	// delete funcion
-
-	PokemonBattleSelect(const PokemonBattleSelect& _Other) = delete;
-	PokemonBattleSelect(PokemonBattleSelect&& _Other) noexcept = delete;
-	PokemonBattleSelect& operator=(const PokemonBattleSelect& _Other) = delete;
-	PokemonBattleSelect& operator=(PokemonBattleSelect&& _Other) noexcept = delete;
-
-
-	void BeginPlay() override;
-
-	void Tick(float _DeltaTime) override;
-
-
-	void HandleInput();
-
-	void UpdateCursorPosition(float DeltaTime);
-
-	void SelectOption();
-
-	int CurrentSelectionIndex = 0;  
-	ESubstate CurrentSubstate = ESubstate::None;  
-	std::vector<ECursorName> MenuOptions = { ECursorName::Fight, ECursorName::Bag, ECursorName::Pokemon, ECursorName::Run };
-
+    void UpdateCursorPosition(float DeltaTime);
+    void SelectOption();
+    void HandleInput();  
 
 protected:
-
-private:
-
+    virtual void BeginPlay() override;
+    virtual void Tick(float DeltaTime) override;
 };
-

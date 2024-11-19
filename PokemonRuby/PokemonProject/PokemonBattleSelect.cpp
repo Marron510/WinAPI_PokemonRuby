@@ -8,81 +8,81 @@
 #include "Cursor.h"
 
 
-
 PokemonBattleSelect::PokemonBattleSelect()
 {
-
 }
 
 PokemonBattleSelect::~PokemonBattleSelect()
 {
-
 }
 
 void PokemonBattleSelect::BeginPlay()
 {
-	Super::BeginPlay();
+    Super::BeginPlay();
+
 }
 
-void PokemonBattleSelect::Tick(float _DeltaTime)
+void PokemonBattleSelect::Tick(float DeltaTime)
 {
-	Super::Tick(_DeltaTime);
-    UpdateCursorPosition(_DeltaTime);
+    Super::Tick(DeltaTime);
 
+    HandleInput();
 
+    UpdateCursorPosition(DeltaTime);
 }
 
 void PokemonBattleSelect::HandleInput()
 {
+    if (UEngineInput::GetInst().IsDown('W'))  
+    {
+        CurrentSelectionRow = (CurrentSelectionRow - 1 + MaxRows) % MaxRows;
+    }
+    else if (UEngineInput::GetInst().IsDown('S'))  
+    {
+        CurrentSelectionRow = (CurrentSelectionRow + 1) % MaxRows;
+    }
+    else if (UEngineInput::GetInst().IsDown('A'))  
+    {
+        CurrentSelectionCol = (CurrentSelectionCol - 1 + MaxCols) % MaxCols;
+    }
+    else if (UEngineInput::GetInst().IsDown('D'))  
+    {
+        CurrentSelectionCol = (CurrentSelectionCol + 1) % MaxCols;
+    }
+    else if (UEngineInput::GetInst().IsDown('Z'))  
+    {
+        SelectOption();
+    }
 }
 
 void PokemonBattleSelect::UpdateCursorPosition(float DeltaTime)
 {
-    FVector2D CursorPosition = FVector2D::ZERO;  
+    FVector2D CursorPosition = FVector2D::ZERO;
 
-    CursorPosition.Y = 50.0f * CurrentSelectionIndex;
+    CursorPosition.X = 100.0f * CurrentSelectionCol;  
+    CursorPosition.Y = 50.0f * CurrentSelectionRow;   
 
 }
 
 void PokemonBattleSelect::SelectOption()
 {
-    ECursorName selectedOption = MenuOptions[CurrentSelectionIndex];
+    ECursorName selectedOption = MenuOptions[CurrentSelectionRow][CurrentSelectionCol];
 
     switch (selectedOption)
     {
     case ECursorName::Fight:
-        CurrentSubstate = ESubstate::Select;
-
+        CurrentSubstate = ESubstate::SkillSelect;
         break;
     case ECursorName::Bag:
         CurrentSubstate = ESubstate::ItemSelect;
-
         break;
     case ECursorName::Pokemon:
         CurrentSubstate = ESubstate::PokemonSelect;
-
         break;
     case ECursorName::Run:
         CurrentSubstate = ESubstate::MoveSelect;
-
         break;
     default:
         break;
     }
-}
-
-void PokemonBattleSelect::HandleInput()
-{
-        if (UEngineInput::GetInst().IsDown('W'))
-        {
-            CurrentSelectionIndex = (CurrentSelectionIndex - 1 + MenuOptions.size()) % MenuOptions.size();
-        }
-        else if (UEngineInput::GetInst().IsDown('S'))
-        {
-            CurrentSelectionIndex = (CurrentSelectionIndex + 1) % MenuOptions.size();
-        }
-        else if (UEngineInput::GetInst().IsDown('Z'))
-        {
-            SelectOption();
-        }
 }
