@@ -42,10 +42,17 @@ public:
 
 	void Tick(float _DeltaTime) override;
 
+
+	void HandleInput();
+
+	void UpdateCursorPosition(float DeltaTime);
+
+	void SelectOption();
+
 protected:
 
 private:
 
-
+	ESubstate = CurrentSubstate;
 };
 
