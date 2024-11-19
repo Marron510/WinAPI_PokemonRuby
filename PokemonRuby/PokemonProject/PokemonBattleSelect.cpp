@@ -2,6 +2,13 @@
 #include "PokemonBattleSelect.h"
 
 
+#include <EnginePlatform/EngineInput.h>
+#include <EngineCore/EngineAPICore.h>
+
+#include "Cursor.h"
+
+
+
 PokemonBattleSelect::PokemonBattleSelect()
 {
 
@@ -20,6 +27,9 @@ void PokemonBattleSelect::BeginPlay()
 void PokemonBattleSelect::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
+    UpdateCursorPosition(_DeltaTime);
+
+
 }
 
 void PokemonBattleSelect::HandleInput()
@@ -41,17 +51,38 @@ void PokemonBattleSelect::SelectOption()
     switch (selectedOption)
     {
     case ECursorName::Fight:
-        CurrentSubstate = ESubstate::MoveSelect;
+        CurrentSubstate = ESubstate::Select;
+
         break;
     case ECursorName::Bag:
         CurrentSubstate = ESubstate::ItemSelect;
+
         break;
     case ECursorName::Pokemon:
         CurrentSubstate = ESubstate::PokemonSelect;
+
         break;
     case ECursorName::Run:
-        CurrentSubstate = ESubstate::CantRunMessage1;
+        CurrentSubstate = ESubstate::MoveSelect;
+
         break;
     default:
         break;
     }
+}
+
+void PokemonBattleSelect::HandleInput()
+{
+        if (UEngineInput::GetInst().IsDown('W'))
+        {
+            CurrentSelectionIndex = (CurrentSelectionIndex - 1 + MenuOptions.size()) % MenuOptions.size();
+        }
+        else if (UEngineInput::GetInst().IsDown('S'))
+        {
+            CurrentSelectionIndex = (CurrentSelectionIndex + 1) % MenuOptions.size();
+        }
+        else if (UEngineInput::GetInst().IsDown('Z'))
+        {
+            SelectOption();
+        }
+}

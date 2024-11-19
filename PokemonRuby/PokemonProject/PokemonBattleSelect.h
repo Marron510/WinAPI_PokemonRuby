@@ -1,6 +1,7 @@
 #pragma once
 #include <EngineCore/Actor.h>
 #include "Cursor.h"
+#include <vector>
 
 class PokemonBattleSelect : public AActor
 {
@@ -49,10 +50,14 @@ public:
 
 	void SelectOption();
 
+	int CurrentSelectionIndex = 0;  
+	ESubstate CurrentSubstate = ESubstate::None;  
+	std::vector<ECursorName> MenuOptions = { ECursorName::Fight, ECursorName::Bag, ECursorName::Pokemon, ECursorName::Run };
+
+
 protected:
 
 private:
 
-	ESubstate = CurrentSubstate;
 };
 
