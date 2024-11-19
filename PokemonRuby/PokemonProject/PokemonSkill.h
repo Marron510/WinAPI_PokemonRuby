@@ -1,7 +1,17 @@
 #pragma once
+
 class PokemonSkill
 {
 public:
+	enum class ETREEKOSKILL
+	{
+		Pound,
+		Glare,
+		Leafage,
+		QuickAttack
+	};
+
+
 	// 持失切 社瑚切
 	PokemonSkill();
 	~PokemonSkill();

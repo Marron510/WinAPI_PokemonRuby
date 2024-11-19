@@ -6,7 +6,7 @@
 #include <EngineCore/EngineAPICore.h>
 
 #include "Cursor.h"
-
+#include "PokemonSkill.h"
 
 PokemonBattleSelect::PokemonBattleSelect()
 {
@@ -85,4 +85,11 @@ void PokemonBattleSelect::SelectOption()
     default:
         break;
     }
+}
+
+
+
+void PokemonBattleSelect::SkillSelect()
+{
+
 }
