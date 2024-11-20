@@ -4,11 +4,14 @@
 #include <EngineBase/EnginePath.h>
 #include <EngineBase/EngineString.h>
 
+// GDI Plus 용 헤더
 #include <objidl.h>
 #include <gdiplus.h>
 
+// BMP 확장용 라이브러리
 #pragma comment(lib, "Msimg32.lib")
 
+// PNG 를 통한 window 네이티브 그래픽 확장용 라이브러리
 #pragma comment(lib, "Gdiplus.lib")
 
 UEngineWinImage::UEngineWinImage()
@@ -41,7 +44,7 @@ void UEngineWinImage::Create(UEngineWinImage* _TargetImage, FVector2D _Scale)
 
 
 	HBITMAP NewBitmap = static_cast<HBITMAP>(CreateCompatibleBitmap(_TargetImage->GetDC(), _Scale.iX(), _Scale.iY()));
-	
+
 	HDC NewImageDC = CreateCompatibleDC(_TargetImage->GetDC());
 
 	HBITMAP OldBitMap = static_cast<HBITMAP>(SelectObject(NewImageDC, NewBitmap));
@@ -63,7 +66,7 @@ void UEngineWinImage::CopyToBit(UEngineWinImage* _TargetImage, const FTransform&
 
 	HDC CopyDC = ImageDC;
 	HDC TargetDC = _TargetImage->ImageDC;
-	
+
 	FVector2D LeftTop = _Trans.CenterLeftTop();
 	FVector2D RightBot = _Trans.CenterRightBottom();
 
@@ -77,6 +80,7 @@ void UEngineWinImage::CopyToBit(UEngineWinImage* _TargetImage, const FTransform&
 		0,
 		0,
 		SRCCOPY);
+
 
 	FVector2D Vector;
 }
@@ -103,6 +107,36 @@ void UEngineWinImage::CopyToTrans(UEngineWinImage* _TargetImage, const FTransfor
 	);
 }
 
+void UEngineWinImage::CopyToAlpha(UEngineWinImage* _TargetImage,
+	const FTransform& _RenderTrans,
+	const FTransform& _LTImageTrans,
+	unsigned char _Alpha)
+{
+	BLENDFUNCTION BLEND;
+	BLEND.BlendOp = AC_SRC_OVER;
+	BLEND.BlendFlags = 0;
+	BLEND.AlphaFormat = AC_SRC_ALPHA;
+	BLEND.SourceConstantAlpha = _Alpha;
+
+	HDC CopyDC = ImageDC;
+	HDC TargetDC = _TargetImage->ImageDC;
+	FVector2D LeftTop = _RenderTrans.CenterLeftTop();
+
+	AlphaBlend(
+		TargetDC,
+		LeftTop.iX(),
+		LeftTop.iY(),
+		_RenderTrans.Scale.iX(),
+		_RenderTrans.Scale.iY(),
+		CopyDC,
+		_LTImageTrans.Location.iX(),
+		_LTImageTrans.Location.iY(),
+		_LTImageTrans.Scale.iX(),
+		_LTImageTrans.Scale.iY(),
+		BLEND
+	);
+}
+
 void UEngineWinImage::Load(UEngineWinImage* _TargetImage, std::string_view _Path)
 {
 	UEnginePath Path = _Path;
@@ -115,6 +149,7 @@ void UEngineWinImage::Load(UEngineWinImage* _TargetImage, std::string_view _Path
 	{
 		ULONG_PTR gidplustoken = 0;
 
+		// GDI plus를 사용하기 위한 인풋
 		Gdiplus::GdiplusStartupInput StartupInput;
 		Gdiplus::GdiplusStartup(&gidplustoken, &StartupInput, nullptr);
 
@@ -161,7 +196,7 @@ void UEngineWinImage::Load(UEngineWinImage* _TargetImage, std::string_view _Path
 	GetObject(hBitMap, sizeof(BITMAP), &Info);
 }
 
-UColor UEngineWinImage::GetColor(FIntPoint _Point, UColor _DefaultColor)
+UColor UEngineWinImage::GetColor(FIntPoint _Point, UColor _DefaultColor = UColor::WHITE)
 {
 	if (0 > _Point.X)
 	{

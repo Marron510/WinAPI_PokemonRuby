@@ -27,7 +27,7 @@ public:
 	}
 
 	void Create(UEngineWinImage* _TargetImage, FVector2D _Scale);
-	
+
 	void CopyToBit(UEngineWinImage* _TargetImage,
 		const FTransform& _Trans);
 
@@ -35,6 +35,12 @@ public:
 		const FTransform& _RenderTrans,
 		const FTransform& _LTImageTrans,
 		UColor _Color = UColor(255, 0, 255, 0));
+
+	void CopyToAlpha(UEngineWinImage* _TargetImage,
+		const FTransform& _RenderTrans,
+		const FTransform& _LTImageTrans,
+		unsigned char _Alpha);
+
 
 	void Load(UEngineWinImage* _TargetImage, std::string_view _Path);
 
@@ -48,13 +54,12 @@ public:
 		return GetColor(_Point.ConvertToPoint(), _DefaultColor);
 	}
 
-	UColor GetColor(FIntPoint _Point, UColor _DefaultColor = UColor::WHITE);
+	UColor GetColor(FIntPoint _Point, UColor _DefaultColor);
 
 protected:
 
 private:
 	HDC ImageDC = nullptr;
-
 	HBITMAP hBitMap = nullptr;
 
 	BITMAP Info;

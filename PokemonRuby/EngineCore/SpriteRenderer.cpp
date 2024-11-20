@@ -15,309 +15,356 @@ USpriteRenderer::~USpriteRenderer()
 
 void USpriteRenderer::Render(float _DeltaTime)
 {
-    
-    if (nullptr == Sprite)
-    {
-        MSGASSERT("스프라이트가 세팅되지 않은 액터를 랜더링을 할수 없습니다.");
-        return;
-    }
+	if (nullptr == Sprite)
+	{
+		MSGASSERT("스프라이트가 세팅되지 않은 액터를 랜더링을 할수 없습니다.");
+		return;
+	}
+	UEngineWindow& MainWindow = UEngineAPICore::GetCore()->GetMainWindow();
+	UEngineWinImage* BackBufferImage = MainWindow.GetBackBuffer();
+	UEngineSprite::USpriteData CurData = Sprite->GetSpriteData(CurIndex);
 
-    UEngineWindow& MainWindow = UEngineAPICore::GetCore()->GetMainWindow();
-    UEngineWinImage* BackBufferImage = MainWindow.GetBackBuffer();
-    UEngineSprite::USpriteData CurData = Sprite->GetSpriteData(CurIndex);
+	FTransform Trans = GetActorTransform();
 
-    FTransform Trans = GetActorTransform();
+	ULevel* Level = GetActor()->GetWorld();
 
-    ULevel* Level = GetActor()->GetWorld();
+	if (true == IsCameraEffect)
+	{
+		Trans.Location = Trans.Location - (Level->CameraPos * CameraEffectScale);
+	}
 
-    Trans.Location = Trans.Location - Level->CameraPos;
+	FVector2D PivotRealScale;
 
-    CurData.Image->CopyToTrans(BackBufferImage, Trans, CurData.Transform);
+	//                 소수점 버림
+	PivotRealScale.X = std::floorf((0.5f - Pivot.X) * Trans.Scale.X);
+	PivotRealScale.Y = std::floorf((0.5f - Pivot.Y) * Trans.Scale.Y);
+
+	Trans.Location += PivotRealScale;
+
+
+	if (Alpha == 255)
+	{
+		CurData.Image->CopyToTrans(BackBufferImage, Trans, CurData.Transform);
+	}
+	else
+	{
+		CurData.Image->CopyToAlpha(BackBufferImage, Trans, CurData.Transform, Alpha);
+	}
 }
 
 void USpriteRenderer::BeginPlay()
 {
-    Super::BeginPlay();
+	Super::BeginPlay();
 
-    AActor* Actor = GetActor();
-    ULevel* Level = Actor->GetWorld();
 
-    Level->PushRenderer(this);
+	AActor* Actor = GetActor();
+	ULevel* Level = Actor->GetWorld();
+
+	Level->ChangeRenderOrder(this, this->GetOrder());
 }
 
 void USpriteRenderer::ComponentTick(float _DeltaTime)
 {
-    Super::ComponentTick(_DeltaTime);
+	Super::ComponentTick(_DeltaTime);
 
-    if (nullptr != CurAnimation)
-    {
-        std::vector<int>& Indexs = CurAnimation->FrameIndex;
-        std::vector<float>& Times = CurAnimation->FrameTime;
+	if (nullptr != CurAnimation)
+	{
+		CurAnimation->IsEnd = false;
+		std::vector<int>& Indexs = CurAnimation->FrameIndex;
+		std::vector<float>& Times = CurAnimation->FrameTime;
 
-        Sprite = CurAnimation->Sprite;
+		Sprite = CurAnimation->Sprite;
 
 
-        CurAnimation->CurTime += _DeltaTime;
+		CurAnimation->CurTime += _DeltaTime * CurAnimationSpeed;
 
-        float CurFrameTime = Times[CurAnimation->CurIndex];
+		float CurFrameTime = Times[CurAnimation->CurIndex];
 
-        if (CurAnimation->CurTime > CurFrameTime)
-        {
-            CurAnimation->CurTime -= CurFrameTime;
-            ++CurAnimation->CurIndex;
+		//                           0.1 0.1 0.1
+		if (CurAnimation->CurTime > CurFrameTime)
+		{
 
-            if (CurAnimation->Events.contains(CurAnimation->CurIndex))
-            {
-                CurAnimation->Events[CurAnimation->CurIndex]();
-            }
+			CurAnimation->CurTime -= CurFrameTime;
+			++CurAnimation->CurIndex;
 
-            if (CurAnimation->CurIndex >= Indexs.size())
-            {
-                if (true == CurAnimation->Loop)
-                {
-                    CurAnimation->CurIndex = 0;
+			if (CurAnimation->Events.contains(CurIndex))
+			{
+				CurAnimation->Events[CurIndex]();
+			}
 
-                    if (CurAnimation->Events.contains(CurAnimation->CurIndex))
-                    {
-                        CurAnimation->Events[CurAnimation->CurIndex]();
-                    }
+			if (CurAnimation->CurIndex >= Indexs.size())
+			{
+				CurAnimation->IsEnd = true;
+			}
+			else {
+				CurAnimation->IsEnd = false;
+			}
 
-                }
-                else
-                {
-                    --CurAnimation->CurIndex;
-                }
-            }
 
-        }
+			if (CurAnimation->CurIndex >= Indexs.size())
+			{
+				if (true == CurAnimation->Loop)
+				{
+					CurAnimation->CurIndex = 0;
 
-        CurIndex = Indexs[CurAnimation->CurIndex];
-    }
+					if (CurAnimation->Events.contains(CurIndex))
+					{
+						CurAnimation->Events[CurIndex]();
+					}
+				}
+				else
+				{
+					CurAnimation->IsEnd = true;
+					--CurAnimation->CurIndex;
+				}
+			}
 
+		}
+
+
+		CurIndex = Indexs[CurAnimation->CurIndex];
+	}
 
 }
 
 void USpriteRenderer::SetSprite(std::string_view _Name, int _CurIndex /*= 0*/)
 {
-    Sprite = UImageManager::GetInst().FindSprite(_Name);
+	Sprite = UImageManager::GetInst().FindSprite(_Name);
 
-    if (nullptr == Sprite)
-    {
-        MSGASSERT("로드하지 않은 스프라이트를 사용하려고 했습니다" + std::string(_Name));
-        return;
-    }
+	if (nullptr == Sprite)
+	{
+		MSGASSERT("로드하지 않은 스프라이트를 사용하려고 했습니다" + std::string(_Name));
+		return;
+	}
 
-    CurIndex = _CurIndex;
-}
-
-void USpriteRenderer::SetPKMSprite(std::string_view _Name, int _CurIndex /*= 0*/)
-{
-    Sprite = UImageManager::GetInst().FindPKMSprite(_Name);
-
-    if (nullptr == Sprite)
-    {
-        MSGASSERT("로드하지 않은 스프라이트를 사용하려고 했습니다" + std::string(_Name));
-        return;
-    }
-
-    CurIndex = _CurIndex;
+	CurIndex = _CurIndex;
 }
 
 void USpriteRenderer::SetOrder(int _Order)
 {
-    int PrevOrder = Order;
+	int PrevOrder = Order;
 
-    Order = _Order;
+	Order = _Order;
 
-    ULevel* Level = GetActor()->GetWorld();
+	if (PrevOrder == Order)
+	{
+		return;
+	}
 
-    if (nullptr != Level)
-    {
-        Level->ChangeRenderOrder(this, PrevOrder);
-    }
+	ULevel* Level = GetActor()->GetWorld();
+
+	if (nullptr != Level)
+	{
+		Level->ChangeRenderOrder(this, PrevOrder);
+	}
 }
 
 FVector2D USpriteRenderer::SetSpriteScale(float _Ratio /*= 1.0f*/, int _CurIndex /*= 0*/)
 {
-    if (nullptr == Sprite)
-    {
-        MSGASSERT("스프라이트를 세팅하지 않고 스프라이트 크기로 랜더러 크기를 조정할수 없습니다.");
-        return FVector2D::ZERO;
-    }
+	if (nullptr == Sprite)
+	{
+		MSGASSERT("스프라이트를 세팅하지 않고 스프라이트 크기로 랜더러 크기를 조정할수 없습니다.");
+		return FVector2D::ZERO;
+	}
 
-    UEngineSprite::USpriteData CurData = Sprite->GetSpriteData(_CurIndex);
+	UEngineSprite::USpriteData CurData = Sprite->GetSpriteData(_CurIndex);
 
-    FVector2D Scale = CurData.Transform.Scale * _Ratio;
+	FVector2D Scale = CurData.Transform.Scale * _Ratio;
 
-    SetComponentScale(CurData.Transform.Scale * _Ratio);
+	SetComponentScale(CurData.Transform.Scale * _Ratio);
 
-    return Scale;
+	return Scale;
 }
 
 
 void USpriteRenderer::CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, int _Start, int _End, float Time /*= 0.1f*/, bool _Loop /*= true*/)
 {
-    if (_Start > _End)
-    {
-        MSGASSERT("애니메이션에서 Start가 End보다 클수는 없습니다. " + std::string(_AnimationName));
-        return;
-    }
+	int Inter = 0;
 
-    int Inter = (_End - _Start) + 1;
+	std::vector<int> Indexs;
+	std::vector<float> Times;
 
-    std::vector<int> Indexs;
-    std::vector<float> Times;
+	if (_Start < _End)
+	{
+		Inter = (_End - _Start) + 1;
+		for (size_t i = 0; i < Inter; i++)
+		{
+			Indexs.push_back(_Start);
+			Times.push_back(Time);
+			++_Start;
+		}
 
-    for (size_t i = 0; i < Inter; i++)
-    {
-        Indexs.push_back(_Start);
-        Times.push_back(Time);
-        ++_Start;
-    }
+	}
+	else
+	{
+		Inter = (_Start - _End) + 1;
+		for (size_t i = 0; i < Inter; i++)
+		{
+			Indexs.push_back(_End);
+			Times.push_back(Time);
+			++_End;
+		}
+	}
 
-    CreateAnimation(_AnimationName, _SpriteName, Indexs, Times, _Loop);
+
+	CreateAnimation(_AnimationName, _SpriteName, Indexs, Times, _Loop);
 }
+
 
 void USpriteRenderer::CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, std::vector<int> _Indexs, float _Frame, bool _Loop /*= true*/)
 {
-    std::vector<float> Times;
+	std::vector<float> Times;
 
-    for (size_t i = 0; i < _Indexs.size(); i++)
-    {
-        Times.push_back(_Frame);
-    }
+	for (size_t i = 0; i < _Indexs.size(); i++)
+	{
+		Times.push_back(_Frame);
+	}
 
-    CreateAnimation(_AnimationName, _SpriteName, _Indexs, Times, _Loop);
+	CreateAnimation(_AnimationName, _SpriteName, _Indexs, Times, _Loop);
 }
 
 void USpriteRenderer::CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, std::vector<int> _Indexs, std::vector<float> _Frame, bool _Loop /*= true*/)
 {
-    std::string UpperName = UEngineString::ToUpper(_AnimationName);
+	std::string UpperName = UEngineString::ToUpper(_AnimationName);
 
-    if (_Frame.size() != _Indexs.size())
-    {
-        MSGASSERT(UpperName + "을 만들다 에러가 났습니다 프레임과 타임의 카운트가 서로 다릅니다");
-        return;
-    }
+	if (_Frame.size() != _Indexs.size())
+	{
+		MSGASSERT(UpperName + "을 만들다 에러가 났습니다 프레임과 타임의 카운트가 서로 다릅니다");
+		return;
+	}
 
-    if (FrameAnimations.contains(UpperName))
-    {
-        return;
-    }
+	if (FrameAnimations.contains(UpperName))
+	{
+		return;
+	}
 
-    UEngineSprite* FindSprite = UImageManager::GetInst().FindSprite(_SpriteName);
+	UEngineSprite* FindSprite = UImageManager::GetInst().FindSprite(_SpriteName);
 
-    if (nullptr == FindSprite)
-    {
-        MSGASSERT("로드하지 않은 스프라이트를 애니메이션 생서에 사용하려고 했습니다" + std::string(UpperName));
-        return;
-    }
+	if (nullptr == FindSprite)
+	{
+		MSGASSERT("로드하지 않은 스프라이트를 애니메이션 생서에 사용하려고 했습니다" + std::string(UpperName));
+		return;
+	}
 
-    FrameAnimation NewAnimation;
-    NewAnimation.Sprite = FindSprite;
-    NewAnimation.FrameIndex = _Indexs;
-    NewAnimation.FrameTime = _Frame;
-    NewAnimation.Loop = _Loop;
-    NewAnimation.Reset();
+	FrameAnimation NewAnimation;
+	NewAnimation.Sprite = FindSprite;
+	NewAnimation.FrameIndex = _Indexs;
+	NewAnimation.FrameTime = _Frame;
+	NewAnimation.Loop = _Loop;
+	NewAnimation.Reset();
 
-    FrameAnimations.insert({ UpperName ,NewAnimation });
+	FrameAnimations.insert({ UpperName ,NewAnimation });
 
 }
 
 void USpriteRenderer::ChangeAnimation(std::string_view _AnimationName, bool _Force /*= false*/)
 {
-    std::string UpperName = UEngineString::ToUpper(_AnimationName);
+	std::string UpperName = UEngineString::ToUpper(_AnimationName);
 
-    if (false == FrameAnimations.contains(UpperName))
-    {
-        MSGASSERT("존재하지 않은 애니메이션으로 변경하려고 했습니다. = " + UpperName);
-        return;
-    }
+	if (false == FrameAnimations.contains(UpperName))
+	{
+		MSGASSERT("존재하지 않은 애니메이션으로 변경하려고 했습니다. = " + UpperName);
+		return;
+	}
 
-    FrameAnimation* ChangeAnimation = &FrameAnimations[UpperName];
+	FrameAnimation* ChangeAnimation = &FrameAnimations[UpperName];
 
-    if (CurAnimation == ChangeAnimation && false == _Force)
-    {
-        return;
-    }
+	if (CurAnimation == ChangeAnimation && false == _Force)
+	{
+		return;
+	}
 
-    CurAnimation = &FrameAnimations[UpperName];
-    CurAnimation->Reset();
+	CurAnimation = &FrameAnimations[UpperName];
+	CurAnimation->Reset();
+	CurIndex = CurAnimation->FrameIndex[CurAnimation->CurIndex];
 
-    if (CurAnimation->Events.contains(CurAnimation->CurIndex))
-    {
-        CurAnimation->Events[CurAnimation->CurIndex]();
-    }
+	if (CurAnimation->Events.contains(CurAnimation->CurIndex))
+	{
+		CurAnimation->Events[CurAnimation->CurIndex]();
+	}
 
-    Sprite = CurAnimation->Sprite;
+	Sprite = CurAnimation->Sprite;
 }
 
 
 void USpriteRenderer::SetAnimationEvent(std::string_view _AnimationName, int _Frame, std::function<void()> _Function)
 {
-    std::string UpperName = UEngineString::ToUpper(_AnimationName);
+	std::string UpperName = UEngineString::ToUpper(_AnimationName);
 
-    if (false == FrameAnimations.contains(UpperName))
-    {
-        MSGASSERT("존재하지 않은 애니메이션으로 변경하려고 했습니다. = " + UpperName);
-        return;
-    }
+	if (false == FrameAnimations.contains(UpperName))
+	{
+		MSGASSERT("존재하지 않은 애니메이션으로 변경하려고 했습니다. = " + UpperName);
+		return;
+	}
 
-    FrameAnimation* ChangeAnimation = &FrameAnimations[UpperName];
+	FrameAnimation* ChangeAnimation = &FrameAnimations[UpperName];
 
-    bool Check = false;
+	bool Check = false;
 
-    for (size_t i = 0; i < ChangeAnimation->FrameIndex.size(); i++)
-    {
-        if (_Frame == ChangeAnimation->FrameIndex[i])
-        {
-            Check = true;
-            break;
-        }
-    }
+	for (size_t i = 0; i < ChangeAnimation->FrameIndex.size(); i++)
+	{
+		if (_Frame == ChangeAnimation->FrameIndex[i])
+		{
+			Check = true;
+			break;
+		}
+	}
 
-    if (false == Check)
-    {
-        MSGASSERT("존재하지 않는 프레임에 이벤트를 생성하려고 했습니다" + std::string(_AnimationName));
-        return;
-    }
+	if (false == Check)
+	{
+		MSGASSERT("존재하지 않는 프레임에 이벤트를 생성하려고 했습니다" + std::string(_AnimationName));
+		return;
+	}
 
-    ChangeAnimation->Events[_Frame] += _Function;
+	ChangeAnimation->Events[_Frame] += _Function;
 
 }
 
 void USpriteRenderer::SetCameraEffectScale(float _Effect)
 {
-    CameraEffectScale = _Effect;
+	CameraEffectScale = _Effect;
 }
 
 void USpriteRenderer::SetPivotType(PivotType _Type)
 {
-    if (PivotType::Center == _Type)
-    {
-        Pivot = FVector2D::ZERO;
-        return;
-    }
+	if (PivotType::Center == _Type)
+	{
+		Pivot = FVector2D::ZERO;
+		return;
+	}
 
-    if (nullptr == Sprite)
-    {
-        MSGASSERT("이미지를 기반으로한 피봇설정은 스프라이트가 세팅되지 않은 상태에서는 호출할수 없습니다");
-        return;
-    }
+	if (nullptr == Sprite)
+	{
+		MSGASSERT("이미지를 기반으로한 피봇설정은 스프라이트가 세팅되지 않은 상태에서는 호출할수 없습니다");
+		return;
+	}
 
-    UEngineSprite::USpriteData CurData = Sprite->GetSpriteData(CurIndex);
 
-    switch (_Type)
-    {
-    case PivotType::Bot:
-        Pivot.X = 0.0f;
-        Pivot.Y -= CurData.Transform.Scale.Y * 0.5f;
-        break;
-    case PivotType::Top:
-        Pivot.X = 0.0f;
-        Pivot.Y += CurData.Transform.Scale.Y * 0.5f;
-        break;
-    default:
-        break;
-    }
+	switch (_Type)
+	{
+	case PivotType::Center:
+		Pivot.X = 0.5f;
+		Pivot.Y = 0.5f;
+		break;
+	case PivotType::Bot:
+		Pivot.X = 0.5f;
+		Pivot.Y = 1.0f;
+		break;
+	case PivotType::Top:
+		Pivot.X = 0.5f;
+		Pivot.Y = 0.0f;
+		break;
+	case PivotType::LeftTop:
+		Pivot.X = 0.0f;
+		Pivot.Y = 0.0f;
+		break;
+	default:
+		break;
+	}
+}
+
+
+void USpriteRenderer::SetPivotValue(FVector2D _Value)
+{
+	Pivot = _Value;
 }

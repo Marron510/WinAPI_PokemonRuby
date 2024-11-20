@@ -19,7 +19,7 @@ void APokemonText::SetTextSpriteName(const std::string _Text)
 
 	for (size_t i = 0; i < Renders.size(); i++)
 	{
-		Renders[i]->SetPKMSprite(TextSpriteName);
+		Renders[i]->SetSprite(TextSpriteName);
 	}
 }
 
