@@ -81,7 +81,7 @@ private:
 	class APokemonText* EnemyPokemonStat = nullptr;
 
 		
-
+	bool bHasDisplayedMenuText = false;
 	int PokemonMapLevel = 2;
 };
 

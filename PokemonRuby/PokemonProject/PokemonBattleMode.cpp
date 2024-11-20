@@ -122,9 +122,8 @@ void APokemonBattleMode::Tick(float _DeltaTime)
 	PlayerSetting();
 
 	SpawnPokemon(_DeltaTime);
-	
-	
-	
+
+
 	
 }
 
@@ -256,7 +255,6 @@ void APokemonBattleMode::PlayerPokemonTextSetting()
 	if (TargetLocation == Curloc)
 	{
 		MyPokemonStat->GetActorLocation() = TargetLocation;
-		ChatText->ClearText();
 		IsChatOn = false;
 		SpawnSelectMenu();
 		return;
@@ -307,7 +305,6 @@ void APokemonBattleMode::SpawnPokemon(float _DeltaTime)
 		ThrowMonsterball();
 		MonsterBall->ChangeAnimation("ThrowBall");
 		ThrowedMosterBall();
-		ChatText->ClearText();
 	}
 
 	SpawnMyPokemonText();
@@ -354,5 +351,6 @@ void APokemonBattleMode::SpawnSelectMenu()
 {
 	SelectMenu->SetOrder(ERenderOrder::UI);
 	IsMenuOn = true;
-	//ChatText->SetText("What should TREEKO do?", 0.01f);
+	std::string enter = "\n";
+	ChatText->SetText("What should"+ enter +"TREEKO do ? ", 0.01f);
 }

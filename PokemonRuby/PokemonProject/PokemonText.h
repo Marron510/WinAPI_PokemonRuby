@@ -120,13 +120,15 @@ public:
 
 	void SetText(std::string_view _Text, float _InterValue = 0.0f);
 
-	// void SetFont(std::vector<std::string_view> _Text, float _InterValue = 0.0f);
+	
 
 	void PrintTextUpdate(float _DeltaTime);
 	
 	void ClearText();
 
-	bool IsEnd() const;
+	int GetTotalTextSize() const;
+
+
 
 	static int GetTextSize()
 	{
@@ -141,8 +143,8 @@ private:
 	float InterTime = 0.0;
 	float CurTime = 0.0;
 	
-	std::string PrintText;
-	// std::vector<std::string> PrintTexts;
+	
+	std::vector<std::string> PrintTexts;
 
 	std::string TextSpriteName;
 	FVector2D TextScale;
