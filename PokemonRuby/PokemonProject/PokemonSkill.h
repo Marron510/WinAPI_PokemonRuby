@@ -39,6 +39,10 @@ public:
 	PokemonSkill& operator=(PokemonSkill&& _Other) noexcept = delete;
 
 
+	static int CalculateDamage(int level, int attack, int defense, int power, bool isPhysical, float effectiveness);
+	static void GetSkillInfo(ETREEKOSKILL skill, int& level, int& attack, int& defense, int& power, bool& isPhysical, float& effectiveness);
+
+
 protected:
 
 private:
