@@ -13,7 +13,7 @@
 
 #include "PokemonEnum.h"
 #include "PokemonInput.h"
-
+#include "WildPokemon.h"
 
 
 
@@ -191,6 +191,7 @@ void APlayer::Walk(float _DeltaTime)
         if (UColor::GREEN == CheckColor)
         {
             UEngineAPICore::GetCore()->OpenLevel("PokemonBattle");
+
         }
 
         FSM.ChangeState(APlayerState::IDLE);

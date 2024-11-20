@@ -1,9 +1,9 @@
 #pragma once
-#include <EngineCore/Actor.h>
+
 #include <string.h>
 
 
-class ATargetPokemon : public AActor
+class ATargetPokemon 
 {
 public:
 	// 생성자 소멸자
@@ -19,7 +19,7 @@ public:
 
     
 
-    // Getter 함수들
+
     std::string GetName() const
     {
         return Name;

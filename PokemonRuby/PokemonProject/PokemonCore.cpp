@@ -171,6 +171,9 @@ void PokemonCore::BeginPlay()
 
 	{
 		UImageManager::GetInst().CuttingSprite("Treecko.png", { 288, 288 });
+		UImageManager::GetInst().CuttingSprite("Zigzagoon.png", { 288, 288 });
+		UImageManager::GetInst().CuttingSprite("Poochyena.png", { 288, 288 });
+		UImageManager::GetInst().CuttingSprite("Wurmple.png", { 288, 288 });
 	}
 
 

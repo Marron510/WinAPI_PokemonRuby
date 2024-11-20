@@ -79,5 +79,9 @@ private:
 	class APokemonText* ChatText = nullptr;
 	class APokemonText* MyPokemonStat = nullptr;
 	class APokemonText* EnemyPokemonStat = nullptr;
+
+		
+
+	int PokemonMapLevel = 2;
 };
 

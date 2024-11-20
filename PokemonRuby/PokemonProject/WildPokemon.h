@@ -10,6 +10,7 @@ enum class EWildPokemonEnum
     Zigzagoon,
     Poochyena,
     Wurmple,
+    MAX
     // 추가 포켓몬은 여기에 추가
 };
 
@@ -31,16 +32,27 @@ public:
     // 랜덤 포켓몬 인카운터
     void EncounterWildPokemon(int regionLevel);
 
+    ATargetPokemon* GetEncounteredPokemon() const
+    {
+        return EncounteredPokemon;
+    }
+
+    std::string GetPokemonName()
+    {
+        return PokemonName;
+    }
+
+
 protected:
 
 
 private:
     // 지역에 따라 레벨 조정하는 함수
     int AdjustLevelByRegion(int baseLevel, int regionLevel);
-
-    std::map<EWildPokemonEnum, std::vector<ATargetPokemon>> WildPokemons;
+    
     class USpriteRenderer* WildPokemonRender = nullptr;
     ATargetPokemon* EncounteredPokemon = nullptr;
 
+    std::string PokemonName = "None";
 
 };

@@ -15,6 +15,7 @@
 #include "WildPokemon.h"
 #include "PokemonText.h"
 #include "PokemonEnum.h"
+#include "WildPokemon.h"
 
 
 
@@ -50,9 +51,6 @@ APokemonBattleMode::APokemonBattleMode()
 
 		MonsterBall->ChangeAnimation("ThrowBallReady");
 	}
-	{
-		
-	}
 }
 
 APokemonBattleMode::~APokemonBattleMode()
@@ -70,7 +68,8 @@ void APokemonBattleMode::BeginPlay()
 
 	{
 		EnemyPokemon = GetWorld()->SpawnActor<AWildPokemon>(); // 적 포켓몬 추가
-		EnemyPokemon->SetActorLocation({ -132.0f , 260.0f });
+		EnemyPokemon->SetActorLocation({ -312.0f , 260.0f });
+		EnemyPokemon->EncounterWildPokemon(PokemonMapLevel);
 	}
 
 	{ 
@@ -83,7 +82,7 @@ void APokemonBattleMode::BeginPlay()
 		ChatText->SetActorLocation({ 100.0f, 640.0f });
 		ChatText->SetTextSpriteName("TextWhite.png");
 		ChatText->SetTextScale({ 30, 40 });
-		ChatText->SetText("Wild Zigzagoon Appeared!", 0.05f);
+		ChatText->SetText("Wild "+ EnemyPokemon->GetPokemonName() + " appeard!", 0.05f);
 		ChatText->SetOrder(ERenderOrder::FONT);
 	}
 
@@ -91,9 +90,10 @@ void APokemonBattleMode::BeginPlay()
 		EnemyPokemonStat = GetWorld()->SpawnActor<APokemonText>();
 		EnemyPokemonStat->SetTextSpriteName("TextBlack.png");
 		EnemyPokemonStat->SetTextScale({ 25, 30 });
-		EnemyPokemonStat->SetText("ZIGZAGOON");
+		EnemyPokemonStat->SetText(EnemyPokemon->GetPokemonName());
 		EnemyPokemonStat->SetActorLocation({ -600.0f , 135.0f });
 		EnemyPokemonStat->SetOrder(ERenderOrder::FONT);
+
 	}
 
 	{
@@ -133,7 +133,7 @@ void APokemonBattleMode::PokemonSetting()
 {
 	
 	{
-		FVector2D TargetLocation = FVector2D({ 1054.0f , 260.0f }); 
+		FVector2D TargetLocation = FVector2D({ 862.0f , 260.0f }); 
 		FVector2D Curloc = EnemyPokemon->GetActorLocation();
 		Curloc += FVector2D::RIGHT.Half();
 

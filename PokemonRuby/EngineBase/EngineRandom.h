@@ -18,10 +18,9 @@ public:
 	{
 		std::mt19937_64 MtGen = std::mt19937_64(_Seed);
 	}
-
 	int RandomInt(int _Min, int _Max)
 	{
-		std::uniform_int_distribution<int> RandomCreate(_Min, _Max + 1);
+		std::uniform_int_distribution<int> RandomCreate(_Min, _Max);
 
 		return RandomCreate.operator()(MtGen);
 	}
@@ -31,6 +30,7 @@ public:
 		std::uniform_real_distribution<float> RandomCreate(_Min, _Max);
 		return RandomCreate.operator()(MtGen);
 	}
+
 
 
 protected:
