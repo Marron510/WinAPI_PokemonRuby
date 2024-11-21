@@ -352,5 +352,5 @@ void APokemonBattleMode::SpawnSelectMenu()
 	SelectMenu->SetOrder(ERenderOrder::UI);
 	IsMenuOn = true;
 	std::string enter = "\n";
-	ChatText->SetText("What should"+ enter +"TREEKO do ? ", 0.01f);
+	ChatText->SetText("What should"+ enter +"TREEKO do? ", 0.01f);
 }

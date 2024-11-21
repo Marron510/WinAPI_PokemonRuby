@@ -35,6 +35,6 @@ protected:
 private:
 
 	class USpriteRenderer* CursorRender = nullptr;
-
+	const float CursorPosMax = 1000.0f;
 };
 

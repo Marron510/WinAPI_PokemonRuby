@@ -65,7 +65,11 @@ public:
 	{
 
 	}
+	float X;
+	float Y;
 
+	
+	
 	int iX() const
 	{
 		return static_cast<int>(X);
@@ -118,6 +122,11 @@ public:
 			Y = Y / Len;
 		}
 		return;
+	}
+
+	static float Dist(const FVector2D& A, const FVector2D& B)
+	{
+		return std::sqrt(std::pow(B.X - A.X, 2) + std::pow(B.Y - A.Y, 2));
 	}
 
 	float Dot(const FVector2D& other) const

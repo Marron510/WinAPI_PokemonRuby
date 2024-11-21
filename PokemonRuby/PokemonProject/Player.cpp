@@ -2,9 +2,12 @@
 #include "Player.h"
 
 #include <EngineBase/EngineMath.h>
+#include <EngineBase/EngineRandom.h>
+
 #include <EngineBase/EngineString.h>
 #include <EnginePlatform/EngineInput.h>
 #include <EnginePlatform/EngineWInImage.h>
+
 
 #include <EngineCore/EngineAPICore.h>
 #include <EngineCore/EngineCoreDebug.h>
@@ -182,16 +185,18 @@ void APlayer::Walk(float _DeltaTime)
     Direction.Normalize();
 
     FVector2D NewLocation = UPokemonMath::Lerp(CurrentLocation, TargetLocation, WalkSpeed * _DeltaTime);
+    UEngineRandom Encounter;
+    int EncounterInt= Encounter.RandomInt( 0 , 9 );
+
 
     if ((NewLocation - TargetLocation).Length() < 0.1f)
     {
         NewLocation = TargetLocation;
         IsMoving = false;
 
-        if (UColor::GREEN == CheckColor)
+        if (UColor::GREEN == CheckColor && 2 > EncounterInt)
         {
             UEngineAPICore::GetCore()->OpenLevel("PokemonBattle");
-
         }
 
         FSM.ChangeState(APlayerState::IDLE);
