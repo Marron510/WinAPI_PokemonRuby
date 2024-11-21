@@ -53,7 +53,8 @@ private:
 
 	class AMyPokemon* MyPokemon = nullptr;
 	class AWildPokemon* EnemyPokemon = nullptr;
-	
+	class ACursor* Cursor = nullptr;
+	USpriteRenderer* CursorRender = nullptr;
 	USpriteRenderer* PlayerPokemonShadow = nullptr;
 	USpriteRenderer* EnemyPokemonShadow = nullptr;
 	USpriteRenderer* PlayerPokemonUI = nullptr;
@@ -79,7 +80,6 @@ private:
 	class APokemonText* ChatText = nullptr;
 	class APokemonText* MyPokemonStat = nullptr;
 	class APokemonText* EnemyPokemonStat = nullptr;
-
 		
 	bool bHasDisplayedMenuText = false;
 	int PokemonMapLevel = 2;

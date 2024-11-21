@@ -21,7 +21,6 @@ public:
 	void Tick(float _DeltaTime) override;
 
 
-	// 레벨에 따른 능력치 계산
 	void LevelUp(int levels = 1);
 
 
@@ -29,10 +28,8 @@ protected:
 
 private:
 
-    // 포켓몬 이름
     std::string PKMName;
 
-    // 포켓몬의 기본 능력치
     int MaxHP = 100;
     int PHp = 0;
     int PAtk = 0;
@@ -41,12 +38,11 @@ private:
     int PSpAtk = 0;
     int PSpDef = 0;
 
-    // 종족값, 개체값, 노력치
     int BaseStat = 0;
     int IValue = 0;
     int EVs = 0;
-    int Lv = 0;  // 레벨
-    int Nature = 0; // 성격 (능력치에 영향을 미칠 수 있음)
+    int Lv = 0; 
+    int Nature = 0;
 
     // 포켓몬 기술
     std::list<std::string> PKMSkills;

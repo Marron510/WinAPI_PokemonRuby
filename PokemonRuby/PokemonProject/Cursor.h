@@ -1,20 +1,11 @@
 #pragma once
+
 #include <EngineCore/Actor.h>
-
-
 
 
 class ACursor : public AActor
 {
 public:
-	enum class ECursorDir
-	{
-		LEFTUP,
-		RIGHTUP,
-		LEFTDOWN,
-		RIGHTDOWN,
-		MAX
-	};
 
 	// 持失切 社瑚切
 	ACursor();
@@ -30,11 +21,15 @@ public:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
+	USpriteRenderer* GetCursorRender()
+	{
+		return CursorRender;
+	}
+
 protected:
 
 private:
-
-	class USpriteRenderer* CursorRender = nullptr;
 	const float CursorPosMax = 1000.0f;
+	class USpriteRenderer* CursorRender = nullptr;
 };
 

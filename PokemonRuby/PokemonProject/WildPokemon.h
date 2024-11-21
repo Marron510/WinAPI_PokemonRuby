@@ -1,6 +1,5 @@
 #pragma once
 #include <EngineCore/Actor.h>
-#include "TargetPokemon.h"
 
 #include <vector>
 #include <map>
@@ -32,7 +31,7 @@ public:
     // 랜덤 포켓몬 인카운터
     void EncounterWildPokemon(int regionLevel);
 
-    ATargetPokemon* GetEncounteredPokemon() const
+    class ATargetPokemon* GetEncounteredPokemon() const
     {
         return EncounteredPokemon;
     }
@@ -51,7 +50,7 @@ private:
     int AdjustLevelByRegion(int baseLevel, int regionLevel);
     
     class USpriteRenderer* WildPokemonRender = nullptr;
-    ATargetPokemon* EncounteredPokemon = nullptr;
+    class  ATargetPokemon* EncounteredPokemon = nullptr;
 
     std::string PokemonName = "None";
 

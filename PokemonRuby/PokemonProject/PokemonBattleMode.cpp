@@ -16,7 +16,7 @@
 #include "PokemonText.h"
 #include "PokemonEnum.h"
 #include "WildPokemon.h"
-
+#include "Cursor.h"
 
 
 
@@ -76,7 +76,12 @@ void APokemonBattleMode::BeginPlay()
 		MyPokemon = GetWorld()->SpawnActor<AMyPokemon>(); // 내 포켓몬 추가
 		MyPokemon->SetActorLocation({ -500.0f, -500.0f });
 	}
-	
+
+	{
+		Cursor = GetWorld()->SpawnActor<ACursor>();
+		CursorRender = Cursor->GetCursorRender();
+	}
+
 	{
 		ChatText = GetWorld()->SpawnActor<APokemonText>();
 		ChatText->SetActorLocation({ 100.0f, 640.0f });
@@ -122,8 +127,7 @@ void APokemonBattleMode::Tick(float _DeltaTime)
 	PlayerSetting();
 
 	SpawnPokemon(_DeltaTime);
-
-
+	
 	
 }
 
@@ -353,4 +357,8 @@ void APokemonBattleMode::SpawnSelectMenu()
 	IsMenuOn = true;
 	std::string enter = "\n";
 	ChatText->SetText("What should"+ enter +"TREEKO do? ", 0.01f);
+
+	CursorRender->SetActive(true);
+	//CursorRender->SetComponentLocation({ 800, 650 });
+
 }

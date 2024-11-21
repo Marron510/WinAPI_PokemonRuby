@@ -65,9 +65,6 @@ public:
 	{
 
 	}
-	float X;
-	float Y;
-
 	
 	
 	int iX() const
