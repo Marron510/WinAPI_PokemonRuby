@@ -37,6 +37,16 @@ APokemonBattleMap::APokemonBattleMap()
 	}
 
 	{
+		BattleSelectMenu = CreateDefaultSubObject<USpriteRenderer>();
+		BattleSelectMenu->SetOrder(ERenderOrder::WATER);
+		BattleSelectMenu->SetSprite("BattleMap3.png");
+
+		FVector2D Scale = BattleSelectMenu->SetSpriteScale(1.0f);
+		BattleSelectMenu->SetComponentLocation({ 600,680 });
+	}
+
+
+	{
 		PlayerPokemonShadow = CreateDefaultSubObject<USpriteRenderer>();
 		PlayerPokemonShadow->SetOrder(ERenderOrder::POKEMONSHADOW);
 		PlayerPokemonShadow->SetSprite("PlayerPokemonShadow.png");

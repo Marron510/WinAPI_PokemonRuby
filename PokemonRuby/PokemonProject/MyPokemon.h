@@ -6,6 +6,15 @@
 class AMyPokemon : public AActor
 {
 public:
+
+	enum class EMyPokemon
+	{
+		TREECKO,
+		TORCHIC,
+		MUDKIP,
+		MAX
+	};
+
 	// 생성자 소멸자
 	AMyPokemon();
 	~AMyPokemon();
@@ -21,42 +30,27 @@ public:
 	void Tick(float _DeltaTime) override;
 
 
-	void LevelUp(int levels = 1);
+	
 
 
 protected:
 
 private:
 
-    std::string PKMName;
+    std::string Name;              // 포켓몬의 이름
+    int Level;                     // 포켓몬의 레벨
+    int HP;                        // HP
+    int Attack;                    // 공격력
+    int Defense;                   // 방어력
+    int SpecialAttack;             // 특수 공격력
+    int SpecialDefense;            // 특수 방어력
+    int Speed;                     // 스피드
 
-    int MaxHP = 100;
-    int PHp = 0;
-    int PAtk = 0;
-    int PDef = 0;
-    int Pspeed = 0;
-    int PSpAtk = 0;
-    int PSpDef = 0;
-
-    int BaseStat = 0;
-    int IValue = 0;
-    int EVs = 0;
-    int Lv = 0; 
-    int Nature = 0;
-
-    // 포켓몬 기술
     std::list<std::string> PKMSkills;
 
-    // 스프라이트 렌더러 (Treecko 등 포켓몬 스프라이트)
     USpriteRenderer* PokemonSprite;
 
-    // 능력치 계산 함수
-    void UpdateStats();
-
-    // 데미지 계산 함수
-    static int CalculateDamage(int level, int attack, int defense, int basePower, bool isPhysical, float effectiveness);
-
-	USpriteRenderer* Treecko;
+	USpriteRenderer* MyPokemon;
 
 };
 

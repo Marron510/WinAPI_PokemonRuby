@@ -162,6 +162,7 @@ void APokemonBattleMode::SetBackGround()
 	PlayerPokemonUI = BackImage->GetPokemonUI();
 	EnemyPokemonUI = BackImage->GetEnemyPokemonUI();
 	SelectMenu = BackImage->GetSelectMenu();
+	BattleSelectMenu = BackImage->GetBattleSelectMenu();
 }
 
 
@@ -354,11 +355,15 @@ void APokemonBattleMode::PokemonStatUpdate(float _DeltaTime)
 void APokemonBattleMode::SpawnSelectMenu()
 {
 	SelectMenu->SetOrder(ERenderOrder::UI);
-	IsMenuOn = true;
 	std::string enter = "\n";
 	ChatText->SetText("What should"+ enter +"TREEKO do? ", 0.01f);
 
 	CursorRender->SetActive(true);
-	//CursorRender->SetComponentLocation({ 800, 650 });
+}
 
+
+
+void APokemonBattleMode::SpawnBattleSelectMenu()
+{
+	BattleSelectMenu->SetOrder(ERenderOrder::UI);
 }

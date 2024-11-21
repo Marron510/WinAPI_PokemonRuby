@@ -8,11 +8,11 @@
 
 AMyPokemon::AMyPokemon()
 {
-	Treecko = CreateDefaultSubObject<USpriteRenderer>();
-	Treecko->SetOrder(ERenderOrder::POKEMON);
-	Treecko->SetSprite("Treecko.png");
-	FVector2D Scale = Treecko->SetSpriteScale(1.0f);
-	Treecko->CreateAnimation("Treecko", "Treecko.png", 0, 0, 0.2f);
+	MyPokemon = CreateDefaultSubObject<USpriteRenderer>();
+	MyPokemon->SetOrder(ERenderOrder::POKEMON);
+	MyPokemon->SetSprite("Treecko.png");
+	FVector2D Scale = MyPokemon->SetSpriteScale(1.0f);
+	MyPokemon->CreateAnimation("Treecko", "Treecko.png", 0, 0, 0.2f);
 }
 
 
@@ -32,25 +32,4 @@ void AMyPokemon::Tick(float _DeltaTime)
 	Super::Tick(_DeltaTime);
 }
 
-void AMyPokemon::LevelUp(int levels)
-{
-    for (int i = 0; i < levels; ++i)
-    {
-        Lv++;
-        PAtk += 5;  
-        PDef += 3; 
-        Pspeed += 2; 
-        PSpAtk += 4; 
-        PSpDef += 3; 
-    }
-
-    UpdateStats();
-}
-
-void AMyPokemon::UpdateStats()
-{
-    PAtk += IValue + EVs / 4;
-    PDef += IValue + EVs / 4;
-   
-}
 

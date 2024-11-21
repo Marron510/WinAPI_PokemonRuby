@@ -35,6 +35,7 @@ public:
 	void EnemyPokemonTextSetting();
 	void PokemonStatUpdate(float _delatime);
 	void SpawnSelectMenu();
+	void SpawnBattleSelectMenu();
 
 
 	void PlayerSetting();
@@ -60,6 +61,7 @@ private:
 	USpriteRenderer* PlayerPokemonUI = nullptr;
 	USpriteRenderer* EnemyPokemonUI = nullptr;
 	USpriteRenderer* SelectMenu = nullptr;
+	USpriteRenderer* BattleSelectMenu = nullptr;
 
 
 	FVector2D PlayerLocation = FVector2D::ZERO;
