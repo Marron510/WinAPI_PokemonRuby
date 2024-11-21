@@ -416,6 +416,7 @@ void APokemonBattleMode::SpawnSelectMenu()
 	if (UEngineInput::GetInst().IsDown('Z'))
 	{
 		IsBattleNow = true;
+		IsBattleCursorSet = true;
 		SpawnBattleSelectMenu();
 	}
 }
@@ -425,7 +426,12 @@ void APokemonBattleMode::SpawnSelectMenu()
 void APokemonBattleMode::SpawnBattleSelectMenu()
 {
 	BattleSelectMenu->SetOrder(ERenderOrder::UI);
-	Cursor->SetState(ACursor::ECursorState::Battle);
+	if (true == IsBattleCursorSet)
+	{
+		Cursor->SetState(ACursor::ECursorState::Battle);
+		IsBattleCursorSet = false;
+	}
+	
 	ChatText->ClearText();
 
 	if (true == IsBattleNow)
@@ -438,7 +444,7 @@ void APokemonBattleMode::SpawnBattleSelectMenu()
 
 	if (Cursor->GetCurrentCursorState() == ACursor::ECursorState::Battle && UEngineInput::GetInst().IsDown('Z'))
 	{
-		FVector2D CurCursorLocation = Cursor->GetActorLocation();
+		FVector2D CurCursorLocation = CursorRender->GetComponentLocation();
 		HandleSkillSelection(CurCursorLocation);
 	}
 }

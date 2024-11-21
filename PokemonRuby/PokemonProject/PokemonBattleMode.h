@@ -83,6 +83,7 @@ private:
 	bool IsChatOn = false;
 	bool IsMenuOn = false;
 	bool IsBattleNow = false;
+	bool IsBattleCursorSet = false;
 
 	class APokemonText* ChatText = nullptr;
 	class APokemonText* MyPokemonStat = nullptr;
