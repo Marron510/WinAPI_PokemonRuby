@@ -36,14 +36,15 @@ public:
 	void PokemonStatUpdate(float _delatime);
 	void SpawnSelectMenu();
 	void SpawnBattleSelectMenu();
-
-
+	void SelectSkill();
+	void HandleSkillSelection(FVector2D CursorLocation);
 	void PlayerSetting();
 	void ThrowMonsterball();
 	void SpawnPokemon(float _DeltaTime);
 	void SpawnMyPokemon();
 	void SpawnMyPokemonText();
 	void ThrowedMosterBall();
+
 
 protected:
 
@@ -53,6 +54,9 @@ private:
 	USpriteRenderer* MonsterBall = nullptr;
 
 	class AMyPokemon* MyPokemon = nullptr;
+	std::string MyPokemonName;
+
+
 	class AWildPokemon* EnemyPokemon = nullptr;
 	class ACursor* Cursor = nullptr;
 	USpriteRenderer* CursorRender = nullptr;
@@ -78,9 +82,17 @@ private:
 	bool IsThrowing = false;   
 	bool IsChatOn = false;
 	bool IsMenuOn = false;
+	bool IsBattleNow = false;
 
 	class APokemonText* ChatText = nullptr;
 	class APokemonText* MyPokemonStat = nullptr;
+	class APokemonText* MyPokemonSkill1 = nullptr;
+	class APokemonText* MyPokemonSkill2 = nullptr;
+	class APokemonText* MyPokemonSkill3 = nullptr;
+	class APokemonText* MyPokemonSkill4 = nullptr;
+
+
+
 	class APokemonText* EnemyPokemonStat = nullptr;
 		
 	bool bHasDisplayedMenuText = false;

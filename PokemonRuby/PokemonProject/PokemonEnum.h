@@ -109,6 +109,7 @@ public:
 		doublequotationend,
 		singlestart,
 		singleend,
+		bar,
 		END
 	};
 	

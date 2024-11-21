@@ -165,12 +165,14 @@ void PokemonCore::BeginPlay()
 	{
 		UImageManager::GetInst().CuttingSprite("Cursor.png", { 288, 288 });
 		UImageManager::GetInst().CuttingSprite("TextWhite.png", { 20, 36 });
-		UImageManager::GetInst().CuttingSprite("TextBlack.png", { 12, 24 });
+		UImageManager::GetInst().CuttingSprite("TextBlack.png", { 14, 24 });
 		UImageManager::GetInst().CuttingSprite("ThrowBall.png", { 165, 272 });
 	}
 
 	{
 		UImageManager::GetInst().CuttingSprite("Treecko.png", { 288, 288 });
+		UImageManager::GetInst().CuttingSprite("Torchic.png", { 288, 288 });
+		UImageManager::GetInst().CuttingSprite("Mudkip.png", { 288, 288 });
 		UImageManager::GetInst().CuttingSprite("Zigzagoon.png", { 288, 288 });
 		UImageManager::GetInst().CuttingSprite("Poochyena.png", { 288, 288 });
 		UImageManager::GetInst().CuttingSprite("Wurmple.png", { 288, 288 });

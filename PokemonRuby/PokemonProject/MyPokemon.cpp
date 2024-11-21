@@ -4,32 +4,150 @@
 
 #include <EngineCore/SpriteRenderer.h>
 
+#include   "WildPokemon.h"
 #include "PokemonEnum.h"
+#include "PokemonSkill.h"
 
 AMyPokemon::AMyPokemon()
 {
-	MyPokemon = CreateDefaultSubObject<USpriteRenderer>();
-	MyPokemon->SetOrder(ERenderOrder::POKEMON);
-	MyPokemon->SetSprite("Treecko.png");
-	FVector2D Scale = MyPokemon->SetSpriteScale(1.0f);
-	MyPokemon->CreateAnimation("Treecko", "Treecko.png", 0, 0, 0.2f);
+    MyPokemon = CreateDefaultSubObject<USpriteRenderer>();
+    SetPokemon(EMyPokemon::TORCHIC);
+    MyPokemon->SetOrder(ERenderOrder::POKEMON);
+    MyPokemon->SetSpriteScale(1.0f);
 }
-
 
 AMyPokemon::~AMyPokemon()
 {
-
 }
-
 
 void AMyPokemon::BeginPlay()
 {
-	Super::BeginPlay();
+    Super::BeginPlay();
+    
 }
 
 void AMyPokemon::Tick(float _DeltaTime)
 {
-	Super::Tick(_DeltaTime);
+    Super::Tick(_DeltaTime);
+    
+}
+
+void AMyPokemon::SetPokemon(EMyPokemon PokemonType)
+{
+    switch (PokemonType)
+    {
+    case EMyPokemon::TREECKO:
+        MyPokemon->SetSprite("Treecko.png");
+        Name = "TREECKO";
+        skill1 = "POUND";
+        skill2 = "LEER";
+        skill3 = "-";
+        skill4 = "-";
+        break;
+    case EMyPokemon::TORCHIC:
+        MyPokemon->SetSprite("Torchic.png");
+        Name = "TORCHIC";
+        skill1 = "SCRATCH";
+        skill2 = "LEER";
+        skill3 = "-";
+        skill4 = "-";
+        break;
+    case EMyPokemon::MUDKIP:
+        MyPokemon->SetSprite("Mudkip.png");
+        Name = "MUDKIP";
+        skill1 = "TACKLE";
+        skill2 = "LEER";
+        skill3 = "-";
+        skill4 = "-";
+        break;
+    default:
+        break;
+    }
+
+    InitializePokemonAttributes(PokemonType);
+}
+
+void AMyPokemon::InitializePokemonAttributes(EMyPokemon PokemonType)
+{
+    switch (PokemonType)
+    {
+    case EMyPokemon::TREECKO:
+        Level = 5;
+        HP = 40;
+        Attack = 45;
+        Defense = 35;
+        SpecialAttack = 65;
+        SpecialDefense = 50;
+        Speed = 70;
+        break;
+    case EMyPokemon::TORCHIC:
+        Level = 5;
+        HP = 40;
+        Attack = 50;
+        Defense = 40;
+        SpecialAttack = 70;
+        SpecialDefense = 50;
+        Speed = 45;
+        break;
+    case EMyPokemon::MUDKIP:
+        Level = 5;
+        HP = 50;
+        Attack = 65;
+        Defense = 50;
+        SpecialAttack = 44;
+        SpecialDefense = 50;
+        Speed = 40;
+        break;
+    default:
+        break;
+    }
 }
 
 
+void AMyPokemon::UseSkill(const std::string& skillName, class AWildPokemon* target)
+{
+    if (skillName == "POUND")
+    {
+        int damage = SkillHandler->Pound(Level, Attack, target->GetDefense());
+        int TargetHp = target->GetHP();
+        TargetHp -= damage;
+        target->SetHP(TargetHp);
+    }
+    else if (skillName == "SCRATCH")
+    {
+        int damage = SkillHandler->Scratch(Level, Attack, target->GetDefense());
+        int TargetHp = target->GetHP();
+        TargetHp -= damage;
+        target->SetHP(TargetHp);
+    }
+    else if (skillName == "TACKLE")
+    {
+        int damage = SkillHandler->Tackle(Level, Attack, target->GetDefense());
+        int TargetHp = target->GetHP();
+        TargetHp -= damage;
+        target->SetHP(TargetHp);
+    }
+    else if (skillName == "LEER")
+    {
+        int TargetDefense = target->GetDefense();
+        SkillHandler->Leer(TargetDefense);
+    }
+    else if (skillName == "GROWL")
+    {
+        int TargetAttack = target->GetAttack();
+        SkillHandler->Growl(TargetAttack);
+    }
+    else if (skillName == "Howl")
+    {
+        SkillHandler->Howl(Attack);
+    }
+    else if (skillName == "StringShot")
+    {
+        int TargetSpeed = target->GetSpeed();
+        SkillHandler->StringShot(TargetSpeed);
+    }
+    else
+    {
+        return;
+    }
+}

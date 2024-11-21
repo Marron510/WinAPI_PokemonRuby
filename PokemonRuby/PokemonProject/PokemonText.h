@@ -85,7 +85,8 @@ public:
 		"\"",
 		"\"",
 		"\'",
-		"\'"
+		"\'",
+		"-"
 	};
 
 	// 생성자 소멸자
@@ -130,10 +131,21 @@ public:
 
 
 
-	static int GetTextSize()
+	static int GetTextSize() 
 	{
 		return TextSize;
 	}
+
+	std::string GetAllText() const
+	{
+		std::string allText;
+		for (const auto& text : PrintTexts)
+		{
+			allText += text + " "; // 각 텍스트 사이에 공백을 추가
+		}
+		return allText;
+	}
+	
 
 protected:
 

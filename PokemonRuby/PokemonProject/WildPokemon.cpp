@@ -1,16 +1,12 @@
 #include "PreCompile.h"
 #include "WildPokemon.h"
 
-
 #include <EngineCore/EngineAPICore.h>
 #include <EngineCore/SpriteRenderer.h>
 #include <EngineBase/EngineRandom.h>
 
-
 #include "PokemonEnum.h"
-#include "TargetPokemon.h"
 #include "PokemonStat.h"
-
 
 AWildPokemon::AWildPokemon()
 {
@@ -21,79 +17,109 @@ AWildPokemon::AWildPokemon()
     switch (selectedPokemonEnum)
     {
     case EWildPokemonEnum::Zigzagoon:
-        PokemonName = "ZIGZAGOON";
+        Name = "ZIGZAGOON";
         break;
     case EWildPokemonEnum::Poochyena:
-        PokemonName = "POOCHYENA";
+        Name = "POOCHYENA";
         break;
     case EWildPokemonEnum::Wurmple:
-        PokemonName = "WURMPLE";
+        Name = "WURMPLE";
         break;
     default:
-        PokemonName = "Unknown";
+        Name = "Unknown";
         break;
     }
 
     WildPokemonRender = CreateDefaultSubObject<USpriteRenderer>();
-    WildPokemonRender->SetSprite(PokemonName + ".png");
-    WildPokemonRender->CreateAnimation(PokemonName, PokemonName + ".png", 0, 0, 0.2f);
-    WildPokemonRender->ChangeAnimation(PokemonName);
+    WildPokemonRender->SetSprite(Name + ".png");
+    WildPokemonRender->CreateAnimation(Name, Name + ".png", 0, 0, 0.2f);
+    WildPokemonRender->ChangeAnimation(Name);
     WildPokemonRender->SetOrder(ERenderOrder::POKEMON);
     WildPokemonRender->SetSpriteScale(1.0f);
 
+    bHasEncountered = false;
 }
-	
 
 AWildPokemon::~AWildPokemon()
 {
-
 }
-
-
-
 
 void AWildPokemon::BeginPlay()
 {
-	Super::BeginPlay();
+    Super::BeginPlay();
 }
 
 void AWildPokemon::Tick(float _DeltaTime)
 {
-	Super::Tick(_DeltaTime);
+    Super::Tick(_DeltaTime);
 }
 
 int AWildPokemon::AdjustLevelByRegion(int baseLevel, int regionLevel)
 {
     UEngineRandom Random;
     int RegionRandom = Random.RandomInt(1, 3);
-    int adjustedLevel = baseLevel + RegionRandom + regionLevel;
-    return adjustedLevel;  // 레벨을 조정하여 반환
+    return baseLevel + RegionRandom + regionLevel;
 }
 
+void AWildPokemon::SetPokemonStats(const std::string& PokemonName, int adjustedLevel)
+{
+    this->Name = PokemonName;
+    this->Level = adjustedLevel;
+
+    // 스탯 설정
+    PokemonStats<ZigzagoonStats> stats(adjustedLevel); 
+    this->HP = stats.GetHP();
+    this->Attack = stats.GetAttack();
+    this->Defense = stats.GetDefense();
+    this->SpecialAttack = stats.GetSpecialAttack();
+    this->SpecialDefense = stats.GetSpecialDefense();
+    this->Speed = stats.GetSpeed();
+
+    if (PokemonName == "ZIGZAGOON")
+    {
+        Skills = { "Tackle", "Growl" };
+    }
+    else if (PokemonName == "POOCHYENA")
+    {
+        Skills = { "Tackle", "Howl" };
+    }
+    else if (PokemonName == "WURMPLE")
+    {
+        Skills = { "Tackle", "StringShot" };
+    }
+}
 
 void AWildPokemon::EncounterWildPokemon(int regionLevel)
 {
+    if (bHasEncountered)
+    {
+        return;
+    }
+
     UEngineRandom Random;
 
     int randomPokemonEnum = Random.RandomInt(static_cast<int>(EWildPokemonEnum::Zigzagoon), static_cast<int>(EWildPokemonEnum::Wurmple));
     EWildPokemonEnum selectedPokemonEnum = static_cast<EWildPokemonEnum>(randomPokemonEnum);
 
     int baseLevel = 1;
-
     int adjustedLevel = AdjustLevelByRegion(baseLevel, regionLevel);
 
-    PokemonStats<ZigzagoonStats> stats(adjustedLevel);
+    switch (selectedPokemonEnum)
+    {
+    case EWildPokemonEnum::Zigzagoon:
+        SetPokemonStats("ZIGZAGOON", adjustedLevel);  // Zigzagoon일 경우
+        break;
+    case EWildPokemonEnum::Poochyena:
+        SetPokemonStats("POOCHYENA", adjustedLevel);  // Poochyena일 경우
+        break;
+    case EWildPokemonEnum::Wurmple:
+        SetPokemonStats("WURMPLE", adjustedLevel);  // Wurmple일 경우
+        break;
+    default:
+        SetPokemonStats("UNKNOWN", adjustedLevel);  // 기본값
+        break;
+    }
 
-    ATargetPokemon encounteredPokemon;
-    encounteredPokemon.SetName(selectedPokemonEnum == EWildPokemonEnum::Zigzagoon ? "Zigzagoon" : "Wurmple");
-    encounteredPokemon.SetLevel(adjustedLevel);
-    encounteredPokemon.SetHP(stats.GetHP());
-    encounteredPokemon.SetAttack(stats.GetAttack());
-    encounteredPokemon.SetDefense(stats.GetDefense());
-    encounteredPokemon.SetSpecialAttack(stats.GetSpecialAttack());
-    encounteredPokemon.SetSpecialDefense(stats.GetSpecialDefense());
-    encounteredPokemon.SetSpeed(stats.GetSpeed());
-
-    EncounteredPokemon = &encounteredPokemon;
-    
+    bHasEncountered = true;
 }
+

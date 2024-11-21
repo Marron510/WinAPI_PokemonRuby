@@ -14,7 +14,7 @@ USpriteRenderer* APokemonBattleMap::EnemyPokemonShadow = nullptr;
 USpriteRenderer* APokemonBattleMap::PlayerPokemonUI = nullptr;
 USpriteRenderer* APokemonBattleMap::EnemyPokemonUI = nullptr;
 USpriteRenderer* APokemonBattleMap::SelectMenu = nullptr;
-
+USpriteRenderer* APokemonBattleMap::BattleSelectMenu = nullptr;
 
 APokemonBattleMap::APokemonBattleMap()
 {

@@ -5,27 +5,44 @@ class PokemonSkill
 public:
 	enum class ETREEKOSKILL
 	{
-		Pound,        // 1레벨
-		Leer,         // 6레벨
-		Absorb,       // 11레벨
-		QuickAttack,  // 16레벨
-		Agility,      // 21레벨
-		LeafBlade,    // 26레벨
-		Slam,         // 31레벨
-		EnergyBall    // 36레벨
+		Pound,        // 1레벨: 물리 공격, 일반 타입
+		Leer,         // 1레벨: 상대의 방어력 1단계 감소      
 	};
+
+	enum class ETORCHICSKILL
+	{
+		Scratch,      // 1레벨: 물리 공격, 일반 타입
+		Leer,         // 1레벨: 상대의 방어력 1단계 감소
+	};
+
+	enum class EMUDKIPSKILL
+	{
+		Tackle,       // 1레벨: 물리 공격, 노말 타입
+		Leer,         // 1레벨: 상대의 방어력 1단계 감소
+	};
+
+	//-------------------------
 
 	enum class EZIGZAGOONSKILL
 	{
-		Tackle,       // 1레벨
-		Growl,        // 1레벨
-		QuickAttack,  // 6레벨
-		TailWhip,     // 9레벨
-		Headbutt,     // 15레벨
-		Rest,         // 23레벨
-		Snore,        // 23레벨
-		HyperBeam     // 55레벨
+		Tackle,       // 1레벨: 물리 공격, 노말 타입
+		Growl,        // 1레벨: 상대의 공격력 1단계 감소
 	};
+
+	enum class EPOOCHYENASKILL
+	{
+		Tackle,       // 1레벨: 물리 공격, 노말 타입
+		Howl,         // 1레벨: 자신의 공격력 1단계 증가
+	};
+
+	enum class EWURMPLESKILL
+	{
+		Tackle,       // 1레벨: 물리 공격, 노말 타입
+		StringShot,   // 1레벨: 상대의 스피드 1단계 감소
+	};
+
+	//-------------------------
+	
 
 	// 생성자 소멸자
 	PokemonSkill();
@@ -39,9 +56,16 @@ public:
 	PokemonSkill& operator=(PokemonSkill&& _Other) noexcept = delete;
 
 
-	static int CalculateDamage(int level, int attack, int defense, int power, bool isPhysical, float effectiveness);
-	static void GetSkillInfo(ETREEKOSKILL skill, int& level, int& attack, int& defense, int& power, bool& isPhysical, float& effectiveness);
+	// 물리 공격 스킬들
+	int Pound(int level, int attack, int defense, bool isPhysical = true);
+	int Scratch(int level, int attack, int defense, bool isPhysical = true);
+	int Tackle(int level, int attack, int defense, bool isPhysical = true);
 
+	// 상태 변화 스킬들
+	void Leer(int& targetDefense);  // 방어력 감소
+	void Growl(int& targetAttack);  // 공격력 감소
+	void Howl(int& selfAttack);    // 자신의 공격력 증가
+	void StringShot(int& targetSpeed); // 상대 스피드 감소
 
 protected:
 

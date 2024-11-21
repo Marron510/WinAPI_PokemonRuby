@@ -1,7 +1,7 @@
 #pragma once
 #include <EngineCore/Actor.h>
 #include <string>
-#include <list>
+#include <vector>
 
 class AMyPokemon : public AActor
 {
@@ -14,6 +14,8 @@ public:
 		MUDKIP,
 		MAX
 	};
+
+
 
 	// 생성자 소멸자
 	AMyPokemon();
@@ -29,28 +31,56 @@ public:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
-
+	void SetPokemon(EMyPokemon PokemonType);
+	void InitializePokemonAttributes(EMyPokemon PokemonType);
 	
 
+	std::string GetMyPokemonName()
+	{
+		return Name;
+	}
+
+	void UseSkill(const std::string& skillName, class AWildPokemon* target);
+
+	std::string GetSkill1()
+	{
+		return skill1;
+	}
+	std::string GetSkill2()
+	{
+		return skill2;
+	}
+	std::string GetSkill3()
+	{
+		return skill3;
+	}
+	std::string GetSkill4()
+	{
+		return skill4;
+	}
 
 protected:
 
 private:
 
-    std::string Name;              // 포켓몬의 이름
-    int Level;                     // 포켓몬의 레벨
-    int HP;                        // HP
-    int Attack;                    // 공격력
-    int Defense;                   // 방어력
-    int SpecialAttack;             // 특수 공격력
-    int SpecialDefense;            // 특수 방어력
-    int Speed;                     // 스피드
+    std::string Name;              
 
-    std::list<std::string> PKMSkills;
+    int Level;                     
+    int HP;                        
+    int Attack;                    
+    int Defense;                   
+    int SpecialAttack;             
+    int SpecialDefense;            
+    int Speed;                     
 
-    USpriteRenderer* PokemonSprite;
+	
+	std::string skill1, skill2, skill3, skill4;
 
-	USpriteRenderer* MyPokemon;
+    class USpriteRenderer* PokemonSprite;
+
+	class USpriteRenderer* MyPokemon;
+
+	class PokemonSkill* SkillHandler;
 
 };
 

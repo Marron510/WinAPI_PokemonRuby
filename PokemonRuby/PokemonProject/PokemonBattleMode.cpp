@@ -20,7 +20,6 @@
 
 
 
-
 APokemonBattleMode::APokemonBattleMode()
 {
 	{
@@ -51,6 +50,9 @@ APokemonBattleMode::APokemonBattleMode()
 
 		MonsterBall->ChangeAnimation("ThrowBallReady");
 	}
+
+	
+
 }
 
 APokemonBattleMode::~APokemonBattleMode()
@@ -65,7 +67,6 @@ void APokemonBattleMode::BeginPlay()
 	
 
 	SetBackGround();
-
 	{
 		EnemyPokemon = GetWorld()->SpawnActor<AWildPokemon>(); // 적 포켓몬 추가
 		EnemyPokemon->SetActorLocation({ -312.0f , 260.0f });
@@ -75,10 +76,12 @@ void APokemonBattleMode::BeginPlay()
 	{ 
 		MyPokemon = GetWorld()->SpawnActor<AMyPokemon>(); // 내 포켓몬 추가
 		MyPokemon->SetActorLocation({ -500.0f, -500.0f });
+		MyPokemonName = MyPokemon->GetMyPokemonName();
 	}
 
 	{
 		Cursor = GetWorld()->SpawnActor<ACursor>();
+		Cursor->SetBattleModeInstance(this);
 		CursorRender = Cursor->GetCursorRender();
 	}
 
@@ -94,7 +97,7 @@ void APokemonBattleMode::BeginPlay()
 	{
 		EnemyPokemonStat = GetWorld()->SpawnActor<APokemonText>();
 		EnemyPokemonStat->SetTextSpriteName("TextBlack.png");
-		EnemyPokemonStat->SetTextScale({ 25, 30 });
+		EnemyPokemonStat->SetTextScale({ 26, 36 });
 		EnemyPokemonStat->SetText(EnemyPokemon->GetPokemonName());
 		EnemyPokemonStat->SetActorLocation({ -600.0f , 135.0f });
 		EnemyPokemonStat->SetOrder(ERenderOrder::FONT);
@@ -104,10 +107,51 @@ void APokemonBattleMode::BeginPlay()
 	{
 		MyPokemonStat = GetWorld()->SpawnActor<APokemonText>();
 		MyPokemonStat->SetTextSpriteName("TextBlack.png");
-		MyPokemonStat->SetTextScale({ 25, 30 });
-		MyPokemonStat->SetText("TREEKO");
+		MyPokemonStat->SetTextScale({ 26, 36 });
+		MyPokemonStat->SetText(MyPokemonName);
 		MyPokemonStat->SetActorLocation({ 1440.0f , 415.0f });
 		MyPokemonStat->SetOrder(ERenderOrder::FONT);
+	}
+
+
+	{
+		MyPokemonSkill1 = GetWorld()->SpawnActor<APokemonText>();
+		MyPokemonSkill1->SetTextSpriteName("TextBlack.png");
+		MyPokemonSkill1->SetTextScale({ 30, 36 });
+		MyPokemonSkill1->SetText(MyPokemon->GetSkill1());
+		MyPokemonSkill1->SetActorLocation({ 120.0f , 640.0f });
+		MyPokemonSkill1->SetOrder(ERenderOrder::FONT);
+		
+	}
+
+	{
+		MyPokemonSkill2 = GetWorld()->SpawnActor<APokemonText>();
+		MyPokemonSkill2->SetTextSpriteName("TextBlack.png");
+		MyPokemonSkill2->SetTextScale({ 30, 36 });
+		MyPokemonSkill2->SetText(MyPokemon->GetSkill2());
+		MyPokemonSkill2->SetActorLocation({ 520.0f , 640.0f });
+		MyPokemonSkill2->SetOrder(ERenderOrder::FONT);
+		MyPokemonSkill2->SetActive(false);
+	}
+
+	{
+		MyPokemonSkill3 = GetWorld()->SpawnActor<APokemonText>();
+		MyPokemonSkill3->SetTextSpriteName("TextBlack.png");
+		MyPokemonSkill3->SetTextScale({ 30, 36 });
+		MyPokemonSkill3->SetText(MyPokemon->GetSkill3());
+		MyPokemonSkill3->SetActorLocation({ 120.0f , 720.0f });
+		MyPokemonSkill3->SetOrder(ERenderOrder::FONT);
+		MyPokemonSkill3->SetActive(false);
+	}
+
+	{
+		MyPokemonSkill4 = GetWorld()->SpawnActor<APokemonText>();
+		MyPokemonSkill4->SetTextSpriteName("TextBlack.png");
+		MyPokemonSkill4->SetTextScale({ 30, 36 });
+		MyPokemonSkill4->SetText(MyPokemon->GetSkill4());
+		MyPokemonSkill4->SetActorLocation({ 520.0f , 720.0f });
+		MyPokemonSkill4->SetOrder(ERenderOrder::FONT);
+		MyPokemonSkill4->SetActive(false);
 	}
 
 }
@@ -340,7 +384,7 @@ void APokemonBattleMode::SpawnMyPokemonText()
 {
 	if (IsChatOn == true)
 	{
-		ChatText->SetText("Go Treeko!", 0.01f);
+		ChatText->SetText("Go " + MyPokemonName + "!", 0.01f);
 	}
 }
 
@@ -348,6 +392,15 @@ void APokemonBattleMode::PokemonStatUpdate(float _DeltaTime)
 {
 	EnemyPokemonStat->PrintTextUpdate(_DeltaTime);
 	MyPokemonStat->PrintTextUpdate(_DeltaTime);
+
+	if (true == IsBattleNow)
+	{
+		MyPokemonSkill1->PrintTextUpdate(_DeltaTime);
+		MyPokemonSkill2->PrintTextUpdate(_DeltaTime);
+		MyPokemonSkill3->PrintTextUpdate(_DeltaTime);
+		MyPokemonSkill4->PrintTextUpdate(_DeltaTime);
+	}
+
 }
 
 
@@ -356,9 +409,15 @@ void APokemonBattleMode::SpawnSelectMenu()
 {
 	SelectMenu->SetOrder(ERenderOrder::UI);
 	std::string enter = "\n";
-	ChatText->SetText("What should"+ enter +"TREEKO do? ", 0.01f);
+	ChatText->SetText("What should"+ enter + MyPokemonName + " do? ", 0.01f);
 
 	CursorRender->SetActive(true);
+	
+	if (UEngineInput::GetInst().IsDown('Z'))
+	{
+		IsBattleNow = true;
+		SpawnBattleSelectMenu();
+	}
 }
 
 
@@ -366,4 +425,57 @@ void APokemonBattleMode::SpawnSelectMenu()
 void APokemonBattleMode::SpawnBattleSelectMenu()
 {
 	BattleSelectMenu->SetOrder(ERenderOrder::UI);
+	Cursor->SetState(ACursor::ECursorState::Battle);
+	ChatText->ClearText();
+
+	if (true == IsBattleNow)
+	{
+		MyPokemonSkill1->SetActive(true);
+		MyPokemonSkill2->SetActive(true);
+		MyPokemonSkill3->SetActive(true);
+		MyPokemonSkill4->SetActive(true);
+	}
+
+	if (Cursor->GetCurrentCursorState() == ACursor::ECursorState::Battle && UEngineInput::GetInst().IsDown('Z'))
+	{
+		FVector2D CurCursorLocation = Cursor->GetActorLocation();
+		HandleSkillSelection(CurCursorLocation);
+	}
+}
+
+
+
+void APokemonBattleMode::HandleSkillSelection(FVector2D CursorLocation)
+{
+	int SkillIndex = -1;
+
+	for (int i = 0; i < 4; i++)
+	{
+		if (Cursor->GetBattleCursorPosition(i) == CursorLocation)
+		{
+			SkillIndex = i;
+			break;
+		}
+	}
+
+	if (SkillIndex != -1)
+	{
+		switch (SkillIndex)
+		{
+		case 0:
+			MyPokemon->UseSkill(MyPokemon->GetSkill1(), EnemyPokemon);
+			break;
+		case 1:
+			MyPokemon->UseSkill(MyPokemon->GetSkill2(), EnemyPokemon);
+			break;
+		case 2:
+			MyPokemon->UseSkill(MyPokemon->GetSkill3(), EnemyPokemon);
+			break;
+		case 3:
+			MyPokemon->UseSkill(MyPokemon->GetSkill4(), EnemyPokemon);
+			break;
+		default:
+			break;
+		}
+	}
 }

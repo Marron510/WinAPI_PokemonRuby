@@ -7,9 +7,9 @@
 #include <EnginePlatform/EngineInput.h>
 
 
-#include"PokemonEnum.h"
-
-
+#include "PokemonEnum.h"
+#include "MyPokemon.h"
+#include "PokemonBattleMode.h"
 
 ACursor::ACursor()
 {
@@ -21,6 +21,7 @@ ACursor::ACursor()
     CursorRender->ChangeAnimation("Cursor");
     CursorRender->SetComponentLocation({ 740, 640 });
     CursorRender->SetActive(false);
+    CurrentState = ECursorState::Menu;
 }
 
 
@@ -39,6 +40,7 @@ void ACursor::Tick(float _DeltaTime)
 {
     Super::Tick(_DeltaTime);
 
+    FVector2D* CurrentPositions = GetCursorPositionsForState(CurrentState);
     FVector2D CurrentLocation = CursorRender->GetComponentLocation();
     FVector2D NewLocation = CurrentLocation;
 
@@ -46,29 +48,28 @@ void ACursor::Tick(float _DeltaTime)
 
     if (UEngineInput::GetInst().IsDown('W'))
     {
-        Offset.Y = -1; 
+        Offset.Y = -1;
     }
     if (UEngineInput::GetInst().IsDown('S'))
     {
-        Offset.Y = 1;  
+        Offset.Y = 1;
     }
     if (UEngineInput::GetInst().IsDown('A'))
     {
-        Offset.X = -1; 
+        Offset.X = -1;
     }
     if (UEngineInput::GetInst().IsDown('D'))
     {
-        Offset.X = 1;  
+        Offset.X = 1;
     }
 
     if (0 != Offset.X || 0 != Offset.Y)
     {
-        FVector2D CurrentPos;
         int CurrentIndex = -1;
 
         for (int i = 0; i < 4; i++)
         {
-            if (MenuCursorPositions[i] == CurrentLocation)
+            if (CurrentPositions[i] == CurrentLocation)
             {
                 CurrentIndex = i;
                 break;
@@ -105,13 +106,27 @@ void ACursor::Tick(float _DeltaTime)
 
             if (TargetIndex >= 0 && TargetIndex < 4)
             {
-                NewLocation = MenuCursorPositions[TargetIndex];
+                NewLocation = CurrentPositions[TargetIndex];
             }
 
             CursorRender->SetComponentLocation(NewLocation);
         }
     }
+    // 커서 클릭 이벤트 처리
+    if (CurrentState == ECursorState::Battle)
+    {
+        if (UEngineInput::GetInst().IsDown('Z'))  // Z 키로 스킬 선택
+        {
+            // 클릭된 커서 위치를 BattleMode에 전달
+            if (BattleModeInstance != nullptr)  // BattleModeInstance가 유효할 때
+            {
+                BattleModeInstance->HandleSkillSelection(CursorRender->GetComponentLocation());
+            }
+        }
+    }
 }
+
+
 
 FVector2D* ACursor::GetCursorPositionsForState(ECursorState State)
 {
@@ -128,6 +143,19 @@ FVector2D* ACursor::GetCursorPositionsForState(ECursorState State)
     default:
         return MenuCursorPositions;
     }
+}
+
+
+void ACursor::SetState(ECursorState NewState)
+{
+    CurrentState = NewState;
+    FVector2D* StartPositions = GetCursorPositionsForState(CurrentState);
+    CursorRender->SetComponentLocation(StartPositions[0]);
+}
+
+void ACursor::SetBattleModeInstance(class APokemonBattleMode* BattleMode)
+{
+    BattleModeInstance = BattleMode;  // BattleMode 인스턴스를 설정
 }
 
 
