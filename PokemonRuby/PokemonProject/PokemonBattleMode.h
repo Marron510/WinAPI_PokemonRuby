@@ -44,6 +44,27 @@ public:
 	void SpawnMyPokemonText();
 	void ThrowedMosterBall();
 	void StartEnemyTurn();
+	void SkillTextOff();
+	void SkillTextOn();
+	void HandleMenuSelection(FVector2D CursorLocation);
+	
+	class AMyPokemon* GetMyPokemon()
+	{
+		return MyPokemon;
+	}
+
+	class AWildPokemon* GetEnemyPokemon()
+	{
+		return EnemyPokemon;
+	}
+
+	class APokemonText* GetMyPokemonStat() { return MyPokemonStat; }
+	class APokemonText* GetMyPokemonSkill1() { return MyPokemonSkill1; }
+	class APokemonText* GetMyPokemonSkill2() { return MyPokemonSkill2; }
+	class APokemonText* GetMyPokemonSkill3() { return MyPokemonSkill3; }
+	class APokemonText* GetMyPokemonSkill4() { return MyPokemonSkill4; }
+	class APokemonText* GetEnemyPokemonStat() { return EnemyPokemonStat; }
+
 
 protected:
 
@@ -71,11 +92,20 @@ private:
 	
 	FVector2D MosterBallLocation = FVector2D::ZERO;
 
-
+	class APokemonBattleMap* BackImage;
 
 	float ThrowingTime = 0.0f;
 	float BallThrowTime = 2.5f;
 
+
+
+	bool IsPlayerPokemonShadowMoved = false;
+	bool IsEnemyPokemonShadowMoved = false;
+	bool IsPlayerPokemonUIMoved = false;
+	bool IsEnemyPokemonUIMoved = false;
+	bool IsPlayerPokemonTextMoved = false;
+	bool IsEnemyPokemonTextMoved = false;
+	bool IsGoMessageDisplayed = false;
 
 	bool IsBackGroundSetting = false;
 	bool IsThrowing = false;   
@@ -87,6 +117,7 @@ private:
 	
 
 	class APokemonText* ChatText = nullptr;
+	class APokemonText* BattleChatText = nullptr;
 	class APokemonText* MyPokemonStat = nullptr;
 	class APokemonText* MyPokemonSkill1 = nullptr;
 	class APokemonText* MyPokemonSkill2 = nullptr;

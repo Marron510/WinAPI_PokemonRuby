@@ -177,9 +177,6 @@
     <ClInclude Include="PokemonText.h">
       <Filter>Global</Filter>
     </ClInclude>
-    <ClInclude Include="PokemonBattleSelect.h">
-      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\02.Battle</Filter>
-    </ClInclude>
     <ClInclude Include="PokemonStat.h">
       <Filter>PokemonObject\3.Pokemon</Filter>
     </ClInclude>
@@ -298,9 +295,6 @@
     </ClCompile>
     <ClCompile Include="PokemonText.cpp">
       <Filter>Global</Filter>
-    </ClCompile>
-    <ClCompile Include="PokemonBattleSelect.cpp">
-      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\02.Battle</Filter>
     </ClCompile>
     <ClCompile Include="PokemonStat.cpp">
       <Filter>PokemonObject\3.Pokemon</Filter>

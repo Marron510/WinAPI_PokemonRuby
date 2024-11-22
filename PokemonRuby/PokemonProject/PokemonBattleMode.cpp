@@ -95,6 +95,14 @@ void APokemonBattleMode::BeginPlay()
 	}
 
 	{
+		BattleChatText = GetWorld()->SpawnActor<APokemonText>();
+		BattleChatText->SetActorLocation({ 100.0f, 640.0f });
+		BattleChatText->SetTextSpriteName("TextWhite.png");
+		BattleChatText->SetTextScale({ 30, 40 });
+		BattleChatText->SetOrder(ERenderOrder::FONT);
+	}
+
+	{
 		EnemyPokemonStat = GetWorld()->SpawnActor<APokemonText>();
 		EnemyPokemonStat->SetTextSpriteName("TextBlack.png");
 		EnemyPokemonStat->SetTextScale({ 26, 36 });
@@ -198,7 +206,7 @@ void APokemonBattleMode::PokemonSetting()
 
 void APokemonBattleMode::APokemonPreparation()
 {
-	APokemonBattleMap* BackImage = GetWorld()->SpawnActor<APokemonBattleMap>();
+	BackImage = GetWorld()->SpawnActor<APokemonBattleMap>();
 	Map = BackImage->GetCurMap();
 
 	PlayerPokemonShadow = BackImage->GetPlayerPKMShadow();
@@ -210,18 +218,18 @@ void APokemonBattleMode::APokemonPreparation()
 	BattleText = BackImage->GetBattleText();
 }
 
-
 void APokemonBattleMode::BattleGroundSetting()
 {
-	
-	
+	if (false == IsPlayerPokemonShadowMoved)
 	{
-		FVector2D TargetLocation = FVector2D({ 336.0f , 520.0f }); // PlayerPokemonShadow의 최종 목적지
+		FVector2D TargetLocation = FVector2D({ 336.0f , 520.0f });
 		FVector2D Curloc = PlayerPokemonShadow->GetComponentLocation();
 		Curloc += FVector2D::LEFT.Half();
+
 		if (TargetLocation == Curloc)
 		{
-			PlayerPokemonShadow->GetComponentLocation() = TargetLocation;
+			PlayerPokemonShadow->SetComponentLocation(TargetLocation);
+			IsPlayerPokemonShadowMoved = true;  // 이동 완료 표시
 			IsBackGroundSetting = true;
 			return;
 		}
@@ -229,88 +237,106 @@ void APokemonBattleMode::BattleGroundSetting()
 		PlayerPokemonShadow->SetComponentLocation(Curloc);
 	}
 
+	if (false == IsEnemyPokemonShadowMoved)
 	{
-		FVector2D EnemyShadowTargetLocation = FVector2D({ 840.0f , 308.0f }); // EnemyPokemonShadow의 최종 목적지
+		FVector2D EnemyShadowTargetLocation = FVector2D({ 840.0f , 308.0f });
 		FVector2D EnemyCurloc = EnemyPokemonShadow->GetComponentLocation();
 
 		if (EnemyShadowTargetLocation == EnemyCurloc)
 		{
-			EnemyPokemonShadow->GetComponentLocation() = EnemyShadowTargetLocation;
+			EnemyPokemonShadow->SetComponentLocation(EnemyShadowTargetLocation);
+			IsEnemyPokemonShadowMoved = true;  // 이동 완료 표시
 			return;
 		}
 
 		EnemyCurloc += FVector2D::RIGHT.Half();
 		EnemyPokemonShadow->SetComponentLocation(EnemyCurloc);
 	}
-
-	
 }
 
 void APokemonBattleMode::EnemyPokemonUISetting()
 {
-	FVector2D TargetLocation = FVector2D({ 336.0f , 166.0f }); // EnemyPokemonUI의 최종 목적지
-	FVector2D Curloc = EnemyPokemonUI->GetComponentLocation();
-
-	Curloc += FVector2D::RIGHT;
-	if (TargetLocation == Curloc)
+	if (false == IsEnemyPokemonUIMoved)
 	{
-		EnemyPokemonUI->GetComponentLocation() = TargetLocation;
-		return;
-	}
+		FVector2D TargetLocation = FVector2D({ 336.0f , 166.0f });
+		FVector2D Curloc = EnemyPokemonUI->GetComponentLocation();
 
-	EnemyPokemonUI->SetComponentLocation(Curloc);
+		Curloc += FVector2D::RIGHT;
+
+		if (TargetLocation == Curloc)
+		{
+			EnemyPokemonUI->SetComponentLocation(TargetLocation);
+			IsEnemyPokemonUIMoved = true;  // 이동 완료 표시
+			return;
+		}
+
+		EnemyPokemonUI->SetComponentLocation(Curloc);
+	}
 }
 
 void APokemonBattleMode::EnemyPokemonTextSetting()
 {
-	FVector2D TargetLocation = FVector2D({ 130.0f , 135.0f }); 
-	FVector2D Curloc = EnemyPokemonStat->GetActorLocation();
-
-	Curloc += FVector2D::RIGHT;
-	
-	if (TargetLocation == Curloc)
+	if (false == IsEnemyPokemonTextMoved)
 	{
-		EnemyPokemonStat->GetActorLocation() = TargetLocation;
-		return;
-	}
 
-	EnemyPokemonStat->SetActorLocation(Curloc);
+		FVector2D TargetLocation = FVector2D({ 130.0f , 135.0f });
+		FVector2D Curloc = EnemyPokemonStat->GetActorLocation();
+
+		Curloc += FVector2D::RIGHT;
+
+		if (TargetLocation == Curloc)
+		{
+			EnemyPokemonStat->GetActorLocation() = TargetLocation;
+			IsEnemyPokemonTextMoved = true;
+			return;
+		}
+
+		EnemyPokemonStat->SetActorLocation(Curloc);
+	}
 }
 
 
 void APokemonBattleMode::PlayerPokemonUISetting()
 {
-	FVector2D TargetLocation = FVector2D({ 902.0f , 460.0f }); // PlayerPokemonUI의 최종 목적지
-	FVector2D Curloc = PlayerPokemonUI->GetComponentLocation();
-
-	Curloc += FVector2D::LEFT;
-	
-	if (TargetLocation == Curloc)
+	if (false == IsPlayerPokemonUIMoved)
 	{
-		PlayerPokemonUI->GetComponentLocation() = TargetLocation;
-		
-		return;
-	}
+		FVector2D TargetLocation = FVector2D({ 902.0f , 460.0f });
+		FVector2D Curloc = PlayerPokemonUI->GetComponentLocation();
 
-	PlayerPokemonUI->SetComponentLocation(Curloc);
+		Curloc += FVector2D::LEFT;
+
+		if (TargetLocation == Curloc)
+		{
+			PlayerPokemonUI->SetComponentLocation(TargetLocation);
+			IsPlayerPokemonUIMoved = true;  // 이동 완료 표시
+			SpawnSelectMenu();
+			return;
+		}
+
+		PlayerPokemonUI->SetComponentLocation(Curloc);
+	}
 }
 
 void APokemonBattleMode::PlayerPokemonTextSetting()
 {
-	FVector2D TargetLocation = FVector2D({ 740.0f , 415.0f });
-	FVector2D Curloc = MyPokemonStat->GetActorLocation();
-	
-	Curloc += FVector2D::LEFT;
-
-	if (TargetLocation == Curloc)
+	if (false == IsPlayerPokemonTextMoved)
 	{
-		MyPokemonStat->GetActorLocation() = TargetLocation;
-		IsChatOn = false;
-		SpawnSelectMenu();
-		return;
-	}
+		FVector2D TargetLocation = FVector2D({ 740.0f , 415.0f });
+		FVector2D Curloc = MyPokemonStat->GetActorLocation();
 
-	MyPokemonStat->SetActorLocation(Curloc);
+		Curloc += FVector2D::LEFT;
+
+		if (TargetLocation == Curloc)
+		{
+			MyPokemonStat->GetActorLocation() = TargetLocation;
+			IsPlayerPokemonTextMoved = true;
+			IsChatOn = false;
+			return;
+		}
+
+		MyPokemonStat->SetActorLocation(Curloc);
+	}
+	
 }
 
 
@@ -348,6 +374,7 @@ void APokemonBattleMode::SpawnPokemon(float _DeltaTime)
 	if (true == IsBackGroundSetting)
 	{
 		ChatText->PrintTextUpdate(_DeltaTime);
+		BattleChatText->PrintTextUpdate(_DeltaTime);
 	}
 
 	if (UEngineInput::GetInst().IsDown('Z'))
@@ -383,9 +410,10 @@ void APokemonBattleMode::ThrowedMosterBall()
 
 void APokemonBattleMode::SpawnMyPokemonText()
 {
-	if (IsChatOn == true)
+	if (IsChatOn && !IsGoMessageDisplayed)
 	{
 		ChatText->SetText("Go " + MyPokemonName + "!", 0.01f);
+		IsGoMessageDisplayed = true; 
 	}
 }
 
@@ -393,6 +421,7 @@ void APokemonBattleMode::PokemonStatUpdate(float _DeltaTime)
 {
 	EnemyPokemonStat->PrintTextUpdate(_DeltaTime);
 	MyPokemonStat->PrintTextUpdate(_DeltaTime);
+	
 
 	if (true == IsBattleNow)
 	{
@@ -400,98 +429,130 @@ void APokemonBattleMode::PokemonStatUpdate(float _DeltaTime)
 		MyPokemonSkill2->PrintTextUpdate(_DeltaTime);
 		MyPokemonSkill3->PrintTextUpdate(_DeltaTime);
 		MyPokemonSkill4->PrintTextUpdate(_DeltaTime);
+		BattleChatText->PrintTextUpdate(_DeltaTime);
 	}
-
+	
 }
-
-
 
 void APokemonBattleMode::SpawnSelectMenu()
 {
 	SelectMenu->SetOrder(ERenderOrder::BackUI1);
-	
-	ChatText->SetText("What should"+ enter + MyPokemonName + " do? ", 0.01f);
 
 	CursorRender->SetActive(true);
+	PlayerRenderer->SetActive(false);
+	MonsterBall->SetActive(false);
+
+	ChatText->SetText("What should" + enter + MyPokemonName + " do?", 0.01f);
 	
-	if (UEngineInput::GetInst().IsDown('Z') && !IsBattleNow && !IsBattleCursorSet)
-	{
-		IsBattleNow = true;
-		IsBattleCursorSet = true;
-		SpawnBattleSelectMenu();
-	}
 }
 
 
-
-
-	void APokemonBattleMode::SpawnBattleSelectMenu()
-	{
-		BattleSelectMenu->SetOrder(ERenderOrder::BackUI2);
-
-		if (true == IsBattleCursorSet)
-		{
-			Cursor->SetState(ACursor::ECursorState::Battle);
-			IsBattleCursorSet = false;
-		}
-
-		ChatText->ClearText();
-
-		if (true == IsBattleNow)
-		{
-			MyPokemonSkill1->SetActive(true);
-			MyPokemonSkill2->SetActive(true);
-			MyPokemonSkill3->SetActive(true);
-			MyPokemonSkill4->SetActive(true);
-		}
-
-	}
-
-
-
-
-void APokemonBattleMode::HandleSkillSelection(FVector2D CursorLocation)
+void APokemonBattleMode::HandleMenuSelection(FVector2D CursorLocation)
 {
-	
-	int SkillIndex = -1;
+	int MenuIndex = -1;
 
-	
 	for (int i = 0; i < 4; i++)
 	{
-		if (Cursor->GetBattleCursorPosition(i) == CursorLocation)
+		if (Cursor->GetMenuCursorPosition(i) == CursorLocation)
 		{
-			SkillIndex = i;
+			MenuIndex = i;
 			break;
 		}
 	}
-	if (SkillIndex != -1)
-	{
 
-		switch (SkillIndex)
+	if (MenuIndex != -1)
+	{
+		switch (MenuIndex)
 		{
 		case 0:
-			MyPokemon->UseSkill(MyPokemon->GetSkill1(), EnemyPokemon);
-			BattleText->SetOrder(ERenderOrder::BackUI3);
-			ChatText->SetText(MyPokemonName + " used" + enter + MyPokemon->GetSkill1(), 0.01f);
+
+			IsBattleCursorSet = true;
+
+			BattleSelectMenu->SetOrder(ERenderOrder::BackUI2);
+			IsBattleNow = true;
+
+			Cursor->SetState(ACursor::ECursorState::Battle);
+			ChatText->ClearText();
+			if (true == IsBattleCursorSet)
+			{
+				MyPokemonSkill1->SetActive(true);
+				MyPokemonSkill2->SetActive(true);
+				MyPokemonSkill3->SetActive(true);
+				MyPokemonSkill4->SetActive(true);
+			}
+
 			break;
+
 		case 1:
-			MyPokemon->UseSkill(MyPokemon->GetSkill2(), EnemyPokemon);
+
 			break;
+
 		case 2:
-			MyPokemon->UseSkill(MyPokemon->GetSkill3(), EnemyPokemon);
+
 			break;
+
 		case 3:
-			MyPokemon->UseSkill(MyPokemon->GetSkill4(), EnemyPokemon);
+
 			break;
+
 		default:
 			break;
 		}
 
-		
-		IsPlayerTurn = false;
-		StartEnemyTurn();
+
 	}
 }
+
+
+void APokemonBattleMode::SpawnBattleSelectMenu()
+{
+	
+}
+	void APokemonBattleMode::HandleSkillSelection(FVector2D CursorLocation)
+	{
+		int SkillIndex = -1;
+
+		for (int i = 0; i < 4; i++)
+		{
+			if (Cursor->GetBattleCursorPosition(i) == CursorLocation)
+			{
+				SkillIndex = i;
+				break;
+			}
+		}
+
+		if (SkillIndex != -1)
+		{
+			switch (SkillIndex)
+			{
+			case 0:
+				BattleText->SetOrder(ERenderOrder::BackUI3);
+				SkillTextOff();
+				ChatText->SetOrder(ERenderOrder::FONT);
+				ChatText->SetText(MyPokemonName + " used " + MyPokemon->GetSkill1() + "!", 0.05f);
+				MyPokemon->UseSkill(MyPokemon->GetSkill1(), EnemyPokemon);
+				break;
+
+			case 1:
+				MyPokemon->UseSkill(MyPokemon->GetSkill2(), EnemyPokemon);
+				break;
+
+			case 2:
+				MyPokemon->UseSkill(MyPokemon->GetSkill3(), EnemyPokemon);
+				break;
+
+			case 3:
+				MyPokemon->UseSkill(MyPokemon->GetSkill4(), EnemyPokemon);
+				break;
+
+			default:
+				break;
+			}
+
+			IsPlayerTurn = false;
+			StartEnemyTurn();
+		}
+	}
 
 
 
@@ -503,4 +564,25 @@ void APokemonBattleMode::StartEnemyTurn()
 		EnemyPokemon->UseSkill(EnemyPokemon->GetSkill1(), MyPokemon);
 		IsPlayerTurn = true;
 	}
+}
+
+
+
+void APokemonBattleMode::SkillTextOff()
+{
+	MyPokemonSkill1->SetOrder(ERenderOrder::WATER);
+	MyPokemonSkill2->SetOrder(ERenderOrder::WATER);
+	MyPokemonSkill3->SetOrder(ERenderOrder::WATER);
+	MyPokemonSkill4->SetOrder(ERenderOrder::WATER);
+	CursorRender->SetOrder(ERenderOrder::WATER);
+}
+
+
+void APokemonBattleMode::SkillTextOn()
+{
+	MyPokemonSkill1->SetOrder(ERenderOrder::FONT);
+	MyPokemonSkill2->SetOrder(ERenderOrder::FONT);
+	MyPokemonSkill3->SetOrder(ERenderOrder::FONT);
+	MyPokemonSkill4->SetOrder(ERenderOrder::FONT);
+	CursorRender->SetOrder(ERenderOrder::FONT);
 }

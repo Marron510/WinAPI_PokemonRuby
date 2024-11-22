@@ -20,7 +20,6 @@
 #include "TileMapMode.h"
 #include "PokemonBattleMode.h"
 
-
 #include "MyPokemon.h"
 #include "Player.h"
 

@@ -147,7 +147,7 @@ public:
 	}
 	
 	bool IsTextCompleted() const;
-
+	std::string GetLastPrintedText() const;
 protected:
 
 private:

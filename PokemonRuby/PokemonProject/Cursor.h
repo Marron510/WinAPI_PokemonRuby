@@ -16,10 +16,10 @@ public:
 
 	FVector2D MenuCursorPositions[4] =
 	{
-		FVector2D(740, 640),
-		FVector2D(1030, 640),
-		FVector2D(740, 720),
-		FVector2D(1030, 720)
+		FVector2D(740, 640),//lefttop
+		FVector2D(1030, 640), //righttop
+		FVector2D(740, 720),//leftbottom
+		FVector2D(1030, 720)//rightbottom
 	};
 
 	FVector2D BattleCursorPositions[4] = 
@@ -85,6 +85,20 @@ public:
 			return FVector2D(0, 0);
 		}
 	}
+
+	FVector2D GetMenuCursorPosition(int Index)
+	{
+		if (Index >= 0 && Index < 4)
+		{
+			return MenuCursorPositions[Index];
+		}
+		else
+		{
+			return FVector2D(0, 0);
+		}
+	}
+
+
 protected:
 
 private:
@@ -93,6 +107,7 @@ private:
 	ECursorState CurrentState = ECursorState::Menu;
 	class AMyPokemon* Mypokemon = nullptr;
 	class APokemonBattleMode* BattleModeInstance = nullptr;
-	bool IsFirstZPressIgnored = true;
+	bool IsFirstMenuZPressIgnored = true;
+	bool IsFirstBattleZPressIgnored = true;
 };
 

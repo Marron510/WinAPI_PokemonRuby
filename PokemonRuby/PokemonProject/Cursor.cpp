@@ -113,15 +113,34 @@ void ACursor::Tick(float _DeltaTime)
         }
     }
 
+
+    if (CurrentState == ECursorState::Menu)
+    {
+        if (UEngineInput::GetInst().IsDown('Z') && true == IsFirstMenuZPressIgnored)
+          {
+            IsFirstMenuZPressIgnored = false;
+              return;
+          }
+
+        if (UEngineInput::GetInst().IsDown('Z') && false == IsFirstMenuZPressIgnored)
+        {
+            if (BattleModeInstance != nullptr)
+            {
+                BattleModeInstance->HandleMenuSelection(CursorRender->GetComponentLocation());
+            }
+        }
+    }
+
+
     if (CurrentState == ECursorState::Battle)
     {
-        if (UEngineInput::GetInst().IsDown('Z') && true == IsFirstZPressIgnored)
+      if (UEngineInput::GetInst().IsDown('Z') && true == IsFirstBattleZPressIgnored)
         {
-            IsFirstZPressIgnored = false;
+          IsFirstBattleZPressIgnored = false;
             return; 
         }
 
-        if (UEngineInput::GetInst().IsDown('Z') && false == IsFirstZPressIgnored)
+        if (UEngineInput::GetInst().IsDown('Z') && false == IsFirstBattleZPressIgnored)
         {
             if (BattleModeInstance != nullptr)
             {
@@ -161,7 +180,7 @@ void ACursor::SetState(ECursorState NewState)
 
 void ACursor::SetBattleModeInstance(class APokemonBattleMode* BattleMode)
 {
-    BattleModeInstance = BattleMode;  // BattleMode 인스턴스를 설정
+    BattleModeInstance = BattleMode;  
 }
 
 

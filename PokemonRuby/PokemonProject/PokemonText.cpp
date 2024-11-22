@@ -141,12 +141,11 @@ void APokemonText::PrintTextUpdate(float _DeltaTime)
 
 
 
-
 void APokemonText::SetText(std::string_view _Text, float _InterValue /*= 0.0f*/)
 {
     PrintTexts.clear();
 
-    PrintTexts.push_back(std::string(_Text));  
+    PrintTexts.push_back(std::string(_Text));
 
     int Value = _Text.size() - Renders.size();
     if (Value > 0)
@@ -167,7 +166,7 @@ void APokemonText::SetText(std::string_view _Text, float _InterValue /*= 0.0f*/)
 
     if (InterTime <= 0.0f) {
         CurTime = 0.0f;
-        CurTextPrint = _Text.size(); 
+        CurTextPrint = _Text.size();  
     }
 }
 
@@ -191,12 +190,37 @@ void APokemonText::ClearText()
 int APokemonText::GetTotalTextSize() const
 {
     int size = 0;
+
     for (const auto& Text : PrintTexts) {
-        size += Text.size();
+        size += Text.size();  
     }
+
     return size;
 }
+
+
 bool APokemonText::IsTextCompleted() const
 {
-    return CurTextPrint >= GetTotalTextSize();  
+    return CurTextPrint >= GetTotalTextSize();
+}
+
+
+std::string APokemonText::GetLastPrintedText() const
+{
+    if (CurTextPrint > 0 && !PrintTexts.empty()) {
+        int totalSize = GetTotalTextSize();
+
+        if (CurTextPrint > 0) {
+            int lastCharIndex = CurTextPrint - 1;
+            int currentPos = 0;
+
+            for (const auto& text : PrintTexts) {
+                if (currentPos + text.size() > lastCharIndex) {
+                    return std::string(1, text[lastCharIndex - currentPos]);
+                }
+                currentPos += text.size();
+            }
+        }
+    }
+    return ""; 
 }

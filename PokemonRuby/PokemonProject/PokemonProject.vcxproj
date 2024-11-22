@@ -43,10 +43,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="PokemonBattleSelect.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="PokemonStat.h">
       <SubType>
       </SubType>
@@ -180,10 +176,6 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="PokemonBattleMode.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="PokemonBattleSelect.cpp">
       <SubType>
       </SubType>
     </ClCompile>
