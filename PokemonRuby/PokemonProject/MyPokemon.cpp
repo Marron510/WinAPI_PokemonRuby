@@ -129,13 +129,15 @@ void AMyPokemon::UseSkill(const std::string& skillName, class AWildPokemon* targ
     }
     else if (skillName == "LEER")
     {
-        int TargetDefense = target->GetDefense();
-        SkillHandler->Leer(TargetDefense);
+        int targetDefense = target->GetDefense();
+        SkillHandler->Leer(targetDefense); 
+        target->SetDefense(targetDefense); 
     }
     else if (skillName == "GROWL")
     {
         int TargetAttack = target->GetAttack();
         SkillHandler->Growl(TargetAttack);
+        target->SetAttack(TargetAttack); 
     }
     else if (skillName == "Howl")
     {
@@ -143,8 +145,9 @@ void AMyPokemon::UseSkill(const std::string& skillName, class AWildPokemon* targ
     }
     else if (skillName == "StringShot")
     {
-        int TargetSpeed = target->GetSpeed();
-        SkillHandler->StringShot(TargetSpeed);
+        int targetSpeed = target->GetSpeed();
+        SkillHandler->StringShot(targetSpeed);  
+        target->SetSpeed(targetSpeed);  
     }
     else
     {

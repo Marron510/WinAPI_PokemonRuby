@@ -413,7 +413,7 @@ void APokemonBattleMode::SpawnSelectMenu()
 
 	CursorRender->SetActive(true);
 	
-	if (UEngineInput::GetInst().IsDown('Z'))
+	if (UEngineInput::GetInst().IsDown('Z') && !IsBattleNow && !IsBattleCursorSet)
 	{
 		IsBattleNow = true;
 		IsBattleCursorSet = true;
