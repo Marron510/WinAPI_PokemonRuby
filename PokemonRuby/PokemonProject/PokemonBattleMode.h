@@ -25,7 +25,7 @@ public:
 
 	void Tick(float _DeltaTime) override;
 
-	void SetBackGround();
+	void APokemonPreparation();
 	void BattleGroundSetting();
 
 	void PokemonSetting();

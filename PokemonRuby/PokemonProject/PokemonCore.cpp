@@ -19,8 +19,13 @@
 #include "LaborProfessorBirchMode.h"
 #include "TileMapMode.h"
 #include "PokemonBattleMode.h"
+#include "PokemonPreparation.h"
+
 #include "MyPokemon.h"
 #include "Player.h"
+
+
+
 
 PokemonCore::PokemonCore()
 {
@@ -195,6 +200,7 @@ void PokemonCore::BeginPlay()
 		UEngineAPICore::GetCore()->CreateLevel<APlayerHouse2FloorMode, APlayer>("PlayerHouse2Floor");
 		UEngineAPICore::GetCore()->CreateLevel<ALaborProfessorBirchMode, APlayer>("LaborProfessorBirch");
 		UEngineAPICore::GetCore()->CreateLevel<APokemonBattleMode, AActor>("PokemonBattle");
+		UEngineAPICore::GetCore()->CreateLevel<APokemonPreparation, AActor>("PokemonBattlePreParation");
 	}
 
 

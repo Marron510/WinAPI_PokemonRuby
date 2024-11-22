@@ -56,6 +56,7 @@ public:
 
 
 	void UseSkill(const std::string& skillName, class AWildPokemon* target);
+	void MovePokemonForSkill();
 
 	std::string GetSkill1()
 	{
@@ -96,6 +97,13 @@ private:
 	class USpriteRenderer* MyPokemon;
 
 	class PokemonSkill* SkillHandler;
+
+
+	FVector2D StartPosition;      // The original position
+	FVector2D TargetPosition;     // The target position to move towards
+	FVector2D CurrentVelocity;    // The velocity of movement (speed and direction)
+	bool bIsMovingRight;          // Whether the Pok?mon is moving right or left
+	bool bIsSkillActive;          // Whether the skill animation is active
 
 };
 

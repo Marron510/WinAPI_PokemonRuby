@@ -66,7 +66,7 @@ void APokemonBattleMode::BeginPlay()
 
 	
 
-	SetBackGround();
+	APokemonPreparation();
 	{
 		EnemyPokemon = GetWorld()->SpawnActor<AWildPokemon>(); // 적 포켓몬 추가
 		EnemyPokemon->SetActorLocation({ -312.0f , 260.0f });
@@ -196,7 +196,7 @@ void APokemonBattleMode::PokemonSetting()
 	}
 }
 
-void APokemonBattleMode::SetBackGround()
+void APokemonBattleMode::APokemonPreparation()
 {
 	APokemonBattleMap* BackImage = GetWorld()->SpawnActor<APokemonBattleMap>();
 	Map = BackImage->GetCurMap();

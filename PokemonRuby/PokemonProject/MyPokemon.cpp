@@ -4,9 +4,10 @@
 
 #include <EngineCore/SpriteRenderer.h>
 
-#include   "WildPokemon.h"
+#include  "WildPokemon.h"
 #include "PokemonEnum.h"
 #include "PokemonSkill.h"
+#include "MyPokemon.h"
 
 AMyPokemon::AMyPokemon()
 {
@@ -29,8 +30,37 @@ void AMyPokemon::BeginPlay()
 void AMyPokemon::Tick(float _DeltaTime)
 {
     Super::Tick(_DeltaTime);
-    
+
+    if (bIsSkillActive)
+    {
+        FVector2D currentPosition = MyPokemon->GetComponentLocation();
+
+        if (bIsMovingRight)
+        {
+            currentPosition += CurrentVelocity; 
+
+            if ((currentPosition.X >= TargetPosition.X))
+            {
+                currentPosition = TargetPosition; 
+                bIsMovingRight = false;  
+            }
+        }
+        else
+        {
+            currentPosition -= CurrentVelocity; 
+
+            if ((currentPosition.X <= StartPosition.X))
+            {
+                currentPosition = StartPosition; 
+                bIsMovingRight = true;  
+                bIsSkillActive = false; 
+            }
+        }
+
+        MyPokemon->SetComponentLocation(currentPosition);
+    }
 }
+
 
 void AMyPokemon::SetPokemon(EMyPokemon PokemonType)
 {
@@ -103,26 +133,26 @@ void AMyPokemon::InitializePokemonAttributes(EMyPokemon PokemonType)
     }
 }
 
-
 void AMyPokemon::UseSkill(const std::string& skillName, class AWildPokemon* target)
 {
-    if (skillName == "POUND")
+    if (skillName == "POUND" || skillName == "SCRATCH" || skillName == "TACKLE")
     {
-        int damage = SkillHandler->Pound(Level, Attack, target->GetDefense());
-        int TargetHp = target->GetHP();
-        TargetHp -= damage;
-        target->SetHP(TargetHp);
-    }
-    else if (skillName == "SCRATCH")
-    {
-        int damage = SkillHandler->Scratch(Level, Attack, target->GetDefense());
-        int TargetHp = target->GetHP();
-        TargetHp -= damage;
-        target->SetHP(TargetHp);
-    }
-    else if (skillName == "TACKLE")
-    {
-        int damage = SkillHandler->Tackle(Level, Attack, target->GetDefense());
+        MovePokemonForSkill();
+
+        int damage = 0;
+        if (skillName == "POUND")
+        {
+            damage = SkillHandler->Pound(Level, Attack, target->GetDefense());
+        }
+        else if (skillName == "SCRATCH")
+        {
+            damage = SkillHandler->Scratch(Level, Attack, target->GetDefense());
+        }
+        else if (skillName == "TACKLE")
+        {
+            damage = SkillHandler->Tackle(Level, Attack, target->GetDefense());
+        }
+
         int TargetHp = target->GetHP();
         TargetHp -= damage;
         target->SetHP(TargetHp);
@@ -130,14 +160,14 @@ void AMyPokemon::UseSkill(const std::string& skillName, class AWildPokemon* targ
     else if (skillName == "LEER")
     {
         int targetDefense = target->GetDefense();
-        SkillHandler->Leer(targetDefense); 
-        target->SetDefense(targetDefense); 
+        SkillHandler->Leer(targetDefense);
+        target->SetDefense(targetDefense);
     }
     else if (skillName == "GROWL")
     {
         int TargetAttack = target->GetAttack();
         SkillHandler->Growl(TargetAttack);
-        target->SetAttack(TargetAttack); 
+        target->SetAttack(TargetAttack);
     }
     else if (skillName == "Howl")
     {
@@ -146,8 +176,8 @@ void AMyPokemon::UseSkill(const std::string& skillName, class AWildPokemon* targ
     else if (skillName == "StringShot")
     {
         int targetSpeed = target->GetSpeed();
-        SkillHandler->StringShot(targetSpeed);  
-        target->SetSpeed(targetSpeed);  
+        SkillHandler->StringShot(targetSpeed);
+        target->SetSpeed(targetSpeed);
     }
     else if (skillName == "-")
     {
@@ -156,5 +186,17 @@ void AMyPokemon::UseSkill(const std::string& skillName, class AWildPokemon* targ
     else
     {
         return;
+    }
+}
+
+void AMyPokemon::MovePokemonForSkill()
+{
+    if (!bIsSkillActive)
+    {
+        StartPosition = MyPokemon->GetComponentLocation();  
+        TargetPosition = StartPosition + FVector2D(100.0f, 0.0f); 
+        CurrentVelocity = FVector2D::RIGHT; 
+        bIsMovingRight = true;
+        bIsSkillActive = true;  
     }
 }

@@ -141,6 +141,7 @@ void AWildPokemon::UseSkill(const std::string& skillName, class AMyPokemon* targ
     }
     else if (skillName == "SCRATCH")
     {
+        
         int damage = SkillHandler->Scratch(Level, Attack, target->GetDefense());
         int TargetHp = target->GetHP();
         TargetHp -= damage;

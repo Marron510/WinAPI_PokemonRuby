@@ -183,6 +183,12 @@
     <ClInclude Include="PokemonStat.h">
       <Filter>PokemonObject\3.Pokemon</Filter>
     </ClInclude>
+    <ClInclude Include="PokemonPreparation.h">
+      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\02.Battle</Filter>
+    </ClInclude>
+    <ClInclude Include="PokemonBattleMenuSelect.h">
+      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\02.Battle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PokemonCore.cpp">
@@ -304,6 +310,12 @@
     </ClCompile>
     <ClCompile Include="PokemonStat.cpp">
       <Filter>PokemonObject\3.Pokemon</Filter>
+    </ClCompile>
+    <ClCompile Include="PokemonPreparation.cpp">
+      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\02.Battle</Filter>
+    </ClCompile>
+    <ClCompile Include="PokemonBattleMenuSelect.cpp">
+      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\02.Battle</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
