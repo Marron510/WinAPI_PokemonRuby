@@ -35,7 +35,6 @@ public:
 	void EnemyPokemonTextSetting();
 	void PokemonStatUpdate(float _delatime);
 	void SpawnSelectMenu();
-	void SpawnBattleSelectMenu();
 	void HandleSkillSelection(FVector2D CursorLocation);
 	void PlayerSetting();
 	void ThrowMonsterball();
@@ -43,7 +42,6 @@ public:
 	void SpawnMyPokemon();
 	void SpawnMyPokemonText();
 	void ThrowedMosterBall();
-	void StartEnemyTurn();
 	void SkillTextOff();
 	void SkillTextOn();
 	void HandleMenuSelection(FVector2D CursorLocation);
@@ -66,6 +64,7 @@ public:
 	class APokemonText* GetEnemyPokemonStat() { return EnemyPokemonStat; }
 
 
+
 protected:
 
 private:
@@ -74,8 +73,12 @@ private:
 	USpriteRenderer* MonsterBall = nullptr;
 
 	class AMyPokemon* MyPokemon = nullptr;
+
+
 	std::string MyPokemonName;
 	std::string enter = "\n";
+	std::string MyPokemonSkillText;
+
 
 	class AWildPokemon* EnemyPokemon = nullptr;
 	class ACursor* Cursor = nullptr;
@@ -96,7 +99,7 @@ private:
 
 	float ThrowingTime = 0.0f;
 	float BallThrowTime = 2.5f;
-
+	float SkillTextDelay = 2.0f;
 
 
 	bool IsPlayerPokemonShadowMoved = false;
@@ -114,7 +117,12 @@ private:
 	bool IsBattleNow = false;
 	bool IsBattleCursorSet = false;
 	bool IsPlayerTurn = true;  // 플레이어 턴이면 true, 상대 턴이면 false
-	
+
+
+	/*bool HasUsedSkill1 = false;
+	bool HasUsedSkill2 = false;
+	bool HasUsedSkill3 = false;
+	bool HasUsedSkill4 = false;*/
 
 	class APokemonText* ChatText = nullptr;
 	class APokemonText* BattleChatText = nullptr;

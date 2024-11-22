@@ -125,16 +125,12 @@ public:
 
 	void PrintTextUpdate(float _DeltaTime);
 	
+
 	void ClearText();
 
 	int GetTotalTextSize() const;
 
 
-
-	static int GetTextSize() 
-	{
-		return TextSize;
-	}
 
 	std::string GetAllText() const
 	{
@@ -148,11 +144,12 @@ public:
 	
 	bool IsTextCompleted() const;
 	std::string GetLastPrintedText() const;
+
+
 protected:
 
 private:
 	int CurTextPrint = 0;
-	static int TextSize;
 	float InterTime = 0.0;
 	float CurTime = 0.0;
 	
@@ -162,5 +159,6 @@ private:
 	std::string TextSpriteName;
 	FVector2D TextScale;
 	std::vector<class USpriteRenderer*> Renders;
+	int Order = 0;
 };
 

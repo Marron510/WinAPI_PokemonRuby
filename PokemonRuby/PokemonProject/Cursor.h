@@ -109,5 +109,7 @@ private:
 	class APokemonBattleMode* BattleModeInstance = nullptr;
 	bool IsFirstMenuZPressIgnored = true;
 	bool IsFirstBattleZPressIgnored = true;
+
+	class APokemonText* ChatText = nullptr;
 };
 

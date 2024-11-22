@@ -1,6 +1,8 @@
 #include "PreCompile.h"
 #include "PokemonBattleMode.h"
 
+#include <EngineBase/EngineTimer.h>
+
 #include <EnginePlatform/EngineInput.h>
 
 #include <EngineCore/EngineAPICore.h>
@@ -161,19 +163,18 @@ void APokemonBattleMode::BeginPlay()
 		MyPokemonSkill4->SetOrder(ERenderOrder::FONT);
 		MyPokemonSkill4->SetActive(false);
 	}
-
+	SkillTextOff();
 }
 
 void APokemonBattleMode::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
-
 	
 
 	PokemonSetting();
 
 	BattleGroundSetting();
-	
+
 	PokemonStatUpdate(_DeltaTime);
 
 	PlayerSetting();
@@ -473,6 +474,7 @@ void APokemonBattleMode::HandleMenuSelection(FVector2D CursorLocation)
 
 			Cursor->SetState(ACursor::ECursorState::Battle);
 			ChatText->ClearText();
+
 			if (true == IsBattleCursorSet)
 			{
 				MyPokemonSkill1->SetActive(true);
@@ -504,65 +506,51 @@ void APokemonBattleMode::HandleMenuSelection(FVector2D CursorLocation)
 }
 
 
-void APokemonBattleMode::SpawnBattleSelectMenu()
+void APokemonBattleMode::HandleSkillSelection(FVector2D CursorLocation)
 {
+	int SkillIndex = -1;
+	BattleText->SetOrder(ERenderOrder::BackUI3);
+	ChatText->SetOrder(ERenderOrder::FONT);
 	
-}
-	void APokemonBattleMode::HandleSkillSelection(FVector2D CursorLocation)
+	for (int i = 0; i < 4; i++)
 	{
-		int SkillIndex = -1;
-
-		for (int i = 0; i < 4; i++)
+		if (Cursor->GetBattleCursorPosition(i) == CursorLocation)
 		{
-			if (Cursor->GetBattleCursorPosition(i) == CursorLocation)
-			{
-				SkillIndex = i;
-				break;
-			}
-		}
-
-		if (SkillIndex != -1)
-		{
-			switch (SkillIndex)
-			{
-			case 0:
-				BattleText->SetOrder(ERenderOrder::BackUI3);
-				SkillTextOff();
-				ChatText->SetOrder(ERenderOrder::FONT);
-				ChatText->SetText(MyPokemonName + " used " + MyPokemon->GetSkill1() + "!", 0.05f);
-				MyPokemon->UseSkill(MyPokemon->GetSkill1(), EnemyPokemon);
-				break;
-
-			case 1:
-				MyPokemon->UseSkill(MyPokemon->GetSkill2(), EnemyPokemon);
-				break;
-
-			case 2:
-				MyPokemon->UseSkill(MyPokemon->GetSkill3(), EnemyPokemon);
-				break;
-
-			case 3:
-				MyPokemon->UseSkill(MyPokemon->GetSkill4(), EnemyPokemon);
-				break;
-
-			default:
-				break;
-			}
-
-			IsPlayerTurn = false;
-			StartEnemyTurn();
+			SkillIndex = i;
+			break;
 		}
 	}
 
-
-
-void APokemonBattleMode::StartEnemyTurn()
-{
-	if (false == IsPlayerTurn)
+	if (SkillIndex != -1)
 	{
+		switch (SkillIndex)
+		{
+		case 0:
+			SkillTextOff();
+			MyPokemonSkillText = MyPokemon->GetMyPokemonName() + " used" + enter + MyPokemon->GetSkill1() + "!";
+			ChatText->SetText(MyPokemonSkillText, 0.01f);
+			MyPokemon->UseSkill(MyPokemon->GetSkill1(), EnemyPokemon);
+			break;
+		case 1:
+			SkillTextOff();
+			MyPokemonSkillText = MyPokemon->GetMyPokemonName() + " used" + enter + MyPokemon->GetSkill2() + "!";
+			ChatText->SetText(MyPokemonSkillText, 0.01f);
+			MyPokemon->UseSkill(MyPokemon->GetSkill2(), EnemyPokemon);
+			break;
 
-		EnemyPokemon->UseSkill(EnemyPokemon->GetSkill1(), MyPokemon);
-		IsPlayerTurn = true;
+		case 2:
+			MyPokemon->UseSkill(MyPokemon->GetSkill3(), EnemyPokemon);
+			break;
+
+		case 3:
+			MyPokemon->UseSkill(MyPokemon->GetSkill4(), EnemyPokemon);
+			break;
+
+		default:
+			break;
+		}
+
+		IsPlayerTurn = false;
 	}
 }
 

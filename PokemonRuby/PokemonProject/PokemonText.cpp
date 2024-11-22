@@ -2,8 +2,6 @@
 #include "PokemonText.h"
 #include "Cursor.h"
 
-int APokemonText::TextSize = 0;
-
 APokemonText::APokemonText()
 {
 }
@@ -31,11 +29,13 @@ void APokemonText::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 
-	//PrintTextUpdate(_DeltaTime);
+	PrintTextUpdate(_DeltaTime);
 }
 
 void APokemonText::SetOrder(int _Order)
 {
+    Order = _Order;
+
 	for (size_t i = 0; i < Renders.size(); i++)
 	{
 		Renders[i]->SetOrder(_Order);
@@ -124,8 +124,8 @@ void APokemonText::PrintTextUpdate(float _DeltaTime)
                 Renders[printCount]->SetSprite(TextSpriteName, CapitalValue);
                 Renders[printCount]->SetComponentScale(TextScale);
                 Renders[printCount]->SetComponentLocation(Pos);
+                Renders[printCount]->SetOrder(Order);
                 Pos.X += TextScale.X;
-                TextSize += 1;
                 Renders[printCount]->SetActive(true);
             }
 
@@ -183,7 +183,7 @@ void APokemonText::ClearText()
     Renders.clear();
 
     CurTime = 0.0f;
-    TextSize = 0;
+ 
 }
 
 
@@ -224,3 +224,6 @@ std::string APokemonText::GetLastPrintedText() const
     }
     return ""; 
 }
+
+
+

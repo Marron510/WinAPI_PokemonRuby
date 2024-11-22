@@ -10,6 +10,8 @@
 #include "PokemonEnum.h"
 #include "MyPokemon.h"
 #include "PokemonBattleMode.h"
+#include "PokemonText.h"
+
 
 ACursor::ACursor()
 {
@@ -34,6 +36,7 @@ ACursor::~ACursor()
 void ACursor::BeginPlay()
 {
     Super::BeginPlay();
+    ChatText = GetWorld()->SpawnActor<APokemonText>();
 }
 
 void ACursor::Tick(float _DeltaTime)
@@ -112,8 +115,8 @@ void ACursor::Tick(float _DeltaTime)
             CursorRender->SetComponentLocation(NewLocation);
         }
     }
-
-
+   
+    
     if (CurrentState == ECursorState::Menu)
     {
         if (UEngineInput::GetInst().IsDown('Z') && true == IsFirstMenuZPressIgnored)
@@ -132,22 +135,22 @@ void ACursor::Tick(float _DeltaTime)
     }
 
 
-    if (CurrentState == ECursorState::Battle)
-    {
-      if (UEngineInput::GetInst().IsDown('Z') && true == IsFirstBattleZPressIgnored)
-        {
-          IsFirstBattleZPressIgnored = false;
-            return; 
-        }
+   if (CurrentState == ECursorState::Battle)
+   {
+     if (UEngineInput::GetInst().IsPress('Z') && true == IsFirstBattleZPressIgnored)
+       {
+         IsFirstBattleZPressIgnored = false;
+           return; 
+       }
 
-        if (UEngineInput::GetInst().IsDown('Z') && false == IsFirstBattleZPressIgnored)
-        {
-            if (BattleModeInstance != nullptr)
-            {
-                BattleModeInstance->HandleSkillSelection(CursorRender->GetComponentLocation());
-            }
-        }
-    }
+       if (UEngineInput::GetInst().IsDown('Z') && false == IsFirstBattleZPressIgnored)
+       {
+           if (BattleModeInstance != nullptr)
+           {
+               BattleModeInstance->HandleSkillSelection(CursorRender->GetComponentLocation());
+           }
+       }
+   }
 }
 
 
