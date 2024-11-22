@@ -54,7 +54,7 @@ private:
 
 	class AMyPokemon* MyPokemon = nullptr;
 	std::string MyPokemonName;
-
+	std::string enter = "\n";
 
 	class AWildPokemon* EnemyPokemon = nullptr;
 	class ACursor* Cursor = nullptr;
@@ -65,7 +65,7 @@ private:
 	USpriteRenderer* EnemyPokemonUI = nullptr;
 	USpriteRenderer* SelectMenu = nullptr;
 	USpriteRenderer* BattleSelectMenu = nullptr;
-
+	USpriteRenderer* BattleText = nullptr;
 
 	FVector2D PlayerLocation = FVector2D::ZERO;
 	
@@ -84,7 +84,7 @@ private:
 	bool IsBattleNow = false;
 	bool IsBattleCursorSet = false;
 	bool IsPlayerTurn = true;  // 플레이어 턴이면 true, 상대 턴이면 false
-	bool IsFirstZKeyPressed = false;
+	
 
 	class APokemonText* ChatText = nullptr;
 	class APokemonText* MyPokemonStat = nullptr;

@@ -12,7 +12,10 @@ enum class ERenderOrder
 	POKEMONSHADOW = 100,
 	POKEMON = 300,
 	SKILLEFFECT = 400,
-	UI = 500,
+	BackUI = 500,
+	BackUI1 = 510,
+	BackUI2 = 520,
+	BackUI3 = 530,
 	FONT = 600,
 	CURSOR = 700,
 	FADE = 1000

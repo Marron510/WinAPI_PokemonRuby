@@ -68,7 +68,7 @@ public:
     void SetSpeed(int InSpeed) { Speed = InSpeed; }
     
     void UseSkill(const std::string& skillName, class AMyPokemon* target);
-
+    void MovePokemonForSkill();
 
 
 
@@ -94,5 +94,11 @@ private:
     class USpriteRenderer* WildPokemonRender = nullptr;
     class PokemonSkill* SkillHandler;
     bool bHasEncountered = false;
+
+    FVector2D StartPosition = FVector2D::ZERO;   
+    FVector2D TargetPosition = FVector2D::ZERO;
+    FVector2D CurrentVelocity = FVector2D::ZERO;
+    bool IsMovingLeft = false;
+    bool IsSkillActive = false;         
 };
 

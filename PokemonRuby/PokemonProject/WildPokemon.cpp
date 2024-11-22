@@ -55,6 +55,34 @@ void AWildPokemon::BeginPlay()
 void AWildPokemon::Tick(float _DeltaTime)
 {
     Super::Tick(_DeltaTime);
+    if (IsSkillActive)
+    {
+        FVector2D currentPosition = WildPokemonRender->GetComponentLocation();
+
+        if (IsMovingLeft)
+        {
+            currentPosition += CurrentVelocity;
+
+            if ((currentPosition.X <= TargetPosition.X))
+            {
+                currentPosition = TargetPosition;
+                IsMovingLeft = false;
+            }
+        }
+        else
+        {
+            currentPosition -= CurrentVelocity;
+
+            if ((currentPosition.X >= StartPosition.X))
+            {
+                currentPosition = StartPosition;
+                IsMovingLeft = true;
+                IsSkillActive = false;
+            }
+        }
+
+        WildPokemonRender->SetComponentLocation(currentPosition);
+    }
 }
 
 int AWildPokemon::AdjustLevelByRegion(int baseLevel, int regionLevel)
@@ -132,24 +160,24 @@ void AWildPokemon::EncounterWildPokemon(int regionLevel)
 
 void AWildPokemon::UseSkill(const std::string& skillName, class AMyPokemon* target)
 {
-    if (skillName == "POUND")
+    if (skillName == "POUND" || skillName == "SCRATCH" || skillName == "TACKLE")
     {
-        int damage = SkillHandler->Pound(Level, Attack, target->GetDefense());
-        int TargetHp = target->GetHP();
-        TargetHp -= damage;
-        target->SetHP(TargetHp);
-    }
-    else if (skillName == "SCRATCH")
-    {
-        
-        int damage = SkillHandler->Scratch(Level, Attack, target->GetDefense());
-        int TargetHp = target->GetHP();
-        TargetHp -= damage;
-        target->SetHP(TargetHp);
-    }
-    else if (skillName == "TACKLE")
-    {
-        int damage = SkillHandler->Tackle(Level, Attack, target->GetDefense());
+        MovePokemonForSkill();
+
+        int damage = 0;
+        if (skillName == "POUND")
+        {
+            damage = SkillHandler->Pound(Level, Attack, target->GetDefense());
+        }
+        else if (skillName == "SCRATCH")
+        {
+            damage = SkillHandler->Scratch(Level, Attack, target->GetDefense());
+        }
+        else if (skillName == "TACKLE")
+        {
+            damage = SkillHandler->Tackle(Level, Attack, target->GetDefense());
+        }
+
         int TargetHp = target->GetHP();
         TargetHp -= damage;
         target->SetHP(TargetHp);
@@ -185,3 +213,18 @@ void AWildPokemon::UseSkill(const std::string& skillName, class AMyPokemon* targ
         return;
     }
 }
+
+
+
+void AWildPokemon::MovePokemonForSkill()
+{
+    if (!IsSkillActive)
+    {
+        StartPosition = WildPokemonRender->GetComponentLocation();
+        TargetPosition = StartPosition + FVector2D(-50.0f, 0.0f);
+        CurrentVelocity = FVector2D::LEFT;
+        IsMovingLeft = true;
+        IsSkillActive = true;
+    }
+}
+

@@ -93,6 +93,6 @@ private:
 	ECursorState CurrentState = ECursorState::Menu;
 	class AMyPokemon* Mypokemon = nullptr;
 	class APokemonBattleMode* BattleModeInstance = nullptr;
-
+	bool IsFirstZPressIgnored = true;
 };
 

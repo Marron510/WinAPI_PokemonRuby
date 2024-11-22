@@ -46,7 +46,7 @@ APokemonBattleMode::APokemonBattleMode()
 
 
 		MonsterBall->SetSpriteScale(1.0f);
-		MonsterBall->SetOrder(ERenderOrder::UI);
+		MonsterBall->SetOrder(ERenderOrder::BackUI);
 
 		MonsterBall->ChangeAnimation("ThrowBallReady");
 	}
@@ -207,6 +207,7 @@ void APokemonBattleMode::APokemonPreparation()
 	EnemyPokemonUI = BackImage->GetEnemyPokemonUI();
 	SelectMenu = BackImage->GetSelectMenu();
 	BattleSelectMenu = BackImage->GetBattleSelectMenu();
+	BattleText = BackImage->GetBattleText();
 }
 
 
@@ -407,8 +408,8 @@ void APokemonBattleMode::PokemonStatUpdate(float _DeltaTime)
 
 void APokemonBattleMode::SpawnSelectMenu()
 {
-	SelectMenu->SetOrder(ERenderOrder::UI);
-	std::string enter = "\n";
+	SelectMenu->SetOrder(ERenderOrder::BackUI1);
+	
 	ChatText->SetText("What should"+ enter + MyPokemonName + " do? ", 0.01f);
 
 	CursorRender->SetActive(true);
@@ -426,7 +427,7 @@ void APokemonBattleMode::SpawnSelectMenu()
 
 	void APokemonBattleMode::SpawnBattleSelectMenu()
 	{
-		BattleSelectMenu->SetOrder(ERenderOrder::UI);
+		BattleSelectMenu->SetOrder(ERenderOrder::BackUI2);
 
 		if (true == IsBattleCursorSet)
 		{
@@ -444,17 +445,6 @@ void APokemonBattleMode::SpawnSelectMenu()
 			MyPokemonSkill4->SetActive(true);
 		}
 
-		if (Cursor->GetCurrentCursorState() == ACursor::ECursorState::Battle && UEngineInput::GetInst().IsDown('Z'))
-		{
-			if (false == IsFirstZKeyPressed) 
-			{
-				IsFirstZKeyPressed = true;
-				return; 
-			}
-
-			FVector2D CurCursorLocation = CursorRender->GetComponentLocation();
-			HandleSkillSelection(CurCursorLocation);
-		}
 	}
 
 
@@ -462,6 +452,7 @@ void APokemonBattleMode::SpawnSelectMenu()
 
 void APokemonBattleMode::HandleSkillSelection(FVector2D CursorLocation)
 {
+	
 	int SkillIndex = -1;
 
 	
@@ -480,6 +471,8 @@ void APokemonBattleMode::HandleSkillSelection(FVector2D CursorLocation)
 		{
 		case 0:
 			MyPokemon->UseSkill(MyPokemon->GetSkill1(), EnemyPokemon);
+			BattleText->SetOrder(ERenderOrder::BackUI3);
+			ChatText->SetText(MyPokemonName + " used" + enter + MyPokemon->GetSkill1(), 0.01f);
 			break;
 		case 1:
 			MyPokemon->UseSkill(MyPokemon->GetSkill2(), EnemyPokemon);
@@ -504,10 +497,10 @@ void APokemonBattleMode::HandleSkillSelection(FVector2D CursorLocation)
 
 void APokemonBattleMode::StartEnemyTurn()
 {
-	if (!IsPlayerTurn)
+	if (false == IsPlayerTurn)
 	{
-		EnemyPokemon->UseSkill(EnemyPokemon->GetSkill1(), MyPokemon);
 
+		EnemyPokemon->UseSkill(EnemyPokemon->GetSkill1(), MyPokemon);
 		IsPlayerTurn = true;
 	}
 }

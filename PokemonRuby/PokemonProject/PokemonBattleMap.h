@@ -50,7 +50,10 @@ public:
 	{
 		return BattleSelectMenu;
 	}
-
+	USpriteRenderer* GetBattleText()
+	{
+		return BattleText;
+	}
 
 protected:
 
@@ -63,6 +66,6 @@ private:
 	static USpriteRenderer* EnemyPokemonUI;
 	static USpriteRenderer* SelectMenu;
 	static USpriteRenderer* BattleSelectMenu;
-
+	static USpriteRenderer* BattleText;
 };
 

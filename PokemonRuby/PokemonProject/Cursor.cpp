@@ -112,19 +112,25 @@ void ACursor::Tick(float _DeltaTime)
             CursorRender->SetComponentLocation(NewLocation);
         }
     }
-    // 커서 클릭 이벤트 처리
+
     if (CurrentState == ECursorState::Battle)
     {
-        if (UEngineInput::GetInst().IsDown('Z'))  // Z 키로 스킬 선택
+        if (UEngineInput::GetInst().IsDown('Z') && true == IsFirstZPressIgnored)
         {
-            // 클릭된 커서 위치를 BattleMode에 전달
-            if (BattleModeInstance != nullptr)  // BattleModeInstance가 유효할 때
+            IsFirstZPressIgnored = false;
+            return; 
+        }
+
+        if (UEngineInput::GetInst().IsDown('Z') && false == IsFirstZPressIgnored)
+        {
+            if (BattleModeInstance != nullptr)
             {
                 BattleModeInstance->HandleSkillSelection(CursorRender->GetComponentLocation());
             }
         }
     }
 }
+
 
 
 

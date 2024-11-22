@@ -194,7 +194,7 @@ void AMyPokemon::MovePokemonForSkill()
     if (!bIsSkillActive)
     {
         StartPosition = MyPokemon->GetComponentLocation();  
-        TargetPosition = StartPosition + FVector2D(100.0f, 0.0f); 
+        TargetPosition = StartPosition + FVector2D(50.0f, 0.0f); 
         CurrentVelocity = FVector2D::RIGHT; 
         bIsMovingRight = true;
         bIsSkillActive = true;  

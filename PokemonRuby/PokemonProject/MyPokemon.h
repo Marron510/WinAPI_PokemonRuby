@@ -92,8 +92,6 @@ private:
 	
 	std::string skill1, skill2, skill3, skill4;
 
-    class USpriteRenderer* PokemonSprite;
-
 	class USpriteRenderer* MyPokemon;
 
 	class PokemonSkill* SkillHandler;
