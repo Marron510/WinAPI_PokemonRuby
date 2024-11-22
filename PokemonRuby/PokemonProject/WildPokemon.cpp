@@ -7,6 +7,9 @@
 
 #include "PokemonEnum.h"
 #include "PokemonStat.h"
+#include "PokemonSkill.h"
+#include "MyPokemon.h"
+
 
 AWildPokemon::AWildPokemon()
 {
@@ -77,15 +80,18 @@ void AWildPokemon::SetPokemonStats(const std::string& PokemonName, int adjustedL
 
     if (PokemonName == "ZIGZAGOON")
     {
-        Skills = { "Tackle", "Growl" };
+        skill1 = "TACKLE";
+        skill2 = "GROWL";
     }
     else if (PokemonName == "POOCHYENA")
     {
-        Skills = { "Tackle", "Howl" };
+        skill1 = "TACKLE";
+        skill2 = "HOWL";
     }
     else if (PokemonName == "WURMPLE")
     {
-        Skills = { "Tackle", "StringShot" };
+        skill1 = "TACKLE";
+        skill2 = "STRINGSHOT";
     }
 }
 
@@ -123,3 +129,58 @@ void AWildPokemon::EncounterWildPokemon(int regionLevel)
     bHasEncountered = true;
 }
 
+
+void AWildPokemon::UseSkill(const std::string& skillName, class AMyPokemon* target)
+{
+    if (skillName == "POUND")
+    {
+        int damage = SkillHandler->Pound(Level, Attack, target->GetDefense());
+        int TargetHp = target->GetHP();
+        TargetHp -= damage;
+        target->SetHP(TargetHp);
+    }
+    else if (skillName == "SCRATCH")
+    {
+        int damage = SkillHandler->Scratch(Level, Attack, target->GetDefense());
+        int TargetHp = target->GetHP();
+        TargetHp -= damage;
+        target->SetHP(TargetHp);
+    }
+    else if (skillName == "TACKLE")
+    {
+        int damage = SkillHandler->Tackle(Level, Attack, target->GetDefense());
+        int TargetHp = target->GetHP();
+        TargetHp -= damage;
+        target->SetHP(TargetHp);
+    }
+    else if (skillName == "LEER")
+    {
+        int targetDefense = target->GetDefense();
+        SkillHandler->Leer(targetDefense);
+        target->SetDefense(targetDefense);
+    }
+    else if (skillName == "GROWL")
+    {
+        int TargetAttack = target->GetAttack();
+        SkillHandler->Growl(TargetAttack);
+        target->SetAttack(TargetAttack);
+    }
+    else if (skillName == "Howl")
+    {
+        SkillHandler->Howl(Attack);
+    }
+    else if (skillName == "StringShot")
+    {
+        int targetSpeed = target->GetSpeed();
+        SkillHandler->StringShot(targetSpeed);
+        target->SetSpeed(targetSpeed);
+    }
+    else if (skillName == "-")
+    {
+        return;
+    }
+    else
+    {
+        return;
+    }
+}

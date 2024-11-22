@@ -36,7 +36,6 @@ public:
 	void PokemonStatUpdate(float _delatime);
 	void SpawnSelectMenu();
 	void SpawnBattleSelectMenu();
-	void SelectSkill();
 	void HandleSkillSelection(FVector2D CursorLocation);
 	void PlayerSetting();
 	void ThrowMonsterball();
@@ -44,7 +43,7 @@ public:
 	void SpawnMyPokemon();
 	void SpawnMyPokemonText();
 	void ThrowedMosterBall();
-
+	void StartEnemyTurn();
 
 protected:
 
@@ -84,6 +83,8 @@ private:
 	bool IsMenuOn = false;
 	bool IsBattleNow = false;
 	bool IsBattleCursorSet = false;
+	bool IsPlayerTurn = true;  // 플레이어 턴이면 true, 상대 턴이면 false
+	bool IsFirstZKeyPressed = false;
 
 	class APokemonText* ChatText = nullptr;
 	class APokemonText* MyPokemonStat = nullptr;

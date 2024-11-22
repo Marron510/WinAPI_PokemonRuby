@@ -34,11 +34,26 @@ public:
 	void SetPokemon(EMyPokemon PokemonType);
 	void InitializePokemonAttributes(EMyPokemon PokemonType);
 	
-
+	int GetLevel() const { return Level; }
+	int GetHP() const { return HP; }
+	int GetAttack() const { return Attack; }
+	int GetDefense() const { return Defense; }
+	int GetSpecialAttack() const { return SpecialAttack; }
+	int GetSpecialDefense() const { return SpecialDefense; }
+	int GetSpeed() const { return Speed; }
 	std::string GetMyPokemonName()
 	{
 		return Name;
 	}
+
+	void SetLevel(int InLevel) { Level = InLevel; }
+	void SetHP(int InHP) { HP = InHP; }
+	void SetAttack(int InAttack) { Attack = InAttack; }
+	void SetDefense(int InDefense) { Defense = InDefense; }
+	void SetSpecialAttack(int InSpecialAttack) { SpecialAttack = InSpecialAttack; }
+	void SetSpecialDefense(int InSpecialDefense) { SpecialDefense = InSpecialDefense; }
+	void SetSpeed(int InSpeed) { Speed = InSpeed; }
+
 
 	void UseSkill(const std::string& skillName, class AWildPokemon* target);
 

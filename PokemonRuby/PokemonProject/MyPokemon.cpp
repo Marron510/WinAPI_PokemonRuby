@@ -149,6 +149,10 @@ void AMyPokemon::UseSkill(const std::string& skillName, class AWildPokemon* targ
         SkillHandler->StringShot(targetSpeed);  
         target->SetSpeed(targetSpeed);  
     }
+    else if (skillName == "-")
+    {
+        return;
+    }
     else
     {
         return;

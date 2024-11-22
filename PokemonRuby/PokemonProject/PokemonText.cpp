@@ -196,3 +196,7 @@ int APokemonText::GetTotalTextSize() const
     }
     return size;
 }
+bool APokemonText::IsTextCompleted() const
+{
+    return CurTextPrint >= GetTotalTextSize();  
+}

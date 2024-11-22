@@ -423,31 +423,40 @@ void APokemonBattleMode::SpawnSelectMenu()
 
 
 
-void APokemonBattleMode::SpawnBattleSelectMenu()
-{
-	BattleSelectMenu->SetOrder(ERenderOrder::UI);
-	if (true == IsBattleCursorSet)
-	{
-		Cursor->SetState(ACursor::ECursorState::Battle);
-		IsBattleCursorSet = false;
-	}
-	
-	ChatText->ClearText();
 
-	if (true == IsBattleNow)
+	void APokemonBattleMode::SpawnBattleSelectMenu()
 	{
-		MyPokemonSkill1->SetActive(true);
-		MyPokemonSkill2->SetActive(true);
-		MyPokemonSkill3->SetActive(true);
-		MyPokemonSkill4->SetActive(true);
+		BattleSelectMenu->SetOrder(ERenderOrder::UI);
+
+		if (true == IsBattleCursorSet)
+		{
+			Cursor->SetState(ACursor::ECursorState::Battle);
+			IsBattleCursorSet = false;
+		}
+
+		ChatText->ClearText();
+
+		if (true == IsBattleNow)
+		{
+			MyPokemonSkill1->SetActive(true);
+			MyPokemonSkill2->SetActive(true);
+			MyPokemonSkill3->SetActive(true);
+			MyPokemonSkill4->SetActive(true);
+		}
+
+		if (Cursor->GetCurrentCursorState() == ACursor::ECursorState::Battle && UEngineInput::GetInst().IsDown('Z'))
+		{
+			if (false == IsFirstZKeyPressed) 
+			{
+				IsFirstZKeyPressed = true;
+				return; 
+			}
+
+			FVector2D CurCursorLocation = CursorRender->GetComponentLocation();
+			HandleSkillSelection(CurCursorLocation);
+		}
 	}
 
-	if (Cursor->GetCurrentCursorState() == ACursor::ECursorState::Battle && UEngineInput::GetInst().IsDown('Z'))
-	{
-		FVector2D CurCursorLocation = CursorRender->GetComponentLocation();
-		HandleSkillSelection(CurCursorLocation);
-	}
-}
 
 
 
@@ -455,6 +464,7 @@ void APokemonBattleMode::HandleSkillSelection(FVector2D CursorLocation)
 {
 	int SkillIndex = -1;
 
+	
 	for (int i = 0; i < 4; i++)
 	{
 		if (Cursor->GetBattleCursorPosition(i) == CursorLocation)
@@ -463,9 +473,9 @@ void APokemonBattleMode::HandleSkillSelection(FVector2D CursorLocation)
 			break;
 		}
 	}
-
 	if (SkillIndex != -1)
 	{
+
 		switch (SkillIndex)
 		{
 		case 0:
@@ -483,5 +493,21 @@ void APokemonBattleMode::HandleSkillSelection(FVector2D CursorLocation)
 		default:
 			break;
 		}
+
+		
+		IsPlayerTurn = false;
+		StartEnemyTurn();
+	}
+}
+
+
+
+void APokemonBattleMode::StartEnemyTurn()
+{
+	if (!IsPlayerTurn)
+	{
+		EnemyPokemon->UseSkill(EnemyPokemon->GetSkill1(), MyPokemon);
+
+		IsPlayerTurn = true;
 	}
 }
