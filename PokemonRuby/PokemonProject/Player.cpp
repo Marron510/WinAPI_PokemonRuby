@@ -92,10 +92,12 @@ void APlayer::Walk(float _DeltaTime) {
     WalkTime += _DeltaTime;
 
     FVector2D CurrentLocation = GetActorLocation();
+
     if ((TargetLocation - CurrentLocation).Length() < 0.1f) {
         SetActorLocation(TargetLocation);
         IsMoving = false;
         FSM.ChangeState(APlayerState::IDLE);
+        HandleBattleEncounter();
         return;
     }
 
@@ -471,3 +473,4 @@ void APlayer::InitializeAnimations()
     SpriteRenderer->CreateAnimation("Idle_Right_Left_Arm", "Player_Walk_Right.png", 0, 0, IdleFrameTime);
     SpriteRenderer->CreateAnimation("Idle_Right_Right_Arm", "Player_Walk_Right.png", 0, 0, IdleFrameTime);
 }
+
