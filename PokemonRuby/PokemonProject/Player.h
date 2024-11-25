@@ -15,7 +15,7 @@ public:
         RUN,
         JUMP,
     };
-
+   
     enum class EPlayerDir
     {
         LEFT_Left_Arm,
@@ -29,7 +29,16 @@ public:
         MAX
     };
 
-
+    std::unordered_map<EPlayerDir, int> DirectionMoveCount = {
+       { EPlayerDir::UP_Left_Arm, 0 },
+       { EPlayerDir::UP_Right_Arm, 0 },
+       { EPlayerDir::LEFT_Left_Arm, 0 },
+       { EPlayerDir::LEFT_Right_Arm, 0 },
+       { EPlayerDir::DOWN_Left_Arm, 0 },
+       { EPlayerDir::DOWN_Right_Arm, 0 },
+       { EPlayerDir::RIGHT_Left_Arm, 0 },
+       { EPlayerDir::RIGHT_Right_Arm, 0 }
+    };
     // constrcuter destructer
     APlayer();
     ~APlayer();
@@ -78,14 +87,14 @@ public:
     void HandleBattleEncounter();
     void InitializeSprites();
     void InitializeAnimations();
-
-
+    EPlayerDir GetArmDirection(EPlayerDir LeftArmDir, EPlayerDir RightArmDir);
+    void StartMovementWithAnimation(EPlayerDir LeftArmDir, EPlayerDir RightArmDir, FVector2D Offset);
 protected:
 
 private:
-    float WalkSpeed = 0.96;
+    float WalkSpeed = 0.24;
     float WalkTime = 0.0f;
-    const float TileMoveTime = 0.1f;
+    const float TileMoveTime = 3.2f;
     
     bool IsMoving = false;
     bool bIsLeftArm = true;
@@ -114,10 +123,7 @@ private:
     {
         ArmOrder = (ArmOrder + 1) % 2; // 0과 1을 번갈아가며 전환
     }
-
-    std::string GetAnimationName(APlayerState State, const std::string& DirectionSuffix, bool IsUpperBody) const;
-
-
+    int MoveCount = 0;
     bool bCanProcessInput = true; // 입력 가능 여부를 나타내는 플래그
     float InputCooldown = 0.0f;   // 남은 딜레이 시간
 };

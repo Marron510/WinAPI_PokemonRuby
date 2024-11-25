@@ -382,7 +382,8 @@ public:
 	static const UColor BLACK;
 	static const UColor GREEN;
 	static const UColor BLUE;
-	static const UColor RED;
+	static const UColor 
+		;
 
 
 	union

@@ -85,94 +85,107 @@ void APlayer::Idle(float _DeltaTime)
     HandleInput();
 }
 
-void APlayer::Walk(float _DeltaTime)
-{
+void APlayer::Walk(float _DeltaTime) {
     PlayerCameraCheck();
     PlayerDebugCheck(_DeltaTime);
 
-    // 이동 완료 여부 확인
-    if (!IsMoving)
-    {
-        FSM.ChangeState(APlayerState::IDLE); // IDLE 상태로 전환
-    }
-    else
-    {
-        WalkTime += _DeltaTime;
+    WalkTime += _DeltaTime;
 
-        if (WalkTime >= TileMoveTime / 2.0f)
-        {
-            ChangeArmAnimation();
-            WalkTime = 0.0f; // 애니메이션 변경 후 WalkTime 초기화
-        }
+    FVector2D CurrentLocation = GetActorLocation();
+    if ((TargetLocation - CurrentLocation).Length() < 0.1f) {
+        SetActorLocation(TargetLocation);
+        IsMoving = false;
+        FSM.ChangeState(APlayerState::IDLE);
+        return;
+    }
+
+    FVector2D NewLocation = UPokemonMath::Lerp(CurrentLocation, TargetLocation, WalkTime / TileMoveTime);
+    SetActorLocation(NewLocation);
+
+    if (WalkTime >= 0.4f) {
+        ChangeArmAnimation();
+        WalkTime -= 0.4f;
     }
 }
 
 
 
-void APlayer::HandleInput()
-{
-    // 키 입력 확인 및 처리
-    if (UEngineInput::GetInst().IsPress('W'))
-    {
-        StartMovement(EPlayerDir::UP_Left_Arm, { 0.0f, -TileSize.Y });
+void APlayer::HandleInput() {
+    if (UEngineInput::GetInst().IsPress('W')) {
+        StartMovementWithAnimation(EPlayerDir::UP_Left_Arm, EPlayerDir::UP_Right_Arm, { 0.0f, -TileSize.Y });
     }
-    else if (UEngineInput::GetInst().IsPress('A'))
-    {
-        StartMovement(EPlayerDir::LEFT_Left_Arm, { -TileSize.X, 0.0f });
+    else if (UEngineInput::GetInst().IsPress('A')) {
+        StartMovementWithAnimation(EPlayerDir::LEFT_Left_Arm, EPlayerDir::LEFT_Right_Arm, { -TileSize.X, 0.0f });
     }
-    else if (UEngineInput::GetInst().IsPress('S'))
-    {
-        StartMovement(EPlayerDir::DOWN_Left_Arm, { 0.0f, TileSize.Y });
+    else if (UEngineInput::GetInst().IsPress('S')) {
+        StartMovementWithAnimation(EPlayerDir::DOWN_Left_Arm, EPlayerDir::DOWN_Right_Arm, { 0.0f, TileSize.Y });
     }
-    else if (UEngineInput::GetInst().IsPress('D'))
-    {
-        StartMovement(EPlayerDir::RIGHT_Left_Arm, { TileSize.X, 0.0f });
+    else if (UEngineInput::GetInst().IsPress('D')) {
+        StartMovementWithAnimation(EPlayerDir::RIGHT_Left_Arm, EPlayerDir::RIGHT_Right_Arm, { TileSize.X, 0.0f });
     }
-    else
-    {
+    else {
         IsMoving = false;
-        bIsLeftArm = true;
         FSM.ChangeState(APlayerState::IDLE);
     }
 }
 
 
+void APlayer::StartMovementWithAnimation(EPlayerDir LeftArmDir, EPlayerDir RightArmDir, FVector2D Offset) {
+    DirectionMoveCount[LeftArmDir]++;
+    bIsLeftArm = (DirectionMoveCount[LeftArmDir] % 2 != 0);
+    CurDir = bIsLeftArm ? LeftArmDir : RightArmDir;
 
-void APlayer::StartMovement(EPlayerDir Direction, FVector2D Offset)
+    SetTargetLocation(GetActorLocation() + Offset);
+    IsMoving = true;
+    FSM.ChangeState(APlayerState::WALK);
+}
+
+
+APlayer::EPlayerDir APlayer::GetArmDirection(EPlayerDir LeftArmDir, EPlayerDir RightArmDir)
 {
+    DirectionMoveCount[LeftArmDir]++;
+
+    bool isLeftArm = (DirectionMoveCount[LeftArmDir] % 2 != 0);
+
+    bIsLeftArm = isLeftArm;
+
+    return isLeftArm ? LeftArmDir : RightArmDir;
+}
+
+
+void APlayer::StartMovement(EPlayerDir Direction, FVector2D Offset) {
     CurDir = Direction;
+
+    MoveCount++;
+
+    bIsLeftArm = (MoveCount % 2 != 0);
+
     SetTargetLocation(GetActorLocation() + Offset);
     FSM.ChangeState(APlayerState::WALK);
 }
 
-void APlayer::UpdateMovement(float _DeltaTime)
-{
+void APlayer::UpdateMovement(float _DeltaTime) {
     WalkTime += _DeltaTime;
 
-    // 현재 위치와 목표 위치의 차이를 계산
     FVector2D CurrentLocation = GetActorLocation();
-    if ((TargetLocation - CurrentLocation).Length() < 0.1f)
-    {
-        // 이동 완료
-        SetActorLocation(TargetLocation); // 최종 위치 설정
+    if ((TargetLocation - CurrentLocation).Length() < 0.1f) {
+        SetActorLocation(TargetLocation);
         IsMoving = false;
-        WalkTime = 0.0f;
-        FSM.ChangeState(APlayerState::IDLE); // IDLE 상태로 전환
+        FSM.ChangeState(APlayerState::IDLE);
     }
-    else
-    {
-        // Lerp를 사용한 부드러운 이동 처리
+    else {
         FVector2D NewLocation = UPokemonMath::Lerp(CurrentLocation, TargetLocation, WalkTime / TileMoveTime);
         SetActorLocation(NewLocation);
 
-        // 타일 한 칸 이동 중간 시점마다 애니메이션 변경
-        if (WalkTime >= TileMoveTime / 2.0f)
+        if (WalkTime >= 0.4f) 
         {
-            ChangeArmAnimation(); // 왼손/오른손 애니메이션 전환
-            WalkTime = 0.0f; // 다음 타일 이동을 위해 초기화
+            ChangeArmAnimation();
+            WalkTime -= 0.4f; 
         }
     }
 }
+
+
 
 
 
@@ -236,31 +249,39 @@ void APlayer::LevelChangeEnd()
 {
     Super::LevelChangeEnd();
 }
-void APlayer::ChangeArmAnimation()
-{
+
+void APlayer::ChangeArmAnimation() {
     std::string AnimationName;
 
     switch (CurDir)
     {
     case EPlayerDir::RIGHT_Left_Arm:
-        AnimationName = bIsLeftArm ? "Walk_Right_Left_Arm" : "Walk_Right_Right_Arm";
+    case EPlayerDir::RIGHT_Right_Arm:
+        AnimationName = (CurDir == EPlayerDir::RIGHT_Left_Arm) ? "Walk_Right_Left_Arm" : "Walk_Right_Right_Arm";
         break;
+
     case EPlayerDir::LEFT_Left_Arm:
-        AnimationName = bIsLeftArm ? "Walk_Left_Left_Arm" : "Walk_Left_Right_Arm";
+    case EPlayerDir::LEFT_Right_Arm:
+        AnimationName = (CurDir == EPlayerDir::LEFT_Left_Arm) ? "Walk_Left_Left_Arm" : "Walk_Left_Right_Arm";
         break;
+
     case EPlayerDir::DOWN_Left_Arm:
-        AnimationName = bIsLeftArm ? "Walk_Down_Left_Arm" : "Walk_Down_Right_Arm";
+    case EPlayerDir::DOWN_Right_Arm:
+        AnimationName = (CurDir == EPlayerDir::DOWN_Left_Arm) ? "Walk_Down_Left_Arm" : "Walk_Down_Right_Arm";
         break;
+
     case EPlayerDir::UP_Left_Arm:
-        AnimationName = bIsLeftArm ? "Walk_Up_Left_Arm" : "Walk_Up_Right_Arm";
+    case EPlayerDir::UP_Right_Arm:
+        AnimationName = (CurDir == EPlayerDir::UP_Left_Arm) ? "Walk_Up_Left_Arm" : "Walk_Up_Right_Arm";
         break;
+
     default:
         break;
     }
 
     SpriteRenderer->ChangeAnimation(AnimationName);
-    bIsLeftArm = !bIsLeftArm; // 왼팔과 오른팔 전환
 }
+
 
 
 void APlayer::PlayerCameraCheck()
@@ -356,19 +377,19 @@ APlayer::EPlayerDir APlayer::GetPressDirection()
 {
     APlayer::EPlayerDir NextDirection = CurDir;
 
-    if (UEngineInput::GetInst().IsPress('S'))
+    if (UEngineInput::GetInst().IsDown('S'))
     {
         NextDirection = APlayer::EPlayerDir::DOWN_Left_Arm;
     }
-    else if (UEngineInput::GetInst().IsPress('W'))
+    else if (UEngineInput::GetInst().IsDown('W'))
     {
         NextDirection = APlayer::EPlayerDir::UP_Left_Arm;
     }
-    else if (UEngineInput::GetInst().IsPress('A'))
+    else if (UEngineInput::GetInst().IsDown('A'))
     {
         NextDirection = APlayer::EPlayerDir::LEFT_Left_Arm;
     }
-    else if (UEngineInput::GetInst().IsPress('D'))
+    else if (UEngineInput::GetInst().IsDown('D'))
     {
         NextDirection = APlayer::EPlayerDir::RIGHT_Left_Arm;
     }
@@ -386,8 +407,8 @@ void APlayer::SetTargetLocation(const FVector2D& NewTarget)
     );
 
     TargetLocation = Target;
-    IsMoving = true; // 이동 플래그 설정
-    WalkTime = 0.0f; // WalkTime 초기화
+    IsMoving = true;
+    WalkTime = 0.0f;
 
     PlayerGroundCheck(TargetLocation);
 }
@@ -423,7 +444,7 @@ void APlayer::InitializeSprites()
 
 void APlayer::InitializeAnimations()
 {
-    float FrameTime = TileMoveTime / 1.0f; 
+    float FrameTime = TileMoveTime / 0.8f; 
 
     SpriteRenderer->CreateAnimation("Walk_Up_Left_Arm", "Player_Walk_Up.png", 1, 2, FrameTime);
     SpriteRenderer->CreateAnimation("Walk_Up_Right_Arm", "Player_Walk_Up.png", 3, 4, FrameTime);
