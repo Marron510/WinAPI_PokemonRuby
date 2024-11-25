@@ -68,8 +68,9 @@ public:
 	class APokemonText* GetMyPokemonSkill4() { return MyPokemonSkill4; }
 	class APokemonText* GetEnemyPokemonStat() { return EnemyPokemonStat; }
 
-
-
+	void PokemonBattleLogic1();
+	void PokemonBattleLogic2();
+	void FailedSkill();
 
 protected:
 

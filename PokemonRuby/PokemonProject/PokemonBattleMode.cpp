@@ -532,64 +532,49 @@ void APokemonBattleMode::HandleSkillSelection(FVector2D CursorLocation)
 		{
 		case 0:
 			SkillTextOff();
-
-			TimeEventManager.PushEvent(0.2f, [this]()
-				{
-					Skill1ChatText();
-				});
-			TimeEventManager.PushEvent(1.5f, [this]()
-				{
-					MyPokemon->UseSkill(MyPokemon->GetSkill1(), EnemyPokemon);
-				});
-			TimeEventManager.PushEvent(3.0f, [this]()
-				{
-					EnemySkill1ChatText();
-				});
-			TimeEventManager.PushEvent(4.5f, [this]()
-				{
-					EnemyPokemon->UseSkill(EnemyPokemon->GetSkill1(), MyPokemon);
-				});
-			TimeEventManager.PushEvent(6.5f, [this]()
-				{
-					ChatText->ClearText();
-					SpawnSelectMenu();
-					SkillTextOff();
-					BattleText->SetOrder(ERenderOrder::BackUI);
-					BattleSelectMenu->SetOrder(ERenderOrder::BackUI);
-					Cursor->SetState(ACursor::ECursorState::Menu);
-					CursorRender->SetOrder(ERenderOrder::CURSOR);
-				});
+			if ("-" == MyPokemon->GetSkill1())
+			{
+				FailedSkill();
+			}
+			else
+			{
+				PokemonBattleLogic1();
+			}
 			
 			break;
 		case 1:
 			SkillTextOff();
-
-			TimeEventManager.PushEvent(0.2f, [this]()
-				{
-					Skill2ChatText();
-				});
-			TimeEventManager.PushEvent(2.2f, [this]()
-				{
-					MyPokemon->UseSkill(MyPokemon->GetSkill2(), EnemyPokemon);
-				});
-			TimeEventManager.PushEvent(3.0f, [this]()
-				{
-					EnemySkill1ChatText();
-				});
-			TimeEventManager.PushEvent(5.0f, [this]()
-				{
-					EnemyPokemon->UseSkill(EnemyPokemon->GetSkill1(), MyPokemon);
-				});
-			
-			
+			if ("-" == MyPokemon->GetSkill2())
+			{
+				FailedSkill();
+			}
+			else
+			{
+				PokemonBattleLogic2();
+			}
 			break;
-
 		case 2:
-			MyPokemon->UseSkill(MyPokemon->GetSkill3(), EnemyPokemon);
+			if ("-" == MyPokemon->GetSkill3())
+			{
+				SkillTextOff();
+				FailedSkill();
+			}
+			else
+			{
+				MyPokemon->UseSkill(MyPokemon->GetSkill3(), EnemyPokemon);
+			}
 			break;
 
 		case 3:
-			MyPokemon->UseSkill(MyPokemon->GetSkill4(), EnemyPokemon);
+			if ("-" == MyPokemon->GetSkill4())
+			{
+				SkillTextOff();
+				FailedSkill();
+			}
+			else
+			{
+				MyPokemon->UseSkill(MyPokemon->GetSkill3(), EnemyPokemon);
+			}
 			break;
 
 		default:
@@ -650,4 +635,78 @@ void APokemonBattleMode::EnemySkill1ChatText()
 	ChatText->ClearText();
 	EnemyPokemonSkillText = EnemyPokemon->GetPokemonName() + " used" + enter + EnemyPokemon->GetSkill1() + "!";
 	ChatText->SetText(EnemyPokemonSkillText, 0.1f);
+}
+
+void APokemonBattleMode::PokemonBattleLogic1()
+{
+
+	TimeEventManager.PushEvent(0.2f, [this]()
+		{
+			Skill1ChatText();
+		});
+	TimeEventManager.PushEvent(1.5f, [this]()
+		{
+			MyPokemon->UseSkill(MyPokemon->GetSkill1(), EnemyPokemon);
+		});
+	TimeEventManager.PushEvent(3.0f, [this]()
+		{
+			EnemySkill1ChatText();
+		});
+	TimeEventManager.PushEvent(4.5f, [this]()
+		{
+			EnemyPokemon->UseSkill(EnemyPokemon->GetSkill1(), MyPokemon);
+		});
+	TimeEventManager.PushEvent(6.5f, [this]()
+		{
+			ChatText->ClearText();
+			SpawnSelectMenu();
+			SkillTextOff();
+			BattleText->SetOrder(ERenderOrder::BackUI);
+			BattleSelectMenu->SetOrder(ERenderOrder::BackUI);
+			Cursor->SetState(ACursor::ECursorState::Menu);
+			CursorRender->SetOrder(ERenderOrder::CURSOR);
+		});
+}
+void APokemonBattleMode::PokemonBattleLogic2()
+{
+	TimeEventManager.PushEvent(0.2f, [this]()
+		{
+			Skill2ChatText();
+		});
+	TimeEventManager.PushEvent(1.5f, [this]()
+		{
+			MyPokemon->UseSkill(MyPokemon->GetSkill2(), EnemyPokemon);
+		});
+	TimeEventManager.PushEvent(3.0f, [this]()
+		{
+			EnemySkill1ChatText();
+		});
+	TimeEventManager.PushEvent(4.5f, [this]()
+		{
+			EnemyPokemon->UseSkill(EnemyPokemon->GetSkill1(), MyPokemon);
+		});
+	TimeEventManager.PushEvent(6.5f, [this]()
+		{
+			ChatText->ClearText();
+			SpawnSelectMenu();
+			SkillTextOff();
+			BattleText->SetOrder(ERenderOrder::BackUI);
+			BattleSelectMenu->SetOrder(ERenderOrder::BackUI);
+			Cursor->SetState(ACursor::ECursorState::Menu);
+			CursorRender->SetOrder(ERenderOrder::CURSOR);
+		});
+}
+
+void APokemonBattleMode::FailedSkill()
+{
+	TimeEventManager.PushEvent(0.1f, [this]()
+		{
+			ChatText->SetText("But it failed!");
+		});
+	TimeEventManager.PushEvent(1.0f, [this]()
+		{
+			ChatText->ClearText();
+			BattleText->SetOrder(ERenderOrder::BackUI1);
+			SkillTextOn();
+		});
 }
