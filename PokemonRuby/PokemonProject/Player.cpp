@@ -409,11 +409,15 @@ void APlayer::SetTargetLocation(const FVector2D& NewTarget)
     );
 
     TargetLocation = Target;
-    IsMoving = true;
-    WalkTime = 0.0f;
+    WalkTime = 0.0f; 
 
-    PlayerGroundCheck(TargetLocation);
+    PlayerGroundCheck(TargetLocation); 
+    if (CheckColor != UColor::RED) 
+    {
+        IsMoving = true;
+    }
 }
+
 
 FVector2D APlayer::GetTargetLocation() const
 {
@@ -426,8 +430,15 @@ void APlayer::PlayerGroundCheck(FVector2D _MovePos)
     {
         FVector2D NextPos = _MovePos;
         CheckColor = ColImage->GetColor(NextPos);
+
+        if (CheckColor == UColor::RED)
+        {
+            IsMoving = false;
+            TargetLocation = GetActorLocation(); 
+        }
     }
 }
+
 
 void APlayer::SetColImage(std::string_view _ColImageName)
 {
