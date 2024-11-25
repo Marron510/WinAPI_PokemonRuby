@@ -15,6 +15,7 @@ AMyPokemon::AMyPokemon()
     SetPokemon(EMyPokemon::TORCHIC);
     MyPokemon->SetOrder(ERenderOrder::POKEMON);
     MyPokemon->SetSpriteScale(1.0f);
+    LevelString = std::to_string(Level);
 }
 
 AMyPokemon::~AMyPokemon()

@@ -46,6 +46,7 @@ public:
 		return Name;
 	}
 
+
 	void SetLevel(int InLevel) { Level = InLevel; }
 	void SetHP(int InHP) { HP = InHP; }
 	void SetAttack(int InAttack) { Attack = InAttack; }
@@ -74,12 +75,17 @@ public:
 	{
 		return skill4;
 	}
+	std::string GetLevelStirng()
+	{
+		return LevelString;
+	}
 
 protected:
 
 private:
 
     std::string Name;              
+	std::string LevelString;
 
     int Level;                     
     int HP;                        

@@ -55,7 +55,10 @@ public:
         return skill4;
     }
 
-
+    std::string GetLevelStirng()
+    {
+        return LevelString;
+    }
 
 
     void SetPokemonName(const std::string& InName) { Name = InName; }
@@ -71,23 +74,24 @@ public:
     void MovePokemonForSkill();
 
 
-
+   
 
 
 protected:
     int AdjustLevelByRegion(int baseLevel, int regionLevel);
 
 private:
-    std::string Name;               // 포켓몬의 이름
-    int Level;                      // 포켓몬의 레벨
-    int HP;                         // HP
-    int Attack;                     // 공격력
-    int Defense;                    // 방어력
-    int SpecialAttack;              // 특수 공격력
-    int SpecialDefense;             // 특수 방어력
-    int Speed;                      // 스피드
+    std::string Name = "";               // 포켓몬의 이름
+    std::string LevelString = "";
+    int Level = 1;                      // 포켓몬의 레벨
+    int HP = 10;                         // HP
+    int Attack = 1;                     // 공격력
+    int Defense = 1;                    // 방어력
+    int SpecialAttack = 1;              // 특수 공격력
+    int SpecialDefense = 1;             // 특수 방어력
+    int Speed = 1;                      // 스피드
 
-    std::string skill1, skill2, skill3, skill4;
+    std::string skill1 = "", skill2 = "", skill3 = "", skill4 = "";
 
     void SetPokemonStats(const std::string& PokemonName, int adjustedLevel);
 

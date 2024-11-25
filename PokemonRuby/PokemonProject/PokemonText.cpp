@@ -86,6 +86,9 @@ void APokemonText::PrintTextUpdate(float _DeltaTime)
             else if (Value >= 'a' && Value <= 'z') {
                 CapitalValue = Value - 'a' + 26;
             }
+            else if (Value >= '0' && Value <= '9') {
+                CapitalValue = Value - '0' + 55;
+            }
             else if (Value == ' ') {
                 CapitalValue = Value - ' ' + 52;
             }

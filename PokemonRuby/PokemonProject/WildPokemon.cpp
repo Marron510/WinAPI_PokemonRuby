@@ -39,7 +39,7 @@ AWildPokemon::AWildPokemon()
     WildPokemonRender->ChangeAnimation(Name);
     WildPokemonRender->SetOrder(ERenderOrder::POKEMON);
     WildPokemonRender->SetSpriteScale(1.0f);
-
+    
     bHasEncountered = false;
 }
 
@@ -96,7 +96,7 @@ void AWildPokemon::SetPokemonStats(const std::string& PokemonName, int adjustedL
 {
     this->Name = PokemonName;
     this->Level = adjustedLevel;
-
+    LevelString = std::to_string(Level);
     // Ω∫≈» º≥¡§
     PokemonStats<ZigzagoonStats> stats(adjustedLevel); 
     this->HP = stats.GetHP();
@@ -129,6 +129,8 @@ void AWildPokemon::EncounterWildPokemon(int regionLevel)
     {
         return;
     }
+
+    LevelString = std::to_string(Level);
 
     UEngineRandom Random;
 

@@ -69,20 +69,22 @@ void APokemonBattleMode::BeginPlay()
 
 	TimeEventManager.PushEvent(2.0f, [this]()
 		{
-			DisplayChatText(); // 텍스트 출력 함수 호출
+			DisplayChatText();
 		});
 
 	APokemonPreparation();
 	{
-		EnemyPokemon = GetWorld()->SpawnActor<AWildPokemon>(); // 적 포켓몬 추가
-		EnemyPokemon->SetActorLocation({ -312.0f , 260.0f });
+		EnemyPokemon = GetWorld()->SpawnActor<AWildPokemon>(); 
+		EnemyPokemon->SetActorLocation({ -336.0f , 260.0f });
 		EnemyPokemon->EncounterWildPokemon(PokemonMapLevel);
+		EnemyPokemonLevel = EnemyPokemon->GetLevelStirng();
 	}
 
 	{ 
-		MyPokemon = GetWorld()->SpawnActor<AMyPokemon>(); // 내 포켓몬 추가
+		MyPokemon = GetWorld()->SpawnActor<AMyPokemon>(); 
 		MyPokemon->SetActorLocation({ -500.0f, -500.0f });
 		MyPokemonName = MyPokemon->GetMyPokemonName();
+		MyPokemonLevel = MyPokemon->GetLevelStirng();
 	}
 
 	{
@@ -124,6 +126,15 @@ void APokemonBattleMode::BeginPlay()
 		MyPokemonStat->SetText(MyPokemonName);
 		MyPokemonStat->SetActorLocation({ 1440.0f , 415.0f });
 		MyPokemonStat->SetOrder(ERenderOrder::FONT);
+	}
+
+	{
+		MyPokemonLevelText = GetWorld()->SpawnActor<APokemonText>();
+		MyPokemonLevelText->SetTextSpriteName("TextBlack.png");
+		MyPokemonLevelText->SetTextScale({ 26, 36 });
+		MyPokemonLevelText->SetText("5");
+		MyPokemonLevelText->SetActorLocation({ 500.0f , 415.0f });
+		MyPokemonLevelText->SetOrder(ERenderOrder::FONT);
 	}
 
 
@@ -313,7 +324,7 @@ void APokemonBattleMode::PlayerPokemonUISetting()
 		if (TargetLocation == Curloc)
 		{
 			PlayerPokemonUI->SetComponentLocation(TargetLocation);
-			IsPlayerPokemonUIMoved = true;  // 이동 완료 표시
+			IsPlayerPokemonUIMoved = true;  
 			SpawnSelectMenu();
 			return;
 		}
@@ -334,12 +345,14 @@ void APokemonBattleMode::PlayerPokemonTextSetting()
 		if (TargetLocation == Curloc)
 		{
 			MyPokemonStat->GetActorLocation() = TargetLocation;
+			//MyPokemonLevelText->GetActorLocation() = TargetLocation;
 			IsPlayerPokemonTextMoved = true;
 			IsChatOn = false;
 			return;
 		}
 
 		MyPokemonStat->SetActorLocation(Curloc);
+		//MyPokemonLevelText->SetActorLocation(Curloc);
 	}
 	
 }
@@ -426,7 +439,7 @@ void APokemonBattleMode::PokemonStatUpdate(float _DeltaTime)
 {
 	EnemyPokemonStat->PrintTextUpdate(_DeltaTime);
 	MyPokemonStat->PrintTextUpdate(_DeltaTime);
-	
+	MyPokemonLevelText->PrintTextUpdate(_DeltaTime);
 
 	if (true == IsBattleNow)
 	{

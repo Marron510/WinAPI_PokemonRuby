@@ -83,18 +83,23 @@ private:
 
 
 	std::string MyPokemonName;
+	std::string MyPokemonLevel;
 	std::string enter = "\n";
 	std::string MyPokemonSkillText;
 	std::string EnemyPokemonSkillText;
+	std::string EnemyPokemonLevel;
 
 
 	class AWildPokemon* EnemyPokemon = nullptr;
 	class ACursor* Cursor = nullptr;
 	USpriteRenderer* CursorRender = nullptr;
+	
 	USpriteRenderer* PlayerPokemonShadow = nullptr;
 	USpriteRenderer* EnemyPokemonShadow = nullptr;
+	
 	USpriteRenderer* PlayerPokemonUI = nullptr;
 	USpriteRenderer* EnemyPokemonUI = nullptr;
+
 	USpriteRenderer* SelectMenu = nullptr;
 	USpriteRenderer* BattleSelectMenu = nullptr;
 	USpriteRenderer* BattleText = nullptr;
@@ -137,7 +142,10 @@ private:
 
 	class APokemonText* ChatText = nullptr;
 	class APokemonText* BattleChatText = nullptr;
+	
 	class APokemonText* MyPokemonStat = nullptr;
+	class APokemonText* MyPokemonLevelText = nullptr;
+
 	class APokemonText* MyPokemonSkill1 = nullptr;
 	class APokemonText* MyPokemonSkill2 = nullptr;
 	class APokemonText* MyPokemonSkill3 = nullptr;
@@ -146,7 +154,7 @@ private:
 
 
 	class APokemonText* EnemyPokemonStat = nullptr;
-		
+	class APokemonText* EnemyPokemonLevelText = nullptr;
 	bool bHasDisplayedMenuText = false;
 	int PokemonMapLevel = 2;
 };
