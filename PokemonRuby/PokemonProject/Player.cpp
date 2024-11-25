@@ -18,35 +18,13 @@
 #include "PokemonInput.h"
 #include "WildPokemon.h"
 
-
-
-
 APlayer::APlayer()
 {
+    SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
+    SpriteRenderer->SetComponentScale({ 300, 300 });
 
-    {
-        SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
-
-        SpriteRenderer->SetSprite("Player_Walk_Up.png");
-        SpriteRenderer->SetSprite("Player_Walk_Down.png");
-        SpriteRenderer->SetSprite("Player_Walk_Right.png");
-        SpriteRenderer->SetSprite("Player_Walk_Left.png");
-
-        SpriteRenderer->SetComponentScale({ 300, 300 });
-
-        SpriteRenderer->CreateAnimation("Walk_Up", "Player_Walk_Up.png", 1, 3, 0.2f);
-        SpriteRenderer->CreateAnimation("Walk_Down", "Player_Walk_Down.png", 1, 3, 0.2f);
-        SpriteRenderer->CreateAnimation("Walk_Right", "Player_Walk_Right.png", 1, 3, 0.2f);
-        SpriteRenderer->CreateAnimation("Walk_Left", "Player_Walk_Left.png", 1, 3, 0.2f);
-
-
-
-        SpriteRenderer->CreateAnimation("Idle_Up", "Player_Walk_Up.png", 0, 0, 0.3f);
-        SpriteRenderer->CreateAnimation("Idle_Down", "Player_Walk_Down.png", 0, 0, 0.3f);
-        SpriteRenderer->CreateAnimation("Idle_Left", "Player_Walk_Left.png", 0, 0, 0.3f);
-        SpriteRenderer->CreateAnimation("Idle_Right", "Player_Walk_Right.png", 0, 0, 0.3f);
-
-    }
+    InitializeSprites();
+    InitializeAnimations();
 }
 
 APlayer::~APlayer()
@@ -55,10 +33,14 @@ APlayer::~APlayer()
 
 std::string DirString[static_cast<int>(APlayer::EPlayerDir::MAX)] =
 {
-    "_Left",
-    "_Right",
-    "_Up",
-    "_Down"
+    "_Left_Left_Arm",
+    "_Left_Right_Arm",
+    "_Right_Left_Arm",
+    "_Right_Right_Arm",
+    "_Up_Left_Arm",
+    "_Up_Right_Arm",
+    "_Down_Left_Arm",
+    "_Down_Right_Arm"
 };
 
 
@@ -67,103 +49,40 @@ void APlayer::BeginPlay()
     Super::BeginPlay();
     SetObject();
 
-    FSM.CreateState(APlayer::APlayerState::IDLE, std::bind(&APlayer::Idle, this, std::placeholders::_1),
-        [this]()
-        {
-            SpriteRenderer->ChangeAnimation("Idle" + DirString[static_cast<int>(CurDir)]);
-        }
+    FSM.CreateState(APlayer::APlayerState::IDLE,
+        std::bind(&APlayer::Idle, this, std::placeholders::_1),
+        [this]() { SpriteRenderer->ChangeAnimation("Idle" + DirString[static_cast<int>(CurDir)]); }
     );
 
-    FSM.CreateState(APlayer::APlayerState::WALK, std::bind(&APlayer::Walk, this, std::placeholders::_1),
-        [this]()
-        {
-            SpriteRenderer->ChangeAnimation("Walk" + DirString[static_cast<int>(CurDir)]);
-        }
+    FSM.CreateState(APlayer::APlayerState::WALK,
+        std::bind(&APlayer::Walk, this, std::placeholders::_1),
+        [this]() { SpriteRenderer->ChangeAnimation("Walk" + DirString[static_cast<int>(CurDir)]); }
     );
 
     FSM.ChangeState(APlayerState::IDLE);
-
 }
+
 
 void APlayer::Tick(float _DeltaTime)
 {
     Super::Tick(_DeltaTime);
-    
-    if (true == IsMoving)
-    {
-        WalkTime += _DeltaTime;
 
-        if (WalkTime >= TileMoveTime)
-        {
-            SetActorLocation(TargetLocation);
-            IsMoving = false;
-            WalkTime = 0.0f;
-            FSM.ChangeState(APlayerState::IDLE);
-        }
-        else
-        {
-            FVector2D NewLocation = UPokemonMath::Lerp(GetActorLocation(), TargetLocation, WalkTime / TileMoveTime);
-            SetActorLocation(NewLocation);
-        }
+    if (IsMoving)
+    {
+        UpdateMovement(_DeltaTime);
     }
 
     FSM.Update(_DeltaTime);
 }
 
-
 void APlayer::Idle(float _DeltaTime)
 {
     PlayerCameraCheck();
     PlayerDebugCheck(_DeltaTime);
-    
 
-    if (true == IsMoving)
-    {
-        return;
-    }
+    if (IsMoving) return;
 
-    if (UEngineInput::GetInst().IsPress('W') && true != IsMoving)
-    {
-        CurDir = EPlayerDir::UP;
-        FVector2D CurrentLocation = GetActorLocation();
-        SetTargetLocation(CurrentLocation + FVector2D(0.0f, -TileSize.Y));
-        FSM.ChangeState(APlayerState::WALK);
-        return;
-    }
-    if (UEngineInput::GetInst().IsPress('A') && true != IsMoving)
-    {
-        CurDir = EPlayerDir::LEFT;
-        FVector2D CurrentLocation = GetActorLocation();
-        SetTargetLocation(CurrentLocation + FVector2D(-TileSize.X, 0.0f));
-        FSM.ChangeState(APlayerState::WALK);
-        return;
-    }
-    if (UEngineInput::GetInst().IsPress('S') && true != IsMoving)
-    {
-        CurDir = EPlayerDir::DOWN;
-        FVector2D CurrentLocation = GetActorLocation();
-        SetTargetLocation(CurrentLocation + FVector2D(0.0f, TileSize.Y));
-        FSM.ChangeState(APlayerState::WALK);
-        return;
-    }
-    if (UEngineInput::GetInst().IsPress('D') && true != IsMoving)
-    {
-        CurDir = EPlayerDir::RIGHT;
-        FVector2D CurrentLocation = GetActorLocation();
-        SetTargetLocation(CurrentLocation + FVector2D(TileSize.X, 0.0f));
-        FSM.ChangeState(APlayerState::WALK);
-        return;
-    }
-
-    if (UEngineInput::GetInst().IsPress('W') || UEngineInput::GetInst().IsPress('A') ||
-        UEngineInput::GetInst().IsPress('S') || UEngineInput::GetInst().IsPress('D'))
-    {
-        SpriteRenderer->ChangeAnimation("Walk" + DirString[static_cast<int>(CurDir)]);
-    }
-    else
-    {
-        SpriteRenderer->ChangeAnimation("Idle" + DirString[static_cast<int>(CurDir)]);
-    }
+    HandleInput();
 }
 
 void APlayer::Walk(float _DeltaTime)
@@ -171,47 +90,103 @@ void APlayer::Walk(float _DeltaTime)
     PlayerCameraCheck();
     PlayerDebugCheck(_DeltaTime);
 
-    FVector2D CurrentLocation = GetActorLocation();
-    FVector2D TargetLocation = GetTargetLocation();
-
-    if (false == IsMoving)
+    // 이동 완료 여부 확인
+    if (!IsMoving)
     {
-        TargetLocation = CurrentLocation;
+        FSM.ChangeState(APlayerState::IDLE); // IDLE 상태로 전환
     }
-    
-    PlayerGroundCheck(TargetLocation);
-    
-    FVector2D Direction = TargetLocation - CurrentLocation;
-    Direction.Normalize();
-
-    FVector2D NewLocation = UPokemonMath::Lerp(CurrentLocation, TargetLocation, WalkSpeed * _DeltaTime);
-    UEngineRandom Encounter;
-    int EncounterInt= Encounter.RandomInt( 0 , 9 );
-
-
-    if ((NewLocation - TargetLocation).Length() < 0.1f)
+    else
     {
-        NewLocation = TargetLocation;
-        IsMoving = false;
+        WalkTime += _DeltaTime;
 
-        if (UColor::GREEN == CheckColor && 2 > EncounterInt)
+        if (WalkTime >= TileMoveTime / 2.0f)
         {
-            UEngineAPICore::GetCore()->OpenLevel("PokemonBattle");
+            ChangeArmAnimation();
+            WalkTime = 0.0f; // 애니메이션 변경 후 WalkTime 초기화
         }
-
-        FSM.ChangeState(APlayerState::IDLE);
-    }
-
-    SetActorLocation(NewLocation);
-
-    if (UEngineInput::GetInst().IsPress('W') || UEngineInput::GetInst().IsPress('A') ||
-        UEngineInput::GetInst().IsPress('S') || UEngineInput::GetInst().IsPress('D'))
-    {
-        SpriteRenderer->ChangeAnimation("Walk" + DirString[static_cast<int>(CurDir)]);
     }
 }
 
 
+
+void APlayer::HandleInput()
+{
+    // 키 입력 확인 및 처리
+    if (UEngineInput::GetInst().IsPress('W'))
+    {
+        StartMovement(EPlayerDir::UP_Left_Arm, { 0.0f, -TileSize.Y });
+    }
+    else if (UEngineInput::GetInst().IsPress('A'))
+    {
+        StartMovement(EPlayerDir::LEFT_Left_Arm, { -TileSize.X, 0.0f });
+    }
+    else if (UEngineInput::GetInst().IsPress('S'))
+    {
+        StartMovement(EPlayerDir::DOWN_Left_Arm, { 0.0f, TileSize.Y });
+    }
+    else if (UEngineInput::GetInst().IsPress('D'))
+    {
+        StartMovement(EPlayerDir::RIGHT_Left_Arm, { TileSize.X, 0.0f });
+    }
+    else
+    {
+        IsMoving = false;
+        bIsLeftArm = true;
+        FSM.ChangeState(APlayerState::IDLE);
+    }
+}
+
+
+
+void APlayer::StartMovement(EPlayerDir Direction, FVector2D Offset)
+{
+    CurDir = Direction;
+    SetTargetLocation(GetActorLocation() + Offset);
+    FSM.ChangeState(APlayerState::WALK);
+}
+
+void APlayer::UpdateMovement(float _DeltaTime)
+{
+    WalkTime += _DeltaTime;
+
+    // 현재 위치와 목표 위치의 차이를 계산
+    FVector2D CurrentLocation = GetActorLocation();
+    if ((TargetLocation - CurrentLocation).Length() < 0.1f)
+    {
+        // 이동 완료
+        SetActorLocation(TargetLocation); // 최종 위치 설정
+        IsMoving = false;
+        WalkTime = 0.0f;
+        FSM.ChangeState(APlayerState::IDLE); // IDLE 상태로 전환
+    }
+    else
+    {
+        // Lerp를 사용한 부드러운 이동 처리
+        FVector2D NewLocation = UPokemonMath::Lerp(CurrentLocation, TargetLocation, WalkTime / TileMoveTime);
+        SetActorLocation(NewLocation);
+
+        // 타일 한 칸 이동 중간 시점마다 애니메이션 변경
+        if (WalkTime >= TileMoveTime / 2.0f)
+        {
+            ChangeArmAnimation(); // 왼손/오른손 애니메이션 전환
+            WalkTime = 0.0f; // 다음 타일 이동을 위해 초기화
+        }
+    }
+}
+
+
+
+
+void APlayer::HandleBattleEncounter()
+{
+    UEngineRandom Encounter;
+    int EncounterInt = Encounter.RandomInt(0, 9);
+
+    if (CheckColor == UColor::GREEN && EncounterInt < 2)
+    {
+        UEngineAPICore::GetCore()->OpenLevel("PokemonBattle");
+    }
+}
 
 void APlayer::ChangeState(APlayerState _CurPlayerState)
 {
@@ -221,7 +196,6 @@ void APlayer::ChangeState(APlayerState _CurPlayerState)
         IdleStart();
         break;
     case APlayerState::WALK:
-        WalkStart();
         break;
     default:
         break;
@@ -234,43 +208,24 @@ void APlayer::ChangeState(APlayerState _CurPlayerState)
 
 void APlayer::IdleStart()
 {
-    if (CurDir == EPlayerDir::RIGHT)
+    if (CurDir == EPlayerDir::RIGHT_Left_Arm)
     {
         SpriteRenderer->ChangeAnimation("Idle_Right");
     }
-    else if (CurDir == EPlayerDir::LEFT)
+    else if (CurDir == EPlayerDir::LEFT_Left_Arm)
     {
         SpriteRenderer->ChangeAnimation("Idle_Left");
     }
-    else if (CurDir == EPlayerDir::DOWN)
+    else if (CurDir == EPlayerDir::DOWN_Left_Arm)
     {
         SpriteRenderer->ChangeAnimation("Idle_Down");
     }
-    else if (CurDir == EPlayerDir::UP)
+    else if (CurDir == EPlayerDir::UP_Left_Arm)
     {
         SpriteRenderer->ChangeAnimation("Idle_Up");
     }
 }
 
-void APlayer::WalkStart()
-{
-    if (CurDir == EPlayerDir::RIGHT)
-    {
-        SpriteRenderer->ChangeAnimation("Walk_Right");
-    }
-    else if (CurDir == EPlayerDir::LEFT)
-    {
-        SpriteRenderer->ChangeAnimation("Walk_Left");
-    }
-    else if (CurDir == EPlayerDir::DOWN)
-    {
-        SpriteRenderer->ChangeAnimation("Walk_Down");
-    }
-    else if (CurDir == EPlayerDir::UP)
-    {
-        SpriteRenderer->ChangeAnimation("Walk_Up");
-    }
-}
 
 void APlayer::LevelChangeStart()
 {
@@ -281,7 +236,31 @@ void APlayer::LevelChangeEnd()
 {
     Super::LevelChangeEnd();
 }
+void APlayer::ChangeArmAnimation()
+{
+    std::string AnimationName;
 
+    switch (CurDir)
+    {
+    case EPlayerDir::RIGHT_Left_Arm:
+        AnimationName = bIsLeftArm ? "Walk_Right_Left_Arm" : "Walk_Right_Right_Arm";
+        break;
+    case EPlayerDir::LEFT_Left_Arm:
+        AnimationName = bIsLeftArm ? "Walk_Left_Left_Arm" : "Walk_Left_Right_Arm";
+        break;
+    case EPlayerDir::DOWN_Left_Arm:
+        AnimationName = bIsLeftArm ? "Walk_Down_Left_Arm" : "Walk_Down_Right_Arm";
+        break;
+    case EPlayerDir::UP_Left_Arm:
+        AnimationName = bIsLeftArm ? "Walk_Up_Left_Arm" : "Walk_Up_Right_Arm";
+        break;
+    default:
+        break;
+    }
+
+    SpriteRenderer->ChangeAnimation(AnimationName);
+    bIsLeftArm = !bIsLeftArm; // 왼팔과 오른팔 전환
+}
 
 
 void APlayer::PlayerCameraCheck()
@@ -379,19 +358,19 @@ APlayer::EPlayerDir APlayer::GetPressDirection()
 
     if (UEngineInput::GetInst().IsPress('S'))
     {
-        NextDirection = APlayer::EPlayerDir::DOWN;
+        NextDirection = APlayer::EPlayerDir::DOWN_Left_Arm;
     }
     else if (UEngineInput::GetInst().IsPress('W'))
     {
-        NextDirection = APlayer::EPlayerDir::UP;
+        NextDirection = APlayer::EPlayerDir::UP_Left_Arm;
     }
     else if (UEngineInput::GetInst().IsPress('A'))
     {
-        NextDirection = APlayer::EPlayerDir::LEFT;
+        NextDirection = APlayer::EPlayerDir::LEFT_Left_Arm;
     }
     else if (UEngineInput::GetInst().IsPress('D'))
     {
-        NextDirection = APlayer::EPlayerDir::RIGHT;
+        NextDirection = APlayer::EPlayerDir::RIGHT_Left_Arm;
     }
 
     return NextDirection;
@@ -401,29 +380,16 @@ APlayer::EPlayerDir APlayer::GetPressDirection()
 
 void APlayer::SetTargetLocation(const FVector2D& NewTarget)
 {
-    FVector2D Target = FVector2D
-    (
+    FVector2D Target = FVector2D(
         std::round(NewTarget.X / TileSize.X) * TileSize.X,
         std::round(NewTarget.Y / TileSize.Y) * TileSize.Y
     );
 
     TargetLocation = Target;
-    IsMoving = true;
-    WalkTime = 0.0f;
+    IsMoving = true; // 이동 플래그 설정
+    WalkTime = 0.0f; // WalkTime 초기화
+
     PlayerGroundCheck(TargetLocation);
-
-    if (CheckColor == UColor::WHITE)
-    {
-        IsMoving = true;
-    }
-    if (CheckColor == UColor::RED)
-    {
-        IsMoving = false;
-        TargetLocation == GetActorLocation();
-    }
-
-    CurrentDirection = TargetLocation - GetActorLocation();
-    CurrentDirection.Normalize();
 }
 
 FVector2D APlayer::GetTargetLocation() const
@@ -443,4 +409,44 @@ void APlayer::PlayerGroundCheck(FVector2D _MovePos)
 void APlayer::SetColImage(std::string_view _ColImageName)
 {
     ColImage = UImageManager::GetInst().FindImage(_ColImageName);
+}
+
+
+void APlayer::InitializeSprites()
+{
+    SpriteRenderer->SetSprite("Player_Walk_Up.png");
+    SpriteRenderer->SetSprite("Player_Walk_Down.png");
+    SpriteRenderer->SetSprite("Player_Walk_Right.png");
+    SpriteRenderer->SetSprite("Player_Walk_Left.png");
+}
+
+
+void APlayer::InitializeAnimations()
+{
+    float FrameTime = TileMoveTime / 1.0f; 
+
+    SpriteRenderer->CreateAnimation("Walk_Up_Left_Arm", "Player_Walk_Up.png", 1, 2, FrameTime);
+    SpriteRenderer->CreateAnimation("Walk_Up_Right_Arm", "Player_Walk_Up.png", 3, 4, FrameTime);
+
+    SpriteRenderer->CreateAnimation("Walk_Down_Left_Arm", "Player_Walk_Down.png", 1, 2, FrameTime);
+    SpriteRenderer->CreateAnimation("Walk_Down_Right_Arm", "Player_Walk_Down.png", 3, 4, FrameTime);
+
+    SpriteRenderer->CreateAnimation("Walk_Right_Left_Arm", "Player_Walk_Right.png", 1, 2, FrameTime);
+    SpriteRenderer->CreateAnimation("Walk_Right_Right_Arm", "Player_Walk_Right.png", 3, 4, FrameTime);
+
+    SpriteRenderer->CreateAnimation("Walk_Left_Left_Arm", "Player_Walk_Left.png", 1, 2, FrameTime);
+    SpriteRenderer->CreateAnimation("Walk_Left_Right_Arm", "Player_Walk_Left.png", 3, 4, FrameTime);
+
+    float IdleFrameTime = 0.2f;
+    SpriteRenderer->CreateAnimation("Idle_Up_Left_Arm", "Player_Walk_Up.png", 0, 0, IdleFrameTime);
+    SpriteRenderer->CreateAnimation("Idle_Up_Right_Arm", "Player_Walk_Up.png", 0, 0, IdleFrameTime);
+
+    SpriteRenderer->CreateAnimation("Idle_Down_Left_Arm", "Player_Walk_Down.png", 0, 0, IdleFrameTime);
+    SpriteRenderer->CreateAnimation("Idle_Down_Right_Arm", "Player_Walk_Down.png", 0, 0, IdleFrameTime);
+
+    SpriteRenderer->CreateAnimation("Idle_Left_Left_Arm", "Player_Walk_Left.png", 0, 0, IdleFrameTime);
+    SpriteRenderer->CreateAnimation("Idle_Left_Right_Arm", "Player_Walk_Left.png", 0, 0, IdleFrameTime);
+
+    SpriteRenderer->CreateAnimation("Idle_Right_Left_Arm", "Player_Walk_Right.png", 0, 0, IdleFrameTime);
+    SpriteRenderer->CreateAnimation("Idle_Right_Right_Arm", "Player_Walk_Right.png", 0, 0, IdleFrameTime);
 }

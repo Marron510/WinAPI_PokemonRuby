@@ -18,10 +18,14 @@ public:
 
     enum class EPlayerDir
     {
-        LEFT,
-        RIGHT,
-        UP,
-        DOWN,
+        LEFT_Left_Arm,
+        LEFT_Right_Arm,
+        RIGHT_Left_Arm,
+        RIGHT_Right_Arm,
+        UP_Left_Arm,
+        UP_Right_Arm,
+        DOWN_Left_Arm,
+        DOWN_Right_Arm,
         MAX
     };
 
@@ -54,7 +58,6 @@ public:
     void Walk(float _DeltaTime);
     void ChangeState(APlayerState _CurPlayerState);
     void IdleStart();
-    void WalkStart();
 
 
 
@@ -68,18 +71,27 @@ public:
     void SetTargetLocation(const FVector2D& NewTarget);
 
     EPlayerDir GetPressDirection();
+    void ChangeArmAnimation();
+    void HandleInput();
+    void StartMovement(EPlayerDir Direction, FVector2D Offset);
+    void UpdateMovement(float _DeltaTime);
+    void HandleBattleEncounter();
+    void InitializeSprites();
+    void InitializeAnimations();
 
-    
-   
+
 protected:
 
 private:
     float WalkSpeed = 0.96;
     float WalkTime = 0.0f;
-    bool IsMoving = false;
-    const float TileMoveTime = 2.4f;
+    const float TileMoveTime = 0.1f;
     
-    EPlayerDir CurDir = EPlayerDir::DOWN;
+    bool IsMoving = false;
+    bool bIsLeftArm = true;
+
+
+    EPlayerDir CurDir = EPlayerDir::DOWN_Left_Arm;
     APlayerState CurPlayerState = APlayerState::IDLE;
 
     FVector2D TargetLocation = FVector2D::ZERO;
@@ -88,11 +100,24 @@ private:
     class USpriteRenderer* SpriteRenderer = nullptr;
     class USpriteRenderer* SpriteMapRenderer = nullptr;
     class UEngineWinImage* ColImage = nullptr;
+    
     FVector2D MapSize = FVector2D::ZERO;
     UColor CheckColor = UColor::WHITE;
 
     UFSMStateManager FSM;
     
     FVector2D TileSize = FVector2D(96, 96);
-};
 
+    int ArmOrder = 0; // 0: 왼팔, 1: 오른팔
+
+    void IncArmOrder()
+    {
+        ArmOrder = (ArmOrder + 1) % 2; // 0과 1을 번갈아가며 전환
+    }
+
+    std::string GetAnimationName(APlayerState State, const std::string& DirectionSuffix, bool IsUpperBody) const;
+
+
+    bool bCanProcessInput = true; // 입력 가능 여부를 나타내는 플래그
+    float InputCooldown = 0.0f;   // 남은 딜레이 시간
+};

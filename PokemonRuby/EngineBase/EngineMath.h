@@ -121,6 +121,12 @@ public:
 		return;
 	}
 
+	void SnapToGrid(float& X, float& Y, float gridSize)
+	{
+		X = std::round(X / gridSize) * gridSize;
+		Y = std::round(Y / gridSize) * gridSize;
+	}
+
 	static float Dist(const FVector2D& A, const FVector2D& B)
 	{
 		return std::sqrt(std::pow(B.X - A.X, 2) + std::pow(B.Y - A.Y, 2));
@@ -310,6 +316,9 @@ public:
 	{
 		return Location.Y + Scale.hY();
 	}
+
+	
+
 };
 
 class FIntPoint
