@@ -120,6 +120,15 @@ void APokemonBattleMode::BeginPlay()
 	}
 
 	{
+		EnemyPokemonLevelText = GetWorld()->SpawnActor<APokemonText>();
+		EnemyPokemonLevelText->SetTextSpriteName("TextBlack.png");
+		EnemyPokemonLevelText->SetTextScale({ 26, 36 });
+		EnemyPokemonLevelText->SetText(EnemyPokemonLevel);
+		EnemyPokemonLevelText->SetActorLocation({ -245.0f , 135.0f });
+		EnemyPokemonLevelText->SetOrder(ERenderOrder::FONT);
+	}
+
+	{
 		MyPokemonStat = GetWorld()->SpawnActor<APokemonText>();
 		MyPokemonStat->SetTextSpriteName("TextBlack.png");
 		MyPokemonStat->SetTextScale({ 26, 36 });
@@ -132,8 +141,8 @@ void APokemonBattleMode::BeginPlay()
 		MyPokemonLevelText = GetWorld()->SpawnActor<APokemonText>();
 		MyPokemonLevelText->SetTextSpriteName("TextBlack.png");
 		MyPokemonLevelText->SetTextScale({ 26, 36 });
-		MyPokemonLevelText->SetText("5");
-		MyPokemonLevelText->SetActorLocation({ 500.0f , 415.0f });
+		MyPokemonLevelText->SetText(MyPokemonLevel);
+		MyPokemonLevelText->SetActorLocation({ 1775.0f , 415.0f });
 		MyPokemonLevelText->SetOrder(ERenderOrder::FONT);
 	}
 
@@ -213,6 +222,7 @@ void APokemonBattleMode::PokemonSetting()
 			EnemyPokemon->GetActorLocation() = TargetLocation;
 			EnemyPokemonUISetting();
 			EnemyPokemonTextSetting();
+			EnemyPokemonLevelTextSetting();
 			return;
 		}
 
@@ -311,6 +321,21 @@ void APokemonBattleMode::EnemyPokemonTextSetting()
 	}
 }
 
+void APokemonBattleMode::EnemyPokemonLevelTextSetting()
+{
+	FVector2D TargetLocation = FVector2D({ 485.0f , 135.0f });
+	FVector2D Curloc = EnemyPokemonLevelText->GetActorLocation();
+
+	Curloc += FVector2D::RIGHT;
+
+	if (TargetLocation == Curloc)
+	{
+		EnemyPokemonLevelText->GetActorLocation() = TargetLocation;
+		return;
+	}
+
+	EnemyPokemonLevelText->SetActorLocation(Curloc);
+}
 
 void APokemonBattleMode::PlayerPokemonUISetting()
 {
@@ -345,19 +370,31 @@ void APokemonBattleMode::PlayerPokemonTextSetting()
 		if (TargetLocation == Curloc)
 		{
 			MyPokemonStat->GetActorLocation() = TargetLocation;
-			//MyPokemonLevelText->GetActorLocation() = TargetLocation;
 			IsPlayerPokemonTextMoved = true;
 			IsChatOn = false;
 			return;
 		}
 
 		MyPokemonStat->SetActorLocation(Curloc);
-		//MyPokemonLevelText->SetActorLocation(Curloc);
 	}
 	
 }
 
+void APokemonBattleMode::PlayerPokemonLevelTextSetting()
+{
+		FVector2D TargetLocation = FVector2D({ 1075.0f , 415.0f });
+		FVector2D Curloc = MyPokemonLevelText->GetActorLocation();
 
+		Curloc += FVector2D::LEFT;
+
+		if (TargetLocation == Curloc)
+		{
+			MyPokemonLevelText->GetActorLocation() = TargetLocation;
+			return;
+		}
+
+		MyPokemonLevelText->SetActorLocation(Curloc);
+}
 
 void APokemonBattleMode::PlayerSetting()
 {
@@ -416,6 +453,7 @@ void APokemonBattleMode::SpawnMyPokemon()
 		PlayerRenderer->SetActive(false);
 		PlayerPokemonUISetting();
 		PlayerPokemonTextSetting();
+		PlayerPokemonLevelTextSetting();
 	}
 
 }
@@ -440,6 +478,7 @@ void APokemonBattleMode::PokemonStatUpdate(float _DeltaTime)
 	EnemyPokemonStat->PrintTextUpdate(_DeltaTime);
 	MyPokemonStat->PrintTextUpdate(_DeltaTime);
 	MyPokemonLevelText->PrintTextUpdate(_DeltaTime);
+	EnemyPokemonLevelText->PrintTextUpdate(_DeltaTime);
 
 	if (true == IsBattleNow)
 	{

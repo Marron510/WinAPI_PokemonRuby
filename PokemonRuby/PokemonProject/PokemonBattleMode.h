@@ -31,8 +31,10 @@ public:
 	void PokemonSetting();
 	void PlayerPokemonUISetting();
 	void PlayerPokemonTextSetting();
+	void PlayerPokemonLevelTextSetting();
 	void EnemyPokemonUISetting();
 	void EnemyPokemonTextSetting();
+	void EnemyPokemonLevelTextSetting();
 	void PokemonStatUpdate(float _delatime);
 	void SpawnSelectMenu();
 	void HandleSkillSelection(FVector2D CursorLocation);
@@ -135,11 +137,6 @@ private:
 
 	UTimeEvent TimeEventManager;
 
-	/*bool HasUsedSkill1 = false;
-	bool HasUsedSkill2 = false;
-	bool HasUsedSkill3 = false;
-	bool HasUsedSkill4 = false;*/
-
 	class APokemonText* ChatText = nullptr;
 	class APokemonText* BattleChatText = nullptr;
 	
@@ -155,6 +152,7 @@ private:
 
 	class APokemonText* EnemyPokemonStat = nullptr;
 	class APokemonText* EnemyPokemonLevelText = nullptr;
+
 	bool bHasDisplayedMenuText = false;
 	int PokemonMapLevel = 2;
 };
