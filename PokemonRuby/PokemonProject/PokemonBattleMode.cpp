@@ -2,6 +2,7 @@
 #include "PokemonBattleMode.h"
 
 #include <EngineBase/EngineTimer.h>
+#include <EngineBase/TimeEvent.h>
 
 #include <EnginePlatform/EngineInput.h>
 
@@ -66,7 +67,10 @@ void APokemonBattleMode::BeginPlay()
 {
 	Super::BeginPlay();
 
-	
+	TimeEventManager.PushEvent(2.0f, [this]()
+		{
+			DisplayChatText(); // 텍스트 출력 함수 호출
+		});
 
 	APokemonPreparation();
 	{
@@ -92,7 +96,6 @@ void APokemonBattleMode::BeginPlay()
 		ChatText->SetActorLocation({ 100.0f, 640.0f });
 		ChatText->SetTextSpriteName("TextWhite.png");
 		ChatText->SetTextScale({ 30, 40 });
-		ChatText->SetText("Wild "+ EnemyPokemon->GetPokemonName() + " appeard!", 0.05f);
 		ChatText->SetOrder(ERenderOrder::FONT);
 	}
 
@@ -170,6 +173,7 @@ void APokemonBattleMode::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 	
+	TimeEventManager.Update(_DeltaTime);
 
 	PokemonSetting();
 
@@ -438,7 +442,7 @@ void APokemonBattleMode::PokemonStatUpdate(float _DeltaTime)
 void APokemonBattleMode::SpawnSelectMenu()
 {
 	SelectMenu->SetOrder(ERenderOrder::BackUI1);
-
+	CursorRender->SetOrder(ERenderOrder::CURSOR);
 	CursorRender->SetActive(true);
 	PlayerRenderer->SetActive(false);
 	MonsterBall->SetActive(false);
@@ -481,6 +485,7 @@ void APokemonBattleMode::HandleMenuSelection(FVector2D CursorLocation)
 				MyPokemonSkill2->SetActive(true);
 				MyPokemonSkill3->SetActive(true);
 				MyPokemonSkill4->SetActive(true);
+				SkillTextOn();
 			}
 
 			break;
@@ -527,9 +532,24 @@ void APokemonBattleMode::HandleSkillSelection(FVector2D CursorLocation)
 		{
 		case 0:
 			SkillTextOff();
-			MyPokemonSkillText = MyPokemon->GetMyPokemonName() + " used" + enter + MyPokemon->GetSkill1() + "!";
-			ChatText->SetText(MyPokemonSkillText, 0.01f);
-			MyPokemon->UseSkill(MyPokemon->GetSkill1(), EnemyPokemon);
+
+			TimeEventManager.PushEvent(0.5f, [this]()
+				{
+					Skill1ChatText();
+				});
+			TimeEventManager.PushEvent(1.5f, [this]()
+				{
+					MyPokemon->UseSkill(MyPokemon->GetSkill1(), EnemyPokemon);
+				});
+			TimeEventManager.PushEvent(3.0f, [this]()
+				{
+					EnemySkill1ChatText();
+				});
+			TimeEventManager.PushEvent(4.5f, [this]()
+				{
+					EnemyPokemon->UseSkill(EnemyPokemon->GetSkill1(), MyPokemon);
+				});
+			
 			break;
 		case 1:
 			SkillTextOff();
@@ -550,7 +570,7 @@ void APokemonBattleMode::HandleSkillSelection(FVector2D CursorLocation)
 			break;
 		}
 
-		IsPlayerTurn = false;
+		
 	}
 }
 
@@ -573,4 +593,27 @@ void APokemonBattleMode::SkillTextOn()
 	MyPokemonSkill3->SetOrder(ERenderOrder::FONT);
 	MyPokemonSkill4->SetOrder(ERenderOrder::FONT);
 	CursorRender->SetOrder(ERenderOrder::FONT);
+}
+
+void APokemonBattleMode::DisplayChatText()
+{
+	if (!IsTextDisplayed) // 텍스트가 이미 출력된 경우 중복 방지
+	{
+		ChatText->SetText("Wild " + EnemyPokemon->GetPokemonName() + " appeared!", 0.05f);
+		IsTextDisplayed = true; // 상태 변경
+	}
+}
+
+void APokemonBattleMode::Skill1ChatText()
+{
+	ChatText->SetOrder(ERenderOrder::FONT);
+	MyPokemonSkillText = MyPokemon->GetMyPokemonName() + " used" + enter + MyPokemon->GetSkill1() + "!";
+	ChatText->SetText(MyPokemonSkillText, 0.2f);
+}
+
+void APokemonBattleMode::EnemySkill1ChatText()
+{
+	ChatText->SetOrder(ERenderOrder::FONT);
+	MyPokemonSkillText = EnemyPokemon->GetPokemonName() + " used" + enter + EnemyPokemon->GetSkill1() + "!";
+	ChatText->SetText(MyPokemonSkillText, 0.2f);
 }

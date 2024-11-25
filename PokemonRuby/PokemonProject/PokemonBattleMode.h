@@ -45,6 +45,9 @@ public:
 	void SkillTextOff();
 	void SkillTextOn();
 	void HandleMenuSelection(FVector2D CursorLocation);
+	void DisplayChatText();
+	void Skill1ChatText();
+	void EnemySkill1ChatText();
 	
 	class AMyPokemon* GetMyPokemon()
 	{
@@ -62,6 +65,7 @@ public:
 	class APokemonText* GetMyPokemonSkill3() { return MyPokemonSkill3; }
 	class APokemonText* GetMyPokemonSkill4() { return MyPokemonSkill4; }
 	class APokemonText* GetEnemyPokemonStat() { return EnemyPokemonStat; }
+
 
 
 
@@ -118,6 +122,9 @@ private:
 	bool IsBattleCursorSet = false;
 	bool IsPlayerTurn = true;  // 플레이어 턴이면 true, 상대 턴이면 false
 
+	bool IsTextDisplayed = false;
+
+	UTimeEvent TimeEventManager;
 
 	/*bool HasUsedSkill1 = false;
 	bool HasUsedSkill2 = false;
