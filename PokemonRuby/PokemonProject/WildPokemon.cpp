@@ -160,6 +160,7 @@ void AWildPokemon::EncounterWildPokemon(int regionLevel)
 
 void AWildPokemon::UseSkill(const std::string& skillName, class AMyPokemon* target)
 {
+
     if (skillName == "POUND" || skillName == "SCRATCH" || skillName == "TACKLE")
     {
         MovePokemonForSkill();

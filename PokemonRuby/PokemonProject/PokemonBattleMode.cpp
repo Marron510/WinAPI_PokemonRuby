@@ -533,7 +533,7 @@ void APokemonBattleMode::HandleSkillSelection(FVector2D CursorLocation)
 		case 0:
 			SkillTextOff();
 
-			TimeEventManager.PushEvent(0.5f, [this]()
+			TimeEventManager.PushEvent(0.2f, [this]()
 				{
 					Skill1ChatText();
 				});
@@ -549,13 +549,39 @@ void APokemonBattleMode::HandleSkillSelection(FVector2D CursorLocation)
 				{
 					EnemyPokemon->UseSkill(EnemyPokemon->GetSkill1(), MyPokemon);
 				});
+			TimeEventManager.PushEvent(6.5f, [this]()
+				{
+					ChatText->ClearText();
+					SpawnSelectMenu();
+					SkillTextOff();
+					BattleText->SetOrder(ERenderOrder::BackUI);
+					BattleSelectMenu->SetOrder(ERenderOrder::BackUI);
+					Cursor->SetState(ACursor::ECursorState::Menu);
+					CursorRender->SetOrder(ERenderOrder::CURSOR);
+				});
 			
 			break;
 		case 1:
 			SkillTextOff();
-			MyPokemonSkillText = MyPokemon->GetMyPokemonName() + " used" + enter + MyPokemon->GetSkill2() + "!";
-			ChatText->SetText(MyPokemonSkillText, 0.01f);
-			MyPokemon->UseSkill(MyPokemon->GetSkill2(), EnemyPokemon);
+
+			TimeEventManager.PushEvent(0.2f, [this]()
+				{
+					Skill2ChatText();
+				});
+			TimeEventManager.PushEvent(2.2f, [this]()
+				{
+					MyPokemon->UseSkill(MyPokemon->GetSkill2(), EnemyPokemon);
+				});
+			TimeEventManager.PushEvent(3.0f, [this]()
+				{
+					EnemySkill1ChatText();
+				});
+			TimeEventManager.PushEvent(5.0f, [this]()
+				{
+					EnemyPokemon->UseSkill(EnemyPokemon->GetSkill1(), MyPokemon);
+				});
+			
+			
 			break;
 
 		case 2:
@@ -597,10 +623,10 @@ void APokemonBattleMode::SkillTextOn()
 
 void APokemonBattleMode::DisplayChatText()
 {
-	if (!IsTextDisplayed) // 텍스트가 이미 출력된 경우 중복 방지
+	if (!IsTextDisplayed) 
 	{
 		ChatText->SetText("Wild " + EnemyPokemon->GetPokemonName() + " appeared!", 0.05f);
-		IsTextDisplayed = true; // 상태 변경
+		IsTextDisplayed = true;
 	}
 }
 
@@ -608,12 +634,20 @@ void APokemonBattleMode::Skill1ChatText()
 {
 	ChatText->SetOrder(ERenderOrder::FONT);
 	MyPokemonSkillText = MyPokemon->GetMyPokemonName() + " used" + enter + MyPokemon->GetSkill1() + "!";
-	ChatText->SetText(MyPokemonSkillText, 0.2f);
+	ChatText->SetText(MyPokemonSkillText, 0.1f);
+}
+
+void APokemonBattleMode::Skill2ChatText()
+{
+	ChatText->SetOrder(ERenderOrder::FONT);
+	MyPokemonSkillText = MyPokemon->GetMyPokemonName() + " used" + enter + MyPokemon->GetSkill2() + "!";
+	ChatText->SetText(MyPokemonSkillText, 0.1f);
 }
 
 void APokemonBattleMode::EnemySkill1ChatText()
 {
 	ChatText->SetOrder(ERenderOrder::FONT);
-	MyPokemonSkillText = EnemyPokemon->GetPokemonName() + " used" + enter + EnemyPokemon->GetSkill1() + "!";
-	ChatText->SetText(MyPokemonSkillText, 0.2f);
+	ChatText->ClearText();
+	EnemyPokemonSkillText = EnemyPokemon->GetPokemonName() + " used" + enter + EnemyPokemon->GetSkill1() + "!";
+	ChatText->SetText(EnemyPokemonSkillText, 0.1f);
 }

@@ -177,9 +177,22 @@ FVector2D* ACursor::GetCursorPositionsForState(ECursorState State)
 void ACursor::SetState(ECursorState NewState)
 {
     CurrentState = NewState;
+
+    switch (NewState)
+    {
+    case ECursorState::Menu:
+        break;
+    case ECursorState::Battle:
+        IsFirstBattleZPressIgnored = true;
+        break;
+    default:
+        break;
+    }
+
     FVector2D* StartPositions = GetCursorPositionsForState(CurrentState);
     CursorRender->SetComponentLocation(StartPositions[0]);
 }
+
 
 void ACursor::SetBattleModeInstance(class APokemonBattleMode* BattleMode)
 {

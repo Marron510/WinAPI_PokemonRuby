@@ -47,6 +47,8 @@ public:
 	void HandleMenuSelection(FVector2D CursorLocation);
 	void DisplayChatText();
 	void Skill1ChatText();
+	void Skill2ChatText();
+
 	void EnemySkill1ChatText();
 	
 	class AMyPokemon* GetMyPokemon()
@@ -82,6 +84,7 @@ private:
 	std::string MyPokemonName;
 	std::string enter = "\n";
 	std::string MyPokemonSkillText;
+	std::string EnemyPokemonSkillText;
 
 
 	class AWildPokemon* EnemyPokemon = nullptr;
