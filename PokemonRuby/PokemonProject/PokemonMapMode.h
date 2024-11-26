@@ -30,7 +30,8 @@ protected:
 
 private:
 	class AFade* Fade = nullptr;
-	
+	class ATruck* NewTruck = nullptr;
+	class APlayer* Player = nullptr;
 };
 
 

@@ -8,6 +8,7 @@ enum class ERenderOrder
 	BACKGROUND = -10,
 	Tile = 0,
 	FLOWER = 10,
+	TRUCK = 20,
 	PLAYER = 50,
 	POKEMONSHADOW = 100,
 	POKEMON = 300,

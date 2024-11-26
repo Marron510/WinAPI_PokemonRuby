@@ -22,7 +22,6 @@
 APlayer::APlayer()
 {
     SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
-    SpriteRenderer->SetComponentScale({ 300, 300 });
 
     InitializeSprites();
     InitializeAnimations();
@@ -454,6 +453,7 @@ void APlayer::InitializeSprites()
     SpriteRenderer->SetSprite("Player_Walk_Down.png");
     SpriteRenderer->SetSprite("Player_Walk_Right.png");
     SpriteRenderer->SetSprite("Player_Walk_Left.png");
+    SpriteRenderer->SetComponentScale({ 300 , 300 });
 }
 
 

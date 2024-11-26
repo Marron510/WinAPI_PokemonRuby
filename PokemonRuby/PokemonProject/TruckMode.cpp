@@ -55,13 +55,13 @@ void ATruckMode::LevelChange()
 	if (MainPlayerLocation == TargetPos1.ToFVector())
 	{
 		UEngineAPICore::GetCore()->OpenLevel("PokemonMap");
-		APokemonMapMode::PokemonMapModeChangePos = { 92 , 70 };
+		APokemonMapMode::PokemonMapModeChangePos = { 84 , 70 };
 		Fade->FadeOut();
 	}
 	if (MainPlayerLocation == TargetPos2.ToFVector())
 	{
 		UEngineAPICore::GetCore()->OpenLevel("PokemonMap");
-		APokemonMapMode::PokemonMapModeChangePos = { 92 , 70 };
+		APokemonMapMode::PokemonMapModeChangePos = { 84 , 70 };
 		Fade->FadeOut();
 	}
 }

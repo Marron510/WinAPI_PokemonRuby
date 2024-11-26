@@ -19,6 +19,7 @@
 #include "Sea.h"
 #include "Player.h"
 #include "Fade.h"
+#include "Truck.h"
 
 FIntPoint APokemonMapMode::PokemonMapModeChangePos;
 
@@ -36,14 +37,18 @@ APokemonMapMode::~APokemonMapMode()
 void APokemonMapMode::BeginPlay()
 {
 	Super::BeginPlay();
-	APlayer* Player = GetWorld()->GetPawn<APlayer>();
-	Player->SetColImage("PokemonMapCollision.png");
+	Player = GetWorld()->GetPawn<APlayer>();
+	Player->SetColImage("PokemonMapCollisionTruck.png");
+	
 	
 	{
 		Fade = GetWorld()->SpawnActor<AFade>();
 		Fade->FadeOut();
 	}
 
+	{
+		NewTruck = GetWorld()->SpawnActor<ATruck>();
+	}
 
 	// AFlower
 	{
@@ -852,6 +857,8 @@ void APokemonMapMode::LevelChange()
 	{
 		UEngineAPICore::GetCore()->OpenLevel("PlayerHouse1Floor");
 		APlayerHouse1FloorMode::APlayerHouse1FloorModeChangePos = { 9, 8 };
+		NewTruck->GetRender()->SetActive(false);
+		Player->SetColImage("PokemonMapCollision.png");
 		Fade->FadeOut();
 	}
 
