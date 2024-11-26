@@ -55,7 +55,7 @@ void AMother::BeginPlay()
     TimeEventer.PushEvent(2.4f, [this]() {
         SetTargetLocation({ 0.0f, 96.0f });
         });
-    TimeEventer.PushEvent(2.6f, [this]() {
+    TimeEventer.PushEvent(2.8f, [this]() {
         SpriteRenderer->ChangeAnimation("Mother_Idle_Left");
         });
 }

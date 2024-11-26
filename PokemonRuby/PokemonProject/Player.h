@@ -96,6 +96,16 @@ public:
         ArmOrder = (ArmOrder + 1) % 2; 
     }
 
+    FVector2D GetCamPos() const
+    {
+        return CamPos;
+    }
+    
+    USpriteRenderer* GetPlayerRender()
+    {
+        return SpriteRenderer;
+    }
+
 protected:
 
 private:
@@ -130,6 +140,5 @@ private:
     bool bCanProcessInput = true; 
     float InputCooldown = 0.0f;   
 
-
-    
+    FVector2D CamPos = FVector2D::ZERO;
 };

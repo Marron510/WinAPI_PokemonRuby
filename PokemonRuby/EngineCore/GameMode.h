@@ -17,7 +17,7 @@ public:
 
 
 	class USpriteRenderer* Map = nullptr;
-
+	class USpriteRenderer* Chat = nullptr;
 
 
 

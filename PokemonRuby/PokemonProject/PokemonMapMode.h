@@ -26,7 +26,8 @@ public:
 	void LevelChange();
 
 	void LevelChangeStart() override;
-
+	void RenderChatAbovePlayer();
+	
 	
 protected:
 
@@ -35,9 +36,14 @@ private:
 	class ATruck* NewTruck = nullptr;
 	class APlayer* Player = nullptr;
 	class AMother* Mother = nullptr;
-	FVector2D TileSize = FVector2D(96, 96);
-
+	
+	class APokemonMap* NewActor = nullptr;
+	
 	UTimeEvent TimeEventManager;
+
+	class APokemonText* ChatText = nullptr;
+	
+	FVector2D TileSize = FVector2D(96, 96);
 };
 
 

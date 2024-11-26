@@ -164,7 +164,6 @@ void APokemonBattleMode::BeginPlay()
 		MyPokemonSkill2->SetText(MyPokemon->GetSkill2());
 		MyPokemonSkill2->SetActorLocation({ 520.0f , 640.0f });
 		MyPokemonSkill2->SetOrder(ERenderOrder::FONT);
-		MyPokemonSkill2->SetActive(false);
 	}
 
 	{
@@ -174,7 +173,6 @@ void APokemonBattleMode::BeginPlay()
 		MyPokemonSkill3->SetText(MyPokemon->GetSkill3());
 		MyPokemonSkill3->SetActorLocation({ 120.0f , 720.0f });
 		MyPokemonSkill3->SetOrder(ERenderOrder::FONT);
-		MyPokemonSkill3->SetActive(false);
 	}
 
 	{
@@ -184,7 +182,6 @@ void APokemonBattleMode::BeginPlay()
 		MyPokemonSkill4->SetText(MyPokemon->GetSkill4());
 		MyPokemonSkill4->SetActorLocation({ 520.0f , 720.0f });
 		MyPokemonSkill4->SetOrder(ERenderOrder::FONT);
-		MyPokemonSkill4->SetActive(false);
 	}
 	SkillTextOff();
 }

@@ -15,6 +15,7 @@
 
 #include "PokemonMath.h"
 #include "PokemonMap.h"
+#include "PokemonText.h"
 #include "PokemonEnum.h"
 #include "TileMap.h"
 #include "Flower.h"
@@ -24,7 +25,6 @@
 #include "Fade.h"
 #include "Truck.h"
 #include "Mother.h"
-
 
 FIntPoint APokemonMapMode::PokemonMapModeChangePos;
 APlayer::EPlayerDir APokemonMapMode::PokemonMapModePlayerDir = APlayer::EPlayerDir::DOWN_Left_Arm;
@@ -46,11 +46,20 @@ void APokemonMapMode::BeginPlay()
 	Player = GetWorld()->GetPawn<APlayer>();
 	Player->SetColImage("PokemonMapCollisionTruck.png");
 	
+	
+	ChatText = GetWorld()->SpawnActor<APokemonText>();
+	ChatText->SetActorLocation(Player->GetActorLocation());
+	ChatText->SetTextSpriteName("TextBlack.png");
+	ChatText->SetTextScale({ 100, 100 });
+	ChatText->SetOrder(ERenderOrder::FONT);
+	ChatText->SetActorLocation(Player->GetActorLocation());
+
+
 	Mother = GetWorld()->SpawnActor<AMother>();
 	FVector2D MotherPosition = { 85 * TileSize.X, 68 * TileSize.Y };
 	Mother->SetActorLocation(MotherPosition);
+	
 	Player->SetDirection(PokemonMapModePlayerDir);
-
 
 	{
 		Fade = GetWorld()->SpawnActor<AFade>();
@@ -836,15 +845,20 @@ void APokemonMapMode::BeginPlay()
 
 
 
-	{
-		APokemonMap* NewActor = GetWorld()->SpawnActor<APokemonMap>();
+	
+		NewActor = GetWorld()->SpawnActor<APokemonMap>();
 		Map = NewActor->GetCurMap();
-	}
+		Chat = NewActor->GetChatRender();
+	
 
-	TimeEventer.PushEvent(0.5f, [this]() {
-		
+
+
+	TimeEventer.PushEvent(3.5f, [this]() {
+		RenderChatAbovePlayer();
 		});
 
+	
+	
 }
 
 void APokemonMapMode::Tick(float _DeltaTime)
@@ -852,6 +866,11 @@ void APokemonMapMode::Tick(float _DeltaTime)
 	Super::Tick(_DeltaTime);
 
 	LevelChange();
+
+	TimeEventManager.Update(_DeltaTime);
+	ChatText->PrintTextUpdate(_DeltaTime);
+	ChatText->SetText("shit!");
+
 	
 }
 
@@ -905,4 +924,21 @@ void APokemonMapMode::LevelChangeStart()
 	FTileVector StartPos = { PokemonMapModeChangePos.X, PokemonMapModeChangePos.Y };
 
 	Actor->SetActorLocation(StartPos.ToFVector());
+}
+
+void APokemonMapMode::RenderChatAbovePlayer()
+{
+	if (Player == nullptr || Chat == nullptr)
+	{
+		return; 
+	}
+
+	FVector2D PlayerLocation = Player->GetActorLocation();
+
+	FVector2D ChatLocation = PlayerLocation + FVector2D(0.0f, 260.0f);
+
+	Chat->SetComponentLocation(ChatLocation);
+
+	Chat->SetOrder(ERenderOrder::CHAT);
+	Chat->SetActive(true);
 }

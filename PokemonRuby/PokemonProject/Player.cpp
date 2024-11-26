@@ -20,6 +20,7 @@
 #include "WildPokemon.h"
 #include "Fade.h"
 #include "Mother.h"
+#include "PokemonText.h"
 
 APlayer::APlayer()
 {
@@ -51,6 +52,7 @@ void APlayer::BeginPlay()
     Super::BeginPlay();
     SetObject();
 
+
     FSM.CreateState(APlayer::APlayerState::IDLE,
         std::bind(&APlayer::Idle, this, std::placeholders::_1),
         [this]() { SpriteRenderer->ChangeAnimation("Idle" + DirString[static_cast<int>(CurDir)]); }
@@ -69,7 +71,7 @@ void APlayer::BeginPlay()
 void APlayer::Tick(float _DeltaTime)
 {
     Super::Tick(_DeltaTime);
-
+    
    
     if (IsMoving)
     {
