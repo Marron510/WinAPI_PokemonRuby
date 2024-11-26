@@ -186,9 +186,6 @@
     <ClInclude Include="Mother.h">
       <Filter>PokemonObject\4.PlayObject</Filter>
     </ClInclude>
-    <ClInclude Include="MoveManager.h">
-      <Filter>PokemonObject\4.PlayObject</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PokemonCore.cpp">
@@ -312,9 +309,6 @@
       <Filter>PokemonObject\4.PlayObject</Filter>
     </ClCompile>
     <ClCompile Include="Mother.cpp">
-      <Filter>PokemonObject\4.PlayObject</Filter>
-    </ClCompile>
-    <ClCompile Include="MoveManager.cpp">
       <Filter>PokemonObject\4.PlayObject</Filter>
     </ClCompile>
   </ItemGroup>
