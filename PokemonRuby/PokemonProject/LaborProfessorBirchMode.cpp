@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "LaborProfessorBirchMap.h"
 #include "PokemonMapMode.h"
+#include "Fade.h"
 
 FIntPoint ALaborProfessorBirchMode::LaborProfessorBirchModeChangePos;
 
@@ -31,6 +32,10 @@ void ALaborProfessorBirchMode::BeginPlay()
 		Map = NewActor->GetCurMap();
 		APlayer* Player = GetWorld()->GetPawn<APlayer>();
 		Player->SetColImage("LaborProfessorBirch Collision.png");
+	}
+	{
+		Fade = GetWorld()->SpawnActor<AFade>();
+		Fade->FadeOut();
 	}
 }
 
@@ -59,6 +64,7 @@ void ALaborProfessorBirchMode::LevelChange(float _DeltaTime)
 		MainPlayer->SetActorLocation(TargetPos1.ToFVector() + FTileVector::Up.ToFVector());
 		UEngineAPICore::GetCore()->OpenLevel("PokemonMap");
 		APokemonMapMode::PokemonMapModeChangePos = { 87, 77 };
+		Fade->FadeOut();
 	}
 }
 
@@ -67,7 +73,7 @@ void ALaborProfessorBirchMode::LevelChange(float _DeltaTime)
 void ALaborProfessorBirchMode::LevelChangeStart()
 {
 	AActor* Actor = GetWorld()->GetPawn();
-
+	
 	FTileVector StartPos = { LaborProfessorBirchModeChangePos.X, LaborProfessorBirchModeChangePos.Y };
 
 	Actor->SetActorLocation(StartPos.ToFVector());

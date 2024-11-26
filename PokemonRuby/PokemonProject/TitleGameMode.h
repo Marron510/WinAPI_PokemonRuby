@@ -16,11 +16,10 @@ public:
 	ATitleGameMode& operator=(const ATitleGameMode& _Other) = delete;
 	ATitleGameMode& operator=(ATitleGameMode&& _Other) noexcept = delete;
 
+	void BeginPlay();
+	void Tick(float _DeltaTime);
 
 protected:
-	void BeginPlay();
-
 private:
-
 };
 

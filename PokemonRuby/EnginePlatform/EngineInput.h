@@ -28,7 +28,7 @@ public:
 
     static UEngineInput& GetInst()
     {
-        static UEngineInput Inst = UEngineInput(); //전역변수처럼 사용하지만 함수가 끝날때 사라지지않을것임 다른곳에서 선언 불가
+        static UEngineInput Inst = UEngineInput(); 
         return Inst;
     }
 
@@ -138,6 +138,8 @@ public:
     {
         return Keys;
     }
+
+    void ExecuteIfKeyPressed(float _DeltaTime, std::function<void()> action);
 
 protected:
 

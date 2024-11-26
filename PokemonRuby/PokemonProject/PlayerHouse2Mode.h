@@ -27,6 +27,6 @@ public:
 protected:
 
 private:
-
+	class AFade* Fade = nullptr;
 };
 

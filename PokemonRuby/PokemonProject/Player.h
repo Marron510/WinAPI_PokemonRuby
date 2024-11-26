@@ -59,6 +59,8 @@ public:
     void PlayerGroundCheck(FVector2D _MovePos);
 
     void SetObject();
+    void SetColImage(std::string_view _ColImageName);
+    void SetTargetLocation(const FVector2D& NewTarget);
 
     void LevelChangeStart();
     void LevelChangeEnd();
@@ -67,28 +69,28 @@ public:
     void Walk(float _DeltaTime);
     void ChangeState(APlayerState _CurPlayerState);
     void IdleStart();
+    void HandleInput();
+    void StartMovement(EPlayerDir Direction, FVector2D Offset);
+    void UpdateMovement(float _DeltaTime);
+    void ChangeArmAnimation();
 
+    void MoveOneTile(EPlayerDir Direction);
 
+    void InitializeSprites();
+    void InitializeAnimations();
+    void StartMovementWithAnimation(EPlayerDir LeftArmDir, EPlayerDir RightArmDir, FVector2D Offset);
 
+    void HandleBattleEncounter();
+
+    FVector2D GetTargetLocation() const;
+    EPlayerDir GetPressDirection();
+    EPlayerDir GetArmDirection(EPlayerDir LeftArmDir, EPlayerDir RightArmDir);
     EPlayerDir GetCurDir()
     {
         return CurDir;
     }
 
-    void SetColImage(std::string_view _ColImageName);
-    FVector2D GetTargetLocation() const;
-    void SetTargetLocation(const FVector2D& NewTarget);
 
-    EPlayerDir GetPressDirection();
-    void ChangeArmAnimation();
-    void HandleInput();
-    void StartMovement(EPlayerDir Direction, FVector2D Offset);
-    void UpdateMovement(float _DeltaTime);
-    void HandleBattleEncounter();
-    void InitializeSprites();
-    void InitializeAnimations();
-    EPlayerDir GetArmDirection(EPlayerDir LeftArmDir, EPlayerDir RightArmDir);
-    void StartMovementWithAnimation(EPlayerDir LeftArmDir, EPlayerDir RightArmDir, FVector2D Offset);
 protected:
 
 private:

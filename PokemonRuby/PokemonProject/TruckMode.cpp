@@ -8,7 +8,7 @@
 #include "TruckMap.h"
 #include "Player.h"
 #include "PokemonMapMode.h"
-
+#include "Fade.h"
 ATruckMode::ATruckMode()
 {
 
@@ -31,6 +31,10 @@ void ATruckMode::BeginPlay()
 		APlayer* Player = GetWorld()->GetPawn<APlayer>();
 		Player->SetColImage("TruckCollision.png");
 	}
+	{
+		Fade = GetWorld()->SpawnActor<AFade>();
+		Fade->FadeOut();
+	}
 }
 
 void ATruckMode::Tick(float _DeltaTime)
@@ -52,10 +56,12 @@ void ATruckMode::LevelChange()
 	{
 		UEngineAPICore::GetCore()->OpenLevel("PokemonMap");
 		APokemonMapMode::PokemonMapModeChangePos = { 92 , 70 };
+		Fade->FadeOut();
 	}
 	if (MainPlayerLocation == TargetPos2.ToFVector())
 	{
 		UEngineAPICore::GetCore()->OpenLevel("PokemonMap");
 		APokemonMapMode::PokemonMapModeChangePos = { 92 , 70 };
+		Fade->FadeOut();
 	}
 }

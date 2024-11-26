@@ -18,7 +18,7 @@
 #include "Water.h"
 #include "Sea.h"
 #include "Player.h"
-
+#include "Fade.h"
 
 FIntPoint APokemonMapMode::PokemonMapModeChangePos;
 
@@ -38,6 +38,12 @@ void APokemonMapMode::BeginPlay()
 	Super::BeginPlay();
 	APlayer* Player = GetWorld()->GetPawn<APlayer>();
 	Player->SetColImage("PokemonMapCollision.png");
+	
+	{
+		Fade = GetWorld()->SpawnActor<AFade>();
+		Fade->FadeOut();
+	}
+
 
 	// AFlower
 	{
@@ -846,18 +852,21 @@ void APokemonMapMode::LevelChange()
 	{
 		UEngineAPICore::GetCore()->OpenLevel("PlayerHouse1Floor");
 		APlayerHouse1FloorMode::APlayerHouse1FloorModeChangePos = { 9, 8 };
+		Fade->FadeOut();
 	}
 
 	if (MainPlayerLocation == TargetPos2.ToFVector())
 	{
 		UEngineAPICore::GetCore()->OpenLevel("PlayerHouse2Floor");
 		APlayerHouse2FloorMode::PlayerHouse2FloorMapModeChangePos = { 3, 8 };
+		Fade->FadeOut();
 	}
 	
 	if (MainPlayerLocation == TargetPos3.ToFVector())
 	{
 		UEngineAPICore::GetCore()->OpenLevel("LaborProfessorBirch");
 		ALaborProfessorBirchMode::LaborProfessorBirchModeChangePos = { 7, 12 };
+		Fade->FadeOut();
 	}
 }
 

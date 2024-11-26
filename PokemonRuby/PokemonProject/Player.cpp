@@ -17,6 +17,7 @@
 #include "PokemonEnum.h"
 #include "PokemonInput.h"
 #include "WildPokemon.h"
+#include "Fade.h"
 
 APlayer::APlayer()
 {
@@ -67,6 +68,7 @@ void APlayer::Tick(float _DeltaTime)
 {
     Super::Tick(_DeltaTime);
 
+   
     if (IsMoving)
     {
         UpdateMovement(_DeltaTime);
@@ -485,3 +487,53 @@ void APlayer::InitializeAnimations()
     SpriteRenderer->CreateAnimation("Idle_Right_Right_Arm", "Player_Walk_Right.png", 0, 0, IdleFrameTime);
 }
 
+void APlayer::MoveOneTile(EPlayerDir Direction)
+{
+    FVector2D CurrentLocation = GetActorLocation();
+
+    FVector2D Offset;
+    switch (Direction)
+    {
+    case EPlayerDir::UP_Left_Arm:
+    case EPlayerDir::UP_Right_Arm:
+        Offset = { 0.0f, -96.0f }; // À§ÂÊÀ¸·Î 96 ÇÈ¼¿
+        break;
+    case EPlayerDir::DOWN_Left_Arm:
+    case EPlayerDir::DOWN_Right_Arm:
+        Offset = { 0.0f, 96.0f }; // ¾Æ·¡ÂÊÀ¸·Î 96 ÇÈ¼¿
+        break;
+    case EPlayerDir::LEFT_Left_Arm:
+    case EPlayerDir::LEFT_Right_Arm:
+        Offset = { -96.0f, 0.0f }; // ¿ÞÂÊÀ¸·Î 96 ÇÈ¼¿
+        break;
+    case EPlayerDir::RIGHT_Left_Arm:
+    case EPlayerDir::RIGHT_Right_Arm:
+        Offset = { 96.0f, 0.0f }; // ¿À¸¥ÂÊÀ¸·Î 96 ÇÈ¼¿
+        break;
+    default:
+        return;
+    }
+
+    std::string AnimationName = "Walk_";
+    if (Direction == EPlayerDir::UP_Left_Arm || Direction == EPlayerDir::UP_Right_Arm)
+        AnimationName += "Up";
+    else if (Direction == EPlayerDir::DOWN_Left_Arm || Direction == EPlayerDir::DOWN_Right_Arm)
+        AnimationName += "Down";
+    else if (Direction == EPlayerDir::LEFT_Left_Arm || Direction == EPlayerDir::LEFT_Right_Arm)
+        AnimationName += "Left";
+    else if (Direction == EPlayerDir::RIGHT_Left_Arm || Direction == EPlayerDir::RIGHT_Right_Arm)
+        AnimationName += "Right";
+
+    if (Direction == EPlayerDir::UP_Left_Arm || Direction == EPlayerDir::DOWN_Left_Arm ||
+        Direction == EPlayerDir::LEFT_Left_Arm || Direction == EPlayerDir::RIGHT_Left_Arm)
+        AnimationName += "_Left_Arm";
+    else
+        AnimationName += "_Right_Arm";
+
+    SpriteRenderer->ChangeAnimation(AnimationName);
+
+    SetTargetLocation(CurrentLocation + Offset);
+
+    IsMoving = true;
+    FSM.ChangeState(APlayerState::WALK);
+}

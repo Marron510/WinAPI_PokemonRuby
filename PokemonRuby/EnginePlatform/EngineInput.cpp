@@ -243,3 +243,17 @@ void UEngineInput::BindAction(int _KeyIndex, KeyEvent _EventType, std::function<
 
 
 }
+
+void UEngineInput::ExecuteIfKeyPressed(float _DeltaTime, std::function<void()> action)
+{
+	for (auto& keyPair : Keys)
+	{
+		UEngineKey& key = keyPair.second;
+		if (key.IsPress)
+		{
+			action(); 
+			break; 
+		}
+	}
+}
+

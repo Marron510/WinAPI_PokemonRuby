@@ -9,6 +9,7 @@
 #include "Player.h"
 
 #include "PlayerHouse1FloorMode.h"
+#include "Fade.h"
 
 FIntPoint APlayerHouse1Mode::PlayerHouse1MapModeChangePos;
 
@@ -28,6 +29,10 @@ void APlayerHouse1Mode::BeginPlay()
 		Map = NewActor->GetCurMap();
 		APlayer* Player = GetWorld()->GetPawn<APlayer>();
 		Player->SetColImage("PlayerHouse_1 Collision.png");
+	}
+	{
+		Fade = GetWorld()->SpawnActor<AFade>();
+		Fade->FadeOut();
 	}
 }
 
@@ -51,6 +56,7 @@ void APlayerHouse1Mode::LevelChange()
 	{
 		UEngineAPICore::GetCore()->OpenLevel("PlayerHouse1Floor");
 		APlayerHouse1FloorMode::APlayerHouse1FloorModeChangePos = { 9 , 3 };
+		Fade->FadeOut();
 	}
 
 }

@@ -11,6 +11,7 @@
 
 #include "PokemonMapMode.h"
 #include "PlayerHouse1Mode.h"
+#include "Fade.h"
  
 FIntPoint APlayerHouse1FloorMode::APlayerHouse1FloorModeChangePos;
 
@@ -33,6 +34,10 @@ void APlayerHouse1FloorMode::BeginPlay()
 		Map = NewActor->GetCurMap();
 		APlayer* Player = GetWorld()->GetPawn<APlayer>();
 		Player->SetColImage("PlayerHouse1Floor Collision.png");
+	}
+	{
+		Fade = GetWorld()->SpawnActor<AFade>();
+		Fade->FadeOut();
 	}
 }
 
@@ -59,11 +64,13 @@ void APlayerHouse1FloorMode::LevelChange()
 	{
 		UEngineAPICore::GetCore()->OpenLevel("PokemonMap");
 		APokemonMapMode::PokemonMapModeChangePos = { 85 , 69 };
+		Fade->FadeOut();
 	}
 	if (MainPlayerLocation == TargetPos3.ToFVector())
 	{
 		UEngineAPICore::GetCore()->OpenLevel("PlayerHouse1");
 		APlayerHouse1Mode::PlayerHouse1MapModeChangePos = { 8 , 2 };
+		Fade->FadeOut();
 	}
 }
 

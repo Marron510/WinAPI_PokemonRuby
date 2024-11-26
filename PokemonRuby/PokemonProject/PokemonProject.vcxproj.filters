@@ -96,9 +96,6 @@
     <ClInclude Include="PlayerHouse1Map.h">
       <Filter>PokemonObject\1.PokemonMap\01_LittleRootTownMap</Filter>
     </ClInclude>
-    <ClInclude Include="TitleMap.h">
-      <Filter>PokemonObject\1.PokemonMap\00_TitleMap</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerHouse2FloorMode.h">
       <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\01.LittleRootTown</Filter>
     </ClInclude>
@@ -180,6 +177,9 @@
     <ClInclude Include="PokemonStat.h">
       <Filter>PokemonObject\3.Pokemon</Filter>
     </ClInclude>
+    <ClInclude Include="TitleMap.h">
+      <Filter>PokemonObject\1.PokemonMap\00_TitleMap</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PokemonCore.cpp">
@@ -214,9 +214,6 @@
     </ClCompile>
     <ClCompile Include="PlayerHouse1Map.cpp">
       <Filter>PokemonObject\1.PokemonMap\01_LittleRootTownMap</Filter>
-    </ClCompile>
-    <ClCompile Include="TitleMap.cpp">
-      <Filter>PokemonObject\1.PokemonMap\00_TitleMap</Filter>
     </ClCompile>
     <ClCompile Include="PlayerHouse2FloorMode.cpp">
       <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\01.LittleRootTown</Filter>
@@ -298,6 +295,9 @@
     </ClCompile>
     <ClCompile Include="PokemonStat.cpp">
       <Filter>PokemonObject\3.Pokemon</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleMap.cpp">
+      <Filter>PokemonObject\1.PokemonMap\00_TitleMap</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
