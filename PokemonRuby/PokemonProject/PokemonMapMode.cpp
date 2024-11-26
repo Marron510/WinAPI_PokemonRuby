@@ -1,6 +1,8 @@
 #include "PreCompile.h"
 #include "PokemonMapMode.h"
 
+#include <EngineBase/TimeEvent.h>
+
 #include <EnginePlatform/EngineInput.h>
 #include <EngineCore/EngineAPICore.h>
 #include <EngineCore/Level.h>
@@ -13,6 +15,7 @@
 
 #include "PokemonMath.h"
 #include "PokemonMap.h"
+#include "PokemonEnum.h"
 #include "TileMap.h"
 #include "Flower.h"
 #include "Water.h"
@@ -20,8 +23,12 @@
 #include "Player.h"
 #include "Fade.h"
 #include "Truck.h"
+#include "Mother.h"
+#include "MoveManager.h"
+
 
 FIntPoint APokemonMapMode::PokemonMapModeChangePos;
+APlayer::EPlayerDir APokemonMapMode::PokemonMapModePlayerDir = APlayer::EPlayerDir::DOWN_Left_Arm;
 
 APokemonMapMode::APokemonMapMode()
 {
@@ -40,7 +47,12 @@ void APokemonMapMode::BeginPlay()
 	Player = GetWorld()->GetPawn<APlayer>();
 	Player->SetColImage("PokemonMapCollisionTruck.png");
 	
-	
+	Mother = GetWorld()->SpawnActor<AMother>();
+	FVector2D MotherPosition = { 85 * TileSize.X, 68 * TileSize.Y };
+	Mother->SetActorLocation(MotherPosition);
+	Player->SetDirection(PokemonMapModePlayerDir);
+
+
 	{
 		Fade = GetWorld()->SpawnActor<AFade>();
 		Fade->FadeOut();
@@ -836,6 +848,7 @@ void APokemonMapMode::Tick(float _DeltaTime)
 	Super::Tick(_DeltaTime);
 
 	LevelChange();
+	
 }
 
 
@@ -857,6 +870,7 @@ void APokemonMapMode::LevelChange()
 	{
 		UEngineAPICore::GetCore()->OpenLevel("PlayerHouse1Floor");
 		APlayerHouse1FloorMode::APlayerHouse1FloorModeChangePos = { 9, 8 };
+		APlayerHouse1FloorMode::APlayerHouse1FloorModePlayerDir = APlayer::EPlayerDir::UP_Left_Arm;
 		NewTruck->GetRender()->SetActive(false);
 		Player->SetColImage("PokemonMapCollision.png");
 		Fade->FadeOut();
@@ -866,6 +880,7 @@ void APokemonMapMode::LevelChange()
 	{
 		UEngineAPICore::GetCore()->OpenLevel("PlayerHouse2Floor");
 		APlayerHouse2FloorMode::PlayerHouse2FloorMapModeChangePos = { 3, 8 };
+		APlayerHouse2FloorMode::APlayerHouse2FloorModePlayerDir = APlayer::EPlayerDir::UP_Left_Arm;
 		Fade->FadeOut();
 	}
 	
@@ -873,6 +888,7 @@ void APokemonMapMode::LevelChange()
 	{
 		UEngineAPICore::GetCore()->OpenLevel("LaborProfessorBirch");
 		ALaborProfessorBirchMode::LaborProfessorBirchModeChangePos = { 7, 12 };
+		ALaborProfessorBirchMode::ALaborProfessorBirchModePlayerDir = APlayer::EPlayerDir::UP_Left_Arm;
 		Fade->FadeOut();
 	}
 }
@@ -885,5 +901,4 @@ void APokemonMapMode::LevelChangeStart()
 	FTileVector StartPos = { PokemonMapModeChangePos.X, PokemonMapModeChangePos.Y };
 
 	Actor->SetActorLocation(StartPos.ToFVector());
-	
 }

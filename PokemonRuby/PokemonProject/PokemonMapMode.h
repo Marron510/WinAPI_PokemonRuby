@@ -1,10 +1,12 @@
 #pragma once
 #include <EngineCore/GameMode.h>
+#include "Player.h"
 
 class APokemonMapMode : public AGameMode
 {
 public:
 	static FIntPoint PokemonMapModeChangePos;
+	static APlayer::EPlayerDir PokemonMapModePlayerDir;
 
 	// 持失切 社瑚切
 	APokemonMapMode();
@@ -32,6 +34,10 @@ private:
 	class AFade* Fade = nullptr;
 	class ATruck* NewTruck = nullptr;
 	class APlayer* Player = nullptr;
+	class AMother* Mother = nullptr;
+	FVector2D TileSize = FVector2D(96, 96);
+
+	UTimeEvent TimeEventManager;
 };
 
 

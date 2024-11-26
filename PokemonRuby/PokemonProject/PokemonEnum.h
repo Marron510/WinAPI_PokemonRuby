@@ -22,6 +22,19 @@ enum class ERenderOrder
 	FADE = 1000
 };
 
+static enum class ENPCDir
+{
+	LEFT_Left_Arm,
+	LEFT_Right_Arm,
+	RIGHT_Left_Arm,
+	RIGHT_Right_Arm,
+	UP_Left_Arm,
+	UP_Right_Arm,
+	DOWN_Left_Arm,
+	DOWN_Right_Arm,
+	MAX
+};
+
 
 class UPokemoncharacter : public UObject
 {

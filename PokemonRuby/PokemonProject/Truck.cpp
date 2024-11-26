@@ -15,7 +15,7 @@ ATruck::ATruck()
 	SpriteRenderer->CreateAnimation("RealTruck", "RealTruck.png", 0, 1, 0.5f);
 	SpriteRenderer->ChangeAnimation("RealTruck");
 	SpriteRenderer->SetOrder(ERenderOrder::TRUCK);
-	SpriteRenderer->SetComponentLocation({ 82 * 96, 70 * 96 });
+	SpriteRenderer->SetComponentLocation({ 82 * 96 + 48 , 70 * 96 - 24 });
 	SpriteRenderer->SetActive(true);
 }
 

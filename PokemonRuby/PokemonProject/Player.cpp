@@ -18,6 +18,7 @@
 #include "PokemonInput.h"
 #include "WildPokemon.h"
 #include "Fade.h"
+#include "Mother.h"
 
 APlayer::APlayer()
 {
@@ -410,14 +411,21 @@ void APlayer::SetTargetLocation(const FVector2D& NewTarget)
     );
 
     TargetLocation = Target;
-    WalkTime = 0.0f; 
+    WalkTime = 0.0f;
 
-    PlayerGroundCheck(TargetLocation); 
-    if (CheckColor != UColor::RED) 
+    PlayerGroundCheck(TargetLocation);
+
+    if (CheckColor != UColor::RED)
     {
         IsMoving = true;
     }
+    else
+    {
+        IsMoving = false;
+        TargetLocation = GetActorLocation(); 
+    }
 }
+
 
 
 FVector2D APlayer::GetTargetLocation() const
@@ -487,53 +495,43 @@ void APlayer::InitializeAnimations()
     SpriteRenderer->CreateAnimation("Idle_Right_Right_Arm", "Player_Walk_Right.png", 0, 0, IdleFrameTime);
 }
 
-void APlayer::MoveOneTile(EPlayerDir Direction)
-{
-    FVector2D CurrentLocation = GetActorLocation();
 
-    FVector2D Offset;
-    switch (Direction)
+void APlayer::SetMother(AMother* Mother)
+{
+    MotherReference = Mother; 
+}
+
+void APlayer::SetDirection(EPlayerDir NewDirection)
+{
+    CurDir = NewDirection;
+
+    std::string AnimationName;
+
+    switch (CurDir)
     {
-    case EPlayerDir::UP_Left_Arm:
-    case EPlayerDir::UP_Right_Arm:
-        Offset = { 0.0f, -96.0f }; // À§ÂÊÀ¸·Î 96 ÇÈ¼¿
-        break;
-    case EPlayerDir::DOWN_Left_Arm:
-    case EPlayerDir::DOWN_Right_Arm:
-        Offset = { 0.0f, 96.0f }; // ¾Æ·¡ÂÊÀ¸·Î 96 ÇÈ¼¿
-        break;
-    case EPlayerDir::LEFT_Left_Arm:
-    case EPlayerDir::LEFT_Right_Arm:
-        Offset = { -96.0f, 0.0f }; // ¿ÞÂÊÀ¸·Î 96 ÇÈ¼¿
-        break;
     case EPlayerDir::RIGHT_Left_Arm:
     case EPlayerDir::RIGHT_Right_Arm:
-        Offset = { 96.0f, 0.0f }; // ¿À¸¥ÂÊÀ¸·Î 96 ÇÈ¼¿
+        AnimationName = "Idle_Right_Left_Arm";
         break;
+
+    case EPlayerDir::LEFT_Left_Arm:
+    case EPlayerDir::LEFT_Right_Arm:
+        AnimationName = "Idle_Left_Left_Arm";
+        break;
+
+    case EPlayerDir::UP_Left_Arm:
+    case EPlayerDir::UP_Right_Arm:
+        AnimationName = "Idle_Up_Left_Arm";
+        break;
+
+    case EPlayerDir::DOWN_Left_Arm:
+    case EPlayerDir::DOWN_Right_Arm:
+        AnimationName = "Idle_Down_Left_Arm";
+        break;
+
     default:
-        return;
+        break;
     }
 
-    std::string AnimationName = "Walk_";
-    if (Direction == EPlayerDir::UP_Left_Arm || Direction == EPlayerDir::UP_Right_Arm)
-        AnimationName += "Up";
-    else if (Direction == EPlayerDir::DOWN_Left_Arm || Direction == EPlayerDir::DOWN_Right_Arm)
-        AnimationName += "Down";
-    else if (Direction == EPlayerDir::LEFT_Left_Arm || Direction == EPlayerDir::LEFT_Right_Arm)
-        AnimationName += "Left";
-    else if (Direction == EPlayerDir::RIGHT_Left_Arm || Direction == EPlayerDir::RIGHT_Right_Arm)
-        AnimationName += "Right";
-
-    if (Direction == EPlayerDir::UP_Left_Arm || Direction == EPlayerDir::DOWN_Left_Arm ||
-        Direction == EPlayerDir::LEFT_Left_Arm || Direction == EPlayerDir::RIGHT_Left_Arm)
-        AnimationName += "_Left_Arm";
-    else
-        AnimationName += "_Right_Arm";
-
     SpriteRenderer->ChangeAnimation(AnimationName);
-
-    SetTargetLocation(CurrentLocation + Offset);
-
-    IsMoving = true;
-    FSM.ChangeState(APlayerState::WALK);
 }

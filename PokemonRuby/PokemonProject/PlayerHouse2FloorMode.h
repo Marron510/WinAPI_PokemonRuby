@@ -1,10 +1,12 @@
 #pragma once
 #include <EngineCore/GameMode.h>
+#include "Player.h"
 
 class APlayerHouse2FloorMode : public AGameMode
 {
 public:
 	static FIntPoint PlayerHouse2FloorMapModeChangePos;
+	static APlayer::EPlayerDir APlayerHouse2FloorModePlayerDir;
 
 	// 持失切 社瑚切
 	APlayerHouse2FloorMode();
@@ -28,6 +30,7 @@ public:
 protected:
 
 private:
+	class APlayer* Player = nullptr;
 	class AFade* Fade = nullptr;
 };
 

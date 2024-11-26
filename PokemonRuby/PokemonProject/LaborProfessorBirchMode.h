@@ -1,11 +1,13 @@
 #pragma once
 #include <EngineCore/GameMode.h>
 #include "PokemonMath.h"
+#include "Player.h"
 
 class ALaborProfessorBirchMode : public AGameMode
 {
 public:
 	static FIntPoint LaborProfessorBirchModeChangePos;
+	static APlayer::EPlayerDir ALaborProfessorBirchModePlayerDir;
 
 	// 持失切 社瑚切
 	ALaborProfessorBirchMode();
@@ -29,6 +31,7 @@ public:
 protected:
 
 private:
+	class APlayer* Player = nullptr;
 	class AFade* Fade = nullptr;
 };
 

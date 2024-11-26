@@ -9,6 +9,8 @@
 #include "Player.h"
 #include "PokemonMapMode.h"
 #include "Fade.h"
+
+
 ATruckMode::ATruckMode()
 {
 
@@ -22,15 +24,13 @@ ATruckMode::~ATruckMode()
 
 void ATruckMode::BeginPlay()
 {
-	{
-		FTileVector StartPos = { 2, 2 };
-		ATruckMap* NewActor = GetWorld()->SpawnActor<ATruckMap>();
-		Map = NewActor->GetCurMap();
-		UEngineAPICore::GetCore()->GetCurLevel()->GetPawn()->SetActorLocation(StartPos.ToFVector());
-
-		APlayer* Player = GetWorld()->GetPawn<APlayer>();
-		Player->SetColImage("TruckCollision.png");
-	}
+	
+	Player = GetWorld()->GetPawn<APlayer>();
+	FTileVector StartPos = { 2, 2 };
+	ATruckMap* NewActor = GetWorld()->SpawnActor<ATruckMap>();
+	Map = NewActor->GetCurMap();
+	UEngineAPICore::GetCore()->GetCurLevel()->GetPawn()->SetActorLocation(StartPos.ToFVector());
+	
 	{
 		Fade = GetWorld()->SpawnActor<AFade>();
 		Fade->FadeOut();
@@ -56,12 +56,15 @@ void ATruckMode::LevelChange()
 	{
 		UEngineAPICore::GetCore()->OpenLevel("PokemonMap");
 		APokemonMapMode::PokemonMapModeChangePos = { 84 , 70 };
+		APokemonMapMode::PokemonMapModePlayerDir = APlayer::EPlayerDir::RIGHT_Left_Arm;
 		Fade->FadeOut();
+		Player->SetDirection(APlayer::EPlayerDir::RIGHT_Left_Arm);
 	}
 	if (MainPlayerLocation == TargetPos2.ToFVector())
 	{
 		UEngineAPICore::GetCore()->OpenLevel("PokemonMap");
 		APokemonMapMode::PokemonMapModeChangePos = { 84 , 70 };
+		APokemonMapMode::PokemonMapModePlayerDir = APlayer::EPlayerDir::RIGHT_Left_Arm;
 		Fade->FadeOut();
 	}
 }

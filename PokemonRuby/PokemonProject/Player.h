@@ -61,6 +61,7 @@ public:
     void SetObject();
     void SetColImage(std::string_view _ColImageName);
     void SetTargetLocation(const FVector2D& NewTarget);
+    void SetDirection(EPlayerDir NewDirection);
 
     void LevelChangeStart();
     void LevelChangeEnd();
@@ -74,7 +75,6 @@ public:
     void UpdateMovement(float _DeltaTime);
     void ChangeArmAnimation();
 
-    void MoveOneTile(EPlayerDir Direction);
 
     void InitializeSprites();
     void InitializeAnimations();
@@ -89,7 +89,7 @@ public:
     {
         return CurDir;
     }
-
+    void SetMother(class AMother* Mother);
 
 protected:
 
@@ -111,7 +111,7 @@ private:
     class USpriteRenderer* SpriteRenderer = nullptr;
     class USpriteRenderer* SpriteMapRenderer = nullptr;
     class UEngineWinImage* ColImage = nullptr;
-    
+    class UEngineWinImage* MotherColImage = nullptr;
     FVector2D MapSize = FVector2D::ZERO;
     UColor CheckColor = UColor::WHITE;
 
@@ -128,4 +128,6 @@ private:
     int MoveCount = 0;
     bool bCanProcessInput = true; // 입력 가능 여부를 나타내는 플래그
     float InputCooldown = 0.0f;   // 남은 딜레이 시간
+
+    class AMother* MotherReference; // 엄마 객체에 대한 참조
 };

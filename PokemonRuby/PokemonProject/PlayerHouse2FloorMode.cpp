@@ -14,6 +14,7 @@
 #include "Fade.h"
 
 FIntPoint APlayerHouse2FloorMode::PlayerHouse2FloorMapModeChangePos;
+APlayer::EPlayerDir APlayerHouse2FloorMode::APlayerHouse2FloorModePlayerDir;
 
 APlayerHouse2FloorMode::APlayerHouse2FloorMode()
 {

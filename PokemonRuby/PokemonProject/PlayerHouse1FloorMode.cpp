@@ -14,6 +14,7 @@
 #include "Fade.h"
  
 FIntPoint APlayerHouse1FloorMode::APlayerHouse1FloorModeChangePos;
+APlayer::EPlayerDir APlayerHouse1FloorMode::APlayerHouse1FloorModePlayerDir;
 
 APlayerHouse1FloorMode::APlayerHouse1FloorMode()
 {
@@ -29,12 +30,13 @@ APlayerHouse1FloorMode::~APlayerHouse1FloorMode()
 void APlayerHouse1FloorMode::BeginPlay()
 {
 	Super::BeginPlay();
-	{
+	
 		APlayerHouse1FloorMap* NewActor = GetWorld()->SpawnActor<APlayerHouse1FloorMap>();
 		Map = NewActor->GetCurMap();
-		APlayer* Player = GetWorld()->GetPawn<APlayer>();
+		Player = GetWorld()->GetPawn<APlayer>();
 		Player->SetColImage("PlayerHouse1Floor Collision.png");
-	}
+		Player->SetDirection(APlayerHouse1FloorModePlayerDir);
+	
 	{
 		Fade = GetWorld()->SpawnActor<AFade>();
 		Fade->FadeOut();

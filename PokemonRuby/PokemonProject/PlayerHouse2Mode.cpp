@@ -12,6 +12,7 @@
 #include "Fade.h"
 
 FIntPoint APlayerHouse2Mode::PlayerHouse2MapModeChangePos;
+APlayer::EPlayerDir APlayerHouse2Mode::PlayerHouse2MapModePlayerDir = APlayer::EPlayerDir::DOWN_Left_Arm;
 
 APlayerHouse2Mode::APlayerHouse2Mode()
 {
@@ -29,6 +30,7 @@ void APlayerHouse2Mode::BeginPlay()
 		Map = NewActor->GetCurMap();
 		APlayer* Player = GetWorld()->GetPawn<APlayer>();
 		Player->SetColImage("PlayerHouse_2Collision.png");
+		Player->SetDirection(PlayerHouse2MapModePlayerDir);
 	}
 	{
 		Fade = GetWorld()->SpawnActor<AFade>();

@@ -12,6 +12,7 @@
 #include "Fade.h"
 
 FIntPoint ALaborProfessorBirchMode::LaborProfessorBirchModeChangePos;
+APlayer::EPlayerDir ALaborProfessorBirchMode::ALaborProfessorBirchModePlayerDir;
 
 ALaborProfessorBirchMode::ALaborProfessorBirchMode()
 {
