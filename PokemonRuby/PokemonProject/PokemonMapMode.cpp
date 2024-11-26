@@ -24,7 +24,6 @@
 #include "Fade.h"
 #include "Truck.h"
 #include "Mother.h"
-#include "MoveManager.h"
 
 
 FIntPoint APokemonMapMode::PokemonMapModeChangePos;
@@ -841,6 +840,11 @@ void APokemonMapMode::BeginPlay()
 		APokemonMap* NewActor = GetWorld()->SpawnActor<APokemonMap>();
 		Map = NewActor->GetCurMap();
 	}
+
+	TimeEventer.PushEvent(0.5f, [this]() {
+		
+		});
+
 }
 
 void APokemonMapMode::Tick(float _DeltaTime)

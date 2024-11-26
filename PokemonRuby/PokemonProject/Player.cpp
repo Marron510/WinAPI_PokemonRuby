@@ -3,6 +3,7 @@
 
 #include <EngineBase/EngineMath.h>
 #include <EngineBase/EngineRandom.h>
+#include <EngineBase/TimeEvent.h>
 
 #include <EngineBase/EngineString.h>
 #include <EnginePlatform/EngineInput.h>
@@ -61,6 +62,7 @@ void APlayer::BeginPlay()
     );
 
     FSM.ChangeState(APlayerState::IDLE);
+
 }
 
 
@@ -495,11 +497,6 @@ void APlayer::InitializeAnimations()
     SpriteRenderer->CreateAnimation("Idle_Right_Right_Arm", "Player_Walk_Right.png", 0, 0, IdleFrameTime);
 }
 
-
-void APlayer::SetMother(AMother* Mother)
-{
-    MotherReference = Mother; 
-}
 
 void APlayer::SetDirection(EPlayerDir NewDirection)
 {

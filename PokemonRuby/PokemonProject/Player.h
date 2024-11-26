@@ -89,7 +89,12 @@ public:
     {
         return CurDir;
     }
-    void SetMother(class AMother* Mother);
+    
+
+    void IncArmOrder()
+    {
+        ArmOrder = (ArmOrder + 1) % 2; 
+    }
 
 protected:
 
@@ -121,13 +126,10 @@ private:
 
     int ArmOrder = 0; // 0: 왼팔, 1: 오른팔
 
-    void IncArmOrder()
-    {
-        ArmOrder = (ArmOrder + 1) % 2; // 0과 1을 번갈아가며 전환
-    }
     int MoveCount = 0;
-    bool bCanProcessInput = true; // 입력 가능 여부를 나타내는 플래그
-    float InputCooldown = 0.0f;   // 남은 딜레이 시간
+    bool bCanProcessInput = true; 
+    float InputCooldown = 0.0f;   
 
-    class AMother* MotherReference; // 엄마 객체에 대한 참조
+
+    
 };

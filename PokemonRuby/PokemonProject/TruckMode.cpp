@@ -1,9 +1,11 @@
 #include "PreCompile.h"
 #include "TruckMode.h"
 
+#include <EngineBase/TimeEvent.h>
 #include <EnginePlatform/EngineInput.h>
 #include <EngineCore/EngineAPICore.h>
 #include <EngineCore/Level.h>
+#include <EngineCore/SpriteRenderer.h>
 
 #include "TruckMap.h"
 #include "Player.h"
@@ -29,12 +31,18 @@ void ATruckMode::BeginPlay()
 	FTileVector StartPos = { 2, 2 };
 	ATruckMap* NewActor = GetWorld()->SpawnActor<ATruckMap>();
 	Map = NewActor->GetCurMap();
+	
 	UEngineAPICore::GetCore()->GetCurLevel()->GetPawn()->SetActorLocation(StartPos.ToFVector());
 	
 	{
 		Fade = GetWorld()->SpawnActor<AFade>();
 		Fade->FadeOut();
 	}
+
+	TimeEventer.PushEvent(0.5f, [this]() {
+		MoveMapHorizontally(3.0f, 10); 
+		});
+
 }
 
 void ATruckMode::Tick(float _DeltaTime)
@@ -67,4 +75,37 @@ void ATruckMode::LevelChange()
 		APokemonMapMode::PokemonMapModePlayerDir = APlayer::EPlayerDir::RIGHT_Left_Arm;
 		Fade->FadeOut();
 	}
+}
+void ATruckMode::MoveMapHorizontally(float Duration, int RepeatCount)
+{
+	if (!Map) return; 
+
+	float Interval = Duration / (RepeatCount * 2);
+	FVector2D OriginalLocation = Map->GetComponentLocation();
+	FVector2D Offset = FVector2D(5.0f, 0.0f); 
+
+	for (int i = 0; i < RepeatCount; ++i)
+	{
+		TimeEventer.PushEvent(i * 2 * Interval, [this, OriginalLocation, Offset]() {
+			if (Map)
+			{
+				Map->SetComponentLocation(OriginalLocation + Offset);
+			}
+			});
+
+		
+		TimeEventer.PushEvent((i * 2 + 1) * Interval, [this, OriginalLocation, Offset]() {
+			if (Map)
+			{
+				Map->SetComponentLocation(OriginalLocation - Offset);
+			}
+			});
+	}
+
+	TimeEventer.PushEvent(RepeatCount * 2 * Interval, [this, OriginalLocation]() {
+		if (Map)
+		{
+			Map->SetComponentLocation(OriginalLocation);
+		}
+		});
 }

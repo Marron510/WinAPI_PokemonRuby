@@ -5,17 +5,25 @@
 class AMother : public AActor
 {
 public:
+	enum class ENPCDirection
+	{
+		UP_Left_Arm,
+		UP_Right_Arm,
+		DOWN_Left_Arm,
+		DOWN_Right_Arm,
+		LEFT_Left_Arm,
+		LEFT_Right_Arm,
+		RIGHT_Left_Arm,
+		RIGHT_Right_Arm,
+		NONE
+	};
+	
+	
 	// 생성자 소멸자
 	AMother();
 	~AMother();
-	enum class ENPCDirection
-	{
-		UP,      // 위로 이동
-		DOWN,    // 아래로 이동
-		LEFT,    // 왼쪽으로 이동
-		RIGHT,   // 오른쪽으로 이동
-		NONE     // 움직임 없음 (Idle 상태)
-	};
+	
+
 	// delete funcion
 
 	AMother(const AMother& _Other) = delete;
@@ -27,6 +35,10 @@ public:
 	void Tick(float _DeltaTime) override;
 	void SetAnimationByDirection(ENPCDirection Direction);
 	void SetTargetLocation(const FVector2D& Offset);
+	void SetLookDirection(ENPCDirection Direction);
+
+	
+
 protected:
 
 private:
@@ -39,6 +51,8 @@ private:
 	bool IsMoving = false; // 이동 중 여부
 	float MoveTime = 0.0f; // 이동 시간
 	ENPCDirection CurrentDirection = ENPCDirection::NONE; // 현재 방향
+	ENPCDirection LastDirection = ENPCDirection::NONE; // 마지막으로 설정된 방향
 	class UTimeEvent TimeEventer;
+	bool bIsLeftArm = true; // 현재 왼팔인지 여부
 };
 

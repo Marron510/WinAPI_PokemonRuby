@@ -21,12 +21,12 @@ public:
 
 	void LevelChange();
 
-
+	void MoveMapHorizontally(float Duration, int RepeatCount);
 protected:
 
 private:
 	class APlayer* Player = nullptr;
 	class AFade* Fade = nullptr;
-
+	UTimeEvent TimeEventManager;
 };
 
