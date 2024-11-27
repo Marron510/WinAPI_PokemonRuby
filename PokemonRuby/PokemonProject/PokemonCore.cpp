@@ -166,6 +166,7 @@ void PokemonCore::BeginPlay()
 		UImageManager::GetInst().CuttingSprite("Water.png", { 96, 96 });
 		UImageManager::GetInst().CuttingSprite("RealTruck.png", { 288, 245 });
 		UImageManager::GetInst().CuttingSprite("Mother.png", { 55, 67});
+		UImageManager::GetInst().CuttingSprite("Child.png", { 55, 60 });
 	}
 
 	{

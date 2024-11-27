@@ -61,6 +61,12 @@
     <Filter Include="PokemonObject\4.PlayObject">
       <UniqueIdentifier>{e19c172b-03ac-4ba7-bdfb-5b2d3fd3daa3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PokemonObject\4.PlayObject\NPC">
+      <UniqueIdentifier>{7082441e-7604-4d98-ae87-5f1d0d646323}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PokemonObject\4.PlayObject\Things">
+      <UniqueIdentifier>{1a8e1efb-3339-47fb-94c7-60df6c3f54f2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PokemonCore.h">
@@ -135,23 +141,11 @@
     <ClInclude Include="TileMapMode.h">
       <Filter>PokemonObject\2.PokemonGameMode</Filter>
     </ClInclude>
-    <ClInclude Include="Flower.h">
-      <Filter>PokemonObject\4.PlayObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Water.h">
-      <Filter>PokemonObject\4.PlayObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Sea.h">
-      <Filter>PokemonObject\4.PlayObject</Filter>
-    </ClInclude>
     <ClInclude Include="PokemonMath.h">
       <Filter>Global</Filter>
     </ClInclude>
     <ClInclude Include="PokemonInput.h">
       <Filter>Global</Filter>
-    </ClInclude>
-    <ClInclude Include="TItleMap.h">
-      <Filter>Play</Filter>
     </ClInclude>
     <ClInclude Include="PokemonBattleMode.h">
       <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\02.Battle</Filter>
@@ -180,11 +174,27 @@
     <ClInclude Include="TitleMap.h">
       <Filter>PokemonObject\1.PokemonMap\00_TitleMap</Filter>
     </ClInclude>
-    <ClInclude Include="Truck.h">
-      <Filter>PokemonObject\4.PlayObject</Filter>
-    </ClInclude>
+    <ClInclude Include="TitleMap.h" />
     <ClInclude Include="Mother.h">
-      <Filter>PokemonObject\4.PlayObject</Filter>
+      <Filter>PokemonObject\4.PlayObject\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="Flower.h">
+      <Filter>PokemonObject\4.PlayObject\Things</Filter>
+    </ClInclude>
+    <ClInclude Include="Sea.h">
+      <Filter>PokemonObject\4.PlayObject\Things</Filter>
+    </ClInclude>
+    <ClInclude Include="Truck.h">
+      <Filter>PokemonObject\4.PlayObject\Things</Filter>
+    </ClInclude>
+    <ClInclude Include="Water.h">
+      <Filter>PokemonObject\4.PlayObject\Things</Filter>
+    </ClInclude>
+    <ClInclude Include="Child.h">
+      <Filter>PokemonObject\4.PlayObject\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="Professor.h">
+      <Filter>PokemonObject\4.PlayObject\NPC</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -260,23 +270,11 @@
     <ClCompile Include="TileMapMode.cpp">
       <Filter>PokemonObject\2.PokemonGameMode</Filter>
     </ClCompile>
-    <ClCompile Include="Flower.cpp">
-      <Filter>PokemonObject\4.PlayObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Water.cpp">
-      <Filter>PokemonObject\4.PlayObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Sea.cpp">
-      <Filter>PokemonObject\4.PlayObject</Filter>
-    </ClCompile>
     <ClCompile Include="PokemonMath.cpp">
       <Filter>Global</Filter>
     </ClCompile>
     <ClCompile Include="PokemonInput.cpp">
       <Filter>Global</Filter>
-    </ClCompile>
-    <ClCompile Include="TItleMap.cpp">
-      <Filter>Play</Filter>
     </ClCompile>
     <ClCompile Include="PokemonBattleMode.cpp">
       <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\02.Battle</Filter>
@@ -305,11 +303,27 @@
     <ClCompile Include="TitleMap.cpp">
       <Filter>PokemonObject\1.PokemonMap\00_TitleMap</Filter>
     </ClCompile>
-    <ClCompile Include="Truck.cpp">
-      <Filter>PokemonObject\4.PlayObject</Filter>
-    </ClCompile>
+    <ClCompile Include="TitleMap.cpp" />
     <ClCompile Include="Mother.cpp">
-      <Filter>PokemonObject\4.PlayObject</Filter>
+      <Filter>PokemonObject\4.PlayObject\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="Flower.cpp">
+      <Filter>PokemonObject\4.PlayObject\Things</Filter>
+    </ClCompile>
+    <ClCompile Include="Sea.cpp">
+      <Filter>PokemonObject\4.PlayObject\Things</Filter>
+    </ClCompile>
+    <ClCompile Include="Truck.cpp">
+      <Filter>PokemonObject\4.PlayObject\Things</Filter>
+    </ClCompile>
+    <ClCompile Include="Water.cpp">
+      <Filter>PokemonObject\4.PlayObject\Things</Filter>
+    </ClCompile>
+    <ClCompile Include="Child.cpp">
+      <Filter>PokemonObject\4.PlayObject\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="Professor.cpp">
+      <Filter>PokemonObject\4.PlayObject\NPC</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

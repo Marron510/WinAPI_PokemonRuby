@@ -30,6 +30,9 @@ public:
 	void RenderChatAbovePlayer();
 	void DisplayNextDialogue();
 
+	void MoveToHouse();
+	void ChildInteractionEvent();
+
 protected:
 
 private:
@@ -37,7 +40,8 @@ private:
 	class ATruck* NewTruck = nullptr;
 	class APlayer* Player = nullptr;
 	class AMother* Mother = nullptr;
-	
+	class AChild* Child = nullptr;
+
 	class APokemonMap* NewActor = nullptr;
 	
 	bool bIsDialogueActive = false;
@@ -58,7 +62,24 @@ private:
 	"Mom: And,you get your own room , LADON!" + enter + "Let's go inside."
 	};
 
+	std::vector<std::string> Dialogues1 =
+	{
+	"I can hear someone shouting" + enter + "down the road here",
+	"What should I do?What should we do?" + enter + "Somebody has to go help...",
+	};
+
+	std::vector<std::string> Dialogues2 =
+	{
+	"H..help me!",
+	"Hello!You over there!" + enter + "Please!Help!",
+	"In my BAG!" + enter + "there's a POKEBALL!",
+	};
 	int CurrentDialogueIndex = 0; 
+	int CurrentDialogue1Index = 0;
+
+	bool bIsChildDialogue = false;
+	bool bMotherDialogueCompleted = false; // 엄마 대화 완료 여부
+	bool bChildDialogueCompleted = false; // 아이 대화 완료 여부
 };
 
 

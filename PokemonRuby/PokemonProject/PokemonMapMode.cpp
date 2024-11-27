@@ -25,6 +25,8 @@
 #include "Fade.h"
 #include "Truck.h"
 #include "Mother.h"
+#include "Child.h"
+
 
 FIntPoint APokemonMapMode::PokemonMapModeChangePos;
 APlayer::EPlayerDir APokemonMapMode::PokemonMapModePlayerDir = APlayer::EPlayerDir::DOWN_Left_Arm;
@@ -57,6 +59,12 @@ void APokemonMapMode::BeginPlay()
 		Mother->GetRender()->SetActive(false);
 	}
 
+	{
+		Child = GetWorld()->SpawnActor<AChild>();
+		FVector2D ChildPosition = { 90 * TileSize.X, 61 * TileSize.Y };
+		Child->SetActorLocation(ChildPosition);
+		Child->GetRender()->SetActive(true);
+	}
 
 	{
 		Fade = GetWorld()->SpawnActor<AFade>();
@@ -883,7 +891,8 @@ void APokemonMapMode::BeginPlay()
 		Mother->GetRender()->ChangeAnimation("Mother_Idle_Left");
 		});
 	
-	
+	bMotherDialogueCompleted = false;
+	bChildDialogueCompleted = false;
 }
 
 void APokemonMapMode::Tick(float _DeltaTime)
@@ -896,7 +905,7 @@ void APokemonMapMode::Tick(float _DeltaTime)
 
 	ChatText->PrintTextUpdate(_DeltaTime);
 
-	
+	ChildInteractionEvent();
 	
 	if (UEngineInput::GetInst().IsDown('Z'))
 	{
@@ -977,7 +986,12 @@ void APokemonMapMode::DisplayNextDialogue()
 {
 	ChatText->ClearText();
 
-	if (CurrentDialogueIndex < Dialogues.size())
+	if (bIsChildDialogue && CurrentDialogue1Index < Dialogues1.size())
+	{
+		ChatText->SetText(Dialogues1[CurrentDialogue1Index], 0.1f);
+		CurrentDialogue1Index++;
+	}
+	else if (!bIsChildDialogue && CurrentDialogueIndex < Dialogues.size() && !bMotherDialogueCompleted)
 	{
 		ChatText->SetText(Dialogues[CurrentDialogueIndex], 0.1f);
 		CurrentDialogueIndex++;
@@ -986,54 +1000,83 @@ void APokemonMapMode::DisplayNextDialogue()
 	{
 		Chat->SetActive(false);
 		ChatText->SetActive(false);
+		bIsChildDialogue = false;
 
-		if (Mother != nullptr)
+		if (!bMotherDialogueCompleted && Mother != nullptr)
 		{
-			
-			TimeEventer.PushEvent(1.0f, [this]() 
-				{ 
-				if (Mother->GetRender() != nullptr)
-				{
-					Mother->SetTargetLocation({ 0.0f, -1 * TileSize.Y }); 
-				}
-				});
-			TimeEventer.PushEvent(1.2f, [this]()
-				{
-					if (Mother->GetRender() != nullptr)
-					{
-						Player->MoveToTile({ 85,70 });
-					}
-				});
-			TimeEventer.PushEvent(1.5f, [this]()
-				{ 
-				if (Mother->GetRender() != nullptr)
-				{
-					Mother->SetTargetLocation({ 0.0f, -1 * TileSize.Y }); 
-				}
-				});
-			TimeEventer.PushEvent(1.7f, [this]()
-				{
-					if (Mother->GetRender() != nullptr)
-					{
-						Player->MoveToTile({ 85,69 });
-					}
-				});
-			TimeEventer.PushEvent(2.0f, [this]()
-				{ 
-				if (Mother->GetRender() != nullptr)
-				{
-					Mother->GetRender()->SetActive(false);
-				}
-				});
-			TimeEventer.PushEvent(2.0f, [this]()
-				{
-					if (Mother->GetRender() != nullptr)
-					{
-						Player->MoveToTile({ 85,68 });
-					}
-				});
-			
-			
+			MoveToHouse();
 		}
 	}
+}
+
+void APokemonMapMode::ChildInteractionEvent()
+{
+	if (bChildDialogueCompleted)
+	{
+		return; 
+	}
+
+	FVector2D PlayerLocation = Player->GetActorLocation();
+	FIntPoint TargetLocation(91, 61);
+
+	if (PlayerLocation.X >= TargetLocation.X * TileSize.X && PlayerLocation.Y <= TargetLocation.Y * TileSize.Y)
+	{
+		Child->SetLookDirection(AChild::ENPCDirection::RIGHT);
+
+		RenderChatAbovePlayer();
+
+		if (!Dialogues1.empty() && Chat->IsActive())
+		{
+			ChatText->SetActive(true);
+			bIsChildDialogue = true;
+		}
+	}
+}
+
+
+void APokemonMapMode::MoveToHouse()
+{
+	TimeEventer.PushEvent(1.0f, [this]()
+		{
+			if (Mother->GetRender() != nullptr)
+			{
+				Mother->SetTargetLocation({ 0.0f, -1 * TileSize.Y });
+			}
+		});
+	TimeEventer.PushEvent(1.2f, [this]()
+		{
+			if (Mother->GetRender() != nullptr)
+			{
+				Player->MoveToTile({ 85,70 });
+			}
+		});
+	TimeEventer.PushEvent(1.5f, [this]()
+		{
+			if (Mother->GetRender() != nullptr)
+			{
+				Mother->SetTargetLocation({ 0.0f, -1 * TileSize.Y });
+			}
+		});
+	TimeEventer.PushEvent(1.7f, [this]()
+		{
+			if (Mother->GetRender() != nullptr)
+			{
+				Player->MoveToTile({ 85,69 });
+			}
+		});
+	TimeEventer.PushEvent(2.0f, [this]()
+		{
+			if (Mother->GetRender() != nullptr)
+			{
+				Mother->GetRender()->SetActive(false);
+			}
+		});
+	TimeEventer.PushEvent(2.0f, [this]()
+		{
+			if (Mother->GetRender() != nullptr)
+			{
+				bMotherDialogueCompleted = true;
+				Player->MoveToTile({ 85,68 });
+			}
+		});
 }

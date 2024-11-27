@@ -50,6 +50,7 @@ private:
 	"Mom: LADON, your room is upstairs." + enter + "Go check it out, dear!"
 	};
 
+
 	int CurrentDialogueIndex = 0;
 };
 
