@@ -11,7 +11,7 @@ public:
 		Menu,
 		Battle,
 		SelectPokemon,
-		Bag
+		ABag
 	};
 
 	FVector2D MenuCursorPositions[4] =

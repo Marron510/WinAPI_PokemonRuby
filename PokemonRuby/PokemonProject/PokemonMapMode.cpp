@@ -18,15 +18,21 @@
 #include "PokemonMap.h"
 #include "PokemonEnum.h"
 #include "TileMap.h"
+
+#include "Fade.h"
+
 #include "Flower.h"
 #include "Water.h"
 #include "Sea.h"
-#include "Player.h"
-#include "Fade.h"
+#include "Bag.h"
 #include "Truck.h"
+
+#include "Player.h"
 #include "Mother.h"
 #include "Child.h"
 #include "Professor.h"
+
+
 
 FIntPoint APokemonMapMode::PokemonMapModeChangePos;
 APlayer::EPlayerDir APokemonMapMode::PokemonMapModePlayerDir = APlayer::EPlayerDir::DOWN_Left_Arm;
@@ -95,8 +101,10 @@ void APokemonMapMode::BeginPlay()
 		FVector2D ChatLocation = { 140,620 };
 		ChatText->SetActorLocation(ChatLocation);
 	}
-	
-
+	{
+		ABag* Bag = GetWorld()->SpawnActor<ABag>();
+		Bag->SetActorLocationTile({ 87,54 });
+	}
 	// AFlower
 	{
 		AFlower* newflower1 = GetWorld()->SpawnActor<AFlower>();
@@ -1070,7 +1078,7 @@ void APokemonMapMode::ProfessorInteractionEvent()
 	}
 
 	FVector2D PlayerLocation = Player->GetActorLocation();
-	FIntPoint ProfessorTargetLocation(91, 55);
+	FIntPoint ProfessorTargetLocation(90, 55);
 
 	if (PlayerLocation.X >= ProfessorTargetLocation.X * TileSize.X &&
 		PlayerLocation.Y <= ProfessorTargetLocation.Y * TileSize.Y)

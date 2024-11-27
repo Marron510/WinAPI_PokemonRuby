@@ -166,7 +166,7 @@ FVector2D* ACursor::GetCursorPositionsForState(ECursorState State)
         return BattleCursorPositions;
     case ECursorState::SelectPokemon:
         return SelectPokemonCursorPositions;
-    case ECursorState::Bag:
+    case ECursorState::ABag:
         return BagCursorPositions;
     default:
         return MenuCursorPositions;

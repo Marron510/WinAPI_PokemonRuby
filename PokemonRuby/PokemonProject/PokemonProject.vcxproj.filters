@@ -196,6 +196,9 @@
     <ClInclude Include="Professor.h">
       <Filter>PokemonObject\4.PlayObject\NPC</Filter>
     </ClInclude>
+    <ClInclude Include="Bag.h">
+      <Filter>PokemonObject\4.PlayObject\Things</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PokemonCore.cpp">
@@ -324,6 +327,9 @@
     </ClCompile>
     <ClCompile Include="Professor.cpp">
       <Filter>PokemonObject\4.PlayObject\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="Bag.cpp">
+      <Filter>PokemonObject\4.PlayObject\Things</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
