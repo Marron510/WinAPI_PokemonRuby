@@ -31,7 +31,7 @@
 #include "Mother.h"
 #include "Child.h"
 #include "Professor.h"
-
+#include "Monster.h"
 
 
 FIntPoint APokemonMapMode::PokemonMapModeChangePos;
@@ -66,9 +66,16 @@ void APokemonMapMode::BeginPlay()
 	}
 	{
 		Professor = GetWorld()->SpawnActor<AProfessor>();
-		FVector2D ProfessorPosition = { 85 * TileSize.X, 52 * TileSize.Y };
+		FVector2D ProfessorPosition = { 87 * TileSize.X, 52 * TileSize.Y };
 		Professor->SetActorLocation(ProfessorPosition);
 		Professor->GetRender()->SetActive(false);
+	}
+
+	{
+		Monster = GetWorld()->SpawnActor<AMonster>();
+		FVector2D MonsterPosition = { 88 * TileSize.X, 52 * TileSize.Y };
+		Monster->SetActorLocation(MonsterPosition);
+		Monster->GetRender()->SetActive(false);
 	}
 	{
 		Child = GetWorld()->SpawnActor<AChild>();
@@ -1056,8 +1063,9 @@ void APokemonMapMode::ChildInteractionEvent()
 	if (PlayerLocation.X >= TargetLocation.X * TileSize.X && PlayerLocation.Y <= TargetLocation.Y * TileSize.Y)
 	{
 		Professor->GetRender()->SetActive(true);
+		Monster->GetRender()->SetActive(true);
 		Child->SetLookDirection(AChild::ENPCDirection::RIGHT);
-
+		Professor->SetLookDirection(AProfessor::ENPCDirection::RIGHT_Left_Arm);
 		RenderChatAbovePlayer();
 
 		if (!Dialogues1.empty() && Chat->IsActive() && !bIsChildDialogue)
@@ -1083,7 +1091,9 @@ void APokemonMapMode::ProfessorInteractionEvent()
 	if (PlayerLocation.X >= ProfessorTargetLocation.X * TileSize.X &&
 		PlayerLocation.Y <= ProfessorTargetLocation.Y * TileSize.Y)
 	{
-		Professor->SetLookDirection(AProfessor::ENPCDirection::RIGHT_Left_Arm);
+		
+		
+		Monster->SetLookDirection(AMonster::ENPCDirection::LEFT);
 		RenderChatAbovePlayer();
 
 		if (!bIsProfessorDialogue)
@@ -1092,6 +1102,7 @@ void APokemonMapMode::ProfessorInteractionEvent()
 			ChatText->SetText(Dialogues2[0], 0.1f); 
 			CurrentDialogue2Index = 1;         
 			bIsProfessorDialogue = true;
+			ProfessorHelpEvent();
 		}
 	}
 }
@@ -1142,6 +1153,43 @@ void APokemonMapMode::MoveToHouse()
 			{
 				bMotherDialogueCompleted = true;
 				Player->MoveToTile({ 85,68 });
+			}
+		});
+}
+
+
+void APokemonMapMode::ProfessorHelpEvent()
+{
+	TimeEventer.PushEvent(0.0f, [this]()
+		{
+			if (Professor->GetRender() != nullptr)
+			{
+				Professor->SetTargetLocation({ -1 * TileSize.Y, 0.0f });
+				Monster->SetTargetLocation({ -1 * TileSize.Y, 0.0f });
+			}
+		});
+	TimeEventer.PushEvent(0.4f, [this]()
+		{
+			if (Professor->GetRender() != nullptr)
+			{
+				Professor->SetTargetLocation({ -1 * TileSize.Y, 0.0f });
+				Monster->SetTargetLocation({ -1 * TileSize.Y, 0.0f });
+			}
+		});
+	TimeEventer.PushEvent(0.8f, [this]()
+		{
+			if (Professor->GetRender() != nullptr)
+			{
+				Professor->SetTargetLocation({ -1 * TileSize.Y, 0.0f });
+				Monster->SetTargetLocation({ -1 * TileSize.Y, 0.0f });
+			}
+		});
+	TimeEventer.PushEvent(1.0f, [this]()
+		{
+			if (Professor->GetRender() != nullptr)
+			{
+				Professor->SetLookDirection(AProfessor::ENPCDirection::RIGHT_Left_Arm);
+				
 			}
 		});
 }

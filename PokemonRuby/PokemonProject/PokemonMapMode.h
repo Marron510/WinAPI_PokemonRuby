@@ -33,6 +33,10 @@ public:
 	void MoveToHouse();
 	void ChildInteractionEvent();
 	void ProfessorInteractionEvent();
+	void ProfessorHelpEvent();
+
+
+
 protected:
 
 private:
@@ -42,6 +46,7 @@ private:
 	class AMother* Mother = nullptr;
 	class AChild* Child = nullptr;
 	class AProfessor* Professor = nullptr;
+	class AMonster* Monster = nullptr;
 
 	class APokemonMap* NewActor = nullptr;
 	
