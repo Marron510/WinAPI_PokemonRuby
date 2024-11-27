@@ -111,7 +111,7 @@ protected:
 private:
     float WalkSpeed = 0.24;
     float WalkTime = 0.0f;
-    const float TileMoveTime = 3.2f;
+    const float TileMoveTime = 1.6f;
     
     bool IsMoving = false;
     bool bIsLeftArm = true;

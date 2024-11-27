@@ -30,5 +30,7 @@ protected:
 private:
 	USpriteRenderer* SpriteRenderer;
 	USpriteRenderer* ChatRenderer;
+	
+	
 };
 

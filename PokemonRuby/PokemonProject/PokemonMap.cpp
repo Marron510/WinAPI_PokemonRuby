@@ -5,6 +5,7 @@
 #include <EngineCore/SpriteRenderer.h>
 
 #include "PokemonEnum.h"
+#include "PokemonText.h"
 
 
 APokemonMap::APokemonMap()

@@ -2,6 +2,7 @@
 #include <EngineCore/GameMode.h>
 #include "Player.h"
 
+
 class APokemonMapMode : public AGameMode
 {
 public:
@@ -41,9 +42,10 @@ private:
 	
 	UTimeEvent TimeEventManager;
 
-	class APokemonText* ChatText = nullptr;
-	
 	FVector2D TileSize = FVector2D(96, 96);
+
+	class APokemonText* ChatText;
+
 };
 
 

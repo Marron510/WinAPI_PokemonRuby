@@ -122,6 +122,9 @@ void APokemonText::PrintTextUpdate(float _DeltaTime)
             else if (Value == '-') {
                 CapitalValue = Value - '-' + 74;
             }
+            else if (Value == ':') {
+                CapitalValue = Value - ':' + 75;
+            }
 
             if (CapitalValue != -1 && CapitalValue < static_cast<int>(UPokemoncharacter::ECapitals::END)) {
                 Renders[printCount]->SetSprite(TextSpriteName, CapitalValue);

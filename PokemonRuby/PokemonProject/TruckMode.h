@@ -1,6 +1,7 @@
 #pragma once
 #include <EngineCore/GameMode.h>
 
+
 class ATruckMode : public AGameMode
 {
 public:

@@ -13,9 +13,9 @@
 #include "PlayerHouse1FloorMode.h"
 #include "PlayerHouse2FloorMode.h" 
 
+#include "PokemonText.h"
 #include "PokemonMath.h"
 #include "PokemonMap.h"
-#include "PokemonText.h"
 #include "PokemonEnum.h"
 #include "TileMap.h"
 #include "Flower.h"
@@ -43,23 +43,19 @@ APokemonMapMode::~APokemonMapMode()
 void APokemonMapMode::BeginPlay()
 {
 	Super::BeginPlay();
-	Player = GetWorld()->GetPawn<APlayer>();
-	Player->SetColImage("PokemonMapCollisionTruck.png");
 	
+	{
+		Player = GetWorld()->GetPawn<APlayer>();
+		Player->SetColImage("PokemonMapCollisionTruck.png");
+		Player->SetDirection(PokemonMapModePlayerDir);
+	}
 	
-	ChatText = GetWorld()->SpawnActor<APokemonText>();
-	ChatText->SetActorLocation(Player->GetActorLocation());
-	ChatText->SetTextSpriteName("TextBlack.png");
-	ChatText->SetTextScale({ 100, 100 });
-	ChatText->SetOrder(ERenderOrder::FONT);
-	ChatText->SetActorLocation(Player->GetActorLocation());
+	{
+		Mother = GetWorld()->SpawnActor<AMother>();
+		FVector2D MotherPosition = { 85 * TileSize.X, 68 * TileSize.Y };
+		Mother->SetActorLocation(MotherPosition);
+	}
 
-
-	Mother = GetWorld()->SpawnActor<AMother>();
-	FVector2D MotherPosition = { 85 * TileSize.X, 68 * TileSize.Y };
-	Mother->SetActorLocation(MotherPosition);
-	
-	Player->SetDirection(PokemonMapModePlayerDir);
 
 	{
 		Fade = GetWorld()->SpawnActor<AFade>();
@@ -69,6 +65,22 @@ void APokemonMapMode::BeginPlay()
 	{
 		NewTruck = GetWorld()->SpawnActor<ATruck>();
 	}
+
+	
+	{
+		NewActor = GetWorld()->SpawnActor<APokemonMap>();
+		Map = NewActor->GetCurMap();
+		Chat = NewActor->GetChatRender();
+	}
+
+	ChatText = GetWorld()->SpawnActor<APokemonText>();
+	ChatText->SetTextSpriteName("TextBlack.png");
+	ChatText->SetTextScale({ 30.0f, 40.0f });
+	ChatText->SetOrder(ERenderOrder::FONT);
+	FVector2D ChatLocation = { 140,630 };
+	ChatText->SetActorLocation(ChatLocation);
+	
+	
 
 	// AFlower
 	{
@@ -845,14 +857,8 @@ void APokemonMapMode::BeginPlay()
 
 
 
-	
-		NewActor = GetWorld()->SpawnActor<APokemonMap>();
-		Map = NewActor->GetCurMap();
-		Chat = NewActor->GetChatRender();
-	
-
-
-
+		
+		
 	TimeEventer.PushEvent(3.5f, [this]() {
 		RenderChatAbovePlayer();
 		});
@@ -868,12 +874,11 @@ void APokemonMapMode::Tick(float _DeltaTime)
 	LevelChange();
 
 	TimeEventManager.Update(_DeltaTime);
+
 	ChatText->PrintTextUpdate(_DeltaTime);
-	ChatText->SetText("shit!");
 
 	
 }
-
 
 void APokemonMapMode::LevelChange()
 {
@@ -923,12 +928,12 @@ void APokemonMapMode::LevelChangeStart()
 
 	FTileVector StartPos = { PokemonMapModeChangePos.X, PokemonMapModeChangePos.Y };
 
-	Actor->SetActorLocation(StartPos.ToFVector());
+	 Actor->SetActorLocation(StartPos.ToFVector());
 }
 
 void APokemonMapMode::RenderChatAbovePlayer()
 {
-	if (Player == nullptr || Chat == nullptr)
+	if (Player == nullptr || Chat == nullptr || ChatText == nullptr)
 	{
 		return; 
 	}
@@ -938,7 +943,7 @@ void APokemonMapMode::RenderChatAbovePlayer()
 	FVector2D ChatLocation = PlayerLocation + FVector2D(0.0f, 260.0f);
 
 	Chat->SetComponentLocation(ChatLocation);
-
 	Chat->SetOrder(ERenderOrder::CHAT);
 	Chat->SetActive(true);
+	ChatText->SetText("Mom: LADON, we are here, honey!", 0.1f);
 }

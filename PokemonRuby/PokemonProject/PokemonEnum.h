@@ -128,6 +128,7 @@ public:
 		singlestart,
 		singleend,
 		bar,
+		colon,
 		END
 	};
 	

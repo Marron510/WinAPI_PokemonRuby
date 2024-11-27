@@ -43,6 +43,7 @@ void ATruckMode::BeginPlay()
 		MoveMapHorizontally(3.0f, 10); 
 		});
 
+	
 }
 
 void ATruckMode::Tick(float _DeltaTime)
