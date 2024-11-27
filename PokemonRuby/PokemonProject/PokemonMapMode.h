@@ -32,7 +32,7 @@ public:
 
 	void MoveToHouse();
 	void ChildInteractionEvent();
-
+	void ProfessorInteractionEvent();
 protected:
 
 private:
@@ -41,6 +41,7 @@ private:
 	class APlayer* Player = nullptr;
 	class AMother* Mother = nullptr;
 	class AChild* Child = nullptr;
+	class AProfessor* Professor = nullptr;
 
 	class APokemonMap* NewActor = nullptr;
 	
@@ -76,10 +77,14 @@ private:
 	};
 	int CurrentDialogueIndex = 0; 
 	int CurrentDialogue1Index = 0;
+	int CurrentDialogue2Index = 0;
 
 	bool bIsChildDialogue = false;
-	bool bMotherDialogueCompleted = false; // 엄마 대화 완료 여부
-	bool bChildDialogueCompleted = false; // 아이 대화 완료 여부
+	bool bIsProfessorDialogue = false;
+
+	bool bMotherDialogueCompleted = false;
+	bool bChildDialogueCompleted = false; 
+	bool bProfessorDialogueCompleted = false;
 };
 
 

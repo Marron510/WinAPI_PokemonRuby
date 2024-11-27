@@ -26,7 +26,7 @@
 #include "Truck.h"
 #include "Mother.h"
 #include "Child.h"
-
+#include "Professor.h"
 
 FIntPoint APokemonMapMode::PokemonMapModeChangePos;
 APlayer::EPlayerDir APokemonMapMode::PokemonMapModePlayerDir = APlayer::EPlayerDir::DOWN_Left_Arm;
@@ -58,7 +58,12 @@ void APokemonMapMode::BeginPlay()
 		Mother->SetActorLocation(MotherPosition);
 		Mother->GetRender()->SetActive(false);
 	}
-
+	{
+		Professor = GetWorld()->SpawnActor<AProfessor>();
+		FVector2D ProfessorPosition = { 85 * TileSize.X, 52 * TileSize.Y };
+		Professor->SetActorLocation(ProfessorPosition);
+		Professor->GetRender()->SetActive(false);
+	}
 	{
 		Child = GetWorld()->SpawnActor<AChild>();
 		FVector2D ChildPosition = { 90 * TileSize.X, 61 * TileSize.Y };
@@ -893,6 +898,7 @@ void APokemonMapMode::BeginPlay()
 	
 	bMotherDialogueCompleted = false;
 	bChildDialogueCompleted = false;
+	bProfessorDialogueCompleted = false;
 }
 
 void APokemonMapMode::Tick(float _DeltaTime)
@@ -905,14 +911,15 @@ void APokemonMapMode::Tick(float _DeltaTime)
 
 	ChatText->PrintTextUpdate(_DeltaTime);
 
-	ChildInteractionEvent();
-	
+	ChildInteractionEvent(); 
+	ProfessorInteractionEvent();
+
 	if (UEngineInput::GetInst().IsDown('Z'))
 	{
 		DisplayNextDialogue(); // 다음 대사 출력
 	}
-	
 }
+
 
 void APokemonMapMode::LevelChange()
 {
@@ -993,12 +1000,25 @@ void APokemonMapMode::DisplayNextDialogue()
 	}
 	else if (bIsChildDialogue && CurrentDialogue1Index >= Dialogues1.size())
 	{
-		// Child 대화 종료 후 비활성화 처리
 		Chat->SetActive(false);
 		ChatText->SetActive(false);
 		bChildDialogueCompleted = true;
+		bIsChildDialogue = false;
 	}
-	else if (!bIsChildDialogue && CurrentDialogueIndex < Dialogues.size() && !bMotherDialogueCompleted)
+	else if (bIsProfessorDialogue && CurrentDialogue2Index < Dialogues2.size())
+	{
+		ChatText->SetText(Dialogues2[CurrentDialogue2Index], 0.1f); 
+		CurrentDialogue2Index++;
+	}
+	else if (bIsProfessorDialogue && CurrentDialogue2Index >= Dialogues2.size())
+	{
+		Chat->SetActive(false);
+		ChatText->SetActive(false);
+		bProfessorDialogueCompleted = true;
+		bIsProfessorDialogue = false;
+	}
+	else if (!bIsChildDialogue && !bIsProfessorDialogue &&
+		CurrentDialogueIndex < Dialogues.size() && !bMotherDialogueCompleted)
 	{
 		ChatText->SetText(Dialogues[CurrentDialogueIndex], 0.1f);
 		CurrentDialogueIndex++;
@@ -1007,8 +1027,6 @@ void APokemonMapMode::DisplayNextDialogue()
 	{
 		Chat->SetActive(false);
 		ChatText->SetActive(false);
-		bIsChildDialogue = false;
-
 		if (!bMotherDialogueCompleted && Mother != nullptr)
 		{
 			MoveToHouse();
@@ -1029,6 +1047,7 @@ void APokemonMapMode::ChildInteractionEvent()
 
 	if (PlayerLocation.X >= TargetLocation.X * TileSize.X && PlayerLocation.Y <= TargetLocation.Y * TileSize.Y)
 	{
+		Professor->GetRender()->SetActive(true);
 		Child->SetLookDirection(AChild::ENPCDirection::RIGHT);
 
 		RenderChatAbovePlayer();
@@ -1036,12 +1055,40 @@ void APokemonMapMode::ChildInteractionEvent()
 		if (!Dialogues1.empty() && Chat->IsActive() && !bIsChildDialogue)
 		{
 			ChatText->SetActive(true);
-			ChatText->SetText(Dialogues1[0], 0.1f); // 첫 번째 대사 바로 출력
-			CurrentDialogue1Index = 1; // 첫 번째 대사 이후로 인덱스 설정
+			ChatText->SetText(Dialogues1[0], 0.1f);
+			CurrentDialogue1Index = 1;
 			bIsChildDialogue = true;
 		}
 	}
 }
+
+void APokemonMapMode::ProfessorInteractionEvent()
+{
+	if (bProfessorDialogueCompleted)
+	{
+		return;
+	}
+
+	FVector2D PlayerLocation = Player->GetActorLocation();
+	FIntPoint ProfessorTargetLocation(91, 55);
+
+	if (PlayerLocation.X >= ProfessorTargetLocation.X * TileSize.X &&
+		PlayerLocation.Y <= ProfessorTargetLocation.Y * TileSize.Y)
+	{
+		Professor->SetLookDirection(AProfessor::ENPCDirection::RIGHT_Left_Arm);
+		RenderChatAbovePlayer();
+
+		if (!bIsProfessorDialogue)
+		{
+			ChatText->SetActive(true);
+			ChatText->SetText(Dialogues2[0], 0.1f); 
+			CurrentDialogue2Index = 1;         
+			bIsProfessorDialogue = true;
+		}
+	}
+}
+
+
 
 
 void APokemonMapMode::MoveToHouse()
