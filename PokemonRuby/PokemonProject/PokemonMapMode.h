@@ -55,7 +55,7 @@ private:
 	std::string enter = "\n";
 	std::vector<std::string> Dialogues = 
 	{
-	"Mom: LADON, we are here, honey!",
+	"Mom: BRENDAN, we are here, honey!",
 	"Mom: It must be tiring riding with" + enter + "our things in the moving truck.",
 	"Mom: Well, this is LITTLEROOT TOWN!",
 	"Mom: How do you like it?" + enter + "This is our new home!",

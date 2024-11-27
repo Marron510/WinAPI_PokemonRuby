@@ -44,10 +44,10 @@ private:
 	std::string enter = "\n";
 	std::vector<std::string> Dialogues =
 	{
-	"Mom: See, LADON?" + enter + "Isn't it nice in here, too?",
+	"Mom: See, BRENDAN?" + enter + "Isn't it nice in here, too?",
 	"Mom: The mover's POKEMON do all the work!",
 	"Mom: This is so convenient!",
-	"Mom: LADON, your room is upstairs." + enter + "Go check it out, dear!"
+	"Mom: BRENDAN, your room is upstairs." + enter + "Go check it out, dear!"
 	};
 
 
