@@ -1117,44 +1117,48 @@ void APokemonMapMode::MoveToHouse()
 			if (Mother->GetRender() != nullptr)
 			{
 				Mother->SetTargetLocation({ 0.0f, -1 * TileSize.Y });
+				Player->MoveToTile({ 85,70 });
 			}
 		});
-	TimeEventer.PushEvent(1.2f, [this]()
+	/*TimeEventer.PushEvent(1.2f, [this]()
 		{
 			if (Mother->GetRender() != nullptr)
 			{
 				Player->MoveToTile({ 85,70 });
 			}
-		});
+		});*/
 	TimeEventer.PushEvent(1.5f, [this]()
 		{
 			if (Mother->GetRender() != nullptr)
 			{
 				Mother->SetTargetLocation({ 0.0f, -1 * TileSize.Y });
+				Player->MoveToTile({ 85,69 });
 			}
 		});
-	TimeEventer.PushEvent(1.7f, [this]()
+	/*TimeEventer.PushEvent(1.7f, [this]()
 		{
 			if (Mother->GetRender() != nullptr)
 			{
 				Player->MoveToTile({ 85,69 });
 			}
-		});
+		});*/
 	TimeEventer.PushEvent(2.0f, [this]()
 		{
 			if (Mother->GetRender() != nullptr)
 			{
 				Mother->GetRender()->SetActive(false);
+				bMotherDialogueCompleted = true;
+				Player->MoveToTile({ 85,68 });
 			}
 		});
-	TimeEventer.PushEvent(2.0f, [this]()
+	/*TimeEventer.PushEvent(2.0f, [this]()
 		{
 			if (Mother->GetRender() != nullptr)
 			{
 				bMotherDialogueCompleted = true;
 				Player->MoveToTile({ 85,68 });
 			}
-		});
+		});*/
 }
 
 
