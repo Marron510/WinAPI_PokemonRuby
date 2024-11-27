@@ -30,7 +30,7 @@ void AMother::BeginPlay()
 
     SpriteRenderer->SetSprite("Mother.png");
     SpriteRenderer->SetComponentScale({ 120.0f, 130.0f });
-    SpriteRenderer->SetOrder(ERenderOrder::PLAYER);
+    SpriteRenderer->SetOrder(ERenderOrder::NPC);
 
     SpriteRenderer->CreateAnimation("Mother_Walk_Down_Left_Arm", "Mother.png", 0, 1, 0.1f);
     SpriteRenderer->CreateAnimation("Mother_Walk_Down_Right_Arm", "Mother.png", 2, 3, 0.1f);
@@ -49,15 +49,7 @@ void AMother::BeginPlay()
     FVector2D ActorLocation = GetActorLocation();
     CurrentPosition = FVector2D(ActorLocation.X, ActorLocation.Y);
 
-    TimeEventer.PushEvent(2.0f, [this]() {
-        SetTargetLocation({ 0.0f, 96.0f });
-        });
-    TimeEventer.PushEvent(2.4f, [this]() {
-        SetTargetLocation({ 0.0f, 96.0f });
-        });
-    TimeEventer.PushEvent(2.8f, [this]() {
-        SpriteRenderer->ChangeAnimation("Mother_Idle_Left");
-        });
+  
 }
 
 void AMother::Tick(float _DeltaTime)
@@ -74,14 +66,12 @@ void AMother::Tick(float _DeltaTime)
 
         SetActorLocation(FVector2D(NewPosition.X, NewPosition.Y));
 
-        // 이동이 완료되었는지 확인
         if ((TargetLocation - NewPosition).Length() < 1.0f)
         {
             CurrentPosition = TargetLocation;
             SetActorLocation(FVector2D(TargetLocation.X, TargetLocation.Y));
             IsMoving = false;
 
-            // 이동 완료 후 Idle 애니메이션으로 전환
             SetLookDirection(LastDirection);
         }
     }
@@ -141,20 +131,21 @@ void AMother::SetTargetLocation(const FVector2D& Offset)
     MoveTime = 0.0f;
 
     if (Offset.X > 0)
-        CurrentDirection = bIsLeftArm ? ENPCDirection::RIGHT_Left_Arm : ENPCDirection::RIGHT_Right_Arm;
+        LastDirection = bIsLeftArm ? ENPCDirection::RIGHT_Left_Arm : ENPCDirection::RIGHT_Right_Arm;
     else if (Offset.X < 0)
-        CurrentDirection = bIsLeftArm ? ENPCDirection::LEFT_Left_Arm : ENPCDirection::LEFT_Right_Arm;
+        LastDirection = bIsLeftArm ? ENPCDirection::LEFT_Left_Arm : ENPCDirection::LEFT_Right_Arm;
     else if (Offset.Y > 0)
-        CurrentDirection = bIsLeftArm ? ENPCDirection::DOWN_Left_Arm : ENPCDirection::DOWN_Right_Arm;
+        LastDirection = bIsLeftArm ? ENPCDirection::DOWN_Left_Arm : ENPCDirection::DOWN_Right_Arm;
     else if (Offset.Y < 0)
-        CurrentDirection = bIsLeftArm ? ENPCDirection::UP_Left_Arm : ENPCDirection::UP_Right_Arm;
+        LastDirection = bIsLeftArm ? ENPCDirection::UP_Left_Arm : ENPCDirection::UP_Right_Arm;
     else
-        CurrentDirection = ENPCDirection::NONE;
+        LastDirection = ENPCDirection::NONE;
 
-    bIsLeftArm = !bIsLeftArm; // 팔 상태 전환
+    bIsLeftArm = !bIsLeftArm; 
 
-    SetAnimationByDirection(CurrentDirection);
+    SetAnimationByDirection(LastDirection); 
 }
+
 
 
 void AMother::SetLookDirection(ENPCDirection Direction)

@@ -873,7 +873,15 @@ void APokemonMapMode::BeginPlay()
 			CurrentDialogueIndex++;
 		}
 		});
-
+	TimeEventer.PushEvent(2.0f, [this]() {
+		Mother->SetTargetLocation({ 0.0f, 96.0f });
+		});
+	TimeEventer.PushEvent(2.3f, [this]() {
+		Mother->SetTargetLocation({ 0.0f, 96.0f });
+		});
+	TimeEventer.PushEvent(2.6f, [this]() {
+		Mother->GetRender()->ChangeAnimation("Mother_Idle_Left");
+		});
 	
 	
 }
@@ -972,11 +980,60 @@ void APokemonMapMode::DisplayNextDialogue()
 	if (CurrentDialogueIndex < Dialogues.size())
 	{
 		ChatText->SetText(Dialogues[CurrentDialogueIndex], 0.1f);
-		CurrentDialogueIndex++; 
+		CurrentDialogueIndex++;
 	}
 	else
 	{
 		Chat->SetActive(false);
 		ChatText->SetActive(false);
+
+		if (Mother != nullptr)
+		{
+			
+			TimeEventer.PushEvent(1.0f, [this]() 
+				{ 
+				if (Mother->GetRender() != nullptr)
+				{
+					Mother->SetTargetLocation({ 0.0f, -1 * TileSize.Y }); 
+				}
+				});
+			TimeEventer.PushEvent(1.2f, [this]()
+				{
+					if (Mother->GetRender() != nullptr)
+					{
+						Player->MoveToTile({ 85,70 });
+					}
+				});
+			TimeEventer.PushEvent(1.5f, [this]()
+				{ 
+				if (Mother->GetRender() != nullptr)
+				{
+					Mother->SetTargetLocation({ 0.0f, -1 * TileSize.Y }); 
+				}
+				});
+			TimeEventer.PushEvent(1.7f, [this]()
+				{
+					if (Mother->GetRender() != nullptr)
+					{
+						Player->MoveToTile({ 85,69 });
+					}
+				});
+			TimeEventer.PushEvent(2.0f, [this]()
+				{ 
+				if (Mother->GetRender() != nullptr)
+				{
+					Mother->GetRender()->SetActive(false);
+				}
+				});
+			TimeEventer.PushEvent(2.0f, [this]()
+				{
+					if (Mother->GetRender() != nullptr)
+					{
+						Player->MoveToTile({ 85,68 });
+					}
+				});
+			
+			
+		}
 	}
 }

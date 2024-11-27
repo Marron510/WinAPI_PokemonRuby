@@ -71,14 +71,14 @@ void APlayer::BeginPlay()
 void APlayer::Tick(float _DeltaTime)
 {
     Super::Tick(_DeltaTime);
-    
-   
+
     if (IsMoving)
     {
         UpdateMovement(_DeltaTime);
     }
 
     FSM.Update(_DeltaTime);
+
 }
 
 void APlayer::Idle(float _DeltaTime)
@@ -533,4 +533,30 @@ void APlayer::SetDirection(EPlayerDir NewDirection)
     }
 
     SpriteRenderer->ChangeAnimation(AnimationName);
+}
+
+void APlayer::MoveToTile(const FVector2D& TargetTile)
+{
+    FVector2D TileSize = FVector2D(96.0f, 96.0f); // 타일 크기
+    FVector2D TargetPosition = FVector2D(
+        TargetTile.X * TileSize.X,
+        TargetTile.Y * TileSize.Y
+    );
+
+    FVector2D Offset = TargetPosition - GetActorLocation();
+
+    if (Offset.X > 0)
+        CurDir = bIsLeftArm ? EPlayerDir::RIGHT_Left_Arm : EPlayerDir::RIGHT_Right_Arm;
+    else if (Offset.X < 0)
+        CurDir = bIsLeftArm ? EPlayerDir::LEFT_Left_Arm : EPlayerDir::LEFT_Right_Arm;
+    else if (Offset.Y > 0)
+        CurDir = bIsLeftArm ? EPlayerDir::DOWN_Left_Arm : EPlayerDir::DOWN_Right_Arm;
+    else if (Offset.Y < 0)
+        CurDir = bIsLeftArm ? EPlayerDir::UP_Left_Arm : EPlayerDir::UP_Right_Arm;
+
+    bIsLeftArm = !bIsLeftArm; 
+
+    SetTargetLocation(TargetPosition); 
+    IsMoving = true;                   
+    FSM.ChangeState(APlayerState::WALK);
 }

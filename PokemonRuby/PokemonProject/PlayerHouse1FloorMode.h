@@ -27,10 +27,29 @@ public:
 
 	void LevelChangeStart() override;
 
+	void Floor1Event();
+
+	void DisplayNextDialogue();
+	void RenderChatAbovePlayer();
 protected:
 
 private:
 	class APlayer* Player = nullptr;
 	class AFade* Fade = nullptr;
+	class AMother* Mother = nullptr;
+
+	FVector2D TileSize = FVector2D(96, 96);
+
+	class APokemonText* ChatText;
+	std::string enter = "\n";
+	std::vector<std::string> Dialogues =
+	{
+	"Mom: See, LADON?" + enter + "Isn't it nice in here, too?",
+	"Mom: The mover's POKEMON do all the work!",
+	"Mom: This is so convenient!",
+	"Mom: LADON, your room is upstairs." + enter + "Go check it out, dear!"
+	};
+
+	int CurrentDialogueIndex = 0;
 };
 

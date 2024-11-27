@@ -74,7 +74,7 @@ public:
     void StartMovement(EPlayerDir Direction, FVector2D Offset);
     void UpdateMovement(float _DeltaTime);
     void ChangeArmAnimation();
-
+    void MoveToTile(const FVector2D& TargetTile);
 
     void InitializeSprites();
     void InitializeAnimations();

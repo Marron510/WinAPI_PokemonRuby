@@ -9,6 +9,7 @@ enum class ERenderOrder
 	Tile = 0,
 	FLOWER = 10,
 	TRUCK = 20,
+	NPC = 40,
 	PLAYER = 50,
 	CHAT = 80,
 	POKEMONSHADOW = 100,

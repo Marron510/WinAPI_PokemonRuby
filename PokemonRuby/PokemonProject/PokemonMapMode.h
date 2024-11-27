@@ -29,7 +29,7 @@ public:
 	void LevelChangeStart() override;
 	void RenderChatAbovePlayer();
 	void DisplayNextDialogue();
-	void KeyInputLimit();
+
 protected:
 
 private:

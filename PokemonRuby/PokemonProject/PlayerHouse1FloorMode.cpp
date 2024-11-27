@@ -4,6 +4,7 @@
 #include <EnginePlatform/EngineInput.h>
 #include <EngineCore/EngineAPICore.h>
 #include <EngineCore/Level.h>
+#include <EngineCore/SpriteRenderer.h>
 
 #include "Player.h"
 #include "PokemonMath.h"
@@ -12,6 +13,8 @@
 #include "PokemonMapMode.h"
 #include "PlayerHouse1Mode.h"
 #include "Fade.h"
+#include "Mother.h"
+#include "PokemonText.h"
  
 FIntPoint APlayerHouse1FloorMode::APlayerHouse1FloorModeChangePos;
 APlayer::EPlayerDir APlayerHouse1FloorMode::APlayerHouse1FloorModePlayerDir;
@@ -33,6 +36,8 @@ void APlayerHouse1FloorMode::BeginPlay()
 	
 		APlayerHouse1FloorMap* NewActor = GetWorld()->SpawnActor<APlayerHouse1FloorMap>();
 		Map = NewActor->GetCurMap();
+		Chat = NewActor->GetChatRender();
+		Chat->SetActive(false);
 		Player = GetWorld()->GetPawn<APlayer>();
 		Player->SetColImage("PlayerHouse1Floor Collision.png");
 		Player->SetDirection(APlayerHouse1FloorModePlayerDir);
@@ -41,6 +46,26 @@ void APlayerHouse1FloorMode::BeginPlay()
 		Fade = GetWorld()->SpawnActor<AFade>();
 		Fade->FadeOut();
 	}
+
+	{
+		Mother = GetWorld()->SpawnActor<AMother>();
+		FVector2D MotherPosition = { 9 * TileSize.X, 7 * TileSize.Y };
+		Mother->SetActorLocation(MotherPosition);
+		Mother->GetRender()->SetActive(true);
+	}
+	{
+		ChatText = GetWorld()->SpawnActor<APokemonText>();
+		ChatText->SetTextSpriteName("TextBlack.png");
+		ChatText->SetTextScale({ 25.0f, 38.0f });
+		ChatText->SetOrder(ERenderOrder::FONT);
+		FVector2D ChatLocation = { 100,620 };
+		ChatText->SetActorLocation(ChatLocation);
+	}
+
+	Floor1Event();
+
+	
+
 }
 
 void APlayerHouse1FloorMode::Tick(float _DeltaTime)
@@ -48,6 +73,14 @@ void APlayerHouse1FloorMode::Tick(float _DeltaTime)
 	Super::Tick(_DeltaTime);
 
 	LevelChange();
+
+	ChatText->PrintTextUpdate(_DeltaTime);
+
+
+	if (UEngineInput::GetInst().IsDown('Z'))
+	{
+		DisplayNextDialogue(); 
+	}
 }
 
 void APlayerHouse1FloorMode::LevelChange()
@@ -88,3 +121,138 @@ void APlayerHouse1FloorMode::LevelChangeStart()
 
 }
 
+void APlayerHouse1FloorMode::Floor1Event()
+{
+	TimeEventer.PushEvent(1.0f, [this]()
+		{
+			if (Mother->GetRender() != nullptr)
+			{
+				Mother->SetTargetLocation({ 0.0f, -1 * TileSize.Y });
+			}
+		});
+	TimeEventer.PushEvent(1.2f, [this]()
+		{
+			if (Mother->GetRender() != nullptr)
+			{
+				Player->MoveToTile({ 9,7 });
+			}
+		});
+	TimeEventer.PushEvent(1.4f, [this]()
+		{
+			if (Mother->GetRender() != nullptr)
+			{
+				Mother->SetTargetLocation({ 0.0f, -1 * TileSize.Y });
+			}
+		});
+	TimeEventer.PushEvent(1.6f, [this]()
+		{
+			if (Mother->GetRender() != nullptr)
+			{
+				Player->MoveToTile({ 9,6 });
+			}
+		});
+	TimeEventer.PushEvent(1.8f, [this]()
+		{
+			if (Mother->GetRender() != nullptr)
+			{
+				Mother->SetTargetLocation({ -1 * TileSize.X, 0.0f });
+			}
+		});
+	TimeEventer.PushEvent(2.0f, [this]()
+		{
+			if (Mother->GetRender() != nullptr)
+			{
+				Player->MoveToTile({ 9,5 });
+			}
+		});
+	TimeEventer.PushEvent(2.2f, [this]()
+		{
+			if (Mother->GetRender() != nullptr)
+			{
+				Mother->SetTargetLocation({ -1 * TileSize.X, 0.0f });
+			}
+		});
+	TimeEventer.PushEvent(2.4f, [this]()
+		{
+			if (Mother->GetRender() != nullptr)
+			{
+				Player->MoveToTile({ 8,5 });
+			}
+		});
+	TimeEventer.PushEvent(2.6f, [this]()
+		{
+			if (Mother->GetRender() != nullptr)
+			{
+				Mother->SetTargetLocation({ -1 * TileSize.X, 0.0f });
+			}
+		});
+	TimeEventer.PushEvent(2.8f, [this]()
+		{
+			if (Mother->GetRender() != nullptr)
+			{
+				Player->MoveToTile({ 7,5 });
+			}
+		});
+	TimeEventer.PushEvent(3.0f, [this]()
+		{
+			if (Mother->GetRender() != nullptr)
+			{
+				Mother->SetTargetLocation({ -1 * TileSize.X, 0.0f });
+			}
+		});
+	TimeEventer.PushEvent(3.2f, [this]()
+		{
+			if (Mother->GetRender() != nullptr)
+			{
+				Player->MoveToTile({ 6,5 });
+			}
+		});
+	TimeEventer.PushEvent(3.4f, [this]()
+		{
+			if (Mother->GetRender() != nullptr)
+			{
+				Mother->GetRender()->ChangeAnimation("Mother_Idle_Right");
+			}
+		});
+	TimeEventer.PushEvent(4.0f, [this]() {
+		RenderChatAbovePlayer();
+		if (!Dialogues.empty())
+		{
+			ChatText->SetText(Dialogues[CurrentDialogueIndex], 0.1f);
+			CurrentDialogueIndex++;
+		}
+		});
+}
+
+void APlayerHouse1FloorMode::DisplayNextDialogue()
+{
+	ChatText->ClearText();
+
+	if (CurrentDialogueIndex < Dialogues.size())
+	{
+		ChatText->SetText(Dialogues[CurrentDialogueIndex], 0.1f);
+		CurrentDialogueIndex++;
+	}
+	else
+	{
+		Chat->SetActive(false);
+		ChatText->SetActive(false);
+	}
+}
+
+
+void APlayerHouse1FloorMode::RenderChatAbovePlayer()
+{
+	if (Player == nullptr || Chat == nullptr || ChatText == nullptr)
+	{
+		return;
+	}
+
+	FVector2D PlayerLocation = Player->GetActorLocation();
+
+	FVector2D ChatLocation = PlayerLocation + FVector2D(0.0f, 260.0f);
+
+	Chat->SetComponentLocation(ChatLocation);
+	Chat->SetOrder(ERenderOrder::CHAT);
+	Chat->SetActive(true);
+}
