@@ -80,6 +80,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="SelectPokemonMap.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="SelectPokemonMode.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="TileMap.h">
       <SubType>
       </SubType>
@@ -237,6 +245,14 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Sea.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="SelectPokemonMap.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="SelectPokemonMode.cpp">
       <SubType>
       </SubType>
     </ClCompile>

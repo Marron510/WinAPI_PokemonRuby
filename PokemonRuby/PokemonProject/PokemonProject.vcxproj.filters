@@ -49,9 +49,6 @@
     <Filter Include="PokemonObject\1.PokemonMap\03_MapEvent">
       <UniqueIdentifier>{d4808bae-2116-4b9d-bc56-ff9555ff6193}</UniqueIdentifier>
     </Filter>
-    <Filter Include="PokemonObject\1.PokemonMap\04.BattleMap">
-      <UniqueIdentifier>{ea10e67d-75d1-46f4-8d60-98cda9fb0a5b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="PokemonObject\2.PokemonGameMode\01_InGameMode\01.LittleRootTown">
       <UniqueIdentifier>{e9deb932-bcef-455e-87e5-2e4ba7d81b75}</UniqueIdentifier>
     </Filter>
@@ -66,6 +63,15 @@
     </Filter>
     <Filter Include="PokemonObject\4.PlayObject\Things">
       <UniqueIdentifier>{1a8e1efb-3339-47fb-94c7-60df6c3f54f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PokemonObject\1.PokemonMap\04.SelectPokemonMap">
+      <UniqueIdentifier>{4f1cafca-2425-4b35-84f3-6edd26b2a6bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PokemonObject\1.PokemonMap\05.BattleMap">
+      <UniqueIdentifier>{ea10e67d-75d1-46f4-8d60-98cda9fb0a5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PokemonObject\2.PokemonGameMode\01_InGameMode\03.SelectPokemon">
+      <UniqueIdentifier>{5f38fde0-576a-498a-a228-7f3db1a3f2c5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -154,7 +160,7 @@
       <Filter>PokemonObject\5.Event</Filter>
     </ClInclude>
     <ClInclude Include="PokemonBattleMap.h">
-      <Filter>PokemonObject\1.PokemonMap\04.BattleMap</Filter>
+      <Filter>PokemonObject\1.PokemonMap\05.BattleMap</Filter>
     </ClInclude>
     <ClInclude Include="Fade.h">
       <Filter>PokemonObject\1.PokemonMap\03_MapEvent</Filter>
@@ -201,6 +207,12 @@
     </ClInclude>
     <ClInclude Include="Monster.h">
       <Filter>PokemonObject\4.PlayObject\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectPokemonMode.h">
+      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\03.SelectPokemon</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectPokemonMap.h">
+      <Filter>PokemonObject\1.PokemonMap\04.SelectPokemonMap</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -289,7 +301,7 @@
       <Filter>PokemonObject\5.Event</Filter>
     </ClCompile>
     <ClCompile Include="PokemonBattleMap.cpp">
-      <Filter>PokemonObject\1.PokemonMap\04.BattleMap</Filter>
+      <Filter>PokemonObject\1.PokemonMap\05.BattleMap</Filter>
     </ClCompile>
     <ClCompile Include="Fade.cpp">
       <Filter>PokemonObject\1.PokemonMap\03_MapEvent</Filter>
@@ -336,6 +348,12 @@
     </ClCompile>
     <ClCompile Include="Monster.cpp">
       <Filter>PokemonObject\4.PlayObject\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectPokemonMode.cpp">
+      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\03.SelectPokemon</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectPokemonMap.cpp">
+      <Filter>PokemonObject\1.PokemonMap\04.SelectPokemonMap</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
