@@ -73,13 +73,14 @@ void APokemonMapMode::BeginPlay()
 		Chat = NewActor->GetChatRender();
 	}
 
-	ChatText = GetWorld()->SpawnActor<APokemonText>();
-	ChatText->SetTextSpriteName("TextBlack.png");
-	ChatText->SetTextScale({ 30.0f, 40.0f });
-	ChatText->SetOrder(ERenderOrder::FONT);
-	FVector2D ChatLocation = { 140,630 };
-	ChatText->SetActorLocation(ChatLocation);
-	
+	{
+		ChatText = GetWorld()->SpawnActor<APokemonText>();
+		ChatText->SetTextSpriteName("TextBlack.png");
+		ChatText->SetTextScale({ 25.0f, 38.0f });
+		ChatText->SetOrder(ERenderOrder::FONT);
+		FVector2D ChatLocation = { 140,620 };
+		ChatText->SetActorLocation(ChatLocation);
+	}
 	
 
 	// AFlower
@@ -877,6 +878,11 @@ void APokemonMapMode::Tick(float _DeltaTime)
 
 	ChatText->PrintTextUpdate(_DeltaTime);
 
+
+	if (UEngineInput::GetInst().IsDown('Z'))
+	{
+		DisplayNextDialogue(); // 다음 대사 출력
+	}
 	
 }
 
@@ -945,5 +951,21 @@ void APokemonMapMode::RenderChatAbovePlayer()
 	Chat->SetComponentLocation(ChatLocation);
 	Chat->SetOrder(ERenderOrder::CHAT);
 	Chat->SetActive(true);
-	ChatText->SetText("Mom: LADON, we are here, honey!", 0.1f);
+}
+
+
+void APokemonMapMode::DisplayNextDialogue()
+{
+	ChatText->ClearText();
+
+	if (CurrentDialogueIndex < Dialogues.size())
+	{
+		ChatText->SetText(Dialogues[CurrentDialogueIndex], 0.1f);
+		CurrentDialogueIndex++; 
+	}
+	else
+	{
+		Chat->SetActive(false);
+		ChatText->SetActive(false);
+	}
 }

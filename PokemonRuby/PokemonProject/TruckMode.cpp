@@ -51,6 +51,7 @@ void ATruckMode::Tick(float _DeltaTime)
 	Super::Tick(_DeltaTime);
 	
 	LevelChange();
+	
 }
 
 void ATruckMode::LevelChange()
