@@ -29,7 +29,7 @@ public:
 	void LevelChangeStart() override;
 	void RenderChatAbovePlayer();
 	void DisplayNextDialogue();
-	
+	void KeyInputLimit();
 protected:
 
 private:
@@ -40,6 +40,8 @@ private:
 	
 	class APokemonMap* NewActor = nullptr;
 	
+	bool bIsDialogueActive = false;
+
 	UTimeEvent TimeEventManager;
 
 	FVector2D TileSize = FVector2D(96, 96);
@@ -53,7 +55,7 @@ private:
 	"Mom: Well, this is LITTLEROOT TOWN!",
 	"Mom: How do you like it?" + enter + "This is our new home!",
 	"Mom: It has a quaint feel,but it seems" + enter + "to be an easy place to live!",
-	"Mom: And,you get your own room , LADON!" + enter + "LET's go inside."
+	"Mom: And,you get your own room , LADON!" + enter + "Let's go inside."
 	};
 
 	int CurrentDialogueIndex = 0; 

@@ -37,7 +37,10 @@ public:
 	void SetTargetLocation(const FVector2D& Offset);
 	void SetLookDirection(ENPCDirection Direction);
 
-	
+	class USpriteRenderer* GetRender()
+	{
+		return SpriteRenderer;
+	}
 
 protected:
 

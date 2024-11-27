@@ -54,6 +54,7 @@ void APokemonMapMode::BeginPlay()
 		Mother = GetWorld()->SpawnActor<AMother>();
 		FVector2D MotherPosition = { 85 * TileSize.X, 68 * TileSize.Y };
 		Mother->SetActorLocation(MotherPosition);
+		Mother->GetRender()->SetActive(false);
 	}
 
 
@@ -859,9 +860,18 @@ void APokemonMapMode::BeginPlay()
 
 
 		
-		
+	TimeEventer.PushEvent(1.0f, [this]() 
+		{
+			Mother->GetRender()->SetActive(true);
+		});
+	
 	TimeEventer.PushEvent(3.5f, [this]() {
 		RenderChatAbovePlayer();
+		if (!Dialogues.empty())
+		{
+			ChatText->SetText(Dialogues[CurrentDialogueIndex], 0.1f);
+			CurrentDialogueIndex++;
+		}
 		});
 
 	
@@ -878,7 +888,8 @@ void APokemonMapMode::Tick(float _DeltaTime)
 
 	ChatText->PrintTextUpdate(_DeltaTime);
 
-
+	
+	
 	if (UEngineInput::GetInst().IsDown('Z'))
 	{
 		DisplayNextDialogue(); // 다음 대사 출력
