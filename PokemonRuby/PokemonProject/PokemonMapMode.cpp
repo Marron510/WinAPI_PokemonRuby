@@ -991,6 +991,13 @@ void APokemonMapMode::DisplayNextDialogue()
 		ChatText->SetText(Dialogues1[CurrentDialogue1Index], 0.1f);
 		CurrentDialogue1Index++;
 	}
+	else if (bIsChildDialogue && CurrentDialogue1Index >= Dialogues1.size())
+	{
+		// Child 대화 종료 후 비활성화 처리
+		Chat->SetActive(false);
+		ChatText->SetActive(false);
+		bChildDialogueCompleted = true;
+	}
 	else if (!bIsChildDialogue && CurrentDialogueIndex < Dialogues.size() && !bMotherDialogueCompleted)
 	{
 		ChatText->SetText(Dialogues[CurrentDialogueIndex], 0.1f);
@@ -1009,11 +1016,12 @@ void APokemonMapMode::DisplayNextDialogue()
 	}
 }
 
+
 void APokemonMapMode::ChildInteractionEvent()
 {
 	if (bChildDialogueCompleted)
 	{
-		return; 
+		return;
 	}
 
 	FVector2D PlayerLocation = Player->GetActorLocation();
@@ -1025,9 +1033,11 @@ void APokemonMapMode::ChildInteractionEvent()
 
 		RenderChatAbovePlayer();
 
-		if (!Dialogues1.empty() && Chat->IsActive())
+		if (!Dialogues1.empty() && Chat->IsActive() && !bIsChildDialogue)
 		{
 			ChatText->SetActive(true);
+			ChatText->SetText(Dialogues1[0], 0.1f); // 첫 번째 대사 바로 출력
+			CurrentDialogue1Index = 1; // 첫 번째 대사 이후로 인덱스 설정
 			bIsChildDialogue = true;
 		}
 	}
