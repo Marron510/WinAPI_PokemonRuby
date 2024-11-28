@@ -62,8 +62,8 @@ void PokemonCore::BeginPlay()
 
 	{
 		UEngineDirectory Dir;
-		Dir.MoveParentToDirectory("PokemonResources//Image");
-		Dir.Append("Intro//Intro_0");
+		Dir.MoveParentToDirectory("PokemonResources//Image//Intro");
+		Dir.Append("Intro_0");
 
 		UImageManager::GetInst().LoadFolder(Dir.GetPathToString());
 
@@ -76,7 +76,6 @@ void PokemonCore::BeginPlay()
 		Dir.Append("Player//Move");
 
 		UImageManager::GetInst().LoadFolder(Dir.GetPathToString());
-
 	}
 
 	{
@@ -85,7 +84,6 @@ void PokemonCore::BeginPlay()
 		Dir.Append("Player//Battle");
 
 		UImageManager::GetInst().LoadFolder(Dir.GetPathToString());
-
 	}
 
 	{
@@ -217,6 +215,14 @@ void PokemonCore::BeginPlay()
 		UEngineAPICore::GetCore()->CreateLevel<APokemonBattleMode, AActor>("PokemonBattle");
 	}
 
+	// UEngdinsound::Load("aaa.mp3");
+	// 
+	// 엔진 어디선가
+	// UEngdinsound::Update(_deltatime);
+	// 
+	// USoundPlayer BGMPlayer = UEngdinsound::Play("aaa.mp3");
+
+	// BGMPlayer.stop();
 
 	
 		UEngineAPICore::GetCore()->OpenLevel("Title");
