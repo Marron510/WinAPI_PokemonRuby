@@ -106,7 +106,7 @@ void AMyPokemon::InitializePokemonAttributes(EMyPokemon PokemonType)
         Level = 5;
         HP = 40;
         MaxHp = 40;
-        Attack = 45;
+        Attack = 90;
         Defense = 35;
         SpecialAttack = 65;
         SpecialDefense = 50;
@@ -116,7 +116,7 @@ void AMyPokemon::InitializePokemonAttributes(EMyPokemon PokemonType)
         Level = 5;
         HP = 40;
         MaxHp = 40;
-        Attack = 50;
+        Attack = 100;
         Defense = 40;
         SpecialAttack = 70;
         SpecialDefense = 50;
@@ -126,7 +126,7 @@ void AMyPokemon::InitializePokemonAttributes(EMyPokemon PokemonType)
         Level = 5;
         HP = 50;
         MaxHp = 50;
-        Attack = 65;
+        Attack = 130;
         Defense = 50;
         SpecialAttack = 44;
         SpecialDefense = 50;

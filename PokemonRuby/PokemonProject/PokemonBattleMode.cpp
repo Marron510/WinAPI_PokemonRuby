@@ -195,12 +195,12 @@ void APokemonBattleMode::BeginPlay()
 
 	{
 		MyPokemonHPbar = GetWorld()->SpawnActor<APokemonHP>();
-		MyPokemonHPbar->SetActorLocation({ 1696.0f, 460.0f });
+		MyPokemonHPbar->SetActorLocation({ 1582.0f, 460.0f });
 	}
 
 	{
 		EnemyPokemonHPbar = GetWorld()->SpawnActor<APokemonHP>();
-		EnemyPokemonHPbar->SetActorLocation({ -330.0f, 185.0f });
+		EnemyPokemonHPbar->SetActorLocation({ -445.0f, 185.0f });
 	}
 
 
@@ -225,6 +225,7 @@ void APokemonBattleMode::Tick(float _DeltaTime)
 	SpawnPokemon(_DeltaTime);
 	
 	HPCheck();
+
 }
 
 
@@ -346,7 +347,7 @@ void APokemonBattleMode::EnemyPokemonHpSetting()
 	if (false == IsEnemyPokemonTextMoved)
 	{
 
-		FVector2D TargetLocation = FVector2D({ 400.0f , 185.0f });
+		FVector2D TargetLocation = FVector2D({ 285.0f , 185.0f });
 		FVector2D Curloc = EnemyPokemonHPbar->GetActorLocation();
 
 		Curloc += FVector2D::RIGHT;
@@ -428,7 +429,7 @@ void APokemonBattleMode::PlayerPokemonHPSetting()
 {
 	if (false == IsPlayerPokemonTextMoved)
 	{
-		FVector2D TargetLocation = FVector2D({ 996.0f , 460.0f });
+		FVector2D TargetLocation = FVector2D({ 882.0f , 460.0f });
 		FVector2D Curloc = MyPokemonHPbar->GetActorLocation();
 
 		Curloc += FVector2D::LEFT;
@@ -767,25 +768,12 @@ void APokemonBattleMode::PokemonBattleLogic1()
 		{
 			MyPokemon->UseSkill(MyPokemon->GetSkill1(), EnemyPokemon);
 		});
-	TimeEventManager.PushEvent(3.0f, [this]()
+	TimeEventManager.PushEvent(2.5f, [this]()
 		{
-			EnemySkill1ChatText();
+			EnemyDeadCheck();
 		});
-	TimeEventManager.PushEvent(4.5f, [this]()
-		{
-			EnemyPokemon->UseSkill(EnemyPokemon->GetSkill1(), MyPokemon);
-		});
-	TimeEventManager.PushEvent(6.5f, [this]()
-		{
-			ChatText->ClearText();
-			SpawnSelectMenu();
-			SkillTextOff();
-			BattleText->SetOrder(ERenderOrder::BackUI);
-			BattleSelectMenu->SetOrder(ERenderOrder::BackUI);
-			Cursor->SetState(ACursor::ECursorState::Menu);
-			CursorRender->SetOrder(ERenderOrder::CURSOR);
-			UEngineInput::GetInst().EnableInput();
-		});
+	
+	
 }
 void APokemonBattleMode::PokemonBattleLogic2()
 {
@@ -802,21 +790,7 @@ void APokemonBattleMode::PokemonBattleLogic2()
 		{
 			EnemySkill1ChatText();
 		});
-	TimeEventManager.PushEvent(4.5f, [this]()
-		{
-			EnemyPokemon->UseSkill(EnemyPokemon->GetSkill1(), MyPokemon);
-		});
-	TimeEventManager.PushEvent(6.5f, [this]()
-		{
-			ChatText->ClearText();
-			SpawnSelectMenu();
-			SkillTextOff();
-			BattleText->SetOrder(ERenderOrder::BackUI);
-			BattleSelectMenu->SetOrder(ERenderOrder::BackUI);
-			Cursor->SetState(ACursor::ECursorState::Menu);
-			CursorRender->SetOrder(ERenderOrder::CURSOR);
-			UEngineInput::GetInst().EnableInput();
-		});
+	
 }
 
 void APokemonBattleMode::FailedSkill()
@@ -831,6 +805,8 @@ void APokemonBattleMode::FailedSkill()
 			BattleText->SetOrder(ERenderOrder::BackUI1);
 			SkillTextOn();
 		});
+	
+
 }
 
 
@@ -839,6 +815,43 @@ void APokemonBattleMode::HPCheck()
 {
 	float MyPokemonHP = static_cast<float>(MyPokemon->GetHP()) / static_cast<float>(MyPokemon->GetMaxHP());
 	float EnemyPokemonHP = static_cast<float>(EnemyPokemon->GetHP()) / static_cast<float>(EnemyPokemon->GetMaxHP());
-	MyPokemonHPbar->GetRender()->SetComponentScale({ MyPokemonHP * 230.0f , 16.0f });
+	MyPokemonHPbar->GetRender()->SetComponentScale({ MyPokemonHP * 230.0f , 14.0f });
 	EnemyPokemonHPbar->GetRender()->SetComponentScale({ EnemyPokemonHP * 230.0f , 16.0f });
+}
+
+void APokemonBattleMode::EnemyPokemonAttack()
+{
+	TimeEventManager.PushEvent(1.0f, [this]()
+		{
+			EnemySkill1ChatText();
+		});
+	TimeEventManager.PushEvent(2.5f, [this]()
+		{
+			EnemyPokemon->UseSkill(EnemyPokemon->GetSkill1(), MyPokemon);
+		});
+	TimeEventManager.PushEvent(4.0f, [this]()
+		{
+			ChatText->ClearText();
+			SpawnSelectMenu();
+			SkillTextOff();
+			BattleText->SetOrder(ERenderOrder::BackUI);
+			BattleSelectMenu->SetOrder(ERenderOrder::BackUI);
+			Cursor->SetState(ACursor::ECursorState::Menu);
+			CursorRender->SetOrder(ERenderOrder::CURSOR);
+			UEngineInput::GetInst().EnableInput();
+		});
+}
+void APokemonBattleMode::EnemyDeadCheck()
+{
+	if (0 >= EnemyPokemon->GetHP())
+	{
+		TimeEventManager.PushEvent(1.0f, [this]()
+			{
+				
+			});
+	}
+	else
+	{
+		EnemyPokemonAttack();
+	}
 }

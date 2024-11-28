@@ -54,7 +54,10 @@ public:
 	void Skill2ChatText();
 	void EnemySkill1ChatText();
 	void HPCheck();
-	
+	void EnemyDeadCheck();
+	void EnemyPokemonAttack();
+
+
 	class AMyPokemon* GetMyPokemon()
 	{
 		return MyPokemon;
@@ -75,7 +78,6 @@ public:
 	void PokemonBattleLogic1();
 	void PokemonBattleLogic2();
 	void FailedSkill();
-
 protected:
 
 private:
@@ -161,6 +163,6 @@ private:
 	
 	   bool bHasSpawnedPokemon = false; 
 	bool bHasDisplayedMenuText = false;
-	int PokemonMapLevel = 2;
+	int PokemonMapLevel = 0;
 };
 

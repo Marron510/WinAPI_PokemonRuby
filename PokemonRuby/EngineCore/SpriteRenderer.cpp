@@ -355,6 +355,10 @@ void USpriteRenderer::SetPivotType(PivotType _Type)
 		Pivot.X = 0.5f;
 		Pivot.Y = 0.0f;
 		break;
+	case PivotType::Left:
+		Pivot.X = 0.0f;
+		Pivot.Y = 0.5f;
+		break;
 	case PivotType::LeftTop:
 		Pivot.X = 0.0f;
 		Pivot.Y = 0.0f;
