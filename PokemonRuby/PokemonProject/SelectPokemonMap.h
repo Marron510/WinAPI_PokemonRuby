@@ -1,24 +1,29 @@
 #pragma once
 #include <EngineCore/Actor.h>
 
-class SelectPokemonMap : public AActor
+class ASelectPokemonMap : public AActor
 {
 public:
 	// 持失切 社瑚切
-	SelectPokemonMap();
-	~SelectPokemonMap();
+	ASelectPokemonMap();
+	~ASelectPokemonMap();
 
 	// delete funcion
 
-	SelectPokemonMap(const SelectPokemonMap& _Other) = delete;
-	SelectPokemonMap(SelectPokemonMap&& _Other) noexcept = delete;
-	SelectPokemonMap& operator=(const SelectPokemonMap& _Other) = delete;
-	SelectPokemonMap& operator=(SelectPokemonMap&& _Other) noexcept = delete;
+	ASelectPokemonMap(const ASelectPokemonMap& _Other) = delete;
+	ASelectPokemonMap(ASelectPokemonMap&& _Other) noexcept = delete;
+	ASelectPokemonMap& operator=(const ASelectPokemonMap& _Other) = delete;
+	ASelectPokemonMap& operator=(ASelectPokemonMap&& _Other) noexcept = delete;
 
+	USpriteRenderer* GetCurMap()
+	{
+		return SpriteRenderer;
+	}
 
 protected:
 
 private:
-	static USpriteRenderer* SpriteRenderer;
+	class USpriteRenderer* SpriteRenderer;
+	
 };
 

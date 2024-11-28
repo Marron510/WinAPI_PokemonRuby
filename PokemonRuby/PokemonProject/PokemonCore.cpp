@@ -19,6 +19,7 @@
 #include "LaborProfessorBirchMode.h"
 #include "TileMapMode.h"
 #include "PokemonBattleMode.h"
+#include "SelectPokemonMode.h"
 
 #include "MyPokemon.h"
 #include "Player.h"
@@ -126,7 +127,7 @@ void PokemonCore::BeginPlay()
 	{
 		UEngineDirectory Dir;
 		Dir.MoveParentToDirectory("PokemonResources//Image");
-		Dir.Append("TileMap//TileSet");
+		Dir.Append("TileMap//Object");
 
 		UImageManager::GetInst().LoadFolder(Dir.GetPathToString());
 
@@ -161,11 +162,19 @@ void PokemonCore::BeginPlay()
 	
 
 	{
-		UImageManager::GetInst().CuttingSprite("Flower.png", { 168, 168  });
+		UImageManager::GetInst().CuttingSprite("Flower.png", { 168, 168 });
 		UImageManager::GetInst().CuttingSprite("Sea.png", { 96, 96 });
 		UImageManager::GetInst().CuttingSprite("Water.png", { 96, 96 });
 		UImageManager::GetInst().CuttingSprite("Bag.png", { 96, 96 });
+		UImageManager::GetInst().CuttingSprite("SelectBall.png", { 83, 72 });
+		UImageManager::GetInst().CuttingSprite("SelectCursor.png", { 74, 99 });
+		UImageManager::GetInst().CuttingSprite("SelectTreecko.png", { 258, 78 });
+		UImageManager::GetInst().CuttingSprite("SelectTorchic.png", { 186, 78 });
+		UImageManager::GetInst().CuttingSprite("SelectMudkip.png", { 230, 78 });
 		UImageManager::GetInst().CuttingSprite("Monster.png", { 60, 54 });
+	}
+
+	{
 		UImageManager::GetInst().CuttingSprite("RealTruck.png", { 288, 245 });
 		UImageManager::GetInst().CuttingSprite("Mother.png", { 55, 67});
 		UImageManager::GetInst().CuttingSprite("Child.png", { 55, 60 });
@@ -204,12 +213,13 @@ void PokemonCore::BeginPlay()
 		UEngineAPICore::GetCore()->CreateLevel<APlayerHouse2Mode, APlayer>("PlayerHouse2");
 		UEngineAPICore::GetCore()->CreateLevel<APlayerHouse2FloorMode, APlayer>("PlayerHouse2Floor");
 		UEngineAPICore::GetCore()->CreateLevel<ALaborProfessorBirchMode, APlayer>("LaborProfessorBirch");
+		UEngineAPICore::GetCore()->CreateLevel<ASelectPokemonMode, AActor>("PokemonSelect");
 		UEngineAPICore::GetCore()->CreateLevel<APokemonBattleMode, AActor>("PokemonBattle");
 	}
 
 
 	
-		UEngineAPICore::GetCore()->OpenLevel("Title");
+		UEngineAPICore::GetCore()->OpenLevel("PokemonSelect");
 	
 }
 

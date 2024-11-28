@@ -888,18 +888,10 @@ void APokemonMapMode::BeginPlay()
 
 
 		
-	TimeEventer.PushEvent(1.0f, [this]() 
+	
+	TimeEventer.PushEvent(1.6f, [this]() 
 		{
 			Mother->GetRender()->SetActive(true);
-		});
-	
-	TimeEventer.PushEvent(3.5f, [this]() {
-		RenderChatAbovePlayer();
-		if (!Dialogues.empty())
-		{
-			ChatText->SetText(Dialogues[CurrentDialogueIndex], 0.1f);
-			CurrentDialogueIndex++;
-		}
 		});
 	TimeEventer.PushEvent(2.0f, [this]() {
 		Mother->SetTargetLocation({ 0.0f, 96.0f });
@@ -909,6 +901,14 @@ void APokemonMapMode::BeginPlay()
 		});
 	TimeEventer.PushEvent(2.6f, [this]() {
 		Mother->GetRender()->ChangeAnimation("Mother_Idle_Left");
+		});
+	TimeEventer.PushEvent(3.5f, [this]() {
+		RenderChatAbovePlayer();
+		if (!Dialogues.empty())
+		{
+			ChatText->SetText(Dialogues[CurrentDialogueIndex], 0.1f);
+			CurrentDialogueIndex++;
+		}
 		});
 	
 	bMotherDialogueCompleted = false;
@@ -1174,7 +1174,7 @@ void APokemonMapMode::ProfessorHelpEvent()
 			if (Professor->GetRender() != nullptr)
 			{
 				Professor->SetLookDirection(AProfessor::ENPCDirection::RIGHT_Left_Arm);
-				
+				Monster->GetRender()->ChangeAnimation("Monster_Walk_Down");
 			}
 		});
 }

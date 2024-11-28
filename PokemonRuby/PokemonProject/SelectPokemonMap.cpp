@@ -8,7 +8,7 @@
 #include "PokemonEnum.h"
 #include "SelectPokemonMode.h"
 
-SelectPokemonMap::SelectPokemonMap()
+ASelectPokemonMap::ASelectPokemonMap()
 {
 	SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
 	SpriteRenderer->SetOrder(ERenderOrder::BACKGROUND);
@@ -18,7 +18,7 @@ SelectPokemonMap::SelectPokemonMap()
 	SpriteRenderer->SetComponentLocation(Scale.Half());
 }
 
-SelectPokemonMap::~SelectPokemonMap()
+ASelectPokemonMap::~ASelectPokemonMap()
 {
 
 }
