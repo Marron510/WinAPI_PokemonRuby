@@ -75,7 +75,7 @@ class ZigzagoonStats : public PokemonStats<ZigzagoonStats>
 public:
     ZigzagoonStats(int level) : PokemonStats(level) {}
 
-    static const int BaseHP = 38;
+    static const int BaseHP = 19;
     static const int BaseAttack = 30;
     static const int BaseDefense = 41;
     static const int BaseSpecialAttack = 30;
@@ -97,7 +97,7 @@ public:
     PoochyenaStats(int level) : PokemonStats(level) {}
 
 
-    static const int BaseHP = 45;
+    static const int BaseHP = 23;
     static const int BaseAttack = 55;
     static const int BaseDefense = 35;
     static const int BaseSpecialAttack = 30;
@@ -118,7 +118,7 @@ class WurmpleStats : public PokemonStats<WurmpleStats>
 public:
     WurmpleStats(int level) : PokemonStats(level) {}
 
-    static const int BaseHP = 45;
+    static const int BaseHP = 22;
     static const int BaseAttack = 45;
     static const int BaseDefense = 35;
     static const int BaseSpecialAttack = 20;

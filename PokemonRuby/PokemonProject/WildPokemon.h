@@ -39,6 +39,7 @@ public:
     int GetSpecialAttack() const { return SpecialAttack; }
     int GetSpecialDefense() const { return SpecialDefense; }
     int GetSpeed() const { return Speed; }
+
     std::string GetSkill1()
     {
         return skill1;
@@ -59,6 +60,11 @@ public:
     std::string GetLevelStirng()
     {
         return LevelString;
+    }
+
+    USpriteRenderer* GetRender()
+    {
+        return WildPokemonRender;
     }
 
 

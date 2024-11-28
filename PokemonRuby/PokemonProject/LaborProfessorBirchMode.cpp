@@ -1,12 +1,16 @@
 #include "PreCompile.h"
 #include "LaborProfessorBirchMode.h"
 
+#include <EngineBase/TimeEvent.h>
+
+#include<EngineCore/SpriteRenderer.h>
 #include <EnginePlatform/EngineInput.h>
 #include <EngineCore/EngineAPICore.h>
 #include <EngineCore/Level.h>
 
 
 #include "Player.h"
+#include "Professor.h"
 #include "LaborProfessorBirchMap.h"
 #include "PokemonMapMode.h"
 #include "Fade.h"
@@ -31,13 +35,29 @@ void ALaborProfessorBirchMode::BeginPlay()
 	{
 		ALaborProfessorBirchMap* NewActor = GetWorld()->SpawnActor<ALaborProfessorBirchMap>();
 		Map = NewActor->GetCurMap();
-		APlayer* Player = GetWorld()->GetPawn<APlayer>();
+		Player = GetWorld()->GetPawn<APlayer>();
 		Player->SetColImage("LaborProfessorBirch Collision.png");
 	}
+	{
+		Professor = GetWorld()->SpawnActor<AProfessor>();
+		FVector2D ProfessorPosition = { 7 * TileSize.X, 4 * TileSize.Y };
+		Professor->SetActorLocation(ProfessorPosition);
+		Professor->GetRender()->SetActive(true);
+	}
+
 	{
 		Fade = GetWorld()->SpawnActor<AFade>();
 		Fade->FadeOut();
 	}
+	UEngineInput::GetInst().EnableInput();
+
+	TimeEventer.PushEvent(0.05f, [this]()
+		{
+			Player->GetPlayerRender()->ChangeAnimation("Idle_Left_Right_Arm");
+			Professor->GetRender()->ChangeAnimation("Professor_Idle_Right");
+		});
+
+
 }
 
 void ALaborProfessorBirchMode::Tick(float _DeltaTime)
@@ -47,6 +67,7 @@ void ALaborProfessorBirchMode::Tick(float _DeltaTime)
 	Super::Tick(_DeltaTime);
 
 	LevelChange(_DeltaTime);
+	
 }
 
 void ALaborProfessorBirchMode::LevelChange(float _DeltaTime)

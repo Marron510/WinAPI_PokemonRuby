@@ -32,6 +32,8 @@ protected:
 
 private:
 	class APlayer* Player = nullptr;
+	class AProfessor* Professor = nullptr;
 	class AFade* Fade = nullptr;
+	FVector2D TileSize = FVector2D(96, 96);
 };
 

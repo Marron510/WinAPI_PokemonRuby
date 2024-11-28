@@ -246,7 +246,7 @@ void PokemonCore::BeginPlay()
 	// BGMPlayer.stop();
 
 	
-		UEngineAPICore::GetCore()->OpenLevel("PokemonBattle");
+		UEngineAPICore::GetCore()->OpenLevel("Title");
 	
 }
 

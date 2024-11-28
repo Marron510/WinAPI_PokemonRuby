@@ -24,7 +24,7 @@ void ATitleGameMode::BeginPlay()
 	Super::BeginPlay();
 	{
 	}
-	
+	UEngineInput::GetInst().EnableInput();
 	{
 		AFade* Actor = GetWorld()->SpawnActor<AFade>();
 		Actor->FadeOut();
@@ -33,7 +33,7 @@ void ATitleGameMode::BeginPlay()
 	Sprite = CreateDefaultSubObject<USpriteRenderer>();
 	Sprite->SetSprite("Intro_0", 0);
 	Sprite->SetSpriteScale(1.0f);
-	Sprite->CreateAnimation("Intro0", "Intro_0", 0, 86, 0.1f, false);
+	Sprite->CreateAnimation("Intro0", "Intro_0", 0, 63, 0.1f, false);
 	Sprite->CreateAnimation("Intro1", "Intro_1", 0, 166, 0.1f, false);
 	Sprite->CreateAnimation("Intro2", "Intro_2", 0, 154, 0.1f, false);
 	Sprite->CreateAnimation("Intro3", "Intro_3", 0, 223, 0.1f, false);

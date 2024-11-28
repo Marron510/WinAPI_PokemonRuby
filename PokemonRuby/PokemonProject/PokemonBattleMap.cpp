@@ -74,7 +74,7 @@ APokemonBattleMap::APokemonBattleMap()
 
 	{
 		PlayerPokemonUI = CreateDefaultSubObject<USpriteRenderer>();
-		PlayerPokemonUI->SetOrder(ERenderOrder::POKEMONSHADOW);
+		PlayerPokemonUI->SetOrder(ERenderOrder::SKILLEFFECT);
 		PlayerPokemonUI->SetSprite("PlayerPokemonUI.png");
 		FVector2D Scale = PlayerPokemonUI->SetSpriteScale(1.0f);
 		PlayerPokemonUI->SetComponentLocation({ 1600 , 460 }); 

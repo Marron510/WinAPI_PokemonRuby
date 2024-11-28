@@ -12,7 +12,7 @@
 
 
 #include "SelectPokemonMode.h"
-
+#include "LaborProfessorBirchMode.h"
 #include "PokemonMath.h"
 #include "PokemonBattleMap.h"
 #include "MyPokemon.h"
@@ -205,7 +205,7 @@ void APokemonBattleMode::BeginPlay()
 
 
 	SkillTextOff();
-	
+
 }
 
 void APokemonBattleMode::Tick(float _DeltaTime)
@@ -226,29 +226,71 @@ void APokemonBattleMode::Tick(float _DeltaTime)
 	
 	HPCheck();
 
+	TimeEventManager.PushEvent(4.0f, [this]()
+		{
+			EnemyPokemonUISetting();
+			EnemyPokemonTextSetting();
+			EnemyPokemonLevelTextSetting();
+			EnemyPokemonHpSetting();
+		});
+
+	if (true == IsEnemyPokemonDead && false == IsEnemyPokemonDeadEventEnd)
+	{
+		TimeEventManager.PushEvent(1.0f, [this]()
+			{
+				EnemyPokemon->GetRender()->SetOrder(ERenderOrder::POKEMONSHADOW);
+				EnemypokemonDead();
+			});
+		TimeEventManager.PushEvent(1.8f, [this]()
+			{
+				EnemyPokemon->GetRender()->SetActive(false);
+			});
+	}
+
+	if (true == IsEnemyPokemonDead && false == IsEnemyPokemonDeadEventEnd)
+	{
+		IsEnemyPokemonDeadEventEnd = true;
+
+		TimeEventManager.PushEvent(2.5f, [this]()
+			{
+				ChatText->ClearText();
+				ChatText->SetText("Wild " + EnemyPokemon->GetPokemonName() + enter + "fainted!", 0.05f);
+			});
+		TimeEventManager.PushEvent(6.0f, [this]()
+			{
+				ChatText->ClearText();
+				ChatText->SetText(MyPokemon->GetMyPokemonName() + " gained" + enter + "15 EXP.Points!", 0.05f);
+			});
+		TimeEventManager.PushEvent(10.0f, [this]()
+			{
+				ALaborProfessorBirchMode::LaborProfessorBirchModeChangePos = { 8,4 };
+				UEngineAPICore::GetCore()->OpenLevel("LaborProfessorBirch");
+			});
+	}
 }
 
 
 void APokemonBattleMode::PokemonSetting()
 {
-	
+	if (bEnemyPokemonPositioned)
 	{
-		FVector2D TargetLocation = FVector2D({ 862.0f , 260.0f }); 
-		FVector2D Curloc = EnemyPokemon->GetActorLocation();
-		Curloc += FVector2D::RIGHT.Half();
-
-		if (TargetLocation == Curloc)
-		{
-			EnemyPokemon->GetActorLocation() = TargetLocation;
-			EnemyPokemonUISetting();
-			EnemyPokemonTextSetting();
-			EnemyPokemonLevelTextSetting();
-			EnemyPokemonHpSetting();
-			return;
-		}
-
-		EnemyPokemon->SetActorLocation(Curloc);
+		return;
 	}
+
+	FVector2D TargetLocation = FVector2D({ 862.0f , 260.0f });
+	FVector2D Curloc = EnemyPokemon->GetActorLocation();
+	Curloc += FVector2D::RIGHT.Half();
+
+	if (TargetLocation == Curloc)
+	{
+		EnemyPokemon->GetActorLocation() = TargetLocation;
+		
+
+		bEnemyPokemonPositioned = true;
+		return;
+	}
+
+	EnemyPokemon->SetActorLocation(Curloc);
 }
 
 void APokemonBattleMode::APokemonPreparation()
@@ -847,11 +889,29 @@ void APokemonBattleMode::EnemyDeadCheck()
 	{
 		TimeEventManager.PushEvent(1.0f, [this]()
 			{
-				
+				IsEnemyPokemonDead = true;
 			});
 	}
 	else
 	{
 		EnemyPokemonAttack();
+	}
+}
+void APokemonBattleMode::EnemypokemonDead()
+{
+	{
+		
+		FVector2D TargetLocation = FVector2D({ 862.0f , 550.0f });
+		FVector2D Curloc = EnemyPokemon->GetActorLocation();
+		Curloc += FVector2D::DOWN.Half();
+
+		if (TargetLocation == Curloc)
+		{
+			EnemyPokemon->GetActorLocation() = TargetLocation;
+			EnemyPokemon->GetRender()->SetActive(false);
+			return;
+		}
+
+		EnemyPokemon->SetActorLocation(Curloc);
 	}
 }

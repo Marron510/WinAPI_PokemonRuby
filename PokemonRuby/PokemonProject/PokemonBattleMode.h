@@ -56,7 +56,7 @@ public:
 	void HPCheck();
 	void EnemyDeadCheck();
 	void EnemyPokemonAttack();
-
+	void EnemypokemonDead();
 
 	class AMyPokemon* GetMyPokemon()
 	{
@@ -127,11 +127,13 @@ private:
 	bool IsEnemyPokemonShadowMoved = false;
 	bool IsPlayerPokemonUIMoved = false;
 	bool IsEnemyPokemonUIMoved = false;
+	bool bEnemyPokemonPositioned = false;
 	bool IsPlayerPokemonTextMoved = false;
 	bool IsEnemyPokemonTextMoved = false;
 	bool IsGoMessageDisplayed = false;
 	bool bIsChatting = false;
-
+	bool IsEnemyPokemonDead = false;
+	bool IsEnemyPokemonDeadEventEnd = false;
 	bool IsBackGroundSetting = false;
 	bool IsThrowing = false;   
 	bool IsChatOn = false;

@@ -1217,6 +1217,8 @@ void APokemonMapMode::BagInteractionEvent()
 	{
 		if (UEngineInput::GetInst().IsDown('Z'))
 		{
+			Professor->SetActive(false);
+			Monster->SetActive(false);
 			UEngineAPICore::GetCore()->OpenLevel("PokemonSelect");
 		}
 	}
