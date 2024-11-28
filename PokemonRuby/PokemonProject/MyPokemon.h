@@ -36,6 +36,7 @@ public:
 	
 	int GetLevel() const { return Level; }
 	int GetHP() const { return HP; }
+	int GetMaxHP() const { return MaxHp; }
 	int GetAttack() const { return Attack; }
 	int GetDefense() const { return Defense; }
 	int GetSpecialAttack() const { return SpecialAttack; }
@@ -50,6 +51,7 @@ public:
 
 	void SetLevel(int InLevel) { Level = InLevel; }
 	void SetHP(int InHP) { HP = InHP; }
+	void SetMaxHP(int InHP) { MaxHp = InHP; }
 	void SetAttack(int InAttack) { Attack = InAttack; }
 	void SetDefense(int InDefense) { Defense = InDefense; }
 	void SetSpecialAttack(int InSpecialAttack) { SpecialAttack = InSpecialAttack; }
@@ -89,7 +91,8 @@ private:
 	std::string LevelString;
 
     int Level;                     
-    int HP;                        
+    int HP;                       
+	int MaxHp;
     int Attack;                    
     int Defense;                   
     int SpecialAttack;             

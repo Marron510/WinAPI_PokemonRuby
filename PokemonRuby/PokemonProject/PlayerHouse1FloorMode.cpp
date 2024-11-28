@@ -41,6 +41,7 @@ void APlayerHouse1FloorMode::BeginPlay()
 		Player = GetWorld()->GetPawn<APlayer>();
 		Player->SetColImage("PlayerHouse1Floor Collision.png");
 		Player->SetDirection(APlayerHouse1FloorModePlayerDir);
+		Player->DisableMovement();
 	
 	{
 		Fade = GetWorld()->SpawnActor<AFade>();
@@ -80,6 +81,11 @@ void APlayerHouse1FloorMode::Tick(float _DeltaTime)
 	if (UEngineInput::GetInst().IsDown('Z'))
 	{
 		DisplayNextDialogue(); 
+	}
+
+	if (4 == CurrentDialogueIndex)
+	{
+		Player->EnableMovement();
 	}
 }
 

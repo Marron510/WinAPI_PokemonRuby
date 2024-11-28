@@ -97,9 +97,9 @@ void AWildPokemon::SetPokemonStats(const std::string& PokemonName, int adjustedL
     this->Name = PokemonName;
     this->Level = adjustedLevel;
     LevelString = std::to_string(Level);
-    // Ω∫≈» º≥¡§
     PokemonStats<ZigzagoonStats> stats(adjustedLevel); 
     this->HP = stats.GetHP();
+    this->MaxHP = stats.GetMaxHP();
     this->Attack = stats.GetAttack();
     this->Defense = stats.GetDefense();
     this->SpecialAttack = stats.GetSpecialAttack();

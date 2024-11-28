@@ -8,7 +8,8 @@ public:
     PokemonStats(int level)
         : Level(level)
     {
-        HP = PokemonName::BaseHP + (level * PokemonName::HPPerLevel);
+        MaxHP = PokemonName::BaseHP + (level * PokemonName::HPPerLevel);
+        HP = MaxHP;
         Attack = PokemonName::BaseAttack + (level * PokemonName::AttackPerLevel);
         Defense = PokemonName::BaseDefense + (level * PokemonName::DefensePerLevel);
         SpecialAttack = PokemonName::BaseSpecialAttack + (level * PokemonName::SpecialAttackPerLevel);
@@ -19,6 +20,11 @@ public:
     int GetHP() const
     {
         return HP;
+    }
+
+    int GetMaxHP() const
+    {
+        return MaxHP;
     }
 
     int GetAttack() const
@@ -53,6 +59,7 @@ protected:
 private:
     int Level = 1;
     int HP = 10;
+    int MaxHP = 10;
     int Attack = 1;
     int Defense = 1;
     int SpecialAttack = 1;

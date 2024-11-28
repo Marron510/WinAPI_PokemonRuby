@@ -20,6 +20,7 @@
 #include "PokemonText.h"
 #include "PokemonEnum.h"
 #include "WildPokemon.h"
+#include "PokemonHP.h"
 #include "Cursor.h"
 
 
@@ -55,6 +56,12 @@ APokemonBattleMode::APokemonBattleMode()
 		MonsterBall->ChangeAnimation("ThrowBallReady");
 	}
 
+	UEngineInput::GetInst().DisableInput();
+
+	TimeEventManager.PushEvent(5.0f, [this]()
+		{
+			UEngineInput::GetInst().EnableInput();
+		});
 	
 
 }
@@ -185,6 +192,18 @@ void APokemonBattleMode::BeginPlay()
 		MyPokemonSkill4->SetActorLocation({ 520.0f , 720.0f });
 		MyPokemonSkill4->SetOrder(ERenderOrder::FONT);
 	}
+
+	{
+		MyPokemonHPbar = GetWorld()->SpawnActor<APokemonHP>();
+		MyPokemonHPbar->SetActorLocation({ 1696.0f, 460.0f });
+	}
+
+	{
+		EnemyPokemonHPbar = GetWorld()->SpawnActor<APokemonHP>();
+		EnemyPokemonHPbar->SetActorLocation({ -330.0f, 185.0f });
+	}
+
+
 	SkillTextOff();
 	
 }
@@ -205,7 +224,7 @@ void APokemonBattleMode::Tick(float _DeltaTime)
 
 	SpawnPokemon(_DeltaTime);
 	
-	
+	HPCheck();
 }
 
 
@@ -223,6 +242,7 @@ void APokemonBattleMode::PokemonSetting()
 			EnemyPokemonUISetting();
 			EnemyPokemonTextSetting();
 			EnemyPokemonLevelTextSetting();
+			EnemyPokemonHpSetting();
 			return;
 		}
 
@@ -321,6 +341,29 @@ void APokemonBattleMode::EnemyPokemonTextSetting()
 	}
 }
 
+void APokemonBattleMode::EnemyPokemonHpSetting()
+{
+	if (false == IsEnemyPokemonTextMoved)
+	{
+
+		FVector2D TargetLocation = FVector2D({ 400.0f , 185.0f });
+		FVector2D Curloc = EnemyPokemonHPbar->GetActorLocation();
+
+		Curloc += FVector2D::RIGHT;
+
+		if (TargetLocation == Curloc)
+		{
+			EnemyPokemonHPbar->GetActorLocation() = TargetLocation;
+			IsEnemyPokemonTextMoved = true;
+			return;
+		}
+
+		EnemyPokemonHPbar->SetActorLocation(Curloc);
+	}
+}
+
+
+
 void APokemonBattleMode::EnemyPokemonLevelTextSetting()
 {
 	FVector2D TargetLocation = FVector2D({ 485.0f , 135.0f });
@@ -379,6 +422,28 @@ void APokemonBattleMode::PlayerPokemonTextSetting()
 	}
 	
 }
+
+
+void APokemonBattleMode::PlayerPokemonHPSetting()
+{
+	if (false == IsPlayerPokemonTextMoved)
+	{
+		FVector2D TargetLocation = FVector2D({ 996.0f , 460.0f });
+		FVector2D Curloc = MyPokemonHPbar->GetActorLocation();
+
+		Curloc += FVector2D::LEFT;
+
+		if (TargetLocation == Curloc)
+		{
+			MyPokemonHPbar->GetActorLocation() = TargetLocation;
+			return;
+		}
+
+		MyPokemonHPbar->SetActorLocation(Curloc);
+	}
+
+}
+
 
 void APokemonBattleMode::PlayerPokemonLevelTextSetting()
 {
@@ -454,6 +519,7 @@ void APokemonBattleMode::SpawnMyPokemon()
 		PlayerPokemonUISetting();
 		PlayerPokemonTextSetting();
 		PlayerPokemonLevelTextSetting();
+		PlayerPokemonHPSetting();
 	}
 
 }
@@ -695,6 +761,7 @@ void APokemonBattleMode::PokemonBattleLogic1()
 	TimeEventManager.PushEvent(0.2f, [this]()
 		{
 			Skill1ChatText();
+			UEngineInput::GetInst().DisableInput();
 		});
 	TimeEventManager.PushEvent(1.5f, [this]()
 		{
@@ -717,6 +784,7 @@ void APokemonBattleMode::PokemonBattleLogic1()
 			BattleSelectMenu->SetOrder(ERenderOrder::BackUI);
 			Cursor->SetState(ACursor::ECursorState::Menu);
 			CursorRender->SetOrder(ERenderOrder::CURSOR);
+			UEngineInput::GetInst().EnableInput();
 		});
 }
 void APokemonBattleMode::PokemonBattleLogic2()
@@ -724,6 +792,7 @@ void APokemonBattleMode::PokemonBattleLogic2()
 	TimeEventManager.PushEvent(0.2f, [this]()
 		{
 			Skill2ChatText();
+			UEngineInput::GetInst().DisableInput();
 		});
 	TimeEventManager.PushEvent(1.5f, [this]()
 		{
@@ -746,6 +815,7 @@ void APokemonBattleMode::PokemonBattleLogic2()
 			BattleSelectMenu->SetOrder(ERenderOrder::BackUI);
 			Cursor->SetState(ACursor::ECursorState::Menu);
 			CursorRender->SetOrder(ERenderOrder::CURSOR);
+			UEngineInput::GetInst().EnableInput();
 		});
 }
 
@@ -761,4 +831,14 @@ void APokemonBattleMode::FailedSkill()
 			BattleText->SetOrder(ERenderOrder::BackUI1);
 			SkillTextOn();
 		});
+}
+
+
+
+void APokemonBattleMode::HPCheck()
+{
+	float MyPokemonHP = static_cast<float>(MyPokemon->GetHP()) / static_cast<float>(MyPokemon->GetMaxHP());
+	float EnemyPokemonHP = static_cast<float>(EnemyPokemon->GetHP()) / static_cast<float>(EnemyPokemon->GetMaxHP());
+	MyPokemonHPbar->GetRender()->SetComponentScale({ MyPokemonHP * 230.0f , 16.0f });
+	EnemyPokemonHPbar->GetRender()->SetComponentScale({ EnemyPokemonHP * 230.0f , 16.0f });
 }

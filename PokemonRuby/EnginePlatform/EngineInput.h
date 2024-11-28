@@ -70,6 +70,21 @@ private:
 
         void KeyCheck(float _DeltaTime);
 
+        void ResetKeyState()
+        {
+            IsDown = false;
+            IsPress = false;
+            IsUp = false;
+            IsFree = true;
+            PressTime = 0.0f;
+        }
+        void ResetEvents()
+        {
+            PressEvents.clear();
+            DownEvents.clear();
+            UpEvents.clear();
+            FreeEvents.clear();
+        }
     };
 
 
@@ -140,6 +155,23 @@ public:
     }
 
     void ExecuteIfKeyPressed(float _DeltaTime, std::function<void()> action);
+    
+    void DisableInput()
+    {
+        bInputDisabled = true;
+    }
+    
+    void EnableInput() 
+    {
+        bInputDisabled = false; 
+
+        for (auto& keyPair : Keys)
+        {
+            keyPair.second.ResetKeyState();
+            keyPair.second.ResetEvents(); 
+        }
+    }
+    
 
 protected:
 
@@ -147,6 +179,7 @@ private:
 
     std::map<int, UEngineKey> Keys;
     UEngineInput();
-
+    
+    bool bInputDisabled = false; 
 };
 

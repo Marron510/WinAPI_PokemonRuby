@@ -28,6 +28,7 @@ void ATruckMode::BeginPlay()
 {
 	
 	Player = GetWorld()->GetPawn<APlayer>();
+	Player->SetColImage("TruckCollision.png");
 	FTileVector StartPos = { 2, 2 };
 	ATruckMap* NewActor = GetWorld()->SpawnActor<ATruckMap>();
 	Map = NewActor->GetCurMap();
@@ -38,11 +39,14 @@ void ATruckMode::BeginPlay()
 		Fade = GetWorld()->SpawnActor<AFade>();
 		Fade->FadeOut();
 	}
+	Player->DisableMovement();
 
 	TimeEventer.PushEvent(0.5f, [this]() {
 		MoveMapHorizontally(3.0f, 10); 
 		});
-
+	TimeEventer.PushEvent(4.5f, [this]() {
+		Player->EnableMovement();
+		});
 	
 }
 

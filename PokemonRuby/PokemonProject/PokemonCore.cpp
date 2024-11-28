@@ -204,6 +204,7 @@ void PokemonCore::BeginPlay()
 		UImageManager::GetInst().CuttingSprite("TextWhite.png", { 20, 36 });
 		UImageManager::GetInst().CuttingSprite("TextBlack.png", { 14, 24 });
 		UImageManager::GetInst().CuttingSprite("ThrowBall.png", { 165, 272 });
+		UImageManager::GetInst().CuttingSprite("EnemyHpBar.png", { 1, 15 });
 	}
 
 	{
@@ -245,7 +246,7 @@ void PokemonCore::BeginPlay()
 	// BGMPlayer.stop();
 
 	
-		UEngineAPICore::GetCore()->OpenLevel("Title");
+		UEngineAPICore::GetCore()->OpenLevel("PokemonBattle");
 	
 }
 

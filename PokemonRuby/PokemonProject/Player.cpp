@@ -117,26 +117,36 @@ void APlayer::Walk(float _DeltaTime) {
 }
 
 
+void APlayer::HandleInput()
+{
+    if (!bCanMove)
+    {
+        FSM.ChangeState(APlayerState::IDLE);
+        return;
+    }
 
-void APlayer::HandleInput() {
-    if (UEngineInput::GetInst().IsPress('W')) {
+    if (UEngineInput::GetInst().IsPress('W'))
+    {
         StartMovementWithAnimation(EPlayerDir::UP_Left_Arm, EPlayerDir::UP_Right_Arm, { 0.0f, -TileSize.Y });
     }
-    else if (UEngineInput::GetInst().IsPress('A')) {
+    else if (UEngineInput::GetInst().IsPress('A'))
+    {
         StartMovementWithAnimation(EPlayerDir::LEFT_Left_Arm, EPlayerDir::LEFT_Right_Arm, { -TileSize.X, 0.0f });
     }
-    else if (UEngineInput::GetInst().IsPress('S')) {
+    else if (UEngineInput::GetInst().IsPress('S'))
+    {
         StartMovementWithAnimation(EPlayerDir::DOWN_Left_Arm, EPlayerDir::DOWN_Right_Arm, { 0.0f, TileSize.Y });
     }
-    else if (UEngineInput::GetInst().IsPress('D')) {
+    else if (UEngineInput::GetInst().IsPress('D'))
+    {
         StartMovementWithAnimation(EPlayerDir::RIGHT_Left_Arm, EPlayerDir::RIGHT_Right_Arm, { TileSize.X, 0.0f });
     }
-    else {
+    else
+    {
         IsMoving = false;
         FSM.ChangeState(APlayerState::IDLE);
     }
 }
-
 
 void APlayer::StartMovementWithAnimation(EPlayerDir LeftArmDir, EPlayerDir RightArmDir, FVector2D Offset) {
     DirectionMoveCount[LeftArmDir]++;

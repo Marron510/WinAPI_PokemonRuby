@@ -33,6 +33,7 @@ public:
     std::string GetPokemonName() const { return Name; }
     int GetLevel() const { return Level; }
     int GetHP() const { return HP; }
+    int GetMaxHP() const { return MaxHP; }
     int GetAttack() const { return Attack; }
     int GetDefense() const { return Defense; }
     int GetSpecialAttack() const { return SpecialAttack; }
@@ -64,6 +65,7 @@ public:
     void SetPokemonName(const std::string& InName) { Name = InName; }
     void SetLevel(int InLevel) { Level = InLevel; }
     void SetHP(int InHP) { HP = InHP; }
+    void SetMaxHP(int InHP) { MaxHP = InHP; }
     void SetAttack(int InAttack) { Attack = InAttack; }
     void SetDefense(int InDefense) { Defense = InDefense; }
     void SetSpecialAttack(int InSpecialAttack) { SpecialAttack = InSpecialAttack; }
@@ -85,6 +87,7 @@ private:
     std::string LevelString = "";
     int Level = 1;                      // 포켓몬의 레벨
     int HP = 10;                         // HP
+    int MaxHP = 10;
     int Attack = 1;                     // 공격력
     int Defense = 1;                    // 방어력
     int SpecialAttack = 1;              // 특수 공격력

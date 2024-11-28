@@ -105,6 +105,7 @@ void AMyPokemon::InitializePokemonAttributes(EMyPokemon PokemonType)
     case EMyPokemon::TREECKO:
         Level = 5;
         HP = 40;
+        MaxHp = 40;
         Attack = 45;
         Defense = 35;
         SpecialAttack = 65;
@@ -114,6 +115,7 @@ void AMyPokemon::InitializePokemonAttributes(EMyPokemon PokemonType)
     case EMyPokemon::TORCHIC:
         Level = 5;
         HP = 40;
+        MaxHp = 40;
         Attack = 50;
         Defense = 40;
         SpecialAttack = 70;
@@ -123,6 +125,7 @@ void AMyPokemon::InitializePokemonAttributes(EMyPokemon PokemonType)
     case EMyPokemon::MUDKIP:
         Level = 5;
         HP = 50;
+        MaxHp = 50;
         Attack = 65;
         Defense = 50;
         SpecialAttack = 44;
@@ -134,7 +137,7 @@ void AMyPokemon::InitializePokemonAttributes(EMyPokemon PokemonType)
     }
 }
 
-void AMyPokemon::UseSkill(const std::string& skillName, class AWildPokemon* target)
+void AMyPokemon::UseSkill(const std::string& skillName, AWildPokemon* target)
 {
     if (skillName == "POUND" || skillName == "SCRATCH" || skillName == "TACKLE")
     {

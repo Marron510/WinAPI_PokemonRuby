@@ -31,9 +31,11 @@ public:
 	void PokemonSetting();
 	void PlayerPokemonUISetting();
 	void PlayerPokemonTextSetting();
+	void PlayerPokemonHPSetting();
 	void PlayerPokemonLevelTextSetting();
 	void EnemyPokemonUISetting();
 	void EnemyPokemonTextSetting();
+	void EnemyPokemonHpSetting();
 	void EnemyPokemonLevelTextSetting();
 	void PokemonStatUpdate(float _delatime);
 	void SpawnSelectMenu();
@@ -50,8 +52,8 @@ public:
 	void DisplayChatText();
 	void Skill1ChatText();
 	void Skill2ChatText();
-
 	void EnemySkill1ChatText();
+	void HPCheck();
 	
 	class AMyPokemon* GetMyPokemon()
 	{
@@ -83,6 +85,8 @@ private:
 
 	class AMyPokemon* MyPokemon = nullptr;
 
+	class APokemonHP* MyPokemonHPbar = nullptr;
+	class APokemonHP* EnemyPokemonHPbar = nullptr;
 
 	std::string MyPokemonName;
 	std::string MyPokemonLevel;
@@ -124,6 +128,7 @@ private:
 	bool IsPlayerPokemonTextMoved = false;
 	bool IsEnemyPokemonTextMoved = false;
 	bool IsGoMessageDisplayed = false;
+	bool bIsChatting = false;
 
 	bool IsBackGroundSetting = false;
 	bool IsThrowing = false;   
@@ -131,7 +136,7 @@ private:
 	bool IsMenuOn = false;
 	bool IsBattleNow = false;
 	bool IsBattleCursorSet = false;
-	bool IsPlayerTurn = true;  // 플레이어 턴이면 true, 상대 턴이면 false
+	bool IsPlayerTurn = true; 
 
 	bool IsTextDisplayed = false;
 
@@ -153,6 +158,8 @@ private:
 	class APokemonText* EnemyPokemonStat = nullptr;
 	class APokemonText* EnemyPokemonLevelText = nullptr;
 
+	
+	   bool bHasSpawnedPokemon = false; 
 	bool bHasDisplayedMenuText = false;
 	int PokemonMapLevel = 2;
 };

@@ -177,9 +177,6 @@
     <ClInclude Include="PokemonStat.h">
       <Filter>PokemonObject\3.Pokemon</Filter>
     </ClInclude>
-    <ClInclude Include="TitleMap.h">
-      <Filter>PokemonObject\1.PokemonMap\00_TitleMap</Filter>
-    </ClInclude>
     <ClInclude Include="TitleMap.h" />
     <ClInclude Include="Mother.h">
       <Filter>PokemonObject\4.PlayObject\NPC</Filter>
@@ -213,6 +210,9 @@
     </ClInclude>
     <ClInclude Include="SelectPokemonMap.h">
       <Filter>PokemonObject\1.PokemonMap\04.SelectPokemonMap</Filter>
+    </ClInclude>
+    <ClInclude Include="PokemonHP.h">
+      <Filter>PokemonObject\3.Pokemon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -318,9 +318,6 @@
     <ClCompile Include="PokemonStat.cpp">
       <Filter>PokemonObject\3.Pokemon</Filter>
     </ClCompile>
-    <ClCompile Include="TitleMap.cpp">
-      <Filter>PokemonObject\1.PokemonMap\00_TitleMap</Filter>
-    </ClCompile>
     <ClCompile Include="TitleMap.cpp" />
     <ClCompile Include="Mother.cpp">
       <Filter>PokemonObject\4.PlayObject\NPC</Filter>
@@ -354,6 +351,9 @@
     </ClCompile>
     <ClCompile Include="SelectPokemonMap.cpp">
       <Filter>PokemonObject\1.PokemonMap\04.SelectPokemonMap</Filter>
+    </ClCompile>
+    <ClCompile Include="PokemonHP.cpp">
+      <Filter>PokemonObject\3.Pokemon</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

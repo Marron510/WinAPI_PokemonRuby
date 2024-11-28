@@ -75,6 +75,16 @@ public:
     void UpdateMovement(float _DeltaTime);
     void ChangeArmAnimation();
     void MoveToTile(const FVector2D& TargetTile);
+    
+    void EnableMovement() 
+    {
+        bCanMove = true; 
+    } 
+    void DisableMovement() 
+    {
+        bCanMove = false; 
+    }
+
 
     void InitializeSprites();
     void InitializeAnimations();
@@ -115,7 +125,7 @@ private:
     
     bool IsMoving = false;
     bool bIsLeftArm = true;
-
+    bool bCanMove = true;
 
     EPlayerDir CurDir = EPlayerDir::DOWN_Left_Arm;
     APlayerState CurPlayerState = APlayerState::IDLE;

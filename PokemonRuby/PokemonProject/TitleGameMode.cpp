@@ -8,7 +8,6 @@
 #include <EngineCore/Level.h>
 #include <EngineCore/SpriteRenderer.h>
 
-#include "TitleMap.h"
 #include "Fade.h"
 
 
@@ -24,7 +23,6 @@ void ATitleGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 	{
-		AtitleMap* NewActor = GetWorld()->SpawnActor<AtitleMap>();
 	}
 	
 	{

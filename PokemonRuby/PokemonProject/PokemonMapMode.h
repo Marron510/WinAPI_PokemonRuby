@@ -51,6 +51,7 @@ private:
 	class APokemonMap* NewActor = nullptr;
 	
 	bool bIsDialogueActive = false;
+	bool bIsChildDialogue = false;
 
 	UTimeEvent TimeEventManager;
 
@@ -84,7 +85,6 @@ private:
 	int CurrentDialogue1Index = 0;
 	int CurrentDialogue2Index = 0;
 
-	bool bIsChildDialogue = false;
 	bool bIsProfessorDialogue = false;
 
 	bool bMotherDialogueCompleted = false;

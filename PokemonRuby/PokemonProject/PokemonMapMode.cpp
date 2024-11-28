@@ -888,7 +888,10 @@ void APokemonMapMode::BeginPlay()
 
 
 		
-	
+	TimeEventer.PushEvent(0.01f, [this]()
+		{
+			Player->DisableMovement();
+		});
 	TimeEventer.PushEvent(1.6f, [this]() 
 		{
 			Mother->GetRender()->SetActive(true);
@@ -934,6 +937,9 @@ void APokemonMapMode::Tick(float _DeltaTime)
 	{
 		DisplayNextDialogue(); 
 	}
+
+	
+
 }
 
 
@@ -958,6 +964,7 @@ void APokemonMapMode::LevelChange()
 		APlayerHouse1FloorMode::APlayerHouse1FloorModePlayerDir = APlayer::EPlayerDir::UP_Left_Arm;
 		NewTruck->GetRender()->SetActive(false);
 		Player->SetColImage("PokemonMapCollision.png");
+		Player->EnableMovement();
 		Fade->FadeOut();
 	}
 
@@ -1020,6 +1027,7 @@ void APokemonMapMode::DisplayNextDialogue()
 		ChatText->SetActive(false);
 		bChildDialogueCompleted = true;
 		bIsChildDialogue = false;
+		Player->EnableMovement();
 	}
 	else if (bIsProfessorDialogue && CurrentDialogue2Index < Dialogues2.size())
 	{
@@ -1032,6 +1040,7 @@ void APokemonMapMode::DisplayNextDialogue()
 		ChatText->SetActive(false);
 		bProfessorDialogueCompleted = true;
 		bIsProfessorDialogue = false;
+		Player->EnableMovement();
 	}
 	else if (!bIsChildDialogue && !bIsProfessorDialogue &&
 		CurrentDialogueIndex < Dialogues.size() && !bMotherDialogueCompleted)
@@ -1051,6 +1060,7 @@ void APokemonMapMode::DisplayNextDialogue()
 }
 
 
+
 void APokemonMapMode::ChildInteractionEvent()
 {
 	if (bChildDialogueCompleted)
@@ -1063,6 +1073,11 @@ void APokemonMapMode::ChildInteractionEvent()
 
 	if (PlayerLocation.X >= TargetLocation.X * TileSize.X && PlayerLocation.Y <= TargetLocation.Y * TileSize.Y)
 	{
+		if (!bChildDialogueCompleted)
+		{
+			Player->DisableMovement();
+		}
+
 		Professor->GetRender()->SetActive(true);
 		Monster->GetRender()->SetActive(true);
 		Child->SetLookDirection(AChild::ENPCDirection::RIGHT);
@@ -1085,18 +1100,17 @@ void APokemonMapMode::ProfessorInteractionEvent()
 	{
 		return;
 	}
-
+	
 	FVector2D PlayerLocation = Player->GetActorLocation();
 	FIntPoint ProfessorTargetLocation(90, 55);
 
-	if (PlayerLocation.X >= ProfessorTargetLocation.X * TileSize.X &&
-		PlayerLocation.Y <= ProfessorTargetLocation.Y * TileSize.Y)
+	if (PlayerLocation.Y <= ProfessorTargetLocation.Y * TileSize.Y)
 	{
 		
-		
+		Player->DisableMovement();
 		Monster->SetLookDirection(AMonster::ENPCDirection::LEFT);
 		RenderChatAbovePlayer();
-
+		
 		if (!bIsProfessorDialogue)
 		{
 			ChatText->SetActive(true);
@@ -1175,7 +1189,13 @@ void APokemonMapMode::ProfessorHelpEvent()
 			if (Professor->GetRender() != nullptr)
 			{
 				Professor->SetLookDirection(AProfessor::ENPCDirection::RIGHT_Left_Arm);
-				Monster->GetRender()->ChangeAnimation("Monster_Walk_Down");
+			}
+		});
+	TimeEventer.PushEvent(0.8f, [this]()
+		{
+			if (Professor->GetRender() != nullptr)
+			{
+				Monster->GetRender()->ChangeAnimation("Monster_Walk_Left",0.1f);
 			}
 		});
 }

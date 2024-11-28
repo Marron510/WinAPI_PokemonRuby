@@ -35,7 +35,6 @@ void USpriteRenderer::Render(float _DeltaTime)
 
 	FVector2D PivotRealScale;
 
-	//                 소수점 버림
 	PivotRealScale.X = std::floorf((0.5f - Pivot.X) * Trans.Scale.X);
 	PivotRealScale.Y = std::floorf((0.5f - Pivot.Y) * Trans.Scale.Y);
 

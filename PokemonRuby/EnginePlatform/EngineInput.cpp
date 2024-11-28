@@ -189,9 +189,13 @@ UEngineInput::UEngineInput()
 
 void UEngineInput::EventCheck(float _DeltaTime)
 {
+	if (UEngineInput::GetInst().bInputDisabled)
+	{
+		return;
+	}
+
 	std::map<int, UEngineKey>::iterator StartIter = Keys.begin();
 	std::map<int, UEngineKey>::iterator EndIter = Keys.end();
-
 	for (; StartIter != EndIter; ++StartIter)
 	{
 		UEngineKey& CurKey = StartIter->second;
@@ -201,6 +205,11 @@ void UEngineInput::EventCheck(float _DeltaTime)
 
 void UEngineInput::KeyCheck(float _DeltaTime)
 {
+	if (bInputDisabled) 
+	{
+		return; 
+	}
+
 	std::map<int, UEngineKey>::iterator StartIter = Keys.begin();
 	std::map<int, UEngineKey>::iterator EndIter = Keys.end();
 
@@ -256,4 +265,3 @@ void UEngineInput::ExecuteIfKeyPressed(float _DeltaTime, std::function<void()> a
 		}
 	}
 }
-
