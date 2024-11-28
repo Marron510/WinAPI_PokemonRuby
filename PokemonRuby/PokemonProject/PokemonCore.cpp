@@ -66,9 +66,29 @@ void PokemonCore::BeginPlay()
 		Dir.Append("Intro_0");
 
 		UImageManager::GetInst().LoadFolder(Dir.GetPathToString());
+	}
+	{
+		UEngineDirectory Dir;
+		Dir.MoveParentToDirectory("PokemonResources//Image//Intro");
+		Dir.Append("Intro_1");
 
+		UImageManager::GetInst().LoadFolder(Dir.GetPathToString());
+	}
+	{
+		UEngineDirectory Dir;
+		Dir.MoveParentToDirectory("PokemonResources//Image//Intro");
+		Dir.Append("Intro_2");
+
+		UImageManager::GetInst().LoadFolder(Dir.GetPathToString());
 	}
 
+	{
+		UEngineDirectory Dir;
+		Dir.MoveParentToDirectory("PokemonResources//Image//Intro");
+		Dir.Append("Intro_3");
+
+		UImageManager::GetInst().LoadFolder(Dir.GetPathToString());
+	}
 
 	{
 		UEngineDirectory Dir;
