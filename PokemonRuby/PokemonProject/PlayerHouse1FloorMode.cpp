@@ -124,98 +124,76 @@ void APlayerHouse1FloorMode::LevelChangeStart()
 
 void APlayerHouse1FloorMode::Floor1Event()
 {
-	TimeEventer.PushEvent(1.0f, [this]()
+	TimeEventer.PushEvent(0.01f, [this]()
+		{
+			if (Mother->GetRender() != nullptr)
+			{
+				Mother->GetRender()->ChangeAnimation("Mother_Idle_Up");
+			}
+		});
+
+	TimeEventer.PushEvent(0.3f, [this]()
 		{
 			if (Mother->GetRender() != nullptr)
 			{
 				Mother->SetTargetLocation({ 0.0f, -1 * TileSize.Y });
+				Player->MoveToTile({ 9,7 });
 			}
 		});
+	
+	TimeEventer.PushEvent(0.6f, [this]()
+		{
+			if (Mother->GetRender() != nullptr)
+			{
+				Mother->SetTargetLocation({ 0.0f, -1 * TileSize.Y });
+				Player->MoveToTile({ 9,6 });
+			}
+		});
+	
+	TimeEventer.PushEvent(0.9f, [this]()
+		{
+			if (Mother->GetRender() != nullptr)
+			{
+				Mother->SetTargetLocation({ -1 * TileSize.X, 0.0f });
+				Player->MoveToTile({ 9,5 });
+			}
+		});
+	
 	TimeEventer.PushEvent(1.2f, [this]()
 		{
 			if (Mother->GetRender() != nullptr)
 			{
-				Player->MoveToTile({ 9,7 });
+				Mother->SetTargetLocation({ -1 * TileSize.X, 0.0f });
+				Player->MoveToTile({ 8,5 });
 			}
 		});
-	TimeEventer.PushEvent(1.4f, [this]()
+	
+	TimeEventer.PushEvent(1.5f, [this]()
 		{
 			if (Mother->GetRender() != nullptr)
 			{
-				Mother->SetTargetLocation({ 0.0f, -1 * TileSize.Y });
+				Mother->SetTargetLocation({ -1 * TileSize.X, 0.0f });
+				Player->MoveToTile({ 7,5 });
 			}
 		});
-	TimeEventer.PushEvent(1.6f, [this]()
-		{
-			if (Mother->GetRender() != nullptr)
-			{
-				Player->MoveToTile({ 9,6 });
-			}
-		});
+	
 	TimeEventer.PushEvent(1.8f, [this]()
 		{
 			if (Mother->GetRender() != nullptr)
 			{
 				Mother->SetTargetLocation({ -1 * TileSize.X, 0.0f });
-			}
-		});
-	TimeEventer.PushEvent(2.0f, [this]()
-		{
-			if (Mother->GetRender() != nullptr)
-			{
-				Player->MoveToTile({ 9,5 });
-			}
-		});
-	TimeEventer.PushEvent(2.2f, [this]()
-		{
-			if (Mother->GetRender() != nullptr)
-			{
-				Mother->SetTargetLocation({ -1 * TileSize.X, 0.0f });
-			}
-		});
-	TimeEventer.PushEvent(2.4f, [this]()
-		{
-			if (Mother->GetRender() != nullptr)
-			{
-				Player->MoveToTile({ 8,5 });
-			}
-		});
-	TimeEventer.PushEvent(2.6f, [this]()
-		{
-			if (Mother->GetRender() != nullptr)
-			{
-				Mother->SetTargetLocation({ -1 * TileSize.X, 0.0f });
-			}
-		});
-	TimeEventer.PushEvent(2.8f, [this]()
-		{
-			if (Mother->GetRender() != nullptr)
-			{
-				Player->MoveToTile({ 7,5 });
-			}
-		});
-	TimeEventer.PushEvent(3.0f, [this]()
-		{
-			if (Mother->GetRender() != nullptr)
-			{
-				Mother->SetTargetLocation({ -1 * TileSize.X, 0.0f });
-			}
-		});
-	TimeEventer.PushEvent(3.2f, [this]()
-		{
-			if (Mother->GetRender() != nullptr)
-			{
 				Player->MoveToTile({ 6,5 });
 			}
 		});
-	TimeEventer.PushEvent(3.4f, [this]()
+	
+	TimeEventer.PushEvent(2.1f, [this]()
 		{
 			if (Mother->GetRender() != nullptr)
 			{
 				Mother->GetRender()->ChangeAnimation("Mother_Idle_Right");
 			}
 		});
-	TimeEventer.PushEvent(4.0f, [this]() {
+	TimeEventer.PushEvent(2.4f, [this]() {
 		RenderChatAbovePlayer();
 		if (!Dialogues.empty())
 		{

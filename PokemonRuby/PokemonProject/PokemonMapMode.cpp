@@ -1120,14 +1120,8 @@ void APokemonMapMode::MoveToHouse()
 				Player->MoveToTile({ 85,70 });
 			}
 		});
-	/*TimeEventer.PushEvent(1.2f, [this]()
-		{
-			if (Mother->GetRender() != nullptr)
-			{
-				Player->MoveToTile({ 85,70 });
-			}
-		});*/
-	TimeEventer.PushEvent(1.5f, [this]()
+
+	TimeEventer.PushEvent(1.3f, [this]()
 		{
 			if (Mother->GetRender() != nullptr)
 			{
@@ -1135,14 +1129,8 @@ void APokemonMapMode::MoveToHouse()
 				Player->MoveToTile({ 85,69 });
 			}
 		});
-	/*TimeEventer.PushEvent(1.7f, [this]()
-		{
-			if (Mother->GetRender() != nullptr)
-			{
-				Player->MoveToTile({ 85,69 });
-			}
-		});*/
-	TimeEventer.PushEvent(2.0f, [this]()
+	
+	TimeEventer.PushEvent(1.6f, [this]()
 		{
 			if (Mother->GetRender() != nullptr)
 			{
@@ -1151,20 +1139,21 @@ void APokemonMapMode::MoveToHouse()
 				Player->MoveToTile({ 85,68 });
 			}
 		});
-	/*TimeEventer.PushEvent(2.0f, [this]()
-		{
-			if (Mother->GetRender() != nullptr)
-			{
-				bMotherDialogueCompleted = true;
-				Player->MoveToTile({ 85,68 });
-			}
-		});*/
+	
 }
 
 
 void APokemonMapMode::ProfessorHelpEvent()
 {
 	TimeEventer.PushEvent(0.0f, [this]()
+		{
+			if (Professor->GetRender() != nullptr)
+			{
+				Professor->SetTargetLocation({ -1 * TileSize.Y, 0.0f });
+				Monster->SetTargetLocation({ -1 * TileSize.Y, 0.0f });
+			}
+		});
+	TimeEventer.PushEvent(0.2f, [this]()
 		{
 			if (Professor->GetRender() != nullptr)
 			{
@@ -1180,15 +1169,7 @@ void APokemonMapMode::ProfessorHelpEvent()
 				Monster->SetTargetLocation({ -1 * TileSize.Y, 0.0f });
 			}
 		});
-	TimeEventer.PushEvent(0.8f, [this]()
-		{
-			if (Professor->GetRender() != nullptr)
-			{
-				Professor->SetTargetLocation({ -1 * TileSize.Y, 0.0f });
-				Monster->SetTargetLocation({ -1 * TileSize.Y, 0.0f });
-			}
-		});
-	TimeEventer.PushEvent(1.0f, [this]()
+	TimeEventer.PushEvent(0.6f, [this]()
 		{
 			if (Professor->GetRender() != nullptr)
 			{
