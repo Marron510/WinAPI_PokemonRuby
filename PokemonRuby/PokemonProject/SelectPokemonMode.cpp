@@ -1,12 +1,15 @@
 #include "PreCompile.h"
 #include "SelectPokemonMode.h"
 
+#include <EngineBase/TimeEvent.h>
+
 #include <EngineCore/EngineAPICore.h>
 #include <EngineCore/SpriteRenderer.h>
 #include <EnginePlatform/EngineInput.h>
 
 #include "PokemonEnum.h"
 #include "SelectPokemonMap.h"
+#include "Fade.h"
 
 
 namespace GameData
@@ -32,7 +35,10 @@ void ASelectPokemonMode::BeginPlay()
 		ASelectPokemonMap* NewActor = GetWorld()->SpawnActor<ASelectPokemonMap>();
 		Map = NewActor->GetCurMap();
 	}
-
+	{
+		Fade = GetWorld()->SpawnActor<AFade>();
+		Fade->FadeOutRightNow();
+	}
 	{
 		Pokeball1 = CreateDefaultSubObject<USpriteRenderer>();
 		Pokeball1->SetSprite("SelectBall.png");
@@ -184,15 +190,43 @@ void ASelectPokemonMode::SelectPokemon()
 	{
 	case 0:
 		GameData::SelectedPokemon = AMyPokemon::EMyPokemon::TREECKO;
+		TimeEventer.PushEvent(0.5f, [this]()
+			{
+				Fade->FadeIn();
+			});
+
+		TimeEventer.PushEvent(2.0f, [this]()
+			{
+				UEngineAPICore::GetCore()->OpenLevel("PokemonBattle");
+			});
 		break;
 	case 1:
 		GameData::SelectedPokemon = AMyPokemon::EMyPokemon::TORCHIC;
+		TimeEventer.PushEvent(0.5f, [this]()
+			{
+				Fade->FadeIn();
+			});
+
+		TimeEventer.PushEvent(2.0f, [this]()
+			{
+				UEngineAPICore::GetCore()->OpenLevel("PokemonBattle");
+			});
 		break;
 	case 2:
 		GameData::SelectedPokemon = AMyPokemon::EMyPokemon::MUDKIP;
+		TimeEventer.PushEvent(0.5f, [this]()
+			{
+				Fade->FadeIn();
+			});
+
+		TimeEventer.PushEvent(2.0f, [this]()
+			{
+				UEngineAPICore::GetCore()->OpenLevel("PokemonBattle");
+			});
 		break;
 	default:
 		break;
 	}
-	UEngineAPICore::GetCore()->OpenLevel("PokemonBattle");
+	
+	
 }

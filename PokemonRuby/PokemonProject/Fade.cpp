@@ -42,7 +42,22 @@ void AFade::FadeOut()
 	TimeEventer.PushEvent(2.0f, std::bind(&AFade::FadeChange, this), true, false);
 }
 
+void AFade::FadeOutRightNow()
+{
+	FadeValue = 1.0f;
+	FadeDir = -1.0f;
+	TimeEventer.PushEvent(2.0f, std::bind(&AFade::FadeChange, this), true, false);
+}
+
+
 void AFade::LevelChangeStart()
 {
 	MainFade = this;
+}
+
+void AFade::BattleFadeIn()
+{
+	FadeValue = 1.0f;
+	FadeDir = -1.0f;
+	TimeEventer.PushEvent(2.0f, std::bind(&AFade::FadeChange, this), true, false);
 }

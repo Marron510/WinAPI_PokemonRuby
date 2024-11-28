@@ -22,7 +22,8 @@ public:
 
 	// 1 => 0
 	void FadeOut();
-
+	void FadeOutRightNow();
+	void BattleFadeIn();
 protected:
 
 private:

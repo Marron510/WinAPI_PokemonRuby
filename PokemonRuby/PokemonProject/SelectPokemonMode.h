@@ -52,6 +52,8 @@ private:
 
 	class AMyPokemon* MyPokemon = nullptr;
 
+	class AFade* Fade = nullptr;
+
 	int CurrentIndex = 0;
 	
 };
