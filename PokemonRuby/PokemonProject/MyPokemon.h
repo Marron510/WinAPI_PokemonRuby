@@ -41,6 +41,7 @@ public:
 	int GetSpecialAttack() const { return SpecialAttack; }
 	int GetSpecialDefense() const { return SpecialDefense; }
 	int GetSpeed() const { return Speed; }
+	
 	std::string GetMyPokemonName()
 	{
 		return Name;

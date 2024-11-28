@@ -11,6 +11,7 @@
 #include <EngineCore/SpriteRenderer.h>
 
 
+#include "SelectPokemonMode.h"
 
 #include "PokemonMath.h"
 #include "PokemonBattleMap.h"
@@ -81,7 +82,8 @@ void APokemonBattleMode::BeginPlay()
 	}
 
 	{ 
-		MyPokemon = GetWorld()->SpawnActor<AMyPokemon>(); 
+		MyPokemon = GetWorld()->SpawnActor<AMyPokemon>();
+		MyPokemon->SetPokemon(GameData::SelectedPokemon);
 		MyPokemon->SetActorLocation({ -500.0f, -500.0f });
 		MyPokemonName = MyPokemon->GetMyPokemonName();
 		MyPokemonLevel = MyPokemon->GetLevelStirng();
@@ -184,6 +186,7 @@ void APokemonBattleMode::BeginPlay()
 		MyPokemonSkill4->SetOrder(ERenderOrder::FONT);
 	}
 	SkillTextOff();
+	
 }
 
 void APokemonBattleMode::Tick(float _DeltaTime)

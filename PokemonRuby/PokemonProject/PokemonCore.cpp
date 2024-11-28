@@ -219,7 +219,7 @@ void PokemonCore::BeginPlay()
 
 
 	
-		UEngineAPICore::GetCore()->OpenLevel("PokemonSelect");
+		UEngineAPICore::GetCore()->OpenLevel("Title");
 	
 }
 

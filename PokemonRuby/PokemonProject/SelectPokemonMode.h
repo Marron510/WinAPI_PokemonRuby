@@ -1,6 +1,11 @@
 #pragma once
 #include <EngineCore/GameMode.h>
+#include "MyPokemon.h"
 
+namespace GameData 
+{
+	extern AMyPokemon::EMyPokemon SelectedPokemon;
+}
 
 class ASelectPokemonMode : public AGameMode
 {
@@ -11,6 +16,8 @@ public:
 		{ 600, 320 },
 		{ 900, 170 }
 	};
+
+
 	// 持失切 社瑚切
 	ASelectPokemonMode();
 	~ASelectPokemonMode();
@@ -26,6 +33,9 @@ public:
 	void Tick(float _DeltaTime) override;
 	void CursorMove();
 	void NameRender();
+	void SelectPokemon();
+
+
 
 protected:
 
@@ -40,6 +50,9 @@ private:
 	class USpriteRenderer* Pokeball2 = nullptr;
 	class USpriteRenderer* Pokeball3 = nullptr;
 
+	class AMyPokemon* MyPokemon = nullptr;
+
 	int CurrentIndex = 0;
+	
 };
 

@@ -1,11 +1,19 @@
 #include "PreCompile.h"
 #include "SelectPokemonMode.h"
 
+#include <EngineCore/EngineAPICore.h>
 #include <EngineCore/SpriteRenderer.h>
 #include <EnginePlatform/EngineInput.h>
 
 #include "PokemonEnum.h"
 #include "SelectPokemonMap.h"
+
+
+namespace GameData
+{
+	AMyPokemon::EMyPokemon SelectedPokemon = AMyPokemon::EMyPokemon::TREECKO;
+}
+
 
 ASelectPokemonMode::ASelectPokemonMode()
 {
@@ -114,6 +122,12 @@ void ASelectPokemonMode::Tick(float _DeltaTime)
 	Super::Tick(_DeltaTime);
 	CursorMove();
 	NameRender();
+	
+	if (UEngineInput::GetInst().IsDown('Z'))
+	{
+		SelectPokemon();
+	}
+
 }
 
 void ASelectPokemonMode::CursorMove()
@@ -163,3 +177,22 @@ void ASelectPokemonMode::NameRender()
 	}
 }
 
+
+void ASelectPokemonMode::SelectPokemon()
+{
+	switch (CurrentIndex)
+	{
+	case 0:
+		GameData::SelectedPokemon = AMyPokemon::EMyPokemon::TREECKO;
+		break;
+	case 1:
+		GameData::SelectedPokemon = AMyPokemon::EMyPokemon::TORCHIC;
+		break;
+	case 2:
+		GameData::SelectedPokemon = AMyPokemon::EMyPokemon::MUDKIP;
+		break;
+	default:
+		break;
+	}
+	UEngineAPICore::GetCore()->OpenLevel("PokemonBattle");
+}

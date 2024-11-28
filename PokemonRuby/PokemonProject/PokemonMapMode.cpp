@@ -109,7 +109,7 @@ void APokemonMapMode::BeginPlay()
 		ChatText->SetActorLocation(ChatLocation);
 	}
 	{
-		ABag* Bag = GetWorld()->SpawnActor<ABag>();
+		Bag = GetWorld()->SpawnActor<ABag>();
 		Bag->SetActorLocationTile({ 87,54 });
 	}
 	// AFlower
@@ -928,10 +928,11 @@ void APokemonMapMode::Tick(float _DeltaTime)
 
 	ChildInteractionEvent(); 
 	ProfessorInteractionEvent();
+	BagInteractionEvent();
 
 	if (UEngineInput::GetInst().IsDown('Z'))
 	{
-		DisplayNextDialogue(); // 다음 대사 출력
+		DisplayNextDialogue(); 
 	}
 }
 
@@ -1177,4 +1178,26 @@ void APokemonMapMode::ProfessorHelpEvent()
 				Monster->GetRender()->ChangeAnimation("Monster_Walk_Down");
 			}
 		});
+}
+
+
+void APokemonMapMode::BagInteractionEvent()
+{
+	if (Bag == nullptr)
+	{
+		return;
+	}
+
+	FVector2D PlayerLocation = Player->GetActorLocation();
+	FVector2D BagLocation = Bag->GetActorLocation();
+
+	float Distance = FVector2D::Dist(PlayerLocation, BagLocation);
+
+	if (Distance <= TileSize.X)
+	{
+		if (UEngineInput::GetInst().IsDown('Z'))
+		{
+			UEngineAPICore::GetCore()->OpenLevel("PokemonSelect");
+		}
+	}
 }

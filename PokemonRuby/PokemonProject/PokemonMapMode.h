@@ -34,7 +34,7 @@ public:
 	void ChildInteractionEvent();
 	void ProfessorInteractionEvent();
 	void ProfessorHelpEvent();
-
+	void BagInteractionEvent();
 
 
 protected:
@@ -47,7 +47,7 @@ private:
 	class AChild* Child = nullptr;
 	class AProfessor* Professor = nullptr;
 	class AMonster* Monster = nullptr;
-
+	class ABag* Bag = nullptr;
 	class APokemonMap* NewActor = nullptr;
 	
 	bool bIsDialogueActive = false;
