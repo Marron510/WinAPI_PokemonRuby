@@ -110,9 +110,6 @@ void APokemonText::PrintTextUpdate(float _DeltaTime)
             else if (Value == '¡Ï') {
                 CapitalValue = Value - '¡Ï' + 68;
             }
-            else if (Value == '\/') {
-                CapitalValue = Value - '\/' + 69;
-            }
             else if (Value == '\"') {
                 CapitalValue = Value - '\"' + 71;
             }
@@ -153,13 +150,13 @@ void APokemonText::SetText(std::string_view _Text, float _InterValue /*= 0.0f*/)
 
     PrintTexts.push_back(std::string(_Text));
 
-    int Value = _Text.size() - Renders.size();
+    int Value = static_cast<int>(_Text.size()) - Renders.size();
     if (Value > 0)
     {
-        int PrevSize = Renders.size();
+        int PrevSize = static_cast<int>(Renders.size());
         Renders.reserve(_Text.size());
 
-        for (size_t i = PrevSize; i < PrevSize + Value; i++)
+        for (int i = PrevSize; i < PrevSize + Value; i++)
         {
             USpriteRenderer* Sprite = CreateDefaultSubObject<USpriteRenderer>();
             Sprite->SetCameraEffect(false);
@@ -172,7 +169,7 @@ void APokemonText::SetText(std::string_view _Text, float _InterValue /*= 0.0f*/)
 
     if (InterTime <= 0.0f) {
         CurTime = 0.0f;
-        CurTextPrint = _Text.size();  
+        CurTextPrint = static_cast<int>(_Text.size());
     }
 }
 
@@ -198,7 +195,7 @@ int APokemonText::GetTotalTextSize() const
     int size = 0;
 
     for (const auto& Text : PrintTexts) {
-        size += Text.size();  
+        size += static_cast<int>(Text.size());  
     }
 
     return size;
@@ -224,7 +221,7 @@ std::string APokemonText::GetLastPrintedText() const
                 if (currentPos + text.size() > lastCharIndex) {
                     return std::string(1, text[lastCharIndex - currentPos]);
                 }
-                currentPos += text.size();
+                currentPos += static_cast<int>(text.size());
             }
         }
     }

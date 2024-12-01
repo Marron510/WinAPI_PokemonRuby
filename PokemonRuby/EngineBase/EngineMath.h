@@ -129,7 +129,7 @@ public:
 
 	static float Dist(const FVector2D& A, const FVector2D& B)
 	{
-		return std::sqrt(std::pow(B.X - A.X, 2) + std::pow(B.Y - A.Y, 2));
+		return static_cast<float>(std::sqrt(std::pow(B.X - A.X, 2) + std::pow(B.Y - A.Y, 2)));
 	}
 
 	float Dot(const FVector2D& other) const
