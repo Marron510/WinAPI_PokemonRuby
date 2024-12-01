@@ -1242,8 +1242,8 @@ void APokemonMapMode::BagInteractionEvent()
 		if (UEngineInput::GetInst().IsDown('Z'))
 		{
 			BGMPlayer = UEngineSound::Play("SEClick.mp3");
-			Professor->SetActive(false);
-			Monster->SetActive(false);
+			Professor->GetRender()->SetActive(false);
+			Monster->GetRender()->SetActive(false);
 			UEngineAPICore::GetCore()->OpenLevel("PokemonSelect");
 		}
 	}

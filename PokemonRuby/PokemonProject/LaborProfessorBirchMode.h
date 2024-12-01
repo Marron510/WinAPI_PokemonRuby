@@ -63,6 +63,6 @@ private:
 	};
 
 	int CurrentDialogueIndex = 0;
-
+	bool bIsDialogueActive = false;
 };
 

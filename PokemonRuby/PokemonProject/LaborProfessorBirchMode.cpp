@@ -76,6 +76,7 @@ void ALaborProfessorBirchMode::BeginPlay()
 			StartProfessorDialogue();
 		});
 	
+	bIsDialogueActive = false;
 }
 
 void ALaborProfessorBirchMode::Tick(float _DeltaTime)
@@ -99,9 +100,9 @@ void ALaborProfessorBirchMode::LevelChange(float _DeltaTime)
 	FVector2D MainPlayerLocation = MainPlayer->GetActorLocation();
 
 
-	FTileVector TargetPos1 = { 6, 13 };
+	FTileVector TargetPos1 = { 7, 13 };
 	FTileVector TargetPos1NextLevelPos = { 87, 77 }; // 楷备家 免备
-	FTileVector TargetPos2 = { 7, 13 };
+	FTileVector TargetPos2 = { 8, 13 };
 	FTileVector TargetPos2NextLevelPos = { 87, 77 }; // 楷备家 免备
 
 	if (MainPlayerLocation == TargetPos1.ToFVector() || MainPlayerLocation == TargetPos2.ToFVector())
@@ -129,13 +130,20 @@ void ALaborProfessorBirchMode::LevelChangeStart()
 
 void ALaborProfessorBirchMode::StartProfessorDialogue()
 {
-	ChatText->SetActive(true);
-	ChatText->SetText(Dialogues[CurrentDialogueIndex], 0.1f); 
-	CurrentDialogueIndex++;
+	if (!bIsDialogueActive)
+	{
+		bIsDialogueActive = true; 
+		ChatText->SetActive(true);
+		ChatText->SetText(Dialogues[CurrentDialogueIndex], 0.03f);
+		CurrentDialogueIndex++;
+	}
 }
 
 void ALaborProfessorBirchMode::DisplayNextDialogue()
 {
+	if (!bIsDialogueActive)
+		return;
+
 	ChatText->ClearText();
 
 	if (CurrentDialogueIndex < Dialogues.size())
@@ -150,9 +158,9 @@ void ALaborProfessorBirchMode::DisplayNextDialogue()
 		ChatText->SetActive(false);
 		Chat->SetActive(false);
 		Player->EnableMovement();
+		bIsDialogueActive = false;
 	}
 }
-
 
 void ALaborProfessorBirchMode::RenderChatAbovePlayer()
 {

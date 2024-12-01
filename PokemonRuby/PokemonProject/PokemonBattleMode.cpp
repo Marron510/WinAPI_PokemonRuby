@@ -298,6 +298,7 @@ void APokemonBattleMode::Tick(float _DeltaTime)
 				BGMPlayer = UEngineSound::Play("008_ Victory!.mp3");
 				int GainedEXP = 15;
 				MyPokemon->AddEXP(GainedEXP);
+				BGMPlayer = UEngineSound::Play("SEGainExp.mp3");
 				ChatText->SetText(MyPokemon->GetMyPokemonName() + " gained" + enter + "15 EXP.Points!", 0.05f);
 			});
 		TimeEventManager.PushEvent(13.0f, [this]()
@@ -1081,7 +1082,7 @@ void APokemonBattleMode::UpdateEXPBar(float _DeltaTime)
 
 	FVector2D TargetEXPBarScale(TargetEXPScaleX, 9.0f);
 
-	float AnimationSpeed = 200.0f; 
+	float AnimationSpeed = 100.0f; 
 
 	if (CurrentEXPBarScale.X > TargetEXPBarScale.X)
 	{

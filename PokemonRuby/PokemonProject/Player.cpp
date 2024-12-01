@@ -68,18 +68,22 @@ void APlayer::BeginPlay()
 }
 
 
-void APlayer::Tick(float _DeltaTime)
+void APlayer::Tick(float DeltaTime)
 {
-    Super::Tick(_DeltaTime);
+    Super::Tick(DeltaTime);
 
-    if (IsMoving)
+    if (IsJumping) 
     {
-        UpdateMovement(_DeltaTime);
+        UpdateJump(DeltaTime);
+    }
+    else if (IsMoving)
+    {
+        UpdateMovement(DeltaTime);
     }
 
-    FSM.Update(_DeltaTime);
-
+    FSM.Update(DeltaTime);
 }
+
 
 void APlayer::Idle(float _DeltaTime)
 {
@@ -119,7 +123,7 @@ void APlayer::Walk(float _DeltaTime) {
 
 void APlayer::HandleInput()
 {
-    if (!bCanMove)
+    if (!bCanMove || IsJumping)
     {
         FSM.ChangeState(APlayerState::IDLE);
         return;
@@ -127,6 +131,16 @@ void APlayer::HandleInput()
 
     if (UEngineInput::GetInst().IsPress('W'))
     {
+        FVector2D NextPos = GetActorLocation() + FVector2D(0.0f, -TileSize.Y);
+        UColor NextColor = ColImage->GetColor(NextPos);
+
+        if (NextColor == UColor::RED || NextColor == UColor::BLUE)
+        {
+            IsMoving = false;
+            FSM.ChangeState(APlayerState::IDLE); 
+            return;
+        }
+
         StartMovementWithAnimation(EPlayerDir::UP_Left_Arm, EPlayerDir::UP_Right_Arm, { 0.0f, -TileSize.Y });
     }
     else if (UEngineInput::GetInst().IsPress('A'))
@@ -135,7 +149,14 @@ void APlayer::HandleInput()
     }
     else if (UEngineInput::GetInst().IsPress('S'))
     {
-        StartMovementWithAnimation(EPlayerDir::DOWN_Left_Arm, EPlayerDir::DOWN_Right_Arm, { 0.0f, TileSize.Y });
+        if (CheckColor == UColor::BLUE)
+        {
+            Jump();
+        }
+        else
+        {
+            StartMovementWithAnimation(EPlayerDir::DOWN_Left_Arm, EPlayerDir::DOWN_Right_Arm, { 0.0f, TileSize.Y });
+        }
     }
     else if (UEngineInput::GetInst().IsPress('D'))
     {
@@ -147,6 +168,9 @@ void APlayer::HandleInput()
         FSM.ChangeState(APlayerState::IDLE);
     }
 }
+
+
+
 
 void APlayer::StartMovementWithAnimation(EPlayerDir LeftArmDir, EPlayerDir RightArmDir, FVector2D Offset) {
     DirectionMoveCount[LeftArmDir]++;
@@ -495,6 +519,9 @@ void APlayer::InitializeAnimations()
     SpriteRenderer->CreateAnimation("Walk_Left_Left_Arm", "Player_Walk_Left.png", 1, 2, FrameTime);
     SpriteRenderer->CreateAnimation("Walk_Left_Right_Arm", "Player_Walk_Left.png", 3, 4, FrameTime);
 
+    SpriteRenderer->CreateAnimation("Jump", "Player_Walk_Down.png", 3, 3, FrameTime);
+
+
     float IdleFrameTime = 0.2f;
     SpriteRenderer->CreateAnimation("Idle_Up_Left_Arm", "Player_Walk_Up.png", 0, 0, IdleFrameTime);
     SpriteRenderer->CreateAnimation("Idle_Up_Right_Arm", "Player_Walk_Up.png", 0, 0, IdleFrameTime);
@@ -570,3 +597,66 @@ void APlayer::MoveToTile(const FVector2D& TargetTile)
     IsMoving = true;                   
     FSM.ChangeState(APlayerState::WALK);
 }
+
+
+void APlayer::Jump()
+{
+    if (!CanJump())
+    {
+        return;
+    }
+
+    FVector2D StartPosition = GetActorLocation();
+    FVector2D MidJumpPosition = StartPosition + FVector2D(0.0f, TileSize.Y); 
+    FVector2D JumpTarget = StartPosition + FVector2D(0.0f, 2.0f * TileSize.Y); 
+
+    UColor MidJumpColor = ColImage->GetColor(MidJumpPosition);
+
+    if (MidJumpColor == UColor::BLUE)
+    {
+        TargetLocation = JumpTarget;
+        IsJumping = true;
+        JumpTime = 0.0f;
+
+        SpriteRenderer->ChangeAnimation("Jump");
+    }
+    else
+    {
+        IsJumping = false; 
+    }
+}
+
+
+
+
+void APlayer::UpdateJump(float DeltaTime)
+{
+    if (!IsJumping)
+    {
+        return;
+    }
+
+    JumpTime += DeltaTime;
+    float JumpProgress = JumpTime / JumpDuration; 
+
+    if (JumpProgress < 1.0f) 
+    {
+        FVector2D CurrentLocation = UPokemonMath::Lerp(GetActorLocation(), TargetLocation, JumpProgress);
+        SetActorLocation(CurrentLocation);
+    }
+    else 
+    {
+        SetActorLocation(TargetLocation);
+        IsJumping = false;
+
+        SpriteRenderer->ChangeAnimation("Idle" + DirString[static_cast<int>(CurDir)]);
+    }
+}
+
+
+
+bool APlayer::CanJump() const
+{
+    return !IsMoving && !IsJumping && CheckColor == UColor::BLUE;
+}
+

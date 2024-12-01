@@ -75,7 +75,11 @@ public:
     void UpdateMovement(float _DeltaTime);
     void ChangeArmAnimation();
     void MoveToTile(const FVector2D& TargetTile);
-    
+    void Jump();
+    void UpdateJump(float DeltaTime);
+    bool CanJump() const;
+
+
     void EnableMovement() 
     {
         bCanMove = true; 
@@ -151,4 +155,9 @@ private:
     float InputCooldown = 0.0f;   
 
     FVector2D CamPos = FVector2D::ZERO;
+
+    FVector2D InitialJumpLocation;  // 점프 시작 위치
+    float JumpTime = 0.0f;          // 점프 진행 시간
+    const float JumpDuration = 0.5f; // 점프에 걸리는 총 시간
+    bool IsJumping = false;
 };
