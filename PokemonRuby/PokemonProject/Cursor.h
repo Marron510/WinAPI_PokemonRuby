@@ -1,7 +1,7 @@
 #pragma once
 
 #include <EngineCore/Actor.h>
-
+#include <EnginePlatform/EngineSound.h>
 
 class ACursor : public AActor
 {
@@ -111,5 +111,6 @@ private:
 	bool IsFirstBattleZPressIgnored = true;
 
 	class APokemonText* ChatText = nullptr;
+	class USoundPlayer BGMPlayer;
 };
 

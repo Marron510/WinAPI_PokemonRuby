@@ -1,5 +1,7 @@
 #pragma once
 #include <EngineCore/Actor.h>
+#include <EnginePlatform/EngineSound.h>
+
 #include <vector>
 #include <list>
 #include <string>
@@ -113,5 +115,6 @@ private:
     FVector2D CurrentVelocity = FVector2D::ZERO;
     bool IsMovingLeft = false;
     bool IsSkillActive = false;         
+    class USoundPlayer BGMPlayer;
 };
 

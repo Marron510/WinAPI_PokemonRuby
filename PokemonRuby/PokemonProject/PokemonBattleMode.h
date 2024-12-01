@@ -1,6 +1,8 @@
 #pragma once
 #include <EngineBase/EngineMath.h>
 #include <EngineCore/GameMode.h>
+#include <EnginePlatform/EngineSound.h>
+
 #include "PokemonEnum.h"
 
 class APokemonBattleMode : public AGameMode
@@ -163,8 +165,10 @@ private:
 	class APokemonText* EnemyPokemonLevelText = nullptr;
 
 	
-	   bool bHasSpawnedPokemon = false; 
+	bool bHasSpawnedPokemon = false; 
 	bool bHasDisplayedMenuText = false;
+
+	class USoundPlayer BGMPlayer;
 	int PokemonMapLevel = 0;
 };
 

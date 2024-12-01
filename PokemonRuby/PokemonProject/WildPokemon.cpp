@@ -170,14 +170,17 @@ void AWildPokemon::UseSkill(const std::string& skillName, class AMyPokemon* targ
         int damage = 0;
         if (skillName == "POUND")
         {
+            BGMPlayer = UEngineSound::Play("SKILL_Pound.mp3");
             damage = SkillHandler->Pound(Level, Attack, target->GetDefense());
         }
         else if (skillName == "SCRATCH")
         {
+            BGMPlayer = UEngineSound::Play("SKILL_Scratch.mp3");
             damage = SkillHandler->Scratch(Level, Attack, target->GetDefense());
         }
         else if (skillName == "TACKLE")
         {
+            BGMPlayer = UEngineSound::Play("SKILL_Tackle.mp3");
             damage = SkillHandler->Tackle(Level, Attack, target->GetDefense());
         }
 
@@ -188,18 +191,21 @@ void AWildPokemon::UseSkill(const std::string& skillName, class AMyPokemon* targ
     else if (skillName == "LEER")
     {
         int targetDefense = target->GetDefense();
+        BGMPlayer = UEngineSound::Play("SKILL_Leer.mp3");
         SkillHandler->Leer(targetDefense);
         target->SetDefense(targetDefense);
     }
     else if (skillName == "GROWL")
     {
         int TargetAttack = target->GetAttack();
+        BGMPlayer = UEngineSound::Play("SKILL_Growl.mp3");
         SkillHandler->Growl(TargetAttack);
         target->SetAttack(TargetAttack);
     }
     else if (skillName == "Howl")
     {
         SkillHandler->Howl(Attack);
+        BGMPlayer = UEngineSound::Play("SKILL_Howl.mp3");
     }
     else if (skillName == "StringShot")
     {

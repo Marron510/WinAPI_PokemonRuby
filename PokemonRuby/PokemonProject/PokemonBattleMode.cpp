@@ -259,11 +259,15 @@ void APokemonBattleMode::Tick(float _DeltaTime)
 		TimeEventManager.PushEvent(6.0f, [this]()
 			{
 				ChatText->ClearText();
+				UEngineSound::AllSoundStop();
+				BGMPlayer = UEngineSound::Play("008_ Victory!.mp3");
 				ChatText->SetText(MyPokemon->GetMyPokemonName() + " gained" + enter + "15 EXP.Points!", 0.05f);
 			});
-		TimeEventManager.PushEvent(10.0f, [this]()
+		TimeEventManager.PushEvent(13.0f, [this]()
 			{
 				ALaborProfessorBirchMode::LaborProfessorBirchModeChangePos = { 8,4 };
+				UEngineSound::AllSoundStop();
+				BGMPlayer = UEngineSound::Play("009_ ProfessorBirchsLab.mp3");
 				UEngineAPICore::GetCore()->OpenLevel("LaborProfessorBirch");
 			});
 	}
@@ -542,6 +546,7 @@ void APokemonBattleMode::SpawnPokemon(float _DeltaTime)
 
 	if (UEngineInput::GetInst().IsDown('Z'))
 	{
+		BGMPlayer = UEngineSound::Play("SEClick.mp3");
 		ThrowMonsterball();
 		MonsterBall->ChangeAnimation("ThrowBall");
 		ThrowedMosterBall();

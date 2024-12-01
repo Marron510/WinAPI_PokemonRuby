@@ -1,5 +1,6 @@
 #pragma once
 #include <EngineCore/Actor.h>
+#include <EnginePlatform/EngineSound.h>
 #include <string>
 #include <vector>
 
@@ -107,11 +108,12 @@ private:
 	class PokemonSkill* SkillHandler;
 
 
-	FVector2D StartPosition;      // The original position
-	FVector2D TargetPosition;     // The target position to move towards
-	FVector2D CurrentVelocity;    // The velocity of movement (speed and direction)
-	bool bIsMovingRight;          // Whether the Pok?mon is moving right or left
-	bool bIsSkillActive;          // Whether the skill animation is active
+	FVector2D StartPosition;      
+	FVector2D TargetPosition;     
+	FVector2D CurrentVelocity;    
+	bool bIsMovingRight;          
+	bool bIsSkillActive;          
+	class USoundPlayer BGMPlayer;
 
 };
 

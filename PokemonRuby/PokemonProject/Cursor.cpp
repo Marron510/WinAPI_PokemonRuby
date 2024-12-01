@@ -129,6 +129,7 @@ void ACursor::Tick(float _DeltaTime)
         {
             if (BattleModeInstance != nullptr)
             {
+                BGMPlayer = UEngineSound::Play("SEClick.mp3");
                 BattleModeInstance->HandleMenuSelection(CursorRender->GetComponentLocation());
             }
         }
@@ -147,6 +148,7 @@ void ACursor::Tick(float _DeltaTime)
        {
            if (BattleModeInstance != nullptr)
            {
+               BGMPlayer = UEngineSound::Play("SEClick.mp3");
                BattleModeInstance->HandleSkillSelection(CursorRender->GetComponentLocation());
            }
        }

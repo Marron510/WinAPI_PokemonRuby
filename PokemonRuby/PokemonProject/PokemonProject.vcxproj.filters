@@ -34,9 +34,6 @@
     <Filter Include="PokemonObject\3.Pokemon\WildPokemon">
       <UniqueIdentifier>{331520bb-d5c5-47e9-9339-9db879c82138}</UniqueIdentifier>
     </Filter>
-    <Filter Include="PokemonObject\5.Event">
-      <UniqueIdentifier>{afaf515f-82ab-4a02-b4db-e8d0d4565d01}</UniqueIdentifier>
-    </Filter>
     <Filter Include="PokemonObject\1.PokemonMap\00_TitleMap">
       <UniqueIdentifier>{852a13db-36f8-49fc-949a-21e18cc49c2d}</UniqueIdentifier>
     </Filter>
@@ -156,9 +153,6 @@
     <ClInclude Include="PokemonBattleMode.h">
       <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\02.Battle</Filter>
     </ClInclude>
-    <ClInclude Include="Cursor.h">
-      <Filter>PokemonObject\5.Event</Filter>
-    </ClInclude>
     <ClInclude Include="PokemonBattleMap.h">
       <Filter>PokemonObject\1.PokemonMap\05.BattleMap</Filter>
     </ClInclude>
@@ -177,7 +171,6 @@
     <ClInclude Include="PokemonStat.h">
       <Filter>PokemonObject\3.Pokemon</Filter>
     </ClInclude>
-    <ClInclude Include="TitleMap.h" />
     <ClInclude Include="Mother.h">
       <Filter>PokemonObject\4.PlayObject\NPC</Filter>
     </ClInclude>
@@ -213,6 +206,9 @@
     </ClInclude>
     <ClInclude Include="PokemonHP.h">
       <Filter>PokemonObject\3.Pokemon</Filter>
+    </ClInclude>
+    <ClInclude Include="Cursor.h">
+      <Filter>PokemonObject\4.PlayObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -297,9 +293,6 @@
     <ClCompile Include="PokemonBattleMode.cpp">
       <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode\02.Battle</Filter>
     </ClCompile>
-    <ClCompile Include="Cursor.cpp">
-      <Filter>PokemonObject\5.Event</Filter>
-    </ClCompile>
     <ClCompile Include="PokemonBattleMap.cpp">
       <Filter>PokemonObject\1.PokemonMap\05.BattleMap</Filter>
     </ClCompile>
@@ -318,7 +311,6 @@
     <ClCompile Include="PokemonStat.cpp">
       <Filter>PokemonObject\3.Pokemon</Filter>
     </ClCompile>
-    <ClCompile Include="TitleMap.cpp" />
     <ClCompile Include="Mother.cpp">
       <Filter>PokemonObject\4.PlayObject\NPC</Filter>
     </ClCompile>
@@ -354,6 +346,9 @@
     </ClCompile>
     <ClCompile Include="PokemonHP.cpp">
       <Filter>PokemonObject\3.Pokemon</Filter>
+    </ClCompile>
+    <ClCompile Include="Cursor.cpp">
+      <Filter>PokemonObject\4.PlayObject</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
