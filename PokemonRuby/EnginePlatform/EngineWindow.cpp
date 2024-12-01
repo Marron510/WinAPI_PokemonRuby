@@ -46,7 +46,7 @@ void UEngineWindow::EngineWindowInit(HINSTANCE _Instance)
     wcex.hInstance = hInstance;
     wcex.hIcon = nullptr;
     wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
-    wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+    wcex.hbrBackground = CreateSolidBrush(RGB(0, 0, 0));
     wcex.lpszMenuName = nullptr;
     wcex.lpszClassName = "Default";
     wcex.hIconSm = nullptr;

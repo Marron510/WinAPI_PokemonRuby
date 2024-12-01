@@ -2,6 +2,7 @@
 #include "TitleGameMode.h"
 
 
+
 #include <EngineBase/TimeEvent.h>
 #include <EnginePlatform/EngineInput.h>
 #include <EngineCore/EngineAPICore.h>
@@ -22,13 +23,11 @@ ATitleGameMode::~ATitleGameMode()
 void ATitleGameMode::BeginPlay()
 {
 	Super::BeginPlay();
-	{
-	}
+
 	UEngineInput::GetInst().EnableInput();
-	{
-		AFade* Actor = GetWorld()->SpawnActor<AFade>();
-		Actor->FadeOut();
-	}
+
+	AFade* Actor = GetWorld()->SpawnActor<AFade>();
+	Actor->FadeOut();
 
 	Sprite = CreateDefaultSubObject<USpriteRenderer>();
 	Sprite->SetSprite("Intro_0", 0);
@@ -38,35 +37,44 @@ void ATitleGameMode::BeginPlay()
 	Sprite->CreateAnimation("Intro2", "Intro_2", 0, 154, 0.1f, false);
 	Sprite->CreateAnimation("Intro3", "Intro_3", 0, 223, 0.1f, true);
 	Sprite->ChangeAnimation("Intro0");
-	Sprite->SetComponentLocation({ 600,400 });
+	Sprite->SetComponentLocation({ 600, 400 });
 
-
-	/*TimeEventer.PushEvent(9.0f, [this]()
+	TimeEventer.PushEvent(9.0f, [this]()
 		{
-			Sprite->ChangeAnimation("Intro1");
+			PlayNextAnimation(); 
 		});
 	TimeEventer.PushEvent(25.6f, [this]()
 		{
-			Sprite->ChangeAnimation("Intro2");
+			PlayNextAnimation(); 
 		});
 	TimeEventer.PushEvent(42.0f, [this]()
 		{
-			Sprite->ChangeAnimation("Intro3");
-		});*/
-
-
+			PlayNextAnimation(); 
+		});
 }
 
 void ATitleGameMode::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
-	if (!bIntro3Active && UEngineInput::GetInst().IsDown('Z') && CurrentAnimationIndex < 4)
+
+	if (!bIntro3Active && UEngineInput::GetInst().IsDown('Z'))
 	{
 		PlayNextAnimation();
+	}
+	if (UEngineInput::GetInst().IsDown('Z'))
+	{
+		StopCurrentSound();
+		PlayNextSound();
+	}
+
+	if (!BGMPlayer.IsPlaying())
+	{
+		PlayNextSound();
 	}
 
 	if (bIntro3Active && UEngineInput::GetInst().IsDown('Z'))
 	{
+		BGMPlayer.Stop();
 		UEngineAPICore::GetCore()->OpenLevel("Truck");
 	}
 }
@@ -75,6 +83,11 @@ void ATitleGameMode::Tick(float _DeltaTime)
 
 void ATitleGameMode::PlayNextAnimation()
 {
+	if (bIntro3Active)
+	{
+		return;
+	}
+
 	switch (CurrentAnimationIndex)
 	{
 	case 0:
@@ -85,10 +98,59 @@ void ATitleGameMode::PlayNextAnimation()
 		break;
 	case 2:
 		Sprite->ChangeAnimation("Intro3");
-		break;
+		++CurrentAnimationIndex; 
+		return;                  
 	case 3:
-		bIntro3Active = true;
+		bIntro3Active = true;    
 		return;
 	}
-	++CurrentAnimationIndex; 
+
+	++CurrentAnimationIndex;
+
+	ResetTimeEvent();
+}
+
+
+
+void ATitleGameMode::ResetTimeEvent()
+{
+	TimeEventer.ResetAllEvents();
+
+	switch (CurrentAnimationIndex)
+	{
+	case 1:
+		TimeEventer.PushEvent(16.6f, [this]() 
+			{
+				PlayNextAnimation();
+			});
+		break;
+	case 2:
+		TimeEventer.PushEvent(16.4f, [this]() 
+			{
+				PlayNextAnimation(); 
+			}); 
+		break;
+	}
+}
+
+
+void ATitleGameMode::PlayNextSound()
+{
+	if (currentSoundIndex >= soundQueue.size())
+	{
+		return;
+	}
+
+	std::string soundName = soundQueue[currentSoundIndex];
+	BGMPlayer = UEngineSound::Play(soundName);
+	++currentSoundIndex;
+}
+
+
+void ATitleGameMode::StopCurrentSound()
+{
+	if (BGMPlayer.IsPlaying())
+	{
+		BGMPlayer.Stop();  
+	}
 }

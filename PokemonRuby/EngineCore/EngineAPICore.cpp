@@ -3,9 +3,9 @@
 #include <EnginePlatform/EngineInput.h>
 
 #include <EnginePlatform/EngineWindow.h>
+#include <EnginePlatform/EngineSound.h>
 #include <EngineBase/EngineDelegate.h>
 #include <EngineBase/EngineDebug.h>
-
 
 
 UEngineAPICore* UEngineAPICore::MainCore = nullptr;
@@ -33,6 +33,7 @@ UEngineAPICore::~UEngineAPICore()
 	}
 
 	Levels.clear();
+	UEngineSound::Release();
 }
 
 
@@ -85,7 +86,7 @@ void UEngineAPICore::Tick()
 
 	DeltaTimer.TimeCheck();
 	float DeltaTime = DeltaTimer.GetDeltaTime();
-
+	UEngineSound::Update();
 	UEngineInput::GetInst().KeyCheck(DeltaTime);
 
 	if (nullptr == CurLevel)

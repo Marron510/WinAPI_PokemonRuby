@@ -6,7 +6,6 @@
 std::map<std::string, UEngineSound*> UEngineSound::Sounds;
 std::list<USoundPlayer> UEngineSound::Players;
 
-// 사운드를 제어하기위한 핸들
 FMOD::System* SoundSystem = nullptr;
 
 #ifdef _DEBUG
@@ -26,10 +25,6 @@ public:
 			return;
 		}
 
-		// 사운드 채널설정
-		// int maxchannels, 동시에 몇개까지 사운드 재생이 되는가?
-		// FMOD_INITFLAGS flags, 지정사항이 있냐인데
-		// void* extradriverdata 지정사항에 대한 데이터넣어줄게 있냐.
 		if (FMOD_RESULT::FMOD_OK != SoundSystem->init(32, FMOD_DEFAULT, nullptr))
 		{
 			MSGASSERT("FMOD 시스템 이닛에 실패했습니다.");
@@ -154,7 +149,6 @@ void UEngineSound::Load(std::string_view _Path)
 
 void UEngineSound::Load(std::string_view _Name, std::string_view _Path)
 {
-	// 이녀석은 UTF-8로 경로를 바꿔줘야 할수 있다.
 	std::string UpperString = UEngineString::ToUpper(_Name);
 
 	UEngineSound* NewSound = new UEngineSound();
@@ -169,7 +163,6 @@ void UEngineSound::Load(std::string_view _Name, std::string_view _Path)
 	;
 
 	UEngineSound::Sounds.insert({ UpperString, NewSound });
-	// Load(FileName, Path);
 }
 
 UEngineSound* UEngineSound::Find(std::string_view _Name)
@@ -196,19 +189,12 @@ USoundPlayer UEngineSound::Play(std::string_view _Name)
 	}
 
 
-	// 그냥 단순히 재생하는게 아니라면 채널을 얻어와야 속략이나 피치 볼륨 믹싱 등등을 조절할수 있다.
 	FMOD::Channel* Ch = nullptr;
 
 	SoundSystem->playSound(FindSound->SoundHandle, nullptr, false, &Ch);
 
-	// 이 재생에 관련된 모든 사항에 대한 
-	// WINproc => 
-	// Ch->setCallback();
-
-	// 1번 재생
 	Ch->setLoopCount(0);
 
-	// 볼륨 1로
 	Ch->setVolume(1.0f);
 
 	USoundPlayer NewPlayer;
@@ -223,11 +209,6 @@ USoundPlayer UEngineSound::Play(std::string_view _Name)
 
 bool UEngineSound::ResLoad(std::string_view _Path)
 {
-	// 유니코드로 넣어도
-	// 멀티바이트로 넣어도 제대로 안될때가 있다.
-	// 그러면 UTF시리즈로 인코딩해서 넣어줘야할때가 있다.
-	// FMOD를 사용하는 부분
-	// 해봤더니 된다 UTF시리즈로 안해줘도 됐다.
 	SoundSystem->createSound(_Path.data(), FMOD_LOOP_NORMAL, nullptr, &SoundHandle);
 
 	if (nullptr == SoundHandle)

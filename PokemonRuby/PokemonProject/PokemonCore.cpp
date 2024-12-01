@@ -6,7 +6,7 @@
 #include <EngineBase/EngineDirectory.h>
 #include <EngineBase/EngineDebug.h>
 #include <EngineBase/EngineFile.h>
-
+#include <EnginePlatform/EngineSound.h>
 #include <EngineCore/ImageManager.h>
 
 #include "TitleGameMode.h"
@@ -41,23 +41,36 @@ void PokemonCore::BeginPlay()
 {
 
 
-	
-	UEngineDirectory Dir;
-
-	if (false == Dir.MoveParentToDirectory("PokemonResources"))
 	{
-		MSGASSERT("리소스 폴더를 찾지 못했습니다.");
-		return;
+		UEngineDirectory Dir;
+		if (false == Dir.MoveParentToDirectory("PokemonResources"))
+		{
+			MSGASSERT("리소스 폴더를 찾지 못했습니다.");
+			return;
+		}
+		Dir.Append("Image");
+		std::vector<UEngineFile> ImageFiles = Dir.GetAllFile();
+		for (size_t i = 0; i < ImageFiles.size(); i++)
+		{
+			std::string FilePath = ImageFiles[i].GetPathToString();
+			UImageManager::GetInst().Load(FilePath);
+		}
 	}
-
-
-
-	std::vector<UEngineFile> ImageFiles = Dir.GetAllFile();
-
-	for (size_t i = 0; i < ImageFiles.size(); i++)
+	
 	{
-		std::string FilePath = ImageFiles[i].GetPathToString();
-		UImageManager::GetInst().Load(FilePath);
+		UEngineDirectory Dir;
+		if (false == Dir.MoveParentToDirectory("PokemonResources"))
+		{
+			MSGASSERT("리소스 폴더를 찾지 못했습니다.");
+			return;
+		}
+		Dir.Append("Sound");
+		std::vector<UEngineFile> ImageFiles = Dir.GetAllFile();
+		for (size_t i = 0; i < ImageFiles.size(); i++)
+		{
+			std::string FilePath = ImageFiles[i].GetPathToString();
+			UEngineSound::Load(FilePath);
+		}
 	}
 
 	{
@@ -236,14 +249,6 @@ void PokemonCore::BeginPlay()
 		UEngineAPICore::GetCore()->CreateLevel<APokemonBattleMode, AActor>("PokemonBattle");
 	}
 
-	// UEngdinsound::Load("aaa.mp3");
-	// 
-	// 엔진 어디선가
-	// UEngdinsound::Update(_deltatime);
-	// 
-	// USoundPlayer BGMPlayer = UEngdinsound::Play("aaa.mp3");
-
-	// BGMPlayer.stop();
 
 	
 		UEngineAPICore::GetCore()->OpenLevel("Title");

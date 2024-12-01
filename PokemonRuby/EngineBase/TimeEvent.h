@@ -64,6 +64,23 @@ public:
 		}
 	}
 
+	void ResetEvent(std::function<void()> _Function)
+	{
+		for (auto& TimeEvent : Events)
+		{
+			if (TimeEvent.Event.target<void()>() == _Function.target<void()>())
+			{
+				TimeEvent.Time = TimeEvent.MaxTime;
+			}
+		}
+	}
+	void ResetAllEvents()
+	{
+		for (auto& TimeEvent : Events)
+		{
+			TimeEvent.Time = TimeEvent.MaxTime;
+		}
+	}
 protected:
 
 private:
