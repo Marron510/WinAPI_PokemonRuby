@@ -371,7 +371,7 @@ void APlayer::PlayerDebugCheck(float _DeltaTime)
     FVector2D Size = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
     FVector2D NewCameraPos = GetActorLocation() - Size.Half();
 
-    GetWorld()->SetCameraPos(UPokemonMath::Lerp(GetWorld()->GetCameraPos(), NewCameraPos, WalkSpeed * 0.5f));
+    GetWorld()->SetCameraPos(UPokemonMath::Lerp(GetWorld()->GetCameraPos(), NewCameraPos, static_cast<float>(WalkSpeed) * 0.5f));
     MapSizeCheck(Size);
 }
 

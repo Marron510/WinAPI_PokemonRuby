@@ -36,12 +36,12 @@ void ATitleGameMode::BeginPlay()
 	Sprite->CreateAnimation("Intro0", "Intro_0", 0, 63, 0.1f, false);
 	Sprite->CreateAnimation("Intro1", "Intro_1", 0, 166, 0.1f, false);
 	Sprite->CreateAnimation("Intro2", "Intro_2", 0, 154, 0.1f, false);
-	Sprite->CreateAnimation("Intro3", "Intro_3", 0, 223, 0.1f, false);
+	Sprite->CreateAnimation("Intro3", "Intro_3", 0, 223, 0.1f, true);
 	Sprite->ChangeAnimation("Intro0");
-	Sprite->SetComponentLocation({600,400});
+	Sprite->SetComponentLocation({ 600,400 });
 
 
-	TimeEventer.PushEvent(9.0f, [this]()
+	/*TimeEventer.PushEvent(9.0f, [this]()
 		{
 			Sprite->ChangeAnimation("Intro1");
 		});
@@ -52,7 +52,7 @@ void ATitleGameMode::BeginPlay()
 	TimeEventer.PushEvent(42.0f, [this]()
 		{
 			Sprite->ChangeAnimation("Intro3");
-		});
+		});*/
 
 
 }
@@ -60,9 +60,35 @@ void ATitleGameMode::BeginPlay()
 void ATitleGameMode::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
-	UEngineInput::GetInst().ExecuteIfKeyPressed(0.0f, []()
-		{
-			UEngineAPICore::GetCore()->OpenLevel("Truck");
-		});
+	if (!bIntro3Active && UEngineInput::GetInst().IsDown('Z') && CurrentAnimationIndex < 4)
+	{
+		PlayNextAnimation();
+	}
+
+	if (bIntro3Active && UEngineInput::GetInst().IsDown('Z'))
+	{
+		UEngineAPICore::GetCore()->OpenLevel("Truck");
+	}
 }
 
+
+
+void ATitleGameMode::PlayNextAnimation()
+{
+	switch (CurrentAnimationIndex)
+	{
+	case 0:
+		Sprite->ChangeAnimation("Intro1");
+		break;
+	case 1:
+		Sprite->ChangeAnimation("Intro2");
+		break;
+	case 2:
+		Sprite->ChangeAnimation("Intro3");
+		break;
+	case 3:
+		bIntro3Active = true;
+		return;
+	}
+	++CurrentAnimationIndex; 
+}

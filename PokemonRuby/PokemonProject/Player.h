@@ -119,7 +119,7 @@ public:
 protected:
 
 private:
-    float WalkSpeed = 0.24;
+    double WalkSpeed = 0.24;
     float WalkTime = 0.0f;
     const float TileMoveTime = 1.6f;
     

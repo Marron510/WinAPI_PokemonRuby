@@ -1195,7 +1195,7 @@ void APokemonMapMode::ProfessorHelpEvent()
 		{
 			if (Professor->GetRender() != nullptr)
 			{
-				Monster->GetRender()->ChangeAnimation("Monster_Walk_Left",0.1f);
+				Monster->GetRender()->ChangeAnimation("Monster_Walk_Left");
 			}
 		});
 }

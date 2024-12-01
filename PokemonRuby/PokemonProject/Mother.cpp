@@ -56,7 +56,6 @@ void AMother::Tick(float _DeltaTime)
 {
     Super::Tick(_DeltaTime);
 
-    TimeEventer.Update(_DeltaTime);
 
     if (IsMoving)
     {

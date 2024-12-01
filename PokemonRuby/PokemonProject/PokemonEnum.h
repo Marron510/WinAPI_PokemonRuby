@@ -24,7 +24,7 @@ enum class ERenderOrder
 	FADE = 1000
 };
 
-static enum class ENPCDir
+enum class ENPCDir
 {
 	LEFT_Left_Arm,
 	LEFT_Right_Arm,
@@ -51,7 +51,7 @@ public:
 	UPokemoncharacter& operator=(UPokemoncharacter&& _Other) noexcept = delete;
 
 
-	static enum class ECapitals
+	enum class ECapitals
 	{
 		A,
 		B,

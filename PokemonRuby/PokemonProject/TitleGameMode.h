@@ -18,9 +18,12 @@ public:
 
 	void BeginPlay();
 	void Tick(float _DeltaTime);
+	void PlayNextAnimation();
 
 protected:
 private:
 	class USpriteRenderer* Sprite = nullptr;
+	int CurrentAnimationIndex = 0;
+	bool bIntro3Active = false;
 };
 
