@@ -1187,7 +1187,7 @@ void APokemonMapMode::ProfessorHelpEvent()
 				Monster->SetTargetLocation({ -1 * TileSize.Y, 0.0f });
 			}
 		});
-	TimeEventer.PushEvent(0.4f, [this]()
+	TimeEventer.PushEvent(0.6f, [this]()
 		{
 			if (Professor->GetRender() != nullptr)
 			{
@@ -1195,14 +1195,22 @@ void APokemonMapMode::ProfessorHelpEvent()
 				Monster->SetTargetLocation({ -1 * TileSize.Y, 0.0f });
 			}
 		});
-	TimeEventer.PushEvent(0.6f, [this]()
+	TimeEventer.PushEvent(0.9f, [this]()
+		{
+			if (Professor->GetRender() != nullptr)
+			{
+				Professor->SetTargetLocation({ -1 * TileSize.Y, 0.0f });
+				Monster->SetTargetLocation({ -1 * TileSize.Y, 0.0f });
+			}
+		});
+	TimeEventer.PushEvent(1.2f, [this]()
 		{
 			if (Professor->GetRender() != nullptr)
 			{
 				Professor->SetLookDirection(AProfessor::ENPCDirection::RIGHT_Left_Arm);
 			}
 		});
-	TimeEventer.PushEvent(0.8f, [this]()
+	TimeEventer.PushEvent(1.3f, [this]()
 		{
 			if (Professor->GetRender() != nullptr)
 			{

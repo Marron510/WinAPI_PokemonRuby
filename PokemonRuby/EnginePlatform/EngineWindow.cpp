@@ -18,10 +18,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         EndPaint(hWnd, &ps);
     }
     break;
-    //case WM_SIZING:
-    //{
-    //    int a = 0;
-    //}
+  
     break;
     case WM_DESTROY:
         --WindowCount;
@@ -46,7 +43,7 @@ void UEngineWindow::EngineWindowInit(HINSTANCE _Instance)
     wcex.hInstance = hInstance;
     wcex.hIcon = nullptr;
     wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
-    wcex.hbrBackground = CreateSolidBrush(RGB(0, 0, 0));
+    wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
     wcex.lpszMenuName = nullptr;
     wcex.lpszClassName = "Default";
     wcex.hIconSm = nullptr;

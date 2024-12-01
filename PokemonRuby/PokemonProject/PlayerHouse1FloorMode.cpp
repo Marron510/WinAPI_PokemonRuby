@@ -38,6 +38,8 @@ void APlayerHouse1FloorMode::BeginPlay()
 		Map = NewActor->GetCurMap();
 		Chat = NewActor->GetChatRender();
 		Chat->SetActive(false);
+
+
 		Player = GetWorld()->GetPawn<APlayer>();
 		Player->SetColImage("PlayerHouse1Floor Collision.png");
 		Player->SetDirection(APlayerHouse1FloorModePlayerDir);
@@ -54,6 +56,7 @@ void APlayerHouse1FloorMode::BeginPlay()
 		Mother->SetActorLocation(MotherPosition);
 		Mother->GetRender()->SetActive(true);
 	}
+
 	{
 		ChatText = GetWorld()->SpawnActor<APokemonText>();
 		ChatText->SetTextSpriteName("TextBlack.png");

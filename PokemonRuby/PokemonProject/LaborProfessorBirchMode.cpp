@@ -35,6 +35,8 @@ void ALaborProfessorBirchMode::BeginPlay()
 	{
 		ALaborProfessorBirchMap* NewActor = GetWorld()->SpawnActor<ALaborProfessorBirchMap>();
 		Map = NewActor->GetCurMap();
+		Chat = NewActor->GetChatRender();
+		Chat->SetActive(false);
 		Player = GetWorld()->GetPawn<APlayer>();
 		Player->SetColImage("LaborProfessorBirch Collision.png");
 	}
@@ -45,19 +47,34 @@ void ALaborProfessorBirchMode::BeginPlay()
 		Professor->GetRender()->SetActive(true);
 	}
 
+	
+	{
+		ChatText = GetWorld()->SpawnActor<APokemonText>();
+		ChatText->SetTextSpriteName("TextBlack.png");
+		ChatText->SetTextScale({ 24.0f, 38.0f });
+		ChatText->SetOrder(ERenderOrder::FONT);
+		FVector2D ChatLocation = { 100,620 };
+		ChatText->SetActorLocation(ChatLocation);
+	}
+
 	{
 		Fade = GetWorld()->SpawnActor<AFade>();
 		Fade->FadeOut();
 	}
+
 	UEngineInput::GetInst().EnableInput();
 
 	TimeEventer.PushEvent(0.05f, [this]()
 		{
 			Player->GetPlayerRender()->ChangeAnimation("Idle_Left_Right_Arm");
 			Professor->GetRender()->ChangeAnimation("Professor_Idle_Right");
+			RenderChatAbovePlayer();
 		});
-
-
+	TimeEventer.PushEvent(0.1f, [this]()
+		{
+			StartProfessorDialogue();
+		});
+	
 }
 
 void ALaborProfessorBirchMode::Tick(float _DeltaTime)
@@ -67,6 +84,11 @@ void ALaborProfessorBirchMode::Tick(float _DeltaTime)
 	Super::Tick(_DeltaTime);
 
 	LevelChange(_DeltaTime);
+	
+	if (ChatText->IsActive() && UEngineInput::GetInst().IsDown('Z'))
+	{
+		DisplayNextDialogue(); 
+	}
 	
 }
 
@@ -84,6 +106,8 @@ void ALaborProfessorBirchMode::LevelChange(float _DeltaTime)
 	if (MainPlayerLocation == TargetPos1.ToFVector() || MainPlayerLocation == TargetPos2.ToFVector())
 	{
 		MainPlayer->SetActorLocation(TargetPos1.ToFVector() + FTileVector::Up.ToFVector());
+		UEngineSound::AllSoundStop();
+		BGMPlayer = UEngineSound::Play("005_MishiroTown.mp3");
 		UEngineAPICore::GetCore()->OpenLevel("PokemonMap");
 		APokemonMapMode::PokemonMapModeChangePos = { 87, 77 };
 		Fade->FadeOut();
@@ -102,3 +126,44 @@ void ALaborProfessorBirchMode::LevelChangeStart()
 
 }
 
+void ALaborProfessorBirchMode::StartProfessorDialogue()
+{
+	ChatText->SetActive(true);
+	ChatText->SetText(Dialogues[CurrentDialogueIndex], 0.1f); 
+	CurrentDialogueIndex++;
+}
+
+void ALaborProfessorBirchMode::DisplayNextDialogue()
+{
+	ChatText->ClearText();
+
+	if (CurrentDialogueIndex < Dialogues.size())
+	{
+		BGMPlayer = UEngineSound::Play("SEClick.mp3");
+		ChatText->SetText(Dialogues[CurrentDialogueIndex], 0.03f);
+		CurrentDialogueIndex++;
+	}
+	else
+	{
+		BGMPlayer = UEngineSound::Play("SEClick.mp3");
+		ChatText->SetActive(false);
+		Chat->SetActive(false);
+	}
+}
+
+
+void ALaborProfessorBirchMode::RenderChatAbovePlayer()
+{
+	if (Player == nullptr || Chat == nullptr || ChatText == nullptr)
+	{
+		return;
+	}
+
+	FVector2D PlayerLocation = Player->GetActorLocation();
+
+	FVector2D ChatLocation = PlayerLocation + FVector2D(0.0f, 255.0f);
+
+	Chat->SetComponentLocation(ChatLocation);
+	Chat->SetOrder(ERenderOrder::CHAT);
+	Chat->SetActive(true);
+}

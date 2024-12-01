@@ -20,10 +20,15 @@ public:
 		return SpriteRenderer;
 	}
 
+	USpriteRenderer* GetChatRender()
+	{
+		return ChatRenderer;
+	}
 
 protected:
 
 private:
 	USpriteRenderer* SpriteRenderer;
+	USpriteRenderer* ChatRenderer;
 };
 
