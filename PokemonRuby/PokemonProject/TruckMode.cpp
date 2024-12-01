@@ -47,9 +47,9 @@ void ATruckMode::BeginPlay()
 	TimeEventer.PushEvent(11.0f, [this]() {
 		UEngineInput::GetInst().EnableInput();
 		Player->EnableMovement();
+		BGMPlayer = UEngineSound::Play("SEOpenTruck.mp3");
 		});
 	TimeEventer.PushEvent(12.0f, [this]() {
-		BGMPlayer = UEngineSound::Play("SEOpenTruck.mp3");
 		Map->SetSprite("Truck.png");
 		});
 

@@ -998,6 +998,11 @@ void APokemonMapMode::LevelChangeStart()
 	FTileVector StartPos = { PokemonMapModeChangePos.X, PokemonMapModeChangePos.Y };
 
 	 Actor->SetActorLocation(StartPos.ToFVector());
+	 
+	 if (Player != nullptr)
+	 {
+		 Player->SetDirection(PokemonMapModePlayerDir);
+	 }
 }
 
 void APokemonMapMode::RenderChatAbovePlayer()
