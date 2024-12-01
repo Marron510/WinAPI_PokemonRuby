@@ -225,6 +225,21 @@ public:
 		return *this;
 	}
 
+	FVector2D Min(const FVector2D& A, const FVector2D& B) const
+	{
+		FVector2D Result;
+		Result.X = (A.X < B.X) ? A.X : B.X;
+		Result.Y = (A.Y < B.Y) ? A.Y : B.Y;
+		return Result;
+	}
+
+	FVector2D Max(const FVector2D& A, const FVector2D& B) const
+	{
+		FVector2D Result;
+		Result.X = (A.X > B.X) ? A.X : B.X;
+		Result.Y = (A.Y > B.Y) ? A.Y : B.Y;
+		return Result;
+	}
 
 	std::string ToString()
 	{
@@ -269,7 +284,16 @@ public:
 
 	FVector2D Scale;
 	FVector2D Location;
+	FVector2D CurrentScale;
+	FVector2D MinScale;    
+	FVector2D MaxScale;    
+	float AnimationSpeed = 2.0f;
 
+
+	
+
+	
+	void UpdateAnimation(float DeltaTime);
 
 	FVector2D CenterLeftTop() const
 	{

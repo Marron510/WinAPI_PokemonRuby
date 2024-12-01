@@ -48,15 +48,15 @@ private:
 	std::string enter = "\n"; 
 	std::vector<std::string> Dialogues =
 	{
-		"Professor: Whew! I was in the tall grass" + enter + "studying wild Pok?mon when I was jumped!",
+		"Professor: Whew! I was in the tall grass" + enter + "studying wild Pokemon when I was jumped!",
 		"Professor: You saved me.Thanks a lot!",
 		"Professor: Oh? Hi! You're BRENDAN!" + enter + "I've heard about you from your father.",
 		"Professor: I've heard that you don't have" + enter +"your own POKEMON yet.",
 		"Professor: But the way you battled earlier," + enter + "you pulled it off with aplomb!",
 		"Professor: I guess you have your father's " + enter +  "blood in your veins after all!",
-		"Professor: Oh yes.As thanks for rescuing me," + enter + "I'd like you to have the POKEMON you used.",
+		"Professor: Oh yes.As thanks for rescuing me" + enter + "I'd like you to have the POKEMON you used.",
 		"Professor: If you work at becoming a strong " + enter +  "trainer,here's what I think you'll do.",
-		"Professor: My kid, May, is also studying" + enter + "Pok?mon while helping me out.",
+		"Professor: My kid, May, is also studying" + enter + "Pokemon while helping me out.",
 		"Professor: Don't you think it might be a " + enter + "good idea to go see May?",
 		"Professor: Great! May should be happy, too",
 		"Professor: Go and have a wonderful" + enter + "adventure together!"

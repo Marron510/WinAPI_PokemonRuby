@@ -193,6 +193,7 @@ void ASelectPokemonMode::SelectPokemon()
 		TimeEventer.PushEvent(0.5f, [this]()
 			{
 				UEngineSound::AllSoundStop();
+				BGMPlayer = UEngineSound::Play("SEClick.mp3");
 				BGMPlayer = UEngineSound::Play("007_ Battle!.mp3");
 				Fade->FadeIn();
 			});
@@ -207,6 +208,7 @@ void ASelectPokemonMode::SelectPokemon()
 		TimeEventer.PushEvent(0.5f, [this]()
 			{
 				UEngineSound::AllSoundStop();
+				BGMPlayer = UEngineSound::Play("SEClick.mp3");
 				BGMPlayer = UEngineSound::Play("007_ Battle!.mp3");
 				Fade->FadeIn();
 			});
@@ -221,6 +223,7 @@ void ASelectPokemonMode::SelectPokemon()
 		TimeEventer.PushEvent(0.5f, [this]()
 			{
 				UEngineSound::AllSoundStop();
+				BGMPlayer = UEngineSound::Play("SEClick.mp3");
 				BGMPlayer = UEngineSound::Play("007_ Battle!.mp3");
 				Fade->FadeIn();
 			});

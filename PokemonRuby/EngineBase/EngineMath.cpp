@@ -142,3 +142,24 @@ bool FTransform::CirCleToRect(const FTransform& _Left, const FTransform& _Right)
 
 	return false;
 }
+void FTransform::UpdateAnimation(float DeltaTime)
+{
+	if (CurrentScale.X < MaxScale.X)
+	{
+		CurrentScale.X = UEngineMath::Clamp(CurrentScale.X + AnimationSpeed * DeltaTime, MinScale.X, MaxScale.X);
+	}
+	else if (CurrentScale.X > MinScale.X)
+	{
+		CurrentScale.X = UEngineMath::Clamp(CurrentScale.X - AnimationSpeed * DeltaTime, MinScale.X, MaxScale.X);
+	}
+
+	if (CurrentScale.Y < MaxScale.Y)
+	{
+		CurrentScale.Y = UEngineMath::Clamp(CurrentScale.Y + AnimationSpeed * DeltaTime, MinScale.Y, MaxScale.Y);
+	}
+	else if (CurrentScale.Y > MinScale.Y)
+	{
+		CurrentScale.Y = UEngineMath::Clamp(CurrentScale.Y - AnimationSpeed * DeltaTime, MinScale.Y, MaxScale.Y);
+	}
+}
+

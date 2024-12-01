@@ -64,12 +64,12 @@ public:
 	void Skill1ChatText();
 	void Skill2ChatText();
 	void EnemySkill1ChatText();
-	void HPCheck();
+	void HPCheck(float _DeltaTime);
 
 	void EnemyDeadCheck();
 	void EnemyPokemonAttack();
 	void EnemypokemonDead();
-	void UpdateEXPBar();
+	void UpdateEXPBar(float _DeltaTime);
 
 	class AMyPokemon* GetMyPokemon()
 	{
@@ -185,6 +185,15 @@ private:
 	bool bHasDisplayedMenuText = false;
 
 	class USoundPlayer BGMPlayer;
+
+	float CurrentHPBarScale = 1.0f; 
+	float TargetHPBarScale = 1.0f;  
+
+	float CurrentEXPBarScale = 0.0f;
+	float TargetEXPBarScale = 0.0f; 
+
+	float AnimationSpeed = 2.0f; 
+
 	int PokemonMapLevel = 0;
 };
 

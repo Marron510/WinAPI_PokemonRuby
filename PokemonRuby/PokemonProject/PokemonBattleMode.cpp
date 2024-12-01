@@ -252,9 +252,9 @@ void APokemonBattleMode::Tick(float _DeltaTime)
 
 	SpawnPokemon(_DeltaTime);
 	
-	HPCheck();
+	HPCheck(_DeltaTime);
 
-	UpdateEXPBar();
+	UpdateEXPBar(_DeltaTime);
 
 	TimeEventManager.PushEvent(4.0f, [this]()
 		{
@@ -305,6 +305,7 @@ void APokemonBattleMode::Tick(float _DeltaTime)
 				ALaborProfessorBirchMode::LaborProfessorBirchModeChangePos = { 8,4 };
 				UEngineSound::AllSoundStop();
 				BGMPlayer = UEngineSound::Play("009_ ProfessorBirchsLab.mp3");
+				ALaborProfessorBirchMode::ALaborProfessorBirchModePlayerDir = APlayer::EPlayerDir::LEFT_Left_Arm;
 				UEngineAPICore::GetCore()->OpenLevel("LaborProfessorBirch");
 			});
 		
@@ -961,13 +962,60 @@ void APokemonBattleMode::FailedSkill()
 
 
 
-void APokemonBattleMode::HPCheck()
+void APokemonBattleMode::HPCheck(float _DeltaTime)
 {
-	float MyPokemonHP = static_cast<float>(MyPokemon->GetHP()) / static_cast<float>(MyPokemon->GetMaxHP());
-	float EnemyPokemonHP = static_cast<float>(EnemyPokemon->GetHP()) / static_cast<float>(EnemyPokemon->GetMaxHP());
-	MyPokemonHPbar->GetRender()->SetComponentScale({ MyPokemonHP * 230.0f , 14.0f });
-	EnemyPokemonHPbar->GetRender()->SetComponentScale({ EnemyPokemonHP * 230.0f , 16.0f });
+	static FVector2D MyCurrentHPBarScale = MyPokemonHPbar->GetRender()->GetComponentScale();
+	static FVector2D EnemyCurrentHPBarScale = EnemyPokemonHPbar->GetRender()->GetComponentScale();
+
+	float TargetMyPokemonHPScaleX = UEngineMath::Clamp(static_cast<float>(MyPokemon->GetHP()) / MyPokemon->GetMaxHP(), 0.0f, 1.0f) * 230.0f;
+	float TargetEnemyPokemonHPScaleX = UEngineMath::Clamp(static_cast<float>(EnemyPokemon->GetHP()) / EnemyPokemon->GetMaxHP(), 0.0f, 1.0f) * 230.0f;
+
+	FVector2D TargetMyHPBarScale(TargetMyPokemonHPScaleX, 14.0f);
+	FVector2D TargetEnemyHPBarScale(TargetEnemyPokemonHPScaleX, 16.0f);
+
+	float AnimationSpeed = 300.0f; 
+
+	if (MyCurrentHPBarScale.X > TargetMyHPBarScale.X)
+	{
+		MyCurrentHPBarScale.X -= AnimationSpeed * _DeltaTime;
+		if (MyCurrentHPBarScale.X < TargetMyHPBarScale.X) 
+		{
+			MyCurrentHPBarScale.X = TargetMyHPBarScale.X;
+		}
+	}
+	else if (MyCurrentHPBarScale.X < TargetMyHPBarScale.X)
+	{
+		MyCurrentHPBarScale.X += AnimationSpeed * _DeltaTime;
+		if (MyCurrentHPBarScale.X > TargetMyHPBarScale.X)
+		{
+			MyCurrentHPBarScale.X = TargetMyHPBarScale.X;
+		}
+	}
+
+	MyPokemonHPbar->GetRender()->SetComponentScale(MyCurrentHPBarScale);
+
+	if (EnemyCurrentHPBarScale.X > TargetEnemyHPBarScale.X)
+	{
+		EnemyCurrentHPBarScale.X -= AnimationSpeed * _DeltaTime;
+		if (EnemyCurrentHPBarScale.X < TargetEnemyHPBarScale.X)
+		{
+			EnemyCurrentHPBarScale.X = TargetEnemyHPBarScale.X;
+		}
+	}
+	else if (EnemyCurrentHPBarScale.X < TargetEnemyHPBarScale.X)
+	{
+		EnemyCurrentHPBarScale.X += AnimationSpeed * _DeltaTime;
+		if (EnemyCurrentHPBarScale.X > TargetEnemyHPBarScale.X)
+		{
+			EnemyCurrentHPBarScale.X = TargetEnemyHPBarScale.X;
+		}
+	}
+
+	EnemyPokemonHPbar->GetRender()->SetComponentScale(EnemyCurrentHPBarScale);
 }
+
+
+
 
 void APokemonBattleMode::EnemyPokemonAttack()
 {
@@ -1025,11 +1073,32 @@ void APokemonBattleMode::EnemypokemonDead()
 
 
 
-void APokemonBattleMode::UpdateEXPBar()
+void APokemonBattleMode::UpdateEXPBar(float _DeltaTime)
 {
-	float CurrentEXP = static_cast<float>(MyPokemon->GetEXP());
-	float MaxEXP = static_cast<float>(MyPokemon->GetMaxEXP());
-	float EXPScale = UEngineMath::Clamp(CurrentEXP / MaxEXP, 0.0f, 1.0f);
+	static FVector2D CurrentEXPBarScale = MyPokemonEXP->GetRender()->GetComponentScale();
 
-	MyPokemonEXP->GetRender()->SetComponentScale({ EXPScale * 230.0f, 9.0f });
+	float TargetEXPScaleX = UEngineMath::Clamp(static_cast<float>(MyPokemon->GetEXP()) / MyPokemon->GetMaxEXP(), 0.0f, 1.0f) * 230.0f;
+
+	FVector2D TargetEXPBarScale(TargetEXPScaleX, 9.0f);
+
+	float AnimationSpeed = 200.0f; 
+
+	if (CurrentEXPBarScale.X > TargetEXPBarScale.X)
+	{
+		CurrentEXPBarScale.X -= AnimationSpeed * _DeltaTime;
+		if (CurrentEXPBarScale.X < TargetEXPBarScale.X) 
+		{
+			CurrentEXPBarScale.X = TargetEXPBarScale.X;
+		}
+	}
+	else if (CurrentEXPBarScale.X < TargetEXPBarScale.X)
+	{
+		CurrentEXPBarScale.X += AnimationSpeed * _DeltaTime;
+		if (CurrentEXPBarScale.X > TargetEXPBarScale.X) 
+		{
+			CurrentEXPBarScale.X = TargetEXPBarScale.X;
+		}
+	}
+
+	MyPokemonEXP->GetRender()->SetComponentScale({ CurrentEXPBarScale.X, TargetEXPBarScale.Y });
 }

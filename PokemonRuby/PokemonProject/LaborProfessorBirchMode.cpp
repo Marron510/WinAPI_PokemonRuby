@@ -39,6 +39,8 @@ void ALaborProfessorBirchMode::BeginPlay()
 		Chat->SetActive(false);
 		Player = GetWorld()->GetPawn<APlayer>();
 		Player->SetColImage("LaborProfessorBirch Collision.png");
+		Player->SetDirection(ALaborProfessorBirchModePlayerDir);
+		Player->DisableMovement();
 	}
 	{
 		Professor = GetWorld()->SpawnActor<AProfessor>();
@@ -66,7 +68,6 @@ void ALaborProfessorBirchMode::BeginPlay()
 
 	TimeEventer.PushEvent(0.05f, [this]()
 		{
-			Player->GetPlayerRender()->ChangeAnimation("Idle_Left_Right_Arm");
 			Professor->GetRender()->ChangeAnimation("Professor_Idle_Right");
 			RenderChatAbovePlayer();
 		});
@@ -148,6 +149,7 @@ void ALaborProfessorBirchMode::DisplayNextDialogue()
 		BGMPlayer = UEngineSound::Play("SEClick.mp3");
 		ChatText->SetActive(false);
 		Chat->SetActive(false);
+		Player->EnableMovement();
 	}
 }
 
@@ -161,7 +163,7 @@ void ALaborProfessorBirchMode::RenderChatAbovePlayer()
 
 	FVector2D PlayerLocation = Player->GetActorLocation();
 
-	FVector2D ChatLocation = PlayerLocation + FVector2D(0.0f, 255.0f);
+	FVector2D ChatLocation = PlayerLocation + FVector2D(0.0f, 270.0f);
 
 	Chat->SetComponentLocation(ChatLocation);
 	Chat->SetOrder(ERenderOrder::CHAT);
