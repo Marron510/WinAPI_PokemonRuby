@@ -31,34 +31,45 @@ public:
 	void BattleGroundSetting();
 
 	void PokemonSetting();
+
 	void PlayerPokemonUISetting();
 	void PlayerPokemonTextSetting();
 	void PlayerPokemonHPSetting();
 	void PlayerPokemonLevelTextSetting();
+	void PlayerPokemonHPTextSetting();
+	void PlayerPokemonMaxHPTextSetting();
+	void PlayerPokemonEXPSetting();
+
 	void EnemyPokemonUISetting();
 	void EnemyPokemonTextSetting();
 	void EnemyPokemonHpSetting();
 	void EnemyPokemonLevelTextSetting();
+
 	void PokemonStatUpdate(float _delatime);
 	void SpawnSelectMenu();
 	void HandleSkillSelection(FVector2D CursorLocation);
 	void PlayerSetting();
+
 	void ThrowMonsterball();
 	void SpawnPokemon(float _DeltaTime);
 	void SpawnMyPokemon();
 	void SpawnMyPokemonText();
 	void ThrowedMosterBall();
+
 	void SkillTextOff();
 	void SkillTextOn();
 	void HandleMenuSelection(FVector2D CursorLocation);
+
 	void DisplayChatText();
 	void Skill1ChatText();
 	void Skill2ChatText();
 	void EnemySkill1ChatText();
 	void HPCheck();
+
 	void EnemyDeadCheck();
 	void EnemyPokemonAttack();
 	void EnemypokemonDead();
+	void UpdateEXPBar();
 
 	class AMyPokemon* GetMyPokemon()
 	{
@@ -80,6 +91,7 @@ public:
 	void PokemonBattleLogic1();
 	void PokemonBattleLogic2();
 	void FailedSkill();
+
 protected:
 
 private:
@@ -91,6 +103,8 @@ private:
 
 	class APokemonHP* MyPokemonHPbar = nullptr;
 	class APokemonHP* EnemyPokemonHPbar = nullptr;
+
+	class APokemonEXP* MyPokemonEXP = nullptr;
 
 	std::string MyPokemonName;
 	std::string MyPokemonLevel;
@@ -153,6 +167,8 @@ private:
 	
 	class APokemonText* MyPokemonStat = nullptr;
 	class APokemonText* MyPokemonLevelText = nullptr;
+	class APokemonText* MyPokemonHPText = nullptr;
+	class APokemonText* MyPokemonMaxHPText = nullptr;
 
 	class APokemonText* MyPokemonSkill1 = nullptr;
 	class APokemonText* MyPokemonSkill2 = nullptr;

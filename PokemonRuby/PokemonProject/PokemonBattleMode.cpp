@@ -21,6 +21,7 @@
 #include "PokemonEnum.h"
 #include "WildPokemon.h"
 #include "PokemonHP.h"
+#include "PokemonEXP.h"
 #include "Cursor.h"
 
 
@@ -136,7 +137,28 @@ void APokemonBattleMode::BeginPlay()
 		EnemyPokemonLevelText->SetActorLocation({ -245.0f , 135.0f });
 		EnemyPokemonLevelText->SetOrder(ERenderOrder::FONT);
 	}
+	{
+		
+		
+		MyPokemonHPText = GetWorld()->SpawnActor<APokemonText>();
+		MyPokemonHPText->SetTextSpriteName("TextBlack.png");
+		MyPokemonHPText->SetTextScale({ 26, 36 });
+		MyPokemonHPText->SetActorLocation({ 1666.0f , 496.0f });
+		MyPokemonHPText->SetOrder(ERenderOrder::FONT);
+	}
+	
+	std::string MaxHp = std::to_string(MyPokemon->GetMaxHP());
+	{
 
+
+		MyPokemonMaxHPText = GetWorld()->SpawnActor<APokemonText>();
+		MyPokemonMaxHPText->SetTextSpriteName("TextBlack.png");
+		MyPokemonMaxHPText->SetTextScale({ 26, 36 });
+		MyPokemonMaxHPText->SetText(MaxHp);
+		MyPokemonMaxHPText->SetActorLocation({ 1750.0f , 496.0f });
+		MyPokemonMaxHPText->SetOrder(ERenderOrder::FONT);
+	}
+	
 	{
 		MyPokemonStat = GetWorld()->SpawnActor<APokemonText>();
 		MyPokemonStat->SetTextSpriteName("TextBlack.png");
@@ -203,6 +225,10 @@ void APokemonBattleMode::BeginPlay()
 		EnemyPokemonHPbar->SetActorLocation({ -445.0f, 185.0f });
 	}
 
+	{
+		MyPokemonEXP = GetWorld()->SpawnActor<APokemonEXP>();
+		MyPokemonEXP->SetActorLocation({ 1506.0f, 535.0f });
+	}
 
 	SkillTextOff();
 
@@ -213,6 +239,8 @@ void APokemonBattleMode::Tick(float _DeltaTime)
 	Super::Tick(_DeltaTime);
 	
 	TimeEventManager.Update(_DeltaTime);
+	
+	
 
 	PokemonSetting();
 
@@ -225,6 +253,8 @@ void APokemonBattleMode::Tick(float _DeltaTime)
 	SpawnPokemon(_DeltaTime);
 	
 	HPCheck();
+
+	UpdateEXPBar();
 
 	TimeEventManager.PushEvent(4.0f, [this]()
 		{
@@ -261,6 +291,8 @@ void APokemonBattleMode::Tick(float _DeltaTime)
 				ChatText->ClearText();
 				UEngineSound::AllSoundStop();
 				BGMPlayer = UEngineSound::Play("008_ Victory!.mp3");
+				int GainedEXP = 15;
+				MyPokemon->AddEXP(GainedEXP);
 				ChatText->SetText(MyPokemon->GetMyPokemonName() + " gained" + enter + "15 EXP.Points!", 0.05f);
 			});
 		TimeEventManager.PushEvent(13.0f, [this]()
@@ -276,6 +308,9 @@ void APokemonBattleMode::Tick(float _DeltaTime)
 
 void APokemonBattleMode::PokemonSetting()
 {
+	std::string Hp = std::to_string(MyPokemon->GetHP());
+	MyPokemonHPText->SetText(Hp);
+
 	if (bEnemyPokemonPositioned)
 	{
 		return;
@@ -491,6 +526,26 @@ void APokemonBattleMode::PlayerPokemonHPSetting()
 
 }
 
+void APokemonBattleMode::PlayerPokemonEXPSetting()
+{
+	if (false == IsPlayerPokemonTextMoved)
+	{
+		FVector2D TargetLocation = FVector2D({ 806.0f , 535.0f });
+		FVector2D Curloc = MyPokemonEXP->GetActorLocation();
+
+		Curloc += FVector2D::LEFT;
+
+		if (TargetLocation == Curloc)
+		{
+			MyPokemonEXP->GetActorLocation() = TargetLocation;
+			return;
+		}
+
+		MyPokemonEXP->SetActorLocation(Curloc);
+	}
+
+}
+
 
 void APokemonBattleMode::PlayerPokemonLevelTextSetting()
 {
@@ -507,6 +562,43 @@ void APokemonBattleMode::PlayerPokemonLevelTextSetting()
 
 		MyPokemonLevelText->SetActorLocation(Curloc);
 }
+
+void APokemonBattleMode::PlayerPokemonHPTextSetting()
+{
+	FVector2D TargetLocation = FVector2D({ 966.0f , 496.0f });
+	FVector2D Curloc = MyPokemonHPText->GetActorLocation();
+
+	Curloc += FVector2D::LEFT;
+
+	if (TargetLocation == Curloc)
+	{
+		MyPokemonHPText->GetActorLocation() = TargetLocation;
+		return;
+	}
+
+	MyPokemonHPText->SetActorLocation(Curloc);
+}
+
+void APokemonBattleMode::PlayerPokemonMaxHPTextSetting()
+{
+	FVector2D TargetLocation = FVector2D({ 1050.0f , 496.0f });
+	FVector2D Curloc = MyPokemonMaxHPText->GetActorLocation();
+
+	Curloc += FVector2D::LEFT;
+
+	if (TargetLocation == Curloc)
+	{
+		MyPokemonMaxHPText->GetActorLocation() = TargetLocation;
+		return;
+	}
+
+	MyPokemonMaxHPText->SetActorLocation(Curloc);
+}
+
+
+
+
+
 
 void APokemonBattleMode::PlayerSetting()
 {
@@ -568,6 +660,9 @@ void APokemonBattleMode::SpawnMyPokemon()
 		PlayerPokemonTextSetting();
 		PlayerPokemonLevelTextSetting();
 		PlayerPokemonHPSetting();
+		PlayerPokemonHPTextSetting();
+		PlayerPokemonMaxHPTextSetting();
+		PlayerPokemonEXPSetting();
 	}
 
 }
@@ -593,6 +688,8 @@ void APokemonBattleMode::PokemonStatUpdate(float _DeltaTime)
 	MyPokemonStat->PrintTextUpdate(_DeltaTime);
 	MyPokemonLevelText->PrintTextUpdate(_DeltaTime);
 	EnemyPokemonLevelText->PrintTextUpdate(_DeltaTime);
+	MyPokemonMaxHPText->PrintTextUpdate(_DeltaTime);
+	MyPokemonHPText->PrintTextUpdate(_DeltaTime);
 
 	if (true == IsBattleNow)
 	{
@@ -919,4 +1016,15 @@ void APokemonBattleMode::EnemypokemonDead()
 
 		EnemyPokemon->SetActorLocation(Curloc);
 	}
+}
+
+
+
+void APokemonBattleMode::UpdateEXPBar()
+{
+	float CurrentEXP = static_cast<float>(MyPokemon->GetEXP());
+	float MaxEXP = static_cast<float>(MyPokemon->GetMaxEXP());
+	float EXPScale = UEngineMath::Clamp(CurrentEXP / MaxEXP, 0.0f, 1.0f);
+
+	MyPokemonEXP->GetRender()->SetComponentScale({ EXPScale * 230.0f, 9.0f });
 }

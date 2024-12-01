@@ -208,3 +208,9 @@ void AMyPokemon::MovePokemonForSkill()
         bIsSkillActive = true;  
     }
 }
+
+
+void AMyPokemon::AddEXP(int GainedEXP)
+{
+    CurrentEXP = UEngineMath::Clamp(CurrentEXP + GainedEXP, 0, MaxEXP);
+}

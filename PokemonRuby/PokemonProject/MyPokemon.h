@@ -59,7 +59,7 @@ public:
 	void SetSpecialDefense(int InSpecialDefense) { SpecialDefense = InSpecialDefense; }
 	void SetSpeed(int InSpeed) { Speed = InSpeed; }
 
-
+	void AddEXP(int GainedEXP);
 	void UseSkill(const std::string& skillName, class AWildPokemon* target);
 	void MovePokemonForSkill();
 
@@ -83,6 +83,14 @@ public:
 	{
 		return LevelString;
 	}
+	int GetEXP() 
+	{
+		return CurrentEXP; 
+	}
+	int GetMaxEXP()
+	{
+		return MaxEXP; 
+	}
 
 protected:
 
@@ -99,8 +107,8 @@ private:
     int SpecialAttack;             
     int SpecialDefense;            
     int Speed;                     
-
-	
+	int CurrentEXP;
+	int MaxEXP = 50;
 	std::string skill1, skill2, skill3, skill4;
 
 	class USpriteRenderer* MyPokemon;
