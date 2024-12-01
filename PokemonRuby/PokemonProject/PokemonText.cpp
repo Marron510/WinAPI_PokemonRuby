@@ -150,7 +150,7 @@ void APokemonText::SetText(std::string_view _Text, float _InterValue /*= 0.0f*/)
 
     PrintTexts.push_back(std::string(_Text));
 
-    int Value = static_cast<int>(_Text.size()) - Renders.size();
+    int Value = static_cast<int>(_Text.size()) - static_cast<int>(Renders.size());
     if (Value > 0)
     {
         int PrevSize = static_cast<int>(Renders.size());
