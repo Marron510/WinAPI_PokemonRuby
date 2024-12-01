@@ -3,6 +3,7 @@
 
 #include <EngineBase/TimeEvent.h>
 
+
 #include <EnginePlatform/EngineInput.h>
 #include <EngineCore/EngineAPICore.h>
 #include <EngineCore/Level.h>
@@ -112,6 +113,11 @@ void APokemonMapMode::BeginPlay()
 		Bag = GetWorld()->SpawnActor<ABag>();
 		Bag->SetActorLocationTile({ 87,54 });
 	}
+
+	{
+		BGMPlayer = UEngineSound::Play("005_MishiroTown.mp3");
+	}
+
 	// AFlower
 	{
 		AFlower* newflower1 = GetWorld()->SpawnActor<AFlower>();
@@ -894,6 +900,7 @@ void APokemonMapMode::BeginPlay()
 		});
 	TimeEventer.PushEvent(1.6f, [this]() 
 		{
+			BGMPlayer = UEngineSound::Play("SEDoorOpen.mp3");
 			Mother->GetRender()->SetActive(true);
 		});
 	TimeEventer.PushEvent(2.0f, [this]() {
@@ -935,11 +942,9 @@ void APokemonMapMode::Tick(float _DeltaTime)
 
 	if (UEngineInput::GetInst().IsDown('Z'))
 	{
+	
 		DisplayNextDialogue(); 
 	}
-
-	
-
 }
 
 
@@ -1018,11 +1023,13 @@ void APokemonMapMode::DisplayNextDialogue()
 
 	if (bIsChildDialogue && CurrentDialogue1Index < Dialogues1.size())
 	{
+		BGMPlayer = UEngineSound::Play("SEClick.mp3");
 		ChatText->SetText(Dialogues1[CurrentDialogue1Index], 0.1f);
 		CurrentDialogue1Index++;
 	}
 	else if (bIsChildDialogue && CurrentDialogue1Index >= Dialogues1.size())
 	{
+		BGMPlayer = UEngineSound::Play("SEClick.mp3");
 		Chat->SetActive(false);
 		ChatText->SetActive(false);
 		bChildDialogueCompleted = true;
@@ -1031,11 +1038,13 @@ void APokemonMapMode::DisplayNextDialogue()
 	}
 	else if (bIsProfessorDialogue && CurrentDialogue2Index < Dialogues2.size())
 	{
+		BGMPlayer = UEngineSound::Play("SEClick.mp3");
 		ChatText->SetText(Dialogues2[CurrentDialogue2Index], 0.1f); 
 		CurrentDialogue2Index++;
 	}
 	else if (bIsProfessorDialogue && CurrentDialogue2Index >= Dialogues2.size())
 	{
+		BGMPlayer = UEngineSound::Play("SEClick.mp3");
 		Chat->SetActive(false);
 		ChatText->SetActive(false);
 		bProfessorDialogueCompleted = true;
@@ -1045,11 +1054,13 @@ void APokemonMapMode::DisplayNextDialogue()
 	else if (!bIsChildDialogue && !bIsProfessorDialogue &&
 		CurrentDialogueIndex < Dialogues.size() && !bMotherDialogueCompleted)
 	{
+		BGMPlayer = UEngineSound::Play("SEClick.mp3");
 		ChatText->SetText(Dialogues[CurrentDialogueIndex], 0.1f);
 		CurrentDialogueIndex++;
 	}
 	else
 	{
+		BGMPlayer = UEngineSound::Play("SEClick.mp3");
 		Chat->SetActive(false);
 		ChatText->SetActive(false);
 		if (!bMotherDialogueCompleted && Mother != nullptr)
@@ -1152,6 +1163,7 @@ void APokemonMapMode::MoveToHouse()
 				Mother->GetRender()->SetActive(false);
 				bMotherDialogueCompleted = true;
 				Player->MoveToTile({ 85,68 });
+				BGMPlayer = UEngineSound::Play("SEMoveMap.mp3");
 			}
 		});
 	
@@ -1162,12 +1174,11 @@ void APokemonMapMode::ProfessorHelpEvent()
 {
 	TimeEventer.PushEvent(0.0f, [this]()
 		{
-			if (Professor->GetRender() != nullptr)
-			{
-				Professor->SetTargetLocation({ -1 * TileSize.Y, 0.0f });
-				Monster->SetTargetLocation({ -1 * TileSize.Y, 0.0f });
-			}
+			UEngineSound::AllSoundStop();
+			BGMPlayer = UEngineSound::Play("006_HelpMe!.mp3");
 		});
+
+	
 	TimeEventer.PushEvent(0.2f, [this]()
 		{
 			if (Professor->GetRender() != nullptr)
@@ -1217,6 +1228,7 @@ void APokemonMapMode::BagInteractionEvent()
 	{
 		if (UEngineInput::GetInst().IsDown('Z'))
 		{
+			BGMPlayer = UEngineSound::Play("SEClick.mp3");
 			Professor->SetActive(false);
 			Monster->SetActive(false);
 			UEngineAPICore::GetCore()->OpenLevel("PokemonSelect");

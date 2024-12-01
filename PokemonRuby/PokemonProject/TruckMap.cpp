@@ -10,12 +10,22 @@
 
 ATruckMap::ATruckMap()
 {
-	SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
-	SpriteRenderer->SetOrder(ERenderOrder::BACKGROUND);
-	SpriteRenderer->SetSprite("Truck.png");
+	{
+		SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
+		SpriteRenderer->SetOrder(ERenderOrder::BACKGROUND);
+		SpriteRenderer->SetSprite("Truck.png");
 
-	FVector2D MapScale = SpriteRenderer->SetSpriteScale(1.0f);
-	SpriteRenderer->SetComponentLocation(MapScale.Half());
+		FVector2D MapScale = SpriteRenderer->SetSpriteScale(1.0f);
+		SpriteRenderer->SetComponentLocation(MapScale.Half());
+	}
+	{
+		SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
+		SpriteRenderer->SetOrder(ERenderOrder::BACKGROUND);
+		SpriteRenderer->SetSprite("TruckNotOpen.png");
+
+		FVector2D MapScale = SpriteRenderer->SetSpriteScale(1.0f);
+		SpriteRenderer->SetComponentLocation(MapScale.Half());
+	}
 }
 
 ATruckMap::~ATruckMap()

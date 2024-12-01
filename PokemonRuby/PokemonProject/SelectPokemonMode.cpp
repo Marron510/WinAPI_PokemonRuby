@@ -192,6 +192,8 @@ void ASelectPokemonMode::SelectPokemon()
 		GameData::SelectedPokemon = AMyPokemon::EMyPokemon::TREECKO;
 		TimeEventer.PushEvent(0.5f, [this]()
 			{
+				UEngineSound::AllSoundStop();
+				BGMPlayer = UEngineSound::Play("007_ Battle!.mp3");
 				Fade->FadeIn();
 			});
 
@@ -204,6 +206,8 @@ void ASelectPokemonMode::SelectPokemon()
 		GameData::SelectedPokemon = AMyPokemon::EMyPokemon::TORCHIC;
 		TimeEventer.PushEvent(0.5f, [this]()
 			{
+				UEngineSound::AllSoundStop();
+				BGMPlayer = UEngineSound::Play("007_ Battle!.mp3");
 				Fade->FadeIn();
 			});
 
@@ -216,6 +220,8 @@ void ASelectPokemonMode::SelectPokemon()
 		GameData::SelectedPokemon = AMyPokemon::EMyPokemon::MUDKIP;
 		TimeEventer.PushEvent(0.5f, [this]()
 			{
+				UEngineSound::AllSoundStop();
+				BGMPlayer = UEngineSound::Play("007_ Battle!.mp3");
 				Fade->FadeIn();
 			});
 

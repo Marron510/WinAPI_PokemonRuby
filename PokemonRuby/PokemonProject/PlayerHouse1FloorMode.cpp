@@ -17,7 +17,7 @@
 #include "PokemonText.h"
  
 FIntPoint APlayerHouse1FloorMode::APlayerHouse1FloorModeChangePos;
-APlayer::EPlayerDir APlayerHouse1FloorMode::APlayerHouse1FloorModePlayerDir;
+APlayer::EPlayerDir APlayerHouse1FloorMode::APlayerHouse1FloorModePlayerDir = APlayer::EPlayerDir::DOWN_Left_Arm;
 
 APlayerHouse1FloorMode::APlayerHouse1FloorMode()
 {
@@ -80,6 +80,7 @@ void APlayerHouse1FloorMode::Tick(float _DeltaTime)
 
 	if (UEngineInput::GetInst().IsDown('Z'))
 	{
+		BGMPlayer = UEngineSound::Play("SEClick.mp3");
 		DisplayNextDialogue(); 
 	}
 
@@ -104,13 +105,17 @@ void APlayerHouse1FloorMode::LevelChange()
 	if (MainPlayerLocation == TargetPos1.ToFVector() || MainPlayerLocation == TargetPos2.ToFVector())
 	{
 		UEngineAPICore::GetCore()->OpenLevel("PokemonMap");
+		APokemonMapMode::PokemonMapModePlayerDir = APlayer::EPlayerDir::DOWN_Left_Arm;
 		APokemonMapMode::PokemonMapModeChangePos = { 85 , 69 };
+		BGMPlayer = UEngineSound::Play("SEMoveMap.mp3");
 		Fade->FadeOut();
 	}
 	if (MainPlayerLocation == TargetPos3.ToFVector())
 	{
 		UEngineAPICore::GetCore()->OpenLevel("PlayerHouse1");
 		APlayerHouse1Mode::PlayerHouse1MapModeChangePos = { 8 , 2 };
+		APokemonMapMode::PokemonMapModePlayerDir = APlayer::EPlayerDir::DOWN_Left_Arm;
+		BGMPlayer = UEngineSound::Play("SEMoveMap.mp3");
 		Fade->FadeOut();
 	}
 
@@ -125,6 +130,11 @@ void APlayerHouse1FloorMode::LevelChangeStart()
 	FTileVector StartPos = { APlayerHouse1FloorModeChangePos.X, APlayerHouse1FloorModeChangePos.Y };
 
 	Actor->SetActorLocation(StartPos.ToFVector());
+	
+	if (Player != nullptr)
+	{
+		Player->SetDirection(APlayerHouse1FloorModePlayerDir);
+	}
 
 }
 

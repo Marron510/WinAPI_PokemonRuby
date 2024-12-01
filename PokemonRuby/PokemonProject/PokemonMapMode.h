@@ -1,7 +1,7 @@
 #pragma once
 #include <EngineCore/GameMode.h>
+#include <EnginePlatform/EngineSound.h>
 #include "Player.h"
-
 
 class APokemonMapMode : public AGameMode
 {
@@ -36,7 +36,6 @@ public:
 	void ProfessorHelpEvent();
 	void BagInteractionEvent();
 
-
 protected:
 
 private:
@@ -54,6 +53,7 @@ private:
 	bool bIsChildDialogue = false;
 
 	UTimeEvent TimeEventManager;
+	class USoundPlayer BGMPlayer;
 
 	FVector2D TileSize = FVector2D(96, 96);
 
@@ -66,7 +66,7 @@ private:
 	"Mom: Well, this is LITTLEROOT TOWN!",
 	"Mom: How do you like it?" + enter + "This is our new home!",
 	"Mom: It has a quaint feel,but it seems" + enter + "to be an easy place to live!",
-	"Mom: And,you get your own room , LADON!" + enter + "Let's go inside."
+	"Mom: And,you get your own room , BRENDAN!" + enter + "Let's go inside."
 	};
 
 	std::vector<std::string> Dialogues1 =

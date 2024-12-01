@@ -42,12 +42,18 @@ void ATruckMode::BeginPlay()
 	Player->DisableMovement();
 
 	TimeEventer.PushEvent(0.5f, [this]() {
-		MoveMapHorizontally(3.0f, 10); 
+		MoveMapHorizontally(10.0f, 30); 
 		});
-	TimeEventer.PushEvent(4.5f, [this]() {
+	TimeEventer.PushEvent(11.0f, [this]() {
+		UEngineInput::GetInst().EnableInput();
 		Player->EnableMovement();
 		});
-	
+	TimeEventer.PushEvent(12.0f, [this]() {
+		BGMPlayer = UEngineSound::Play("SEOpenTruck.mp3");
+		Map->SetSprite("Truck.png");
+		});
+
+	BGMPlayer = UEngineSound::Play("004_Truck.mp3");
 }
 
 void ATruckMode::Tick(float _DeltaTime)
@@ -71,7 +77,12 @@ void ATruckMode::LevelChange()
 		UEngineAPICore::GetCore()->OpenLevel("PokemonMap");
 		APokemonMapMode::PokemonMapModeChangePos = { 84 , 70 };
 		APokemonMapMode::PokemonMapModePlayerDir = APlayer::EPlayerDir::RIGHT_Left_Arm;
+		BGMPlayer = UEngineSound::Play("SEMoveMap.mp3");
+		TimeEventer.PushEvent(1.2f, [this]() {
+			BGMPlayer.Stop();
+			}); 
 		Fade->FadeOut();
+
 		Player->SetDirection(APlayer::EPlayerDir::RIGHT_Left_Arm);
 	}
 	if (MainPlayerLocation == TargetPos2.ToFVector())
@@ -79,6 +90,10 @@ void ATruckMode::LevelChange()
 		UEngineAPICore::GetCore()->OpenLevel("PokemonMap");
 		APokemonMapMode::PokemonMapModeChangePos = { 84 , 70 };
 		APokemonMapMode::PokemonMapModePlayerDir = APlayer::EPlayerDir::RIGHT_Left_Arm;
+		BGMPlayer = UEngineSound::Play("SEMoveMap.mp3");
+		TimeEventer.PushEvent(1.2f, [this]() {
+			BGMPlayer.Stop();
+			});
 		Fade->FadeOut();
 	}
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include <EngineCore/GameMode.h>
+#include <EnginePlatform/EngineSound.h>
 #include "MyPokemon.h"
 
 namespace GameData 
@@ -53,6 +54,8 @@ private:
 	class AMyPokemon* MyPokemon = nullptr;
 
 	class AFade* Fade = nullptr;
+
+	class USoundPlayer BGMPlayer;
 
 	int CurrentIndex = 0;
 	

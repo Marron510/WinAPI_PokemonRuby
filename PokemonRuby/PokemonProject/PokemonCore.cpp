@@ -251,7 +251,7 @@ void PokemonCore::BeginPlay()
 
 
 	
-		UEngineAPICore::GetCore()->OpenLevel("Title");
+		UEngineAPICore::GetCore()->OpenLevel("Truck");
 	
 }
 

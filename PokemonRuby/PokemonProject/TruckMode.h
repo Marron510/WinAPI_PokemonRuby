@@ -1,6 +1,6 @@
 #pragma once
 #include <EngineCore/GameMode.h>
-
+#include <EnginePlatform/EngineSound.h>
 
 class ATruckMode : public AGameMode
 {
@@ -29,7 +29,7 @@ private:
 	class APlayer* Player = nullptr;
 	class AFade* Fade = nullptr;
 	UTimeEvent TimeEventManager;
-
+	class USoundPlayer BGMPlayer;
 
 };
 

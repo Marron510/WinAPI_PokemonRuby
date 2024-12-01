@@ -1,5 +1,6 @@
 #pragma once
 #include <EngineCore/GameMode.h>
+#include <EnginePlatform/EngineSound.h>
 #include "Player.h"
 
 class APlayerHouse1FloorMode : public AGameMode
@@ -31,12 +32,15 @@ public:
 
 	void DisplayNextDialogue();
 	void RenderChatAbovePlayer();
+
 protected:
 
 private:
 	class APlayer* Player = nullptr;
 	class AFade* Fade = nullptr;
 	class AMother* Mother = nullptr;
+
+	class USoundPlayer BGMPlayer;
 
 	FVector2D TileSize = FVector2D(96, 96);
 
@@ -47,7 +51,8 @@ private:
 	"Mom: See, BRENDAN?" + enter + "Isn't it nice in here, too?",
 	"Mom: The mover's POKEMON do all the work!",
 	"Mom: This is so convenient!",
-	"Mom: BRENDAN, your room is upstairs." + enter + "Go check it out, dear!"
+	"Mom: It seems like there's a" + enter + "strange noise coming from outside.",
+	"Mom: Go check it out, dear!",
 	};
 
 
