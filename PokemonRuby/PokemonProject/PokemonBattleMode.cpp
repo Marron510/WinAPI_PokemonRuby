@@ -284,7 +284,7 @@ void APokemonBattleMode::Tick(float _DeltaTime)
 
 	UpdateEXPBar(_DeltaTime);
 
-	TimeEventManager.PushEvent(4.0f, [this]()
+	TimeEventManager.PushEvent(5.0f, [this]()
 		{
 			EnemyPokemonUISetting();
 			EnemyPokemonTextSetting();
