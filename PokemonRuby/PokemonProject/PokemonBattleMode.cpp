@@ -264,13 +264,14 @@ void APokemonBattleMode::Tick(float _DeltaTime)
 			EnemyPokemonHpSetting();
 		});
 
-	if (true == IsEnemyPokemonDead && false == IsEnemyPokemonDeadEventEnd)
+	if (true == IsEnemyPokemonDead)
 	{
 		TimeEventManager.PushEvent(1.0f, [this]()
 			{
 				EnemyPokemon->GetRender()->SetOrder(ERenderOrder::POKEMONSHADOW);
 				EnemypokemonDead();
 			});
+		
 		TimeEventManager.PushEvent(1.8f, [this]()
 			{
 				EnemyPokemon->GetRender()->SetActive(false);
@@ -281,6 +282,10 @@ void APokemonBattleMode::Tick(float _DeltaTime)
 	{
 		IsEnemyPokemonDeadEventEnd = true;
 
+		TimeEventManager.PushEvent(1.5f, [this]()
+			{
+				BGMPlayer = UEngineSound::Play("SEFainted.mp3");
+			});
 		TimeEventManager.PushEvent(2.5f, [this]()
 			{
 				ChatText->ClearText();
@@ -302,6 +307,7 @@ void APokemonBattleMode::Tick(float _DeltaTime)
 				BGMPlayer = UEngineSound::Play("009_ ProfessorBirchsLab.mp3");
 				UEngineAPICore::GetCore()->OpenLevel("LaborProfessorBirch");
 			});
+		
 	}
 }
 
@@ -1002,7 +1008,6 @@ void APokemonBattleMode::EnemyDeadCheck()
 void APokemonBattleMode::EnemypokemonDead()
 {
 	{
-		
 		FVector2D TargetLocation = FVector2D({ 862.0f , 550.0f });
 		FVector2D Curloc = EnemyPokemon->GetActorLocation();
 		Curloc += FVector2D::DOWN.Half();
