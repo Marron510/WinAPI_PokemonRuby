@@ -86,6 +86,8 @@ public:
 	class APokemonText* GetMyPokemonSkill2() { return MyPokemonSkill2; }
 	class APokemonText* GetMyPokemonSkill3() { return MyPokemonSkill3; }
 	class APokemonText* GetMyPokemonSkill4() { return MyPokemonSkill4; }
+	class APokemonText* GetMyPokemonSkill1PP() { return MyPokemonSkill1PP; }
+	class APokemonText* GetMyPokemonSkill2PP() { return MyPokemonSkill2PP; }
 	class APokemonText* GetEnemyPokemonStat() { return EnemyPokemonStat; }
 
 	void PokemonBattleLogic1();
@@ -174,6 +176,9 @@ private:
 	class APokemonText* MyPokemonSkill2 = nullptr;
 	class APokemonText* MyPokemonSkill3 = nullptr;
 	class APokemonText* MyPokemonSkill4 = nullptr;
+	class APokemonText* MyPokemonSkill1PP = nullptr;
+	class APokemonText* MyPokemonSkill2PP = nullptr;
+	class APokemonText* MyPokemonSkillType = nullptr;
 
 
 

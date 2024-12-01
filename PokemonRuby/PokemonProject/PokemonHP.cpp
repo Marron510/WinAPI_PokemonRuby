@@ -29,3 +29,14 @@ void APokemonHP::Tick(float _DeltaTime)
     Super::Tick(_DeltaTime);
 
 }
+
+void APokemonHP::HpHalf()
+{
+    PokemonHpBar->SetSprite("EnemyHpBarYellow.png");
+}
+
+void APokemonHP::HpLow()
+{
+    PokemonHpBar->SetSprite("EnemyHpBarRed.png");
+}
+

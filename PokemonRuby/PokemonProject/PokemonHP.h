@@ -23,6 +23,9 @@ public:
 		return PokemonHpBar;
 	}
 
+	void HpHalf();
+	void HpLow();
+
 protected:
 
 private:

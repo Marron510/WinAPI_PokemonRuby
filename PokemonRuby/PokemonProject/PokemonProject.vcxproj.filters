@@ -129,9 +129,6 @@
     <ClInclude Include="WildPokemon.h">
       <Filter>PokemonObject\3.Pokemon\Pokemons</Filter>
     </ClInclude>
-    <ClInclude Include="TileMapMode.h">
-      <Filter>PokemonObject\2.PokemonGameMode</Filter>
-    </ClInclude>
     <ClInclude Include="PokemonMath.h">
       <Filter>Global</Filter>
     </ClInclude>
@@ -204,6 +201,9 @@
     <ClInclude Include="PokemonStat.h">
       <Filter>PokemonObject\3.Pokemon\PokemonStats</Filter>
     </ClInclude>
+    <ClInclude Include="TileMapMode.h">
+      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PokemonCore.cpp">
@@ -265,9 +265,6 @@
     </ClCompile>
     <ClCompile Include="WildPokemon.cpp">
       <Filter>PokemonObject\3.Pokemon\Pokemons</Filter>
-    </ClCompile>
-    <ClCompile Include="TileMapMode.cpp">
-      <Filter>PokemonObject\2.PokemonGameMode</Filter>
     </ClCompile>
     <ClCompile Include="PokemonMath.cpp">
       <Filter>Global</Filter>
@@ -340,6 +337,9 @@
     </ClCompile>
     <ClCompile Include="PokemonStat.cpp">
       <Filter>PokemonObject\3.Pokemon\PokemonStats</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMapMode.cpp">
+      <Filter>PokemonObject\2.PokemonGameMode\01_InGameMode</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

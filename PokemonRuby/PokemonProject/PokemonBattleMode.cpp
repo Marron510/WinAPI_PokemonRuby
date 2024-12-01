@@ -216,6 +216,34 @@ void APokemonBattleMode::BeginPlay()
 	}
 
 	{
+		MyPokemonSkill1PP = GetWorld()->SpawnActor<APokemonText>();
+		MyPokemonSkill1PP->SetTextSpriteName("TextBlack.png");
+		MyPokemonSkill1PP->SetTextScale({ 30, 36 });
+		
+		MyPokemonSkill1PP->SetActorLocation({ 920.0f , 640.0f });
+		MyPokemonSkill1PP->SetOrder(ERenderOrder::FONT);
+	}
+
+	{
+		MyPokemonSkill2PP = GetWorld()->SpawnActor<APokemonText>();
+		MyPokemonSkill2PP->SetTextSpriteName("TextBlack.png");
+		MyPokemonSkill2PP->SetTextScale({ 30, 36 });
+		MyPokemonSkill2PP->SetActorLocation({ 920.0f , 640.0f });
+		MyPokemonSkill2PP->SetOrder(ERenderOrder::FONT);
+	}
+
+	{
+		MyPokemonSkillType = GetWorld()->SpawnActor<APokemonText>();
+		MyPokemonSkillType->SetTextSpriteName("TextBlack.png");
+		MyPokemonSkillType->SetTextScale({ 30, 36 });
+		MyPokemonSkillType->SetText("NORMAL");
+		MyPokemonSkillType->SetActorLocation({ 920.0f , 720.0f });
+		MyPokemonSkillType->SetOrder(ERenderOrder::FONT);
+	}
+
+
+
+	{
 		MyPokemonHPbar = GetWorld()->SpawnActor<APokemonHP>();
 		MyPokemonHPbar->SetActorLocation({ 1582.0f, 460.0f });
 	}
@@ -318,6 +346,11 @@ void APokemonBattleMode::PokemonSetting()
 {
 	std::string Hp = std::to_string(MyPokemon->GetHP());
 	MyPokemonHPText->SetText(Hp);
+	std::string PP1 = "PP " + std::to_string(MyPokemon->GetPP(0)) + " " + std::to_string(MyPokemon->GetMaxPP(0));
+	MyPokemonSkill1PP->SetText(PP1);
+	std::string PP2 = "PP " + std::to_string(MyPokemon->GetPP(1)) + " " + std::to_string(MyPokemon->GetMaxPP(1));
+	MyPokemonSkill2PP->SetText(PP2);
+
 
 	if (bEnemyPokemonPositioned)
 	{
@@ -705,6 +738,9 @@ void APokemonBattleMode::PokemonStatUpdate(float _DeltaTime)
 		MyPokemonSkill2->PrintTextUpdate(_DeltaTime);
 		MyPokemonSkill3->PrintTextUpdate(_DeltaTime);
 		MyPokemonSkill4->PrintTextUpdate(_DeltaTime);
+		MyPokemonSkill1PP->PrintTextUpdate(_DeltaTime);
+		MyPokemonSkill2PP->PrintTextUpdate(_DeltaTime);
+		MyPokemonSkillType->PrintTextUpdate(_DeltaTime);
 		BattleChatText->PrintTextUpdate(_DeltaTime);
 	}
 	
@@ -735,7 +771,8 @@ void APokemonBattleMode::HandleMenuSelection(FVector2D CursorLocation)
 			break;
 		}
 	}
-
+	
+	
 	if (MenuIndex != -1)
 	{
 		switch (MenuIndex)
@@ -756,6 +793,9 @@ void APokemonBattleMode::HandleMenuSelection(FVector2D CursorLocation)
 				MyPokemonSkill2->SetActive(true);
 				MyPokemonSkill3->SetActive(true);
 				MyPokemonSkill4->SetActive(true);
+				MyPokemonSkill1PP->SetActive(true);
+				MyPokemonSkill2PP->SetActive(true);
+				MyPokemonSkillType->SetActive(true);
 				SkillTextOn();
 			}
 
@@ -787,7 +827,7 @@ void APokemonBattleMode::HandleSkillSelection(FVector2D CursorLocation)
 	int SkillIndex = -1;
 	BattleText->SetOrder(ERenderOrder::BackUI3);
 	ChatText->SetOrder(ERenderOrder::FONT);
-	
+
 	for (int i = 0; i < 4; i++)
 	{
 		if (Cursor->GetBattleCursorPosition(i) == CursorLocation)
@@ -811,7 +851,6 @@ void APokemonBattleMode::HandleSkillSelection(FVector2D CursorLocation)
 			{
 				PokemonBattleLogic1();
 			}
-			
 			break;
 		case 1:
 			SkillTextOff();
@@ -844,17 +883,16 @@ void APokemonBattleMode::HandleSkillSelection(FVector2D CursorLocation)
 			}
 			else
 			{
-				MyPokemon->UseSkill(MyPokemon->GetSkill3(), EnemyPokemon);
+				MyPokemon->UseSkill(MyPokemon->GetSkill4(), EnemyPokemon);
 			}
 			break;
 
 		default:
 			break;
 		}
-
-		
 	}
 }
+
 
 
 
@@ -864,6 +902,9 @@ void APokemonBattleMode::SkillTextOff()
 	MyPokemonSkill2->SetOrder(ERenderOrder::WATER);
 	MyPokemonSkill3->SetOrder(ERenderOrder::WATER);
 	MyPokemonSkill4->SetOrder(ERenderOrder::WATER);
+	MyPokemonSkill1PP->SetOrder(ERenderOrder::WATER);
+	MyPokemonSkill2PP->SetOrder(ERenderOrder::WATER);
+	MyPokemonSkillType->SetOrder(ERenderOrder::WATER);
 	CursorRender->SetOrder(ERenderOrder::WATER);
 }
 
@@ -874,6 +915,8 @@ void APokemonBattleMode::SkillTextOn()
 	MyPokemonSkill2->SetOrder(ERenderOrder::FONT);
 	MyPokemonSkill3->SetOrder(ERenderOrder::FONT);
 	MyPokemonSkill4->SetOrder(ERenderOrder::FONT);
+	MyPokemonSkill1PP->SetOrder(ERenderOrder::FONT);
+	MyPokemonSkillType->SetOrder(ERenderOrder::FONT);
 	CursorRender->SetOrder(ERenderOrder::FONT);
 }
 
@@ -940,7 +983,7 @@ void APokemonBattleMode::PokemonBattleLogic2()
 		});
 	TimeEventManager.PushEvent(3.0f, [this]()
 		{
-			EnemySkill1ChatText();
+			EnemyDeadCheck();
 		});
 	
 }
@@ -974,12 +1017,12 @@ void APokemonBattleMode::HPCheck(float _DeltaTime)
 	FVector2D TargetMyHPBarScale(TargetMyPokemonHPScaleX, 14.0f);
 	FVector2D TargetEnemyHPBarScale(TargetEnemyPokemonHPScaleX, 16.0f);
 
-	float AnimationSpeed = 300.0f; 
+	float AnimationSpeed = 300.0f;
 
 	if (MyCurrentHPBarScale.X > TargetMyHPBarScale.X)
 	{
 		MyCurrentHPBarScale.X -= AnimationSpeed * _DeltaTime;
-		if (MyCurrentHPBarScale.X < TargetMyHPBarScale.X) 
+		if (MyCurrentHPBarScale.X < TargetMyHPBarScale.X)
 		{
 			MyCurrentHPBarScale.X = TargetMyHPBarScale.X;
 		}
@@ -1013,7 +1056,36 @@ void APokemonBattleMode::HPCheck(float _DeltaTime)
 	}
 
 	EnemyPokemonHPbar->GetRender()->SetComponentScale(EnemyCurrentHPBarScale);
+
+	float MyPokemonHPRatio = static_cast<float>(MyPokemon->GetHP()) / MyPokemon->GetMaxHP();
+	if (MyPokemonHPRatio <= 0.2f)
+	{
+		MyPokemonHPbar->GetRender()->SetSprite("EnemyHpBarRed.png");
+	}
+	else if (MyPokemonHPRatio <= 0.5f)
+	{
+		MyPokemonHPbar->GetRender()->SetSprite("EnemyHpBarYellow.png");
+	}
+	else
+	{
+		MyPokemonHPbar->GetRender()->SetSprite("EnemyHpBar.png");
+	}
+
+	float EnemyPokemonHPRatio = static_cast<float>(EnemyPokemon->GetHP()) / EnemyPokemon->GetMaxHP();
+	if (EnemyPokemonHPRatio <= 0.2f)
+	{
+		EnemyPokemonHPbar->GetRender()->SetSprite("EnemyHpBarRed.png");
+	}
+	else if (EnemyPokemonHPRatio <= 0.5f)
+	{
+		EnemyPokemonHPbar->GetRender()->SetSprite("EnemyHpBarYellow.png");
+	}
+	else
+	{
+		EnemyPokemonHPbar->GetRender()->SetSprite("EnemyHpBar.png");
+	}
 }
+
 
 
 

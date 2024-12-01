@@ -43,10 +43,12 @@ void ACursor::Tick(float _DeltaTime)
 {
     Super::Tick(_DeltaTime);
 
+    // 현재 상태에 따라 커서 위치 배열 가져오기
     FVector2D* CurrentPositions = GetCursorPositionsForState(CurrentState);
     FVector2D CurrentLocation = CursorRender->GetComponentLocation();
     FVector2D NewLocation = CurrentLocation;
 
+    // 입력 처리
     FVector2D Offset(0, 0);
 
     if (UEngineInput::GetInst().IsDown('W'))
@@ -66,7 +68,8 @@ void ACursor::Tick(float _DeltaTime)
         Offset.X = 1;
     }
 
-    if (0 != Offset.X || 0 != Offset.Y)
+    // 커서 이동 로직
+    if (Offset.X != 0 || Offset.Y != 0)
     {
         int CurrentIndex = -1;
 
@@ -115,44 +118,19 @@ void ACursor::Tick(float _DeltaTime)
             CursorRender->SetComponentLocation(NewLocation);
         }
     }
-   
-    
+
+    // 상태에 따른 처리
     if (CurrentState == ECursorState::Menu)
     {
-        if (UEngineInput::GetInst().IsDown('Z') && true == IsFirstMenuZPressIgnored)
-          {
-            IsFirstMenuZPressIgnored = false;
-              return;
-          }
-
-        if (UEngineInput::GetInst().IsDown('Z') && false == IsFirstMenuZPressIgnored)
-        {
-            if (BattleModeInstance != nullptr)
-            {
-                BGMPlayer = UEngineSound::Play("SEClick.mp3");
-                BattleModeInstance->HandleMenuSelection(CursorRender->GetComponentLocation());
-            }
-        }
+        HandleMenuInput();
     }
+    else if (CurrentState == ECursorState::Battle)
+    {
+        HandleBattleInput();
 
-
-   if (CurrentState == ECursorState::Battle)
-   {
-     if (UEngineInput::GetInst().IsPress('Z') && true == IsFirstBattleZPressIgnored)
-       {
-         IsFirstBattleZPressIgnored = false;
-           return; 
-       }
-
-       if (UEngineInput::GetInst().IsDown('Z') && false == IsFirstBattleZPressIgnored)
-       {
-           if (BattleModeInstance != nullptr)
-           {
-               BGMPlayer = UEngineSound::Play("SEClick.mp3");
-               BattleModeInstance->HandleSkillSelection(CursorRender->GetComponentLocation());
-           }
-       }
-   }
+        // 커서 위치에 따른 PP 텍스트 렌더링
+        UpdatePPTextRendering(CurrentLocation);
+    }
 }
 
 
@@ -185,6 +163,7 @@ void ACursor::SetState(ECursorState NewState)
     case ECursorState::Menu:
         break;
     case ECursorState::Battle:
+        bPPTextEnabled = true; 
         IsFirstBattleZPressIgnored = true;
         break;
     default:
@@ -201,4 +180,73 @@ void ACursor::SetBattleModeInstance(class APokemonBattleMode* BattleMode)
     BattleModeInstance = BattleMode;  
 }
 
+void ACursor::HandleMenuInput()
+{
+    if (UEngineInput::GetInst().IsDown('Z') && IsFirstMenuZPressIgnored)
+    {
+        IsFirstMenuZPressIgnored = false;
+        return;
+    }
 
+    if (UEngineInput::GetInst().IsDown('Z') && !IsFirstMenuZPressIgnored)
+    {
+        if (BattleModeInstance != nullptr)
+        {
+            BGMPlayer = UEngineSound::Play("SEClick.mp3");
+            BattleModeInstance->HandleMenuSelection(CursorRender->GetComponentLocation());
+        }
+    }
+}
+
+void ACursor::HandleBattleInput()
+{
+    if (UEngineInput::GetInst().IsPress('Z') && IsFirstBattleZPressIgnored)
+    {
+        IsFirstBattleZPressIgnored = false;
+        return;
+    }
+
+    if (UEngineInput::GetInst().IsDown('Z') && !IsFirstBattleZPressIgnored)
+    {
+        if (BattleModeInstance != nullptr)
+        {
+            BGMPlayer = UEngineSound::Play("SEClick.mp3");
+
+            BattleModeInstance->SkillTextOff();
+
+            bPPTextEnabled = false; 
+
+            BattleModeInstance->GetMyPokemonSkill1PP()->SetOrder(ERenderOrder::WATER);
+            BattleModeInstance->GetMyPokemonSkill2PP()->SetOrder(ERenderOrder::WATER);
+
+            BattleModeInstance->HandleSkillSelection(CursorRender->GetComponentLocation());
+        }
+    }
+}
+
+
+void ACursor::UpdatePPTextRendering(const FVector2D& CursorLocation)
+{
+    if (!bPPTextEnabled)
+    {
+        BattleModeInstance->GetMyPokemonSkill1PP()->SetOrder(ERenderOrder::WATER);
+        BattleModeInstance->GetMyPokemonSkill2PP()->SetOrder(ERenderOrder::WATER);
+        return;
+    }
+
+    if (CursorLocation == BattleCursorPositions[0])
+    {
+        BattleModeInstance->GetMyPokemonSkill1PP()->SetOrder(ERenderOrder::FONT);
+        BattleModeInstance->GetMyPokemonSkill2PP()->SetOrder(ERenderOrder::WATER);
+    }
+    else if (CursorLocation == BattleCursorPositions[1])
+    {
+        BattleModeInstance->GetMyPokemonSkill1PP()->SetOrder(ERenderOrder::WATER);
+        BattleModeInstance->GetMyPokemonSkill2PP()->SetOrder(ERenderOrder::FONT);
+    }
+    else
+    {
+        BattleModeInstance->GetMyPokemonSkill1PP()->SetOrder(ERenderOrder::WATER);
+        BattleModeInstance->GetMyPokemonSkill2PP()->SetOrder(ERenderOrder::WATER);
+    }
+}

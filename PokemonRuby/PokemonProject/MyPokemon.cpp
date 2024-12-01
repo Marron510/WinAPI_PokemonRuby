@@ -74,7 +74,11 @@ void AMyPokemon::SetPokemon(EMyPokemon PokemonType)
         skill2 = "LEER";
         skill3 = "-";
         skill4 = "-";
+
+        PP = { 35, 30, 0, 0 };    
+        MaxPP = { 35, 30, 0, 0 }; 
         break;
+
     case EMyPokemon::TORCHIC:
         MyPokemon->SetSprite("Torchic.png");
         Name = "TORCHIC";
@@ -82,7 +86,11 @@ void AMyPokemon::SetPokemon(EMyPokemon PokemonType)
         skill2 = "LEER";
         skill3 = "-";
         skill4 = "-";
+
+        PP = { 35, 30, 0, 0 };
+        MaxPP = { 35, 30, 0, 0 };
         break;
+
     case EMyPokemon::MUDKIP:
         MyPokemon->SetSprite("Mudkip.png");
         Name = "MUDKIP";
@@ -90,13 +98,18 @@ void AMyPokemon::SetPokemon(EMyPokemon PokemonType)
         skill2 = "LEER";
         skill3 = "-";
         skill4 = "-";
+
+        PP = { 35, 30, 0, 0 };
+        MaxPP = { 35, 30, 0, 0 };
         break;
+
     default:
         break;
     }
 
     InitializePokemonAttributes(PokemonType);
 }
+
 
 void AMyPokemon::InitializePokemonAttributes(EMyPokemon PokemonType)
 {
@@ -139,6 +152,20 @@ void AMyPokemon::InitializePokemonAttributes(EMyPokemon PokemonType)
 
 void AMyPokemon::UseSkill(const std::string& skillName, AWildPokemon* target)
 {
+    int skillIndex = -1;
+
+    if (skillName == skill1)
+        skillIndex = 0;
+    else if (skillName == skill2)
+        skillIndex = 1;
+    else if (skillName == skill3)
+        skillIndex = 2;
+    else if (skillName == skill4)
+        skillIndex = 3;
+
+
+    PP[skillIndex]--;
+
     if (skillName == "POUND" || skillName == "SCRATCH" || skillName == "TACKLE")
     {
         MovePokemonForSkill();
@@ -171,27 +198,7 @@ void AMyPokemon::UseSkill(const std::string& skillName, AWildPokemon* target)
         SkillHandler->Leer(targetDefense);
         target->SetDefense(targetDefense);
     }
-    else if (skillName == "GROWL")
-    {
-        int TargetAttack = target->GetAttack();
-        SkillHandler->Growl(TargetAttack);
-        target->SetAttack(TargetAttack);
-    }
-    else if (skillName == "Howl")
-    {
-        SkillHandler->Howl(Attack);
-    }
-    else if (skillName == "StringShot")
-    {
-        int targetSpeed = target->GetSpeed();
-        SkillHandler->StringShot(targetSpeed);
-        target->SetSpeed(targetSpeed);
-    }
     else if (skillName == "-")
-    {
-        return;
-    }
-    else
     {
         return;
     }

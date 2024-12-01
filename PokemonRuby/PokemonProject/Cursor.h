@@ -63,6 +63,9 @@ public:
 	FVector2D* GetCursorPositionsForState(ECursorState State);
 	void SetState(ECursorState NewState);
 	void SetBattleModeInstance(class APokemonBattleMode* BattleMode);
+	void UpdatePPTextRendering(const FVector2D& CursorLocation);
+	void HandleMenuInput();
+	void HandleBattleInput();
 
 	USpriteRenderer* GetCursorRender()
 	{
@@ -102,13 +105,15 @@ public:
 protected:
 
 private:
+	ECursorState CurrentState = ECursorState::Menu;
 	const float CursorPosMax = 1000.0f;
 	class USpriteRenderer* CursorRender = nullptr;
-	ECursorState CurrentState = ECursorState::Menu;
 	class AMyPokemon* Mypokemon = nullptr;
 	class APokemonBattleMode* BattleModeInstance = nullptr;
+	
 	bool IsFirstMenuZPressIgnored = true;
 	bool IsFirstBattleZPressIgnored = true;
+	bool bPPTextEnabled = true;
 
 	class APokemonText* ChatText = nullptr;
 	class USoundPlayer BGMPlayer;

@@ -91,6 +91,14 @@ public:
 	{
 		return MaxEXP; 
 	}
+	int GetPP(int skillIndex) 
+	{
+		return PP[skillIndex]; 
+	}
+	int GetMaxPP(int skillIndex)
+	{
+		return MaxPP[skillIndex]; 
+	}
 
 protected:
 
@@ -110,7 +118,8 @@ private:
 	int CurrentEXP;
 	int MaxEXP = 50;
 	std::string skill1, skill2, skill3, skill4;
-
+	std::vector<int> PP;     
+	std::vector<int> MaxPP;  
 	class USpriteRenderer* MyPokemon;
 
 	class PokemonSkill* SkillHandler;
