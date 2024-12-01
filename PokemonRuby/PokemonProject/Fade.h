@@ -17,13 +17,11 @@ public:
 	AFade& operator=(const AFade& _Other) = delete;
 	AFade& operator=(AFade&& _Other) noexcept = delete;
 
-	// 0 => 1
 	void FadeIn();
-
-	// 1 => 0
 	void FadeOut();
 	void FadeOutRightNow();
 	void BattleFadeIn();
+
 protected:
 
 private:

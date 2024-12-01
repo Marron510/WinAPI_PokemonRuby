@@ -87,7 +87,6 @@ bool U2DCollision::Collision(int _OtherCollisionGroup, std::vector<AActor*>& _Re
 
 		bool Result = FTransform::Collision(ThisType, ThisTrans, DestType, DestTrans);
 
-		// 충돌 true
 		if (true == Result)
 		{
 			_Result.push_back(DestCollision->GetActor());
@@ -105,7 +104,6 @@ bool U2DCollision::Collision(int _OtherCollisionGroup, std::vector<AActor*>& _Re
 
 
 
-// 이벤트 방식
 void U2DCollision::SetCollisionEnter(std::function<void(AActor*)> _Function)
 {
 	Enter = _Function;
@@ -157,7 +155,6 @@ void U2DCollision::CollisionEventCheck(class U2DCollision* _Other)
 
 	bool Result = FTransform::Collision(ThisType, ThisTrans, DestType, DestTrans);
 
-	// 충돌 true
 	if (true == Result)
 	{
 		if (false == CollisionCheckSet.contains(DestCollision))

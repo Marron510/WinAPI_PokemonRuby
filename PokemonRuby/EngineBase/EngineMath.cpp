@@ -44,7 +44,6 @@ public:
 	}
 };
 
-// 데이터 영역
 CollisionFunctionInit Inst = CollisionFunctionInit();
 
 
@@ -101,7 +100,6 @@ bool FTransform::RectToRect(const FTransform& _Left, const FTransform& _Right)
 	{
 		return false;
 	}
-	// 공식 만들면 된다.
 	return true;
 }
 

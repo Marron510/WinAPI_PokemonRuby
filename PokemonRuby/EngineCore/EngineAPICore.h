@@ -82,7 +82,7 @@ private:
 	static UContentsCore* UserCore;
 
 	UEngineTimer DeltaTimer = UEngineTimer();
-	UEngineWindow EngineMainWindow = UEngineWindow(); // 엔진 메인 윈도우
+	UEngineWindow EngineMainWindow = UEngineWindow(); 
 
 	std::map<std::string, class ULevel*> Levels;
 

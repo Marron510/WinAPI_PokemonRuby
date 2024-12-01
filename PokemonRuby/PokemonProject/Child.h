@@ -29,8 +29,6 @@ public:
 
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
-	void SetAnimationByDirection(ENPCDirection Direction);
-	void SetTargetLocation(const FVector2D& Offset);
 	void SetLookDirection(ENPCDirection Direction);
 
 	class USpriteRenderer* GetRender()

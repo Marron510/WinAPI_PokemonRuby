@@ -11,7 +11,6 @@ public:
 	bool Loop = false;
 };
 
-// Ό³Έν :
 class UTimeEvent
 {
 public:

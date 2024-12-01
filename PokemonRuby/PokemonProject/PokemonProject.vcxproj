@@ -113,14 +113,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="ExteriorObject.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="InteriorObject.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="LaborProfessorBirchMap.h">
       <SubType>
       </SubType>
@@ -279,14 +271,6 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="TruckMode.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="ExteriorObject.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="InteriorObject.cpp">
       <SubType>
       </SubType>
     </ClCompile>

@@ -48,9 +48,9 @@ private:
 	FVector2D TileSize = FVector2D(96, 96);
 	FVector2D TargetLocation = FVector2D::ZERO;
 	FVector2D CurrentPosition = FVector2D::ZERO;
-	float MoveSpeed = 5.0f; // 이동 속도
-	bool IsMoving = false; // 이동 중 여부
-	float MoveTime = 0.0f; // 이동 시간
+	float MoveSpeed = 5.0f; 
+	bool IsMoving = false; 
+	float MoveTime = 0.0f;
 	ENPCDirection CurrentDirection = ENPCDirection::NONE;
 	ENPCDirection LastDirection = ENPCDirection::NONE;
 	class UTimeEvent TimeEventer;

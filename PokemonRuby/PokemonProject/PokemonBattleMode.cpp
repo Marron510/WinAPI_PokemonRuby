@@ -363,7 +363,7 @@ void APokemonBattleMode::BattleGroundSetting()
 		if (TargetLocation == Curloc)
 		{
 			PlayerPokemonShadow->SetComponentLocation(TargetLocation);
-			IsPlayerPokemonShadowMoved = true;  // 이동 완료 표시
+			IsPlayerPokemonShadowMoved = true;  
 			IsBackGroundSetting = true;
 			return;
 		}
@@ -379,7 +379,7 @@ void APokemonBattleMode::BattleGroundSetting()
 		if (EnemyShadowTargetLocation == EnemyCurloc)
 		{
 			EnemyPokemonShadow->SetComponentLocation(EnemyShadowTargetLocation);
-			IsEnemyPokemonShadowMoved = true;  // 이동 완료 표시
+			IsEnemyPokemonShadowMoved = true;  
 			return;
 		}
 
@@ -400,7 +400,7 @@ void APokemonBattleMode::EnemyPokemonUISetting()
 		if (TargetLocation == Curloc)
 		{
 			EnemyPokemonUI->SetComponentLocation(TargetLocation);
-			IsEnemyPokemonUIMoved = true;  // 이동 완료 표시
+			IsEnemyPokemonUIMoved = true;  
 			return;
 		}
 

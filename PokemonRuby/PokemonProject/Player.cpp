@@ -547,7 +547,7 @@ void APlayer::SetDirection(EPlayerDir NewDirection)
 
 void APlayer::MoveToTile(const FVector2D& TargetTile)
 {
-    FVector2D TileSize = FVector2D(96.0f, 96.0f); // 타일 크기
+    FVector2D TileSize = FVector2D(96.0f, 96.0f);
     FVector2D TargetPosition = FVector2D(
         TargetTile.X * TileSize.X,
         TargetTile.Y * TileSize.Y

@@ -30,7 +30,6 @@ public:
 		Name = _Name.data();
 	}
 
-	// bool IsActive()
 	virtual bool IsActive()
 	{
 		return IsActiveValue && false == IsDestroyValue;

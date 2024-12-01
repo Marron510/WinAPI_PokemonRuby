@@ -86,7 +86,6 @@ public:
 		IsCameraEffect = _IsCameraEffect;
 	}
 
-	//                                        충돌한 상대
 	void SetCollisionEnter(std::function<void(AActor*)> _Function);
 	void SetCollisionStay(std::function<void(AActor*)> _Function);
 	void SetCollisionEnd(std::function<void(AActor*)> _Function);

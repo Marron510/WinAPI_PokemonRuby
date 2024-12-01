@@ -33,7 +33,7 @@ public:
 protected:
 
 private:
-	LARGE_INTEGER Count = LARGE_INTEGER(); // 나 1초에 xxx만큼 샐수 있어요.
+	LARGE_INTEGER Count = LARGE_INTEGER();
 
 	LARGE_INTEGER PrevTime = LARGE_INTEGER();
 

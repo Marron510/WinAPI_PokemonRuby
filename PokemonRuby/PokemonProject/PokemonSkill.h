@@ -56,16 +56,14 @@ public:
 	PokemonSkill& operator=(PokemonSkill&& _Other) noexcept = delete;
 
 
-	// 물리 공격 스킬들
 	int Pound(int level, int attack, int defense, bool isPhysical = true);
 	int Scratch(int level, int attack, int defense, bool isPhysical = true);
 	int Tackle(int level, int attack, int defense, bool isPhysical = true);
 
-	// 상태 변화 스킬들
-	void Leer(int& targetDefense);  // 방어력 감소
-	void Growl(int& targetAttack);  // 공격력 감소
-	void Howl(int& selfAttack);    // 자신의 공격력 증가
-	void StringShot(int& targetSpeed); // 상대 스피드 감소
+	void Leer(int& targetDefense); 
+	void Growl(int& targetAttack); 
+	void Howl(int& selfAttack);    
+	void StringShot(int& targetSpeed);
 
 protected:
 
