@@ -335,6 +335,7 @@ void APokemonBattleMode::Tick(float _DeltaTime)
 				UEngineSound::AllSoundStop();
 				BGMPlayer = UEngineSound::Play("009_ ProfessorBirchsLab.mp3");
 				ALaborProfessorBirchMode::ALaborProfessorBirchModePlayerDir = APlayer::EPlayerDir::LEFT_Left_Arm;
+				UEngineAPICore::GetCore()->ResetLevel<APokemonBattleMode, AActor>("PokemonBattle");
 				UEngineAPICore::GetCore()->OpenLevel("LaborProfessorBirch");
 			});
 		

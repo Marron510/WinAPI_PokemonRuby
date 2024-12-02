@@ -137,6 +137,7 @@ void APlayer::HandleInput()
         if (NextColor == UColor::RED || NextColor == UColor::BLUE)
         {
             IsMoving = false;
+            BGMPlayer = UEngineSound::Play("SECollision.mp3");
             FSM.ChangeState(APlayerState::IDLE); 
             return;
         }

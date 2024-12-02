@@ -1,7 +1,10 @@
 #pragma once
+
+#include <EngineBase/FSMStateManager.h>
+#include <EnginePlatform/EngineSound.h>
 #include <EngineCore/Actor.h>
 #include <EngineCore/ImageManager.h>
-#include <EngineBase/FSMStateManager.h>
+
 #include "PokemonMath.h"
 
 class APlayer : public AActor
@@ -156,8 +159,9 @@ private:
 
     FVector2D CamPos = FVector2D::ZERO;
 
-    FVector2D InitialJumpLocation;  // 점프 시작 위치
-    float JumpTime = 0.0f;          // 점프 진행 시간
-    const float JumpDuration = 0.5f; // 점프에 걸리는 총 시간
+    FVector2D InitialJumpLocation;  
+    float JumpTime = 0.0f;          
+    const float JumpDuration = 0.5f;
     bool IsJumping = false;
+    class USoundPlayer BGMPlayer;
 };
