@@ -5,33 +5,33 @@
 #include <vector>
 
 
-class AMyPokemon;
-
-class PokemonStateBackup 
-{
-public:
-	void Backup(AMyPokemon& Pokemon);
-	void Restore(AMyPokemon& Pokemon);
-
-private:
-	int Level, HP, MaxHp, Attack, Defense, SpecialAttack, SpecialDefense, Speed;
-	std::string Name, Skill1, Skill2, Skill3, Skill4;
-};
-
-
-class PokemonStateManager
-{
-public:
-	static PokemonStateManager& GetInstance();
-	void SavePokemonState(AMyPokemon& Pokemon);
-	void LoadPokemonState(AMyPokemon& Pokemon);
-	PokemonStateBackup& GetSelectedPokemonState()
-	{
-		return PokemonState;
-	}
-private:
-	PokemonStateBackup PokemonState;
-};
+//class AMyPokemon;
+//
+//class PokemonStateBackup 
+//{
+//public:
+//	void Backup(AMyPokemon& Pokemon);
+//	void Restore(AMyPokemon& Pokemon);
+//
+//private:
+//	int Level, HP, MaxHp, Attack, Defense, SpecialAttack, SpecialDefense, Speed;
+//	std::string Name, Skill1, Skill2, Skill3, Skill4;
+//};
+//
+//
+//class PokemonStateManager
+//{
+//public:
+//	static PokemonStateManager& GetInstance();
+//	void SavePokemonState(AMyPokemon& Pokemon);
+//	void LoadPokemonState(AMyPokemon& Pokemon);
+//	PokemonStateBackup& GetSelectedPokemonState()
+//	{
+//		return PokemonState;
+//	}
+//private:
+//	PokemonStateBackup PokemonState;
+//};
 
 class AMyPokemon : public AActor
 {
@@ -144,15 +144,15 @@ public:
 		return MaxPP[skillIndex];
 	}
 
-	void BackupState()
-	{
-		StateBackup->Backup(*this);
-	}
+	//void BackupState()
+	//{
+	//	StateBackup->Backup(*this);
+	//}
 
-	void RestoreState()
-	{
-		StateBackup->Restore(*this);
-	}
+	//void RestoreState()
+	//{
+	//	StateBackup->Restore(*this);
+	//}
 
 
 
@@ -190,6 +190,6 @@ private:
 	class USoundPlayer BGMPlayer;
 
 
-	PokemonStateBackup* StateBackup;
+	//PokemonStateBackup* StateBackup;
 };
 

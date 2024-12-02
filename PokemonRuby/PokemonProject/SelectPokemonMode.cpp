@@ -200,7 +200,7 @@ void ASelectPokemonMode::SelectPokemon()
 
 		TimeEventer.PushEvent(2.0f, [this]()
 			{
-				OnPokemonSelected(AMyPokemon::EMyPokemon::TREECKO);
+				UEngineAPICore::GetCore()->OpenLevel("PokemonBattle");
 			});
 		break;
 	case 1:
@@ -215,7 +215,7 @@ void ASelectPokemonMode::SelectPokemon()
 
 		TimeEventer.PushEvent(2.0f, [this]()
 			{
-				OnPokemonSelected(AMyPokemon::EMyPokemon::TORCHIC);
+				UEngineAPICore::GetCore()->OpenLevel("PokemonBattle");
 			});
 		break;
 	case 2:
@@ -230,7 +230,7 @@ void ASelectPokemonMode::SelectPokemon()
 
 		TimeEventer.PushEvent(2.0f, [this]()
 			{
-				OnPokemonSelected(AMyPokemon::EMyPokemon::MUDKIP);
+				UEngineAPICore::GetCore()->OpenLevel("PokemonBattle");
 			});
 		break;
 	default:
@@ -239,14 +239,14 @@ void ASelectPokemonMode::SelectPokemon()
 	
 	
 }
-
-void ASelectPokemonMode::OnPokemonSelected(AMyPokemon::EMyPokemon SelectedPokemon)
-{
-	AMyPokemon TemporaryPokemon;
-	TemporaryPokemon.SetPokemon(SelectedPokemon);
-	TemporaryPokemon.InitializePokemonAttributes(SelectedPokemon);
-
-	PokemonStateManager::GetInstance().SavePokemonState(TemporaryPokemon);
-
-	UEngineAPICore::GetCore()->OpenLevel("PokemonBattle");
-}
+//
+//void ASelectPokemonMode::OnPokemonSelected(AMyPokemon::EMyPokemon SelectedPokemon)
+//{
+//	AMyPokemon TemporaryPokemon;
+//	TemporaryPokemon.SetPokemon(SelectedPokemon);
+//	TemporaryPokemon.InitializePokemonAttributes(SelectedPokemon);
+//
+//	PokemonStateManager::GetInstance().SavePokemonState(TemporaryPokemon);
+//
+//	UEngineAPICore::GetCore()->OpenLevel("PokemonBattle");
+//}

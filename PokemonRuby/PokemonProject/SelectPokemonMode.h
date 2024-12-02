@@ -35,7 +35,7 @@ public:
 	void CursorMove();
 	void NameRender();
 	void SelectPokemon();
-	void OnPokemonSelected(AMyPokemon::EMyPokemon SelectedPokemon);
+	// void OnPokemonSelected(AMyPokemon::EMyPokemon SelectedPokemon);
 
 
 protected:
