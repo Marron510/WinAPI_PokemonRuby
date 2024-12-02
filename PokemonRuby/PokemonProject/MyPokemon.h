@@ -4,6 +4,35 @@
 #include <string>
 #include <vector>
 
+
+class AMyPokemon;
+
+class PokemonStateBackup 
+{
+public:
+	void Backup(AMyPokemon& Pokemon);
+	void Restore(AMyPokemon& Pokemon);
+
+private:
+	int Level, HP, MaxHp, Attack, Defense, SpecialAttack, SpecialDefense, Speed;
+	std::string Name, Skill1, Skill2, Skill3, Skill4;
+};
+
+
+class PokemonStateManager
+{
+public:
+	static PokemonStateManager& GetInstance();
+	void SavePokemonState(AMyPokemon& Pokemon);
+	void LoadPokemonState(AMyPokemon& Pokemon);
+	PokemonStateBackup& GetSelectedPokemonState()
+	{
+		return PokemonState;
+	}
+private:
+	PokemonStateBackup PokemonState;
+};
+
 class AMyPokemon : public AActor
 {
 public:
@@ -34,7 +63,7 @@ public:
 
 	void SetPokemon(EMyPokemon PokemonType);
 	void InitializePokemonAttributes(EMyPokemon PokemonType);
-	
+
 	int GetLevel() const { return Level; }
 	int GetHP() const { return HP; }
 	int GetMaxHP() const { return MaxHp; }
@@ -43,7 +72,7 @@ public:
 	int GetSpecialAttack() const { return SpecialAttack; }
 	int GetSpecialDefense() const { return SpecialDefense; }
 	int GetSpeed() const { return Speed; }
-	
+
 	std::string GetMyPokemonName()
 	{
 		return Name;
@@ -58,6 +87,21 @@ public:
 	void SetSpecialAttack(int InSpecialAttack) { SpecialAttack = InSpecialAttack; }
 	void SetSpecialDefense(int InSpecialDefense) { SpecialDefense = InSpecialDefense; }
 	void SetSpeed(int InSpeed) { Speed = InSpeed; }
+
+	void SetSkills(const std::string& skill1, const std::string& skill2,
+		const std::string& skill3, const std::string& skill4)
+	{
+		this->skill1 = skill1;
+		this->skill2 = skill2;
+		this->skill3 = skill3;
+		this->skill4 = skill4;
+	}
+
+	void SetPokemonName(const std::string& Name)
+	{
+		this->Name = Name;
+	}
+
 
 	void AddEXP(int GainedEXP);
 	void UseSkill(const std::string& skillName, class AWildPokemon* target);
@@ -83,54 +127,69 @@ public:
 	{
 		return LevelString;
 	}
-	int GetEXP() 
+	int GetEXP()
 	{
-		return CurrentEXP; 
+		return CurrentEXP;
 	}
 	int GetMaxEXP()
 	{
-		return MaxEXP; 
+		return MaxEXP;
 	}
-	int GetPP(int skillIndex) 
+	int GetPP(int skillIndex)
 	{
-		return PP[skillIndex]; 
+		return PP[skillIndex];
 	}
 	int GetMaxPP(int skillIndex)
 	{
-		return MaxPP[skillIndex]; 
+		return MaxPP[skillIndex];
 	}
+
+	void BackupState()
+	{
+		StateBackup->Backup(*this);
+	}
+
+	void RestoreState()
+	{
+		StateBackup->Restore(*this);
+	}
+
+
 
 protected:
 
 private:
 
-    std::string Name;              
+	std::string Name;
 	std::string LevelString;
 
-    int Level;                     
-    int HP;                       
-	int MaxHp;
-    int Attack;                    
-    int Defense;                   
-    int SpecialAttack;             
-    int SpecialDefense;            
-    int Speed;                     
-	int CurrentEXP;
+	
+	int Level = 5;
+	int HP = 40;
+	int MaxHp = 40;
+	int Attack = 180;
+	int Defense = 35;
+	int SpecialAttack = 65;
+	int SpecialDefense = 50;
+	int Speed = 70;
+	int CurrentEXP = 0;
 	int MaxEXP = 50;
 	std::string skill1, skill2, skill3, skill4;
-	std::vector<int> PP;     
-	std::vector<int> MaxPP;  
+	std::vector<int> PP;
+	std::vector<int> MaxPP;
 	class USpriteRenderer* MyPokemon;
 
 	class PokemonSkill* SkillHandler;
 
 
-	FVector2D StartPosition;      
-	FVector2D TargetPosition;     
-	FVector2D CurrentVelocity;    
-	bool bIsMovingRight;          
-	bool bIsSkillActive;          
+	FVector2D StartPosition;
+	FVector2D TargetPosition;
+	FVector2D CurrentVelocity;
+	bool bIsMovingRight;
+	bool bIsSkillActive;
 	class USoundPlayer BGMPlayer;
 
+
+	PokemonStateBackup* StateBackup;
 };
 

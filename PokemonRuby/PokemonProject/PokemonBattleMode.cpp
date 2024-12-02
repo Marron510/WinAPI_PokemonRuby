@@ -90,6 +90,11 @@ void APokemonBattleMode::BeginPlay()
 	}
 
 	{ 
+	/*	PokemonStateBackup& SelectedPokemonState = PokemonStateManager::GetInstance().GetSelectedPokemonState();
+
+		MyPokemon = GetWorld()->SpawnActor<AMyPokemon>();
+		SelectedPokemonState.Restore(*MyPokemon);*/
+
 		MyPokemon = GetWorld()->SpawnActor<AMyPokemon>();
 		MyPokemon->SetPokemon(GameData::SelectedPokemon);
 		MyPokemon->SetActorLocation({ -500.0f, -500.0f });
@@ -257,6 +262,10 @@ void APokemonBattleMode::BeginPlay()
 		MyPokemonEXP = GetWorld()->SpawnActor<APokemonEXP>();
 		MyPokemonEXP->SetActorLocation({ 1506.0f, 535.0f });
 	}
+	
+	
+	
+	// PokemonStateManager::GetInstance().LoadPokemonState(*MyPokemon);
 
 	SkillTextOff();
 
@@ -327,16 +336,27 @@ void APokemonBattleMode::Tick(float _DeltaTime)
 				int GainedEXP = 15;
 				MyPokemon->AddEXP(GainedEXP);
 				BGMPlayer = UEngineSound::Play("SEGainExp.mp3");
-				ChatText->SetText(MyPokemon->GetMyPokemonName() + " gained" + enter + "15 EXP.Points!", 0.05f);
+				ChatText->SetText(MyPokemonName + " gained" + enter + "15 EXP.Points!", 0.05f);
 			});
 		TimeEventManager.PushEvent(13.0f, [this]()
 			{
 				ALaborProfessorBirchMode::LaborProfessorBirchModeChangePos = { 8,4 };
 				UEngineSound::AllSoundStop();
-				BGMPlayer = UEngineSound::Play("009_ ProfessorBirchsLab.mp3");
-				ALaborProfessorBirchMode::ALaborProfessorBirchModePlayerDir = APlayer::EPlayerDir::LEFT_Left_Arm;
-				UEngineAPICore::GetCore()->ResetLevel<APokemonBattleMode, AActor>("PokemonBattle");
-				UEngineAPICore::GetCore()->OpenLevel("LaborProfessorBirch");
+				if (!bIsProfessorEventEnd)
+				{
+					BGMPlayer = UEngineSound::Play("009_ ProfessorBirchsLab.mp3");
+					ALaborProfessorBirchMode::ALaborProfessorBirchModePlayerDir = APlayer::EPlayerDir::LEFT_Left_Arm;
+					UEngineAPICore::GetCore()->ResetLevel<APokemonBattleMode, AActor>("PokemonBattle");
+					UEngineAPICore::GetCore()->OpenLevel("LaborProfessorBirch");
+					bIsProfessorEventEnd = true;
+				}
+				else
+				{
+					BGMPlayer = UEngineSound::Play("005_MishiroTown.mp3");
+					UEngineAPICore::GetCore()->ResetLevel<APokemonBattleMode, AActor>("PokemonBattle");
+					UEngineAPICore::GetCore()->OpenLevel("PokemonMap");
+				}
+				
 			});
 		
 	}
@@ -933,14 +953,14 @@ void APokemonBattleMode::DisplayChatText()
 void APokemonBattleMode::Skill1ChatText()
 {
 	ChatText->SetOrder(ERenderOrder::FONT);
-	MyPokemonSkillText = MyPokemon->GetMyPokemonName() + " used" + enter + MyPokemon->GetSkill1() + "!";
+	MyPokemonSkillText = MyPokemonName + " used" + enter + MyPokemon->GetSkill1() + "!";
 	ChatText->SetText(MyPokemonSkillText, 0.1f);
 }
 
 void APokemonBattleMode::Skill2ChatText()
 {
 	ChatText->SetOrder(ERenderOrder::FONT);
-	MyPokemonSkillText = MyPokemon->GetMyPokemonName() + " used" + enter + MyPokemon->GetSkill2() + "!";
+	MyPokemonSkillText = MyPokemonName + " used" + enter + MyPokemon->GetSkill2() + "!";
 	ChatText->SetText(MyPokemonSkillText, 0.1f);
 }
 

@@ -115,7 +115,6 @@ private:
 	std::string EnemyPokemonSkillText;
 	std::string EnemyPokemonLevel;
 
-
 	class AWildPokemon* EnemyPokemon = nullptr;
 	class ACursor* Cursor = nullptr;
 	USpriteRenderer* CursorRender = nullptr;
@@ -188,6 +187,7 @@ private:
 	
 	bool bHasSpawnedPokemon = false; 
 	bool bHasDisplayedMenuText = false;
+	bool bIsProfessorEventEnd = false;
 
 	class USoundPlayer BGMPlayer;
 

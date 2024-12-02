@@ -4,7 +4,7 @@
 
 #include <EngineCore/SpriteRenderer.h>
 
-#include  "WildPokemon.h"
+#include "WildPokemon.h"
 #include "PokemonEnum.h"
 #include "PokemonSkill.h"
 #include "MyPokemon.h"
@@ -220,4 +220,52 @@ void AMyPokemon::MovePokemonForSkill()
 void AMyPokemon::AddEXP(int GainedEXP)
 {
     CurrentEXP = UEngineMath::Clamp(CurrentEXP + GainedEXP, 0, MaxEXP);
+}
+
+
+void PokemonStateBackup::Backup(AMyPokemon& Pokemon)
+{
+    Level = Pokemon.GetLevel();
+    HP = Pokemon.GetHP();
+    MaxHp = Pokemon.GetMaxHP();
+    Attack = Pokemon.GetAttack();
+    Defense = Pokemon.GetDefense();
+    SpecialAttack = Pokemon.GetSpecialAttack();
+    SpecialDefense = Pokemon.GetSpecialDefense();
+    Speed = Pokemon.GetSpeed();
+    Name = Pokemon.GetName();
+    Skill1 = Pokemon.GetSkill1();
+    Skill2 = Pokemon.GetSkill2();
+    Skill3 = Pokemon.GetSkill3();
+    Skill4 = Pokemon.GetSkill4();
+}
+
+void PokemonStateBackup::Restore(AMyPokemon& Pokemon) {
+    Pokemon.SetLevel(Level);
+    Pokemon.SetHP(HP);
+    Pokemon.SetMaxHP(MaxHp);
+    Pokemon.SetAttack(Attack);
+    Pokemon.SetDefense(Defense);
+    Pokemon.SetSpecialAttack(SpecialAttack);
+    Pokemon.SetSpecialDefense(SpecialDefense);
+    Pokemon.SetSpeed(Speed);
+    Pokemon.SetPokemonName(Name);
+    Pokemon.SetSkills(Skill1, Skill2, Skill3, Skill4);
+}
+
+
+PokemonStateManager& PokemonStateManager::GetInstance() 
+{
+    static PokemonStateManager Instance;
+    return Instance;
+}
+
+void PokemonStateManager::SavePokemonState(AMyPokemon& Pokemon)
+{
+    PokemonState.Backup(Pokemon);
+}
+
+void PokemonStateManager::LoadPokemonState(AMyPokemon& Pokemon)
+{
+    PokemonState.Restore(Pokemon);
 }

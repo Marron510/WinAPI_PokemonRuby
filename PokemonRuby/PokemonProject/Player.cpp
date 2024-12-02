@@ -240,6 +240,8 @@ void APlayer::HandleBattleEncounter()
 
     if (CheckColor == UColor::GREEN && EncounterInt < 2)
     {
+        UEngineSound::AllSoundStop();
+        BGMPlayer = UEngineSound::Play("007_ Battle!.mp3");
         UEngineAPICore::GetCore()->OpenLevel("PokemonBattle");
     }
 }
