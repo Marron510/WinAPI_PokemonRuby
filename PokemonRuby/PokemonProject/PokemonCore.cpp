@@ -251,7 +251,7 @@ void PokemonCore::BeginPlay()
 
 
 	
-		UEngineAPICore::GetCore()->OpenLevel("PokemonBattle");
+		UEngineAPICore::GetCore()->OpenLevel("Title");
 	
 }
 
