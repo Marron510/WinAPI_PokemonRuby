@@ -1092,6 +1092,7 @@ void APokemonMapMode::ChildInteractionEvent()
 		if (!bChildDialogueCompleted)
 		{
 			Player->DisableMovement();
+			Player->SetDirection(APlayer::EPlayerDir::LEFT_Left_Arm);
 		}
 
 		Professor->GetRender()->SetActive(true);
